@@ -10,7 +10,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Tax Declarations - F0100214 & F0121214",
+  title: "Monegoo - F0100214 & F0121214",
   description: "Online system for filing tax declarations on property status, income, and investment transactions",
   generator: "v0.app",
   icons: {
@@ -22,10 +22,6 @@ export const metadata: Metadata = {
       {
         url: "/icon-dark-32x32.png",
         media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
       },
     ],
     apple: "/apple-icon.png",
@@ -44,10 +40,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark')
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                  document.documentElement.classList.add('dark');
+                  // Save system preference on first visit
+                  if (!savedTheme) {
+                    localStorage.setItem('theme', 'system');
+                  }
                 } else {
-                  document.documentElement.classList.remove('dark')
+                  document.documentElement.classList.remove('dark');
+                  // Save system preference on first visit
+                  if (!savedTheme) {
+                    localStorage.setItem('theme', 'system');
+                  }
                 }
               } catch (e) {}
             `,
@@ -56,7 +63,7 @@ export default function RootLayout({
       </head>
       <body className={`font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <I18nProvider initialLanguage="uk">
+          <I18nProvider>
             {children}
             <Analytics />
           </I18nProvider>
