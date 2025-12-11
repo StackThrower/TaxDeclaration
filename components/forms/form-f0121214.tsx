@@ -1,0 +1,497 @@
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useI18n } from "@/lib/i18n-context"
+
+export function FormF0121214() {
+  const { language } = useI18n()
+  const [formData, setFormData] = useState({
+    fullName: "",
+    taxNumber: "",
+    year: "2024",
+    assetType: "",
+    purchaseDate: "",
+    saleDate: "",
+    purchasePrice: "",
+    salePrice: "",
+    expenses: "",
+    notes: "",
+  })
+
+  const [calculations, setCalculations] = useState({
+    profit: 0,
+    pdfo: 0,
+    militaryTax: 0,
+    total: 0,
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    calculateTaxes(name, value)
+  }
+
+  const handleSelect = (name: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const calculateTaxes = (fieldName: string, value: string) => {
+    const numValue = Number.parseFloat(value) || 0
+    const purchasePrice = Number.parseFloat(formData.purchasePrice) || 0
+    const salePrice = Number.parseFloat(formData.salePrice) || 0
+    const expenses = Number.parseFloat(formData.expenses) || 0
+
+    if (fieldName === "salePrice" || fieldName === "purchasePrice" || fieldName === "expenses") {
+      const newSalePrice = fieldName === "salePrice" ? numValue : salePrice
+      const newPurchasePrice = fieldName === "purchasePrice" ? numValue : purchasePrice
+      const newExpenses = fieldName === "expenses" ? numValue : expenses
+
+      const profit = Math.max(0, newSalePrice - newPurchasePrice - newExpenses)
+      const pdfo = profit * 0.18
+      const militaryTax = profit * 0.015
+      const total = pdfo + militaryTax
+
+      setCalculations({
+        profit,
+        pdfo,
+        militaryTax,
+        total,
+      })
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("Form data:", formData)
+    console.log("Calculations:", calculations)
+    alert("Form saved! ID: " + Date.now())
+  }
+
+  const getLabel = (key: string): string => {
+    const translations: Record<string, Record<string, string>> = {
+      uk: {
+        personalData: "Персональні дані",
+        fullName: "Прізвище та ім'я",
+        taxId: "ІПН",
+        periodAsset: "Період і тип активу",
+        year: "Рік звіту",
+        assetType: "Тип інвестиційного активу",
+        operationDates: "Дати операцій",
+        purchaseDate: "Дата придбання",
+        saleDate: "Дата продажу",
+        financialIndicators: "Фінансові показники",
+        purchasePrice: "Вартість придбання (грн)",
+        salePrice: "Вартість продажу (грн)",
+        expensesOp: "Витрати на операцію (грн)",
+        taxCalculation: "Розрахунок податкових зобов'язань",
+        profit: "Прибуток",
+        pdfo: "ПДФО (18%)",
+        military: "Військ. збір (1.5%)",
+        total: "Всього до сплати",
+        additionalInfo: "Додаткова інформація",
+        notes: "Примітки та уточнення",
+        save: "Зберегти форму Ф1",
+        clear: "Очистити форму",
+      },
+      en: {
+        personalData: "Personal Data",
+        fullName: "Full Name",
+        taxId: "Tax ID",
+        periodAsset: "Period and Asset Type",
+        year: "Reporting Year",
+        assetType: "Investment Asset Type",
+        operationDates: "Operation Dates",
+        purchaseDate: "Purchase Date",
+        saleDate: "Sale Date",
+        financialIndicators: "Financial Indicators",
+        purchasePrice: "Purchase Price (UAH)",
+        salePrice: "Sale Price (UAH)",
+        expensesOp: "Operation Expenses (UAH)",
+        taxCalculation: "Tax Obligation Calculation",
+        profit: "Profit",
+        pdfo: "Personal Income Tax (18%)",
+        military: "Military Levy (1.5%)",
+        total: "Total Due",
+        additionalInfo: "Additional Information",
+        notes: "Notes and Clarifications",
+        save: "Save Form F1",
+        clear: "Clear Form",
+      },
+      fr: {
+        personalData: "Données personnelles",
+        fullName: "Nom complet",
+        taxId: "ID fiscal",
+        periodAsset: "Période et type d'actif",
+        year: "Année du rapport",
+        assetType: "Type d'actif d'investissement",
+        operationDates: "Dates des opérations",
+        purchaseDate: "Date d'achat",
+        saleDate: "Date de vente",
+        financialIndicators: "Indicateurs financiers",
+        purchasePrice: "Prix d'achat (UAH)",
+        salePrice: "Prix de vente (UAH)",
+        expensesOp: "Frais opérationnels (UAH)",
+        taxCalculation: "Calcul de l'obligation fiscale",
+        profit: "Bénéfice",
+        pdfo: "Impôt sur le revenu (18%)",
+        military: "Prélèvement militaire (1.5%)",
+        total: "Montant total dû",
+        additionalInfo: "Informations supplémentaires",
+        notes: "Notes et clarifications",
+        save: "Enregistrer le formulaire F1",
+        clear: "Effacer le formulaire",
+      },
+      pl: {
+        personalData: "Dane osobowe",
+        fullName: "Imię i nazwisko",
+        taxId: "NIP",
+        periodAsset: "Okres i typ aktywa",
+        year: "Rok raportowania",
+        assetType: "Typ aktywa inwestycyjnego",
+        operationDates: "Daty operacji",
+        purchaseDate: "Data nabycia",
+        saleDate: "Data sprzedaży",
+        financialIndicators: "Wskaźniki finansowe",
+        purchasePrice: "Cena nabycia (UAH)",
+        salePrice: "Cena sprzedaży (UAH)",
+        expensesOp: "Koszty operacyjne (UAH)",
+        taxCalculation: "Obliczenie zobowiązania podatkowego",
+        profit: "Zysk",
+        pdfo: "PIT (18%)",
+        military: "Opłata wojskowa (1.5%)",
+        total: "Razem do zapłaty",
+        additionalInfo: "Dodatkowe informacje",
+        notes: "Uwagi i wyjaśnienia",
+        save: "Zapisz formularz F1",
+        clear: "Wyczyść formularz",
+      },
+      es: {
+        personalData: "Datos personales",
+        fullName: "Nombre completo",
+        taxId: "Número de contribuyente",
+        periodAsset: "Período y tipo de activo",
+        year: "Año del informe",
+        assetType: "Tipo de activo de inversión",
+        operationDates: "Fechas de operación",
+        purchaseDate: "Fecha de compra",
+        saleDate: "Fecha de venta",
+        financialIndicators: "Indicadores financieros",
+        purchasePrice: "Precio de compra (UAH)",
+        salePrice: "Precio de venta (UAH)",
+        expensesOp: "Gastos operacionales (UAH)",
+        taxCalculation: "Cálculo de obligación fiscal",
+        profit: "Ganancia",
+        pdfo: "IRPF (18%)",
+        military: "Gravamen militar (1.5%)",
+        total: "Total a pagar",
+        additionalInfo: "Información adicional",
+        notes: "Notas y aclaraciones",
+        save: "Guardar formulario F1",
+        clear: "Limpiar formulario",
+      },
+      pt: {
+        personalData: "Dados pessoais",
+        fullName: "Nome completo",
+        taxId: "Número de contribuinte",
+        periodAsset: "Período e tipo de ativo",
+        year: "Ano do relatório",
+        assetType: "Tipo de ativo de investimento",
+        operationDates: "Datas da operação",
+        purchaseDate: "Data de compra",
+        saleDate: "Data de venda",
+        financialIndicators: "Indicadores financeiros",
+        purchasePrice: "Preço de compra (UAH)",
+        salePrice: "Preço de venda (UAH)",
+        expensesOp: "Despesas operacionais (UAH)",
+        taxCalculation: "Cálculo de obrigação fiscal",
+        profit: "Lucro",
+        pdfo: "IR (18%)",
+        military: "Taxa militar (1.5%)",
+        total: "Total a pagar",
+        additionalInfo: "Informações adicionais",
+        notes: "Notas e esclarecimentos",
+        save: "Salvar formulário F1",
+        clear: "Limpar formulário",
+      },
+      de: {
+        personalData: "Persönliche Daten",
+        fullName: "Vollständiger Name",
+        taxId: "Steuernummer",
+        periodAsset: "Zeitraum und Anlagentyp",
+        year: "Berichtsjahr",
+        assetType: "Typ des Anlagegutes",
+        operationDates: "Operationsdaten",
+        purchaseDate: "Kaufdatum",
+        saleDate: "Verkaufsdatum",
+        financialIndicators: "Finanzielle Indikatoren",
+        purchasePrice: "Kaufpreis (UAH)",
+        salePrice: "Verkaufspreis (UAH)",
+        expensesOp: "Betriebsausgaben (UAH)",
+        taxCalculation: "Berechnung der Steuerschuld",
+        profit: "Gewinn",
+        pdfo: "Einkommensteuer (18%)",
+        military: "Wehrbeitrag (1.5%)",
+        total: "Gesamtzahlbar",
+        additionalInfo: "Zusätzliche Informationen",
+        notes: "Notizen und Klarstellungen",
+        save: "Formular F1 speichern",
+        clear: "Formular löschen",
+      },
+    }
+
+    return translations[language]?.[key] || key
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-accent">{getLabel("personalData")}</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName">{getLabel("fullName")}</Label>
+              <Input
+                id="fullName"
+                name="fullName"
+                placeholder="John Smith"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="taxNumber">{getLabel("taxId")}</Label>
+              <Input
+                id="taxNumber"
+                name="taxNumber"
+                placeholder="ХХХХХХХХХХХХ"
+                value={formData.taxNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-accent">{getLabel("periodAsset")}</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="year">{getLabel("year")}</Label>
+              <Select value={formData.year} onValueChange={(value) => handleSelect("year", value)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="2022">2022</SelectItem>
+                  <SelectItem value="2023">2023</SelectItem>
+                  <SelectItem value="2024">2024</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="assetType">{getLabel("assetType")}</Label>
+              <Select value={formData.assetType} onValueChange={(value) => handleSelect("assetType", value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="stocks">
+                    {language === "uk"
+                      ? "Акції"
+                      : language === "en"
+                        ? "Stocks"
+                        : language === "fr"
+                          ? "Actions"
+                          : language === "pl"
+                            ? "Akcje"
+                            : language === "es"
+                              ? "Acciones"
+                              : language === "pt"
+                                ? "Ações"
+                                : "Aktien"}
+                  </SelectItem>
+                  <SelectItem value="bonds">
+                    {language === "uk"
+                      ? "Облігації"
+                      : language === "en"
+                        ? "Bonds"
+                        : language === "fr"
+                          ? "Obligations"
+                          : language === "pl"
+                            ? "Obligacje"
+                            : language === "es"
+                              ? "Bonos"
+                              : language === "pt"
+                                ? "Títulos"
+                                : "Anleihen"}
+                  </SelectItem>
+                  <SelectItem value="crypto">
+                    {language === "uk"
+                      ? "Крипто активи"
+                      : language === "en"
+                        ? "Crypto Assets"
+                        : language === "fr"
+                          ? "Actifs crypto"
+                          : language === "pl"
+                            ? "Aktywa kryptograficzne"
+                            : language === "es"
+                              ? "Activos criptográficos"
+                              : language === "pt"
+                                ? "Ativos criptográficos"
+                                : "Krypto-Vermögenswerte"}
+                  </SelectItem>
+                  <SelectItem value="real_estate">
+                    {language === "uk"
+                      ? "Нерухоме майно"
+                      : language === "en"
+                        ? "Real Estate"
+                        : language === "fr"
+                          ? "Immobilier"
+                          : language === "pl"
+                            ? "Nieruchomości"
+                            : language === "es"
+                              ? "Bienes raíces"
+                              : language === "pt"
+                                ? "Imóveis"
+                                : "Immobilien"}
+                  </SelectItem>
+                  <SelectItem value="other">{language === "uk" ? "Інше" : "Other"}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-accent">{getLabel("operationDates")}</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="purchaseDate">{getLabel("purchaseDate")}</Label>
+              <Input
+                id="purchaseDate"
+                name="purchaseDate"
+                type="date"
+                value={formData.purchaseDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="saleDate">{getLabel("saleDate")}</Label>
+              <Input id="saleDate" name="saleDate" type="date" value={formData.saleDate} onChange={handleChange} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-accent">{getLabel("financialIndicators")}</h3>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="purchasePrice">{getLabel("purchasePrice")}</Label>
+              <Input
+                id="purchasePrice"
+                name="purchasePrice"
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={formData.purchasePrice}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="salePrice">{getLabel("salePrice")}</Label>
+              <Input
+                id="salePrice"
+                name="salePrice"
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={formData.salePrice}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="expenses">{getLabel("expensesOp")}</Label>
+              <Input
+                id="expenses"
+                name="expenses"
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                value={formData.expenses}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-border/50 bg-primary/5">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-accent">{getLabel("taxCalculation")}</h3>
+          <div className="grid md:grid-cols-4 gap-4">
+            <div className="space-y-2 bg-background p-4 rounded-lg border border-border">
+              <Label className="text-xs font-semibold uppercase">{getLabel("profit")}</Label>
+              <p className="text-2xl font-bold text-primary">{calculations.profit.toFixed(2)}</p>
+              <p className="text-xs text-foreground/60">грн</p>
+            </div>
+            <div className="space-y-2 bg-background p-4 rounded-lg border border-border">
+              <Label className="text-xs font-semibold uppercase">{getLabel("pdfo")}</Label>
+              <p className="text-2xl font-bold text-accent">{calculations.pdfo.toFixed(2)}</p>
+              <p className="text-xs text-foreground/60">грн</p>
+            </div>
+            <div className="space-y-2 bg-background p-4 rounded-lg border border-border">
+              <Label className="text-xs font-semibold uppercase">{getLabel("military")}</Label>
+              <p className="text-2xl font-bold text-accent">{calculations.militaryTax.toFixed(2)}</p>
+              <p className="text-xs text-foreground/60">грн</p>
+            </div>
+            <div className="space-y-2 bg-background p-4 rounded-lg border border-primary">
+              <Label className="text-xs font-semibold uppercase text-primary">{getLabel("total")}</Label>
+              <p className="text-2xl font-bold text-primary">{calculations.total.toFixed(2)}</p>
+              <p className="text-xs text-foreground/60">грн</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-accent">{getLabel("additionalInfo")}</h3>
+          <div className="space-y-2">
+            <Label htmlFor="notes">{getLabel("notes")}</Label>
+            <Textarea
+              id="notes"
+              name="notes"
+              placeholder="Enter additional information..."
+              value={formData.notes}
+              onChange={handleChange}
+              rows={4}
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="flex gap-4 pt-6">
+        <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90">
+          {getLabel("save")}
+        </Button>
+        <Button type="reset" variant="outline" size="lg">
+          {getLabel("clear")}
+        </Button>
+      </div>
+    </form>
+  )
+}

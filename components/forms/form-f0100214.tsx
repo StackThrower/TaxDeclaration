@@ -1,0 +1,483 @@
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useI18n } from "@/lib/i18n-context"
+
+export function FormF0100214() {
+  const { language } = useI18n()
+  const [formData, setFormData] = useState({
+    fullName: "",
+    taxNumber: "",
+    passportNumber: "",
+    residence: "",
+    year: "2024",
+    realEstate: "",
+    vehicles: "",
+    otherProperty: "",
+    totalIncome: "",
+    expenses: "",
+    additionalInfo: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelect = (name: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("Form data:", formData)
+    alert("Form saved! ID: " + Date.now())
+  }
+
+  const translations: Record<string, { label: string; placeholder: string }> = {
+    uk: {
+      label: "Персональні дані",
+      placeholder: "Іванов Іван Іванович",
+    },
+    en: {
+      label: "Personal Data",
+      placeholder: "John Smith",
+    },
+    fr: {
+      label: "Données personnelles",
+      placeholder: "Jean Martin",
+    },
+    pl: {
+      label: "Dane osobowe",
+      placeholder: "Jan Kowalski",
+    },
+    es: {
+      label: "Datos personales",
+      placeholder: "Juan García",
+    },
+    pt: {
+      label: "Dados pessoais",
+      placeholder: "João Silva",
+    },
+    de: {
+      label: "Persönliche Daten",
+      placeholder: "Johann Schmidt",
+    },
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Персональні дані */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-primary">{translations[language]?.label || "Personal Data"}</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName">
+                {language === "uk"
+                  ? "Прізвище та ім'я"
+                  : language === "en"
+                    ? "Full Name"
+                    : language === "fr"
+                      ? "Nom complet"
+                      : language === "pl"
+                        ? "Imię i nazwisko"
+                        : language === "es"
+                          ? "Nombre completo"
+                          : language === "pt"
+                            ? "Nome completo"
+                            : "Vollständiger Name"}
+              </Label>
+              <Input
+                id="fullName"
+                name="fullName"
+                placeholder={translations[language]?.placeholder || "Name"}
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="taxNumber">
+                {language === "uk"
+                  ? "ІПН"
+                  : language === "en"
+                    ? "Tax ID"
+                    : language === "fr"
+                      ? "ID fiscal"
+                      : language === "pl"
+                        ? "NIP"
+                        : language === "es"
+                          ? "Número de contribuyente"
+                          : language === "pt"
+                            ? "Número de contribuinte"
+                            : "Steuernummer"}
+              </Label>
+              <Input
+                id="taxNumber"
+                name="taxNumber"
+                placeholder="ХХХХХХХХХХХХ"
+                value={formData.taxNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="passportNumber">
+                {language === "uk"
+                  ? "Номер паспорту"
+                  : language === "en"
+                    ? "Passport Number"
+                    : language === "fr"
+                      ? "Numéro de passeport"
+                      : language === "pl"
+                        ? "Numer paszportu"
+                        : language === "es"
+                          ? "Número de pasaporte"
+                          : language === "pt"
+                            ? "Número do passaporte"
+                            : "Passnummer"}
+              </Label>
+              <Input
+                id="passportNumber"
+                name="passportNumber"
+                placeholder="АА 123456"
+                value={formData.passportNumber}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="residence">
+                {language === "uk"
+                  ? "Місце проживання"
+                  : language === "en"
+                    ? "Residence"
+                    : language === "fr"
+                      ? "Résidence"
+                      : language === "pl"
+                        ? "Miejsce zamieszkania"
+                        : language === "es"
+                          ? "Domicilio"
+                          : language === "pt"
+                            ? "Residência"
+                            : "Wohnort"}
+              </Label>
+              <Input
+                id="residence"
+                name="residence"
+                placeholder={language === "uk" ? "Місто, вул., дім" : "City, street, house"}
+                value={formData.residence}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Період */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-primary">
+            {language === "uk"
+              ? "Період розрахунку"
+              : language === "en"
+                ? "Calculation Period"
+                : language === "fr"
+                  ? "Période de calcul"
+                  : language === "pl"
+                    ? "Okres rozliczeniowy"
+                    : language === "es"
+                      ? "Período de cálculo"
+                      : language === "pt"
+                        ? "Período de cálculo"
+                        : "Abrechnungszeitraum"}
+          </h3>
+          <div className="space-y-2">
+            <Label htmlFor="year">
+              {language === "uk"
+                ? "Рік"
+                : language === "en"
+                  ? "Year"
+                  : language === "fr"
+                    ? "Année"
+                    : language === "pl"
+                      ? "Rok"
+                      : language === "es"
+                        ? "Año"
+                        : language === "pt"
+                          ? "Ano"
+                          : "Jahr"}
+            </Label>
+            <Select value={formData.year} onValueChange={(value) => handleSelect("year", value)}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2022">2022</SelectItem>
+                <SelectItem value="2023">2023</SelectItem>
+                <SelectItem value="2024">2024</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Майно */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-primary">
+            {language === "uk"
+              ? "Відомості про майно"
+              : language === "en"
+                ? "Property Information"
+                : language === "fr"
+                  ? "Informations sur les biens"
+                  : language === "pl"
+                    ? "Informacje o majątku"
+                    : language === "es"
+                      ? "Información sobre bienes"
+                      : language === "pt"
+                        ? "Informações sobre bens"
+                        : "Vermögensinformationen"}
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="realEstate">
+                {language === "uk"
+                  ? "Нерухоме майно (кількість об'єктів)"
+                  : language === "en"
+                    ? "Real Estate (number of objects)"
+                    : language === "fr"
+                      ? "Immobilier (nombre d'objets)"
+                      : language === "pl"
+                        ? "Nieruchomości (liczba obiektów)"
+                        : language === "es"
+                          ? "Inmuebles (número de objetos)"
+                          : language === "pt"
+                            ? "Imóveis (número de objetos)"
+                            : "Immobilien (Anzahl der Objekte)"}
+              </Label>
+              <Input
+                id="realEstate"
+                name="realEstate"
+                type="number"
+                placeholder="0"
+                value={formData.realEstate}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="vehicles">
+                {language === "uk"
+                  ? "Транспортні засоби (кількість)"
+                  : language === "en"
+                    ? "Vehicles (quantity)"
+                    : language === "fr"
+                      ? "Véhicules (quantité)"
+                      : language === "pl"
+                        ? "Pojazdy (ilość)"
+                        : language === "es"
+                          ? "Vehículos (cantidad)"
+                          : language === "pt"
+                            ? "Veículos (quantidade)"
+                            : "Fahrzeuge (Anzahl)"}
+              </Label>
+              <Input
+                id="vehicles"
+                name="vehicles"
+                type="number"
+                placeholder="0"
+                value={formData.vehicles}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="otherProperty">
+              {language === "uk"
+                ? "Інше майно (опис)"
+                : language === "en"
+                  ? "Other Property (description)"
+                  : language === "fr"
+                    ? "Autres biens (description)"
+                    : language === "pl"
+                      ? "Inny majątek (opis)"
+                      : language === "es"
+                        ? "Otros bienes (descripción)"
+                        : language === "pt"
+                          ? "Outros bens (descrição)"
+                          : "Sonstiges Vermögen (Beschreibung)"}
+            </Label>
+            <Textarea
+              id="otherProperty"
+              name="otherProperty"
+              placeholder={language === "uk" ? "Описати інше майно..." : "Describe other property..."}
+              value={formData.otherProperty}
+              onChange={handleChange}
+              rows={3}
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Доходи та витрати */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-primary">
+            {language === "uk"
+              ? "Доходи та витрати"
+              : language === "en"
+                ? "Income and Expenses"
+                : language === "fr"
+                  ? "Revenus et dépenses"
+                  : language === "pl"
+                    ? "Dochody i wydatki"
+                    : language === "es"
+                      ? "Ingresos y gastos"
+                      : language === "pt"
+                        ? "Receitas e despesas"
+                        : "Einnahmen und Ausgaben"}
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="totalIncome">
+                {language === "uk"
+                  ? "Загальний дохід (грн)"
+                  : language === "en"
+                    ? "Total Income (UAH)"
+                    : language === "fr"
+                      ? "Revenu total (UAH)"
+                      : language === "pl"
+                        ? "Całkowity dochód (UAH)"
+                        : language === "es"
+                          ? "Ingreso total (UAH)"
+                          : language === "pt"
+                            ? "Renda total (UAH)"
+                            : "Gesamteinkommen (UAH)"}
+              </Label>
+              <Input
+                id="totalIncome"
+                name="totalIncome"
+                type="number"
+                placeholder="0.00"
+                value={formData.totalIncome}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="expenses">
+                {language === "uk"
+                  ? "Витрати (грн)"
+                  : language === "en"
+                    ? "Expenses (UAH)"
+                    : language === "fr"
+                      ? "Dépenses (UAH)"
+                      : language === "pl"
+                        ? "Wydatki (UAH)"
+                        : language === "es"
+                          ? "Gastos (UAH)"
+                          : language === "pt"
+                            ? "Despesas (UAH)"
+                            : "Ausgaben (UAH)"}
+              </Label>
+              <Input
+                id="expenses"
+                name="expenses"
+                type="number"
+                placeholder="0.00"
+                value={formData.expenses}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Додаткова інформація */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-primary">
+            {language === "uk"
+              ? "Додаткова інформація"
+              : language === "en"
+                ? "Additional Information"
+                : language === "fr"
+                  ? "Informations supplémentaires"
+                  : language === "pl"
+                    ? "Dodatkowe informacje"
+                    : language === "es"
+                      ? "Información adicional"
+                      : language === "pt"
+                        ? "Informações adicionais"
+                        : "Zusätzliche Informationen"}
+          </h3>
+          <div className="space-y-2">
+            <Label htmlFor="additionalInfo">
+              {language === "uk"
+                ? "Примітки та уточнення"
+                : language === "en"
+                  ? "Notes and Clarifications"
+                  : language === "fr"
+                    ? "Notes et clarifications"
+                    : language === "pl"
+                      ? "Uwagi i wyjaśnienia"
+                      : language === "es"
+                        ? "Notas y aclaraciones"
+                        : language === "pt"
+                          ? "Notas e esclarecimentos"
+                          : "Notizen und Klarstellungen"}
+            </Label>
+            <Textarea
+              id="additionalInfo"
+              name="additionalInfo"
+              placeholder={language === "uk" ? "Введіть додаткову інформацію..." : "Enter additional information..."}
+              value={formData.additionalInfo}
+              onChange={handleChange}
+              rows={4}
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="flex gap-4 pt-6">
+        <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90">
+          {language === "uk"
+            ? "Зберегти декларацію"
+            : language === "en"
+              ? "Save Declaration"
+              : language === "fr"
+                ? "Enregistrer la déclaration"
+                : language === "pl"
+                  ? "Zapisz deklarację"
+                  : language === "es"
+                    ? "Guardar declaración"
+                    : language === "pt"
+                      ? "Salvar declaração"
+                      : "Deklaration speichern"}
+        </Button>
+        <Button type="reset" variant="outline" size="lg">
+          {language === "uk"
+            ? "Очистити форму"
+            : language === "en"
+              ? "Clear Form"
+              : language === "fr"
+                ? "Effacer le formulaire"
+                : language === "pl"
+                  ? "Wyczyść formularz"
+                  : language === "es"
+                    ? "Limpiar formulario"
+                    : language === "pt"
+                      ? "Limpar formulário"
+                      : "Formular löschen"}
+        </Button>
+      </div>
+    </form>
+  )
+}
