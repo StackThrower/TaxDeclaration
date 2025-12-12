@@ -1,5 +1,29 @@
 # Monegoo - Tax Declaration System
 
+## 🚨 Quick Start: GitHub Actions не запускается?
+
+**Если вы видите "0 workflow runs":**
+
+1. **Проверьте файлы:**
+   ```bash
+   ls -la .github/workflows/
+   ```
+   Должны быть: `deploy.yml` и `ci.yml` ✅
+
+2. **Подключите GitHub репозиторий:**
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/TaxDeclaration.git
+   git push -u origin main
+   ```
+
+3. **Настройте GitHub Secrets** (Settings → Secrets):
+   - `GCP_PROJECT_ID` - ваш GCP project ID
+   - `GCP_SA_KEY` - JSON ключ service account
+
+📖 **Полная инструкция:** [QUICKSTART_GITHUB_ACTIONS.md](./QUICKSTART_GITHUB_ACTIONS.md)
+
+---
+
 ## 🌍 Multi-Country Tax Forms Platform
 
 Monegoo is an open-source platform for filing tax declarations across multiple countries. The system supports country-specific tax forms with multi-language interfaces.
