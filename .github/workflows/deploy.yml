@@ -119,11 +119,4 @@ jobs:
           --cpu 1 \
           --max-instances 10 \
           --min-instances 0
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    - name: Output Service URL
-      run: |
-        SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region ${{ env.REGION }} --format 'value(status.url)')
-        echo "Service deployed to: $SERVICE_URL"
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
