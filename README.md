@@ -39,10 +39,16 @@ Examples:
 
 ## 📚 Documentation
 
+### Core Documentation
 - **[LOCALE_ROUTING.md](./LOCALE_ROUTING.md)** - Locale-based routing implementation details
 - **[TAX_FORMS.md](./TAX_FORMS.md)** - Complete tax forms reference for all countries
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment and infrastructure guide
 - **[SETUP.md](./SETUP.md)** - Development setup instructions
+
+### GitHub Actions & CI/CD
+- **[GITHUB_ACTIONS_STATUS.md](./GITHUB_ACTIONS_STATUS.md)** - ⭐ Current setup status and quick start
+- **[QUICKSTART_GITHUB_ACTIONS.md](./QUICKSTART_GITHUB_ACTIONS.md)** - 5-minute setup guide
+- **[GITHUB_ACTIONS_SETUP.md](./GITHUB_ACTIONS_SETUP.md)** - Detailed configuration guide
 
 ## 🚀 Deployment Options
 
