@@ -1,4 +1,48 @@
-# Quick Start Guide
+# Monegoo - Tax Declaration System
+
+## 🌍 Multi-Country Tax Forms Platform
+
+Monegoo is an open-source platform for filing tax declarations across multiple countries. The system supports country-specific tax forms with multi-language interfaces.
+
+### Supported Countries & Forms
+
+- 🇺🇦 **Ukraine** - F0100214, F0121214 (Fully Implemented)
+- 🇵🇱 **Poland** - PIT-37, PIT-38, PIT-39
+- 🇫🇷 **France** - 2042, 2042-C, 2044
+- 🇩🇪 **Germany** - EST 1A, Anlage N, Anlage KAP
+- 🇵🇹 **Portugal** - IRS Modelo 3, Anexo A, Anexo E
+- 🇪🇸 **Spain** - Modelo 100, D-100, 720
+- 🇸🇪 **Sweden** - INK1, K4, K10
+- 🇬🇧 **UK** - SA100, SA108, SA109
+- 🇺🇸 **USA** - Form 1040, Schedule D, Form 8949, Schedule C
+- 🇨🇦 **Canada** - T1 General, Schedule 3, T5008
+
+### Supported Languages
+
+- 🇺🇦 Українська
+- 🇬🇧 English
+- 🇫🇷 Français
+- 🇵🇱 Polski
+- 🇪🇸 Español
+- 🇵🇹 Português
+- 🇩🇪 Deutsch
+
+### URL Structure
+
+The application uses locale-based routing: `/{language}-{country}`
+
+Examples:
+- `/en-us` - English interface, US tax forms
+- `/uk-ua` - Ukrainian interface, Ukraine tax forms
+- `/pl-pl` - Polish interface, Poland tax forms
+- `/fr-fr` - French interface, France tax forms
+
+## 📚 Documentation
+
+- **[LOCALE_ROUTING.md](./LOCALE_ROUTING.md)** - Locale-based routing implementation details
+- **[TAX_FORMS.md](./TAX_FORMS.md)** - Complete tax forms reference for all countries
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment and infrastructure guide
+- **[SETUP.md](./SETUP.md)** - Development setup instructions
 
 ## 🚀 Deployment Options
 

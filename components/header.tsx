@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useParams } from "next/navigation"
 import { FileText, Heart, Menu, X, Home, HelpCircle, Shield, Globe, MapPin } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
@@ -14,12 +15,14 @@ import { Separator } from "./ui/separator"
 
 export function Header() {
   const { language } = useI18n()
+  const params = useParams()
+  const locale = params?.locale as string || `${language}-ua`
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <header className="bg-secondary text-secondary-foreground sticky top-0 z-50 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between gap-2">
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity min-w-0">
+        <Link href={`/${locale}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity min-w-0">
           <FileText className="w-6 h-6 md:w-8 md:h-8 flex-shrink-0" />
           <div className="min-w-0">
             <h1 className="text-base md:text-xl font-bold truncate">{t(language, "header.title")}</h1>
@@ -29,13 +32,13 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex gap-6">
-          <Link href="/#forms" className="hover:text-accent transition-colors whitespace-nowrap">
+          <Link href={`/${locale}#forms`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.forms")}
           </Link>
-          <Link href="/privacy" className="hover:text-accent transition-colors whitespace-nowrap">
+          <Link href={`/${locale}/privacy`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.info")}
           </Link>
-          <Link href="/help" className="hover:text-accent transition-colors whitespace-nowrap">
+          <Link href={`/${locale}/help`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.help")}
           </Link>
         </nav>
@@ -91,7 +94,7 @@ export function Header() {
                 {/* Navigation Links */}
                 <nav className="flex flex-col gap-2 mb-6">
                   <Link
-                    href="/#forms"
+                    href={`/${locale}#forms`}
                     className="flex items-center gap-4 px-4 py-3.5 text-base font-medium rounded-lg hover:bg-accent/10 hover:text-accent transition-all duration-200 group"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -102,7 +105,7 @@ export function Header() {
                   </Link>
 
                   <Link
-                    href="/privacy"
+                    href={`/${locale}/privacy`}
                     className="flex items-center gap-4 px-4 py-3.5 text-base font-medium rounded-lg hover:bg-accent/10 hover:text-accent transition-all duration-200 group"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -113,7 +116,7 @@ export function Header() {
                   </Link>
 
                   <Link
-                    href="/help"
+                    href={`/${locale}/help`}
                     className="flex items-center gap-4 px-4 py-3.5 text-base font-medium rounded-lg hover:bg-accent/10 hover:text-accent transition-all duration-200 group"
                     onClick={() => setMobileMenuOpen(false)}
                   >

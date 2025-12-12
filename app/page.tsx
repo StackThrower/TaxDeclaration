@@ -1,17 +1,19 @@
 "use client"
 
-import { Header } from "@/components/header"
-import { Hero } from "@/components/hero"
-import { FormsSection } from "@/components/forms-section"
-import { Footer } from "@/components/footer"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useI18n } from "@/lib/i18n-context"
+import { getDefaultCountryForLanguage } from "@/lib/countries"
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-background">
-      <Header />
-      <Hero />
-      <FormsSection />
-      <Footer />
-    </main>
-  )
+  const router = useRouter()
+  const { language } = useI18n()
+
+  useEffect(() => {
+    // Redirect to locale-based URL
+    const defaultCountry = getDefaultCountryForLanguage(language)
+    router.replace(`/${language}-${defaultCountry}`)
+  }, [language, router])
+
+  return null
 }
