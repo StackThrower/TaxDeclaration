@@ -9,6 +9,13 @@ import "./globals.css"
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+}
+
 export const metadata: Metadata = {
   title: "Monegoo - F0100214 & F0121214",
   description: "Online system for filing tax declarations on property status, income, and investment transactions",

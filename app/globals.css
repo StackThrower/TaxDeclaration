@@ -122,5 +122,28 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Улучшенное touch-взаимодействие для мобильных */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    /* Плавный скроллинг */
+    scroll-behavior: smooth;
+  }
+
+  /* Улучшение для touch-устройств */
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Оптимизация шрифтов для мобильных */
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+  }
+
+  /* Улучшение скроллинга на iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
   }
 }

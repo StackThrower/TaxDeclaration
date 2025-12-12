@@ -55,32 +55,32 @@ export function HelpSection() {
   ]
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-12 md:py-16 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">{t(language, "help.title")}</h1>
-          <p className="text-xl text-muted-foreground mb-2">{t(language, "help.subtitle")}</p>
-          <p className="text-muted-foreground">{t(language, "help.intro")}</p>
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">{t(language, "help.title")}</h1>
+          <p className="text-lg md:text-xl text-muted-foreground mb-2">{t(language, "help.subtitle")}</p>
+          <p className="text-sm md:text-base text-muted-foreground px-4">{t(language, "help.intro")}</p>
         </div>
 
-        <Accordion type="single" collapsible className="w-full space-y-4">
+        <Accordion type="single" collapsible className="w-full space-y-3 md:space-y-4">
           {helpItems.map((item) => {
             const Icon = item.icon
             return (
               <AccordionItem key={item.id} value={item.id} className="border rounded-lg">
-                <AccordionTrigger className="px-6 hover:no-underline">
-                  <div className="flex items-center gap-4 text-left">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-primary" />
+                <AccordionTrigger className="px-4 md:px-6 py-4 hover:no-underline">
+                  <div className="flex items-start md:items-center gap-3 md:gap-4 text-left">
+                    <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-lg">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-base md:text-lg">{item.title}</h3>
+                      <p className="text-xs md:text-sm text-muted-foreground mt-0.5">{item.description}</p>
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-6 pb-6">
-                  <div className="pl-14 text-muted-foreground">
+                <AccordionContent className="px-4 md:px-6 pb-4 md:pb-6">
+                  <div className="pl-11 md:pl-14 text-sm md:text-base text-muted-foreground">
                     {item.content}
                   </div>
                 </AccordionContent>
@@ -89,13 +89,13 @@ export function HelpSection() {
           })}
         </Accordion>
 
-        <Card className="mt-12 bg-muted/50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5" />
-              {t(language, "help.support.title")}
+        <Card className="mt-8 md:mt-12 bg-muted/50">
+          <CardHeader className="space-y-2">
+            <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+              <MessageSquare className="w-5 h-5 flex-shrink-0" />
+              <span>{t(language, "help.support.title")}</span>
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm">
               {t(language, "help.support.description")}
             </CardDescription>
           </CardHeader>
