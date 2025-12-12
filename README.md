@@ -152,6 +152,27 @@ With default settings (min_instances=0):
 
 You only pay for actual usage with Cloud Run.
 
+## 🔧 Troubleshooting
+
+### pnpm lockfile issues in CI
+
+If you see errors like:
+```
+WARN  Ignoring not compatible lockfile
+ERR_PNPM_NO_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.yaml is absent
+```
+
+**Solution**: The lockfile version must match the pnpm version in GitHub Actions.
+- This project uses pnpm 9.x (lockfileVersion: '9.0')
+- Check `.github/workflows/*.yml` files have `version: 9` in the pnpm setup
+- The `packageManager` field in `package.json` should specify the correct pnpm version
+
+### Other common issues
+
+- **Docker build fails**: Ensure all dependencies are in package.json
+- **GCP authentication fails**: Verify `GCP_SA_KEY` secret is correctly configured
+- **Terraform errors**: Check that your service account has necessary permissions
+
 ## 🆘 Need Help?
 
 1. Check [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup
