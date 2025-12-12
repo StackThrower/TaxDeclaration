@@ -167,6 +167,21 @@ ERR_PNPM_NO_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.ya
 - Check `.github/workflows/*.yml` files have `version: 9` in the pnpm setup
 - The `packageManager` field in `package.json` should specify the correct pnpm version
 
+### Docker build errors
+
+If you see:
+```
+ERROR: failed to build: failed to solve: no build stage in current context
+```
+
+**Solution**: The Dockerfile structure must follow proper multi-stage build order:
+1. Base stage with Node.js
+2. Dependencies stage (install packages)
+3. Builder stage (build application)
+4. Runner stage (production image)
+
+Ensure your Next.js config has `output: 'standalone'` for Docker builds.
+
 ### Other common issues
 
 - **Docker build fails**: Ensure all dependencies are in package.json

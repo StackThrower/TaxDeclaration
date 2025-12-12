@@ -1,49 +1,49 @@
 # Dockerfile for Next.js application
-CMD ["node", "server.js"]
+FROM node:20-alpine AS base
 
-EXPOSE 3000
+# Install pnpm
+RUN npm install -g pnpm@9.15.0
+
+# Dependencies stage
+FROM base AS dependencies
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Build stage
+FROM base AS builder
+WORKDIR /app
+
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY . .
+
+# Build the Next.js application
+RUN pnpm run build
+
+# Production stage
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy necessary files
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# Set proper permissions
+RUN chown -R nextjs:nodejs /app
 
 USER nextjs
 
-RUN chown -R nextjs:nodejs /app
-# Set proper permissions
+EXPOSE 3000
 
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/public ./public
-# Copy necessary files
-
-RUN adduser --system --uid 1001 nextjs
-RUN addgroup --system --gid 1001 nodejs
-# Create a non-root user
-
-ENV HOSTNAME="0.0.0.0"
-ENV PORT=3000
-ENV NODE_ENV=production
-
-WORKDIR /app
-FROM base AS runner
-# Production stage
-
-RUN pnpm run build
-# Build the Next.js application
-
-COPY . .
-COPY --from=dependencies /app/node_modules ./node_modules
-
-WORKDIR /app
-FROM base AS builder
-# Build stage
-
-RUN pnpm install --frozen-lockfile
-COPY package.json pnpm-lock.yaml ./
-
-WORKDIR /app
-FROM base AS dependencies
-# Dependencies stage
-
-RUN npm install -g pnpm
-# Install pnpm
-
-FROM node:20-alpine AS base
+CMD ["node", "server.js"]
 
