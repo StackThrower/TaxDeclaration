@@ -35,8 +35,13 @@ export interface F0100214Data {
 export interface F0121214Position {
   id: string
   assetType: string
+  currency: string
   purchaseDate: string
   saleDate: string
+  purchasePriceForeign: string
+  salePriceForeign: string
+  purchaseRate: string
+  saleRate: string
   purchasePrice: string
   salePrice: string
   expenses: string
@@ -236,8 +241,13 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
       positions: "Фінансові позиції",
       position: "Позиція",
       assetType: "Тип активу:",
+      currency: "Валюта:",
       purchaseDate: "Дата придбання:",
       saleDate: "Дата продажу:",
+      purchasePriceForeign: "Сума купівлі (валюта):",
+      salePriceForeign: "Сума продажу (валюта):",
+      purchaseRate: "Курс НБУ купівлі:",
+      saleRate: "Курс НБУ продажу:",
       purchasePrice: "Вартість придбання:",
       salePrice: "Вартість продажу:",
       expenses: "Витрати:",
@@ -267,8 +277,13 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
       positions: "Financial Positions",
       position: "Position",
       assetType: "Asset Type:",
+      currency: "Currency:",
       purchaseDate: "Purchase Date:",
       saleDate: "Sale Date:",
+      purchasePriceForeign: "Purchase amount (foreign):",
+      salePriceForeign: "Sale amount (foreign):",
+      purchaseRate: "NBU purchase rate:",
+      saleRate: "NBU sale rate:",
       purchasePrice: "Purchase Price:",
       salePrice: "Sale Price:",
       expenses: "Expenses:",
@@ -346,6 +361,12 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
     const assetTypeLabel =
       t.assetTypes[position.assetType as keyof typeof t.assetTypes] || position.assetType || "-"
 
+    const currency = position.currency || "UAH"
+    const purchasePriceForeign = parseFloat(position.purchasePriceForeign) || 0
+    const salePriceForeign = parseFloat(position.salePriceForeign) || 0
+    const purchaseRate = parseFloat(position.purchaseRate) || 0
+    const saleRate = parseFloat(position.saleRate) || 0
+
     doc.setFontSize(12)
     doc.setTextColor(60, 60, 60)
     doc.text(`${t.position} #${index + 1}`, 15, yPos)
@@ -353,13 +374,27 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
 
     const positionData = [
       [t.assetType, assetTypeLabel],
+      [t.currency, currency],
       [t.purchaseDate, position.purchaseDate || "-"],
       [t.saleDate, position.saleDate || "-"],
+    ]
+
+    // Add foreign currency amounts if not UAH
+    if (currency !== "UAH") {
+      positionData.push(
+        [t.purchasePriceForeign, purchasePriceForeign > 0 ? `${purchasePriceForeign.toFixed(2)} ${currency}` : "-"],
+        [t.salePriceForeign, salePriceForeign > 0 ? `${salePriceForeign.toFixed(2)} ${currency}` : "-"],
+        [t.purchaseRate, purchaseRate > 0 ? `${purchaseRate.toFixed(4)}` : "-"],
+        [t.saleRate, saleRate > 0 ? `${saleRate.toFixed(4)}` : "-"]
+      )
+    }
+
+    positionData.push(
       [t.purchasePrice, purchasePrice > 0 ? `${purchasePrice.toFixed(2)} UAH` : "-"],
       [t.salePrice, salePrice > 0 ? `${salePrice.toFixed(2)} UAH` : "-"],
       [t.expenses, expenses > 0 ? `${expenses.toFixed(2)} UAH` : "-"],
-      [t.positionProfit, `${profit.toFixed(2)} UAH`],
-    ]
+      [t.positionProfit, `${profit.toFixed(2)} UAH`]
+    )
 
     autoTable(doc, {
       startY: yPos,

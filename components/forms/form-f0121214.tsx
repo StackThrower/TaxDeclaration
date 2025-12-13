@@ -11,12 +11,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useI18n } from "@/lib/i18n-context"
 import { Trash2, Plus, FileText } from "lucide-react"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
+import {
+  fetchNBUExchangeRate,
+  convertToUAH,
+  SUPPORTED_CURRENCIES,
+  formatExchangeRate,
+  getCurrencySymbol
+} from "@/lib/nbu-exchange-rates"
 
 interface FinancialPosition {
   id: string
   assetType: string
+  currency: string
   purchaseDate: string
   saleDate: string
+  purchasePriceForeign: string
+  salePriceForeign: string
+  purchaseRate: string
+  saleRate: string
   purchasePrice: string
   salePrice: string
   expenses: string
@@ -35,8 +47,13 @@ export function FormF0121214() {
     {
       id: Date.now().toString(),
       assetType: "",
+      currency: "UAH",
       purchaseDate: "",
       saleDate: "",
+      purchasePriceForeign: "",
+      salePriceForeign: "",
+      purchaseRate: "1",
+      saleRate: "1",
       purchasePrice: "",
       salePrice: "",
       expenses: "",
@@ -63,6 +80,97 @@ export function FormF0121214() {
     setPositions((prev) =>
       prev.map((pos) => (pos.id === id ? { ...pos, [field]: value } : pos))
     )
+
+    // Fetch exchange rates when currency or dates change
+    if (field === "currency" || field === "purchaseDate" || field === "saleDate") {
+      const position = positions.find(p => p.id === id)
+      if (!position) return
+
+      const currency = field === "currency" ? value : position.currency
+
+      if (currency !== "UAH") {
+        // Fetch purchase rate
+        if ((field === "currency" || field === "purchaseDate") && (field === "purchaseDate" ? value : position.purchaseDate)) {
+          const purchaseDate = field === "purchaseDate" ? value : position.purchaseDate
+          fetchNBUExchangeRate(purchaseDate, currency).then(rate => {
+            if (rate !== null) {
+              setPositions(prev => prev.map(p => {
+                if (p.id === id) {
+                  const updatedPos = { ...p, purchaseRate: rate.toFixed(4) }
+                  // Auto-convert if foreign amount exists
+                  if (p.purchasePriceForeign) {
+                    const foreignAmount = parseFloat(p.purchasePriceForeign)
+                    updatedPos.purchasePrice = convertToUAH(foreignAmount, rate).toFixed(2)
+                  }
+                  return updatedPos
+                }
+                return p
+              }))
+            }
+          })
+        }
+
+        // Fetch sale rate
+        if ((field === "currency" || field === "saleDate") && (field === "saleDate" ? value : position.saleDate)) {
+          const saleDate = field === "saleDate" ? value : position.saleDate
+          fetchNBUExchangeRate(saleDate, currency).then(rate => {
+            if (rate !== null) {
+              setPositions(prev => prev.map(p => {
+                if (p.id === id) {
+                  const updatedPos = { ...p, saleRate: rate.toFixed(4) }
+                  // Auto-convert if foreign amount exists
+                  if (p.salePriceForeign) {
+                    const foreignAmount = parseFloat(p.salePriceForeign)
+                    updatedPos.salePrice = convertToUAH(foreignAmount, rate).toFixed(2)
+                  }
+                  return updatedPos
+                }
+                return p
+              }))
+            }
+          })
+        }
+      } else {
+        // Reset rates to 1 for UAH
+        setPositions(prev => prev.map(p => {
+          if (p.id === id) {
+            return {
+              ...p,
+              purchaseRate: "1",
+              saleRate: "1",
+              purchasePrice: p.purchasePriceForeign || p.purchasePrice,
+              salePrice: p.salePriceForeign || p.salePrice
+            }
+          }
+          return p
+        }))
+      }
+    }
+
+    // Auto-convert when foreign amounts change
+    if (field === "purchasePriceForeign") {
+      const position = positions.find(p => p.id === id)
+      if (position && position.currency !== "UAH") {
+        const foreignAmount = parseFloat(value) || 0
+        const rate = parseFloat(position.purchaseRate) || 1
+        const uahAmount = convertToUAH(foreignAmount, rate).toFixed(2)
+        setPositions(prev => prev.map(p =>
+          p.id === id ? { ...p, purchasePrice: uahAmount } : p
+        ))
+      }
+    }
+
+    if (field === "salePriceForeign") {
+      const position = positions.find(p => p.id === id)
+      if (position && position.currency !== "UAH") {
+        const foreignAmount = parseFloat(value) || 0
+        const rate = parseFloat(position.saleRate) || 1
+        const uahAmount = convertToUAH(foreignAmount, rate).toFixed(2)
+        setPositions(prev => prev.map(p =>
+          p.id === id ? { ...p, salePrice: uahAmount } : p
+        ))
+      }
+    }
   }
 
   const addPosition = () => {
@@ -71,8 +179,13 @@ export function FormF0121214() {
       {
         id: Date.now().toString(),
         assetType: "",
+        currency: "UAH",
         purchaseDate: "",
         saleDate: "",
+        purchasePriceForeign: "",
+        salePriceForeign: "",
+        purchaseRate: "1",
+        saleRate: "1",
         purchasePrice: "",
         salePrice: "",
         expenses: "",
@@ -159,9 +272,16 @@ export function FormF0121214() {
         periodAsset: "Період і тип активу",
         year: "Рік звіту",
         assetType: "Тип інвестиційного активу",
+        currency: "Валюта операції",
         operationDates: "Дати операцій",
         purchaseDate: "Дата придбання",
         saleDate: "Дата продажу",
+        foreignAmounts: "Суми в іноземній валюті",
+        purchasePriceForeign: "Сума купівлі (валюта)",
+        salePriceForeign: "Сума продажу (валюта)",
+        exchangeRates: "Курси НБУ",
+        purchaseRate: "Курс НБУ купівлі",
+        saleRate: "Курс НБУ продажу",
         financialIndicators: "Фінансові показники",
         purchasePrice: "Вартість придбання (грн)",
         salePrice: "Вартість продажу (грн)",
@@ -186,9 +306,16 @@ export function FormF0121214() {
         periodAsset: "Period and Asset Type",
         year: "Reporting Year",
         assetType: "Investment Asset Type",
+        currency: "Transaction Currency",
         operationDates: "Operation Dates",
         purchaseDate: "Purchase Date",
         saleDate: "Sale Date",
+        foreignAmounts: "Foreign Currency Amounts",
+        purchasePriceForeign: "Purchase amount (foreign)",
+        salePriceForeign: "Sale amount (foreign)",
+        exchangeRates: "NBU Exchange Rates",
+        purchaseRate: "NBU purchase rate",
+        saleRate: "NBU sale rate",
         financialIndicators: "Financial Indicators",
         purchasePrice: "Purchase Price (UAH)",
         salePrice: "Sale Price (UAH)",
@@ -496,6 +623,26 @@ export function FormF0121214() {
               </Select>
             </div>
 
+            {/* Currency Selector */}
+            <div className="space-y-2">
+              <Label htmlFor={`currency-${position.id}`}>{getLabel("currency")}</Label>
+              <Select
+                value={position.currency}
+                onValueChange={(value) => handlePositionChange(position.id, "currency", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {SUPPORTED_CURRENCIES.map((curr) => (
+                    <SelectItem key={curr.code} value={curr.code}>
+                      {curr.code} - {curr.name} ({curr.symbol})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             {/* Operation Dates */}
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -518,6 +665,75 @@ export function FormF0121214() {
               </div>
             </div>
 
+            {/* Foreign Currency Amounts (if not UAH) */}
+            {position.currency !== "UAH" && (
+              <>
+                <div className="pt-2">
+                  <h4 className="text-sm font-semibold text-accent mb-3">{getLabel("foreignAmounts")}</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor={`purchasePriceForeign-${position.id}`}>
+                        {getLabel("purchasePriceForeign")}
+                      </Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id={`purchasePriceForeign-${position.id}`}
+                          type="number"
+                          step="0.01"
+                          placeholder="0.00"
+                          value={position.purchasePriceForeign}
+                          onChange={(e) => handlePositionChange(position.id, "purchasePriceForeign", e.target.value)}
+                        />
+                        <div className="flex items-center px-3 bg-muted rounded-md min-w-[60px] justify-center">
+                          <span className="text-sm font-medium">{getCurrencySymbol(position.currency)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor={`salePriceForeign-${position.id}`}>
+                        {getLabel("salePriceForeign")}
+                      </Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id={`salePriceForeign-${position.id}`}
+                          type="number"
+                          step="0.01"
+                          placeholder="0.00"
+                          value={position.salePriceForeign}
+                          onChange={(e) => handlePositionChange(position.id, "salePriceForeign", e.target.value)}
+                        />
+                        <div className="flex items-center px-3 bg-muted rounded-md min-w-[60px] justify-center">
+                          <span className="text-sm font-medium">{getCurrencySymbol(position.currency)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <h4 className="text-sm font-semibold text-accent mb-3">{getLabel("exchangeRates")}</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>{getLabel("purchaseRate")}</Label>
+                      <div className="p-3 bg-muted rounded-md">
+                        <span className="text-sm font-mono">
+                          {formatExchangeRate(parseFloat(position.purchaseRate) || null, position.currency)} ₴
+                        </span>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>{getLabel("saleRate")}</Label>
+                      <div className="p-3 bg-muted rounded-md">
+                        <span className="text-sm font-mono">
+                          {formatExchangeRate(parseFloat(position.saleRate) || null, position.currency)} ₴
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
             {/* Financial Indicators */}
             <div className="grid md:grid-cols-3 gap-4">
               <div className="space-y-2">
@@ -529,7 +745,12 @@ export function FormF0121214() {
                   placeholder="0.00"
                   value={position.purchasePrice}
                   onChange={(e) => handlePositionChange(position.id, "purchasePrice", e.target.value)}
+                  readOnly={position.currency !== "UAH"}
+                  className={position.currency !== "UAH" ? "bg-muted cursor-not-allowed" : ""}
                 />
+                {position.currency !== "UAH" && (
+                  <p className="text-xs text-muted-foreground">Автоматично розраховано</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor={`salePrice-${position.id}`}>{getLabel("salePrice")}</Label>
@@ -540,7 +761,12 @@ export function FormF0121214() {
                   placeholder="0.00"
                   value={position.salePrice}
                   onChange={(e) => handlePositionChange(position.id, "salePrice", e.target.value)}
+                  readOnly={position.currency !== "UAH"}
+                  className={position.currency !== "UAH" ? "bg-muted cursor-not-allowed" : ""}
                 />
+                {position.currency !== "UAH" && (
+                  <p className="text-xs text-muted-foreground">Автоматично розраховано</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor={`expenses-${position.id}`}>{getLabel("expensesOp")}</Label>
