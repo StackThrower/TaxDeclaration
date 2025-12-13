@@ -340,10 +340,12 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   const t = labels[language as keyof typeof labels] || labels.en
 
   // Header
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(18)
   doc.setTextColor(40, 40, 40)
   doc.text(t.title, 105, 20, { align: "center" })
 
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(12)
   doc.setTextColor(100, 100, 100)
   doc.text(t.subtitle, 105, 28, { align: "center" })
@@ -351,11 +353,13 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   let yPos = 45
 
   // Personal Data Section
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
   doc.text(t.personalData, 15, yPos)
   yPos += 10
 
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(11)
   doc.setTextColor(40, 40, 40)
   const personalData = [
@@ -384,6 +388,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   yPos = (doc as any).lastAutoTable.finalY + 15
 
   // Positions Section
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
   doc.text(t.positions, 15, yPos)
@@ -404,6 +409,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
     const purchaseRate = parseFloat(position.purchaseRate) || 0
     const saleRate = parseFloat(position.saleRate) || 0
 
+    doc.setFont("DejaVuSans", "bold")
     doc.setFontSize(12)
     doc.setTextColor(60, 60, 60)
     doc.text(`${t.position} #${index + 1}`, 15, yPos)
@@ -465,6 +471,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
     yPos = 20
   }
 
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
   doc.text(t.taxSummary, 15, yPos)
@@ -518,11 +525,13 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
 
   // Notes
   if (data.notes) {
+    doc.setFont("DejaVuSans", "bold")
     doc.setFontSize(12)
     doc.setTextColor(0, 102, 204)
     doc.text(t.notes, 15, yPos)
     yPos += 8
 
+    doc.setFont("DejaVuSans", "normal")
     doc.setFontSize(10)
     doc.setTextColor(40, 40, 40)
     const splitText = doc.splitTextToSize(data.notes, 180)
@@ -530,6 +539,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   }
 
   // Footer
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(9)
   doc.setTextColor(150, 150, 150)
   const pageCount = (doc as any).internal.getNumberOfPages()
