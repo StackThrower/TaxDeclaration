@@ -52,7 +52,7 @@ export function Header() {
             asChild
           >
             <a
-              href="https://www.buymeacoffee.com/monegoo"
+              href="https://www.paypal.com/donate/?hosted_button_id=RMHSQVH59BVPS"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -172,7 +172,7 @@ export function Header() {
                     asChild
                   >
                     <a
-                      href="https://www.buymeacoffee.com/monegoo"
+                      href="https://www.paypal.com/donate/?hosted_button_id=RMHSQVH59BVPS"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
