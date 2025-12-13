@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "next-themes"
 import { I18nProvider } from "@/lib/i18n-context"
 import { DynamicHtmlLang } from "@/components/dynamic-html-lang"
+import { GoogleAnalytics } from "@/components/google-analytics"
 import { headers } from "next/headers"
 import "./globals.css"
 
@@ -142,6 +143,7 @@ export default async function RootLayout({
         />
       </head>
       <body className={`font-sans antialiased`}>
+        <GoogleAnalytics />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <I18nProvider>
             <DynamicHtmlLang />
