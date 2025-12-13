@@ -246,11 +246,11 @@ export function FormF0121214() {
 
 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Generate PDF with current form data
-    generateF0121214PDF(
+    await generateF0121214PDF(
       {
         fullName: formData.fullName,
         taxNumber: formData.taxNumber,

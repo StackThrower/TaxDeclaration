@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf"
 import autoTable from "jspdf-autotable"
+import { setupUkrainianFonts } from "./fonts/font-setup"
 
 // Type for autoTable options
 type AutoTableOptions = {
@@ -61,8 +62,11 @@ export interface F0121214Data {
   }
 }
 
-export const generateF0100214PDF = (data: F0100214Data, language: string = "uk") => {
+export const generateF0100214PDF = async (data: F0100214Data, language: string = "uk") => {
   const doc = new jsPDF()
+
+  // Setup Ukrainian fonts for Cyrillic support
+  await setupUkrainianFonts(doc)
 
   const labels = {
     uk: {
@@ -108,10 +112,12 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
   const t = labels[language as keyof typeof labels] || labels.en
 
   // Header
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(18)
   doc.setTextColor(40, 40, 40)
   doc.text(t.title, 105, 20, { align: "center" })
 
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(12)
   doc.setTextColor(100, 100, 100)
   doc.text(t.subtitle, 105, 28, { align: "center" })
@@ -119,11 +125,13 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
   let yPos = 45
 
   // Personal Data Section
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
   doc.text(t.personalData, 15, yPos)
   yPos += 10
 
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(11)
   doc.setTextColor(40, 40, 40)
   const personalData = [
@@ -139,21 +147,28 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
     head: [],
     body: personalData,
     theme: "plain",
-    styles: { fontSize: 10, cellPadding: 3 },
+    styles: {
+      font: "DejaVuSans",
+      fontStyle: "normal",
+      fontSize: 10,
+      cellPadding: 3
+    },
     columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
+      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 60 },
+      1: { font: "DejaVuSans", cellWidth: 120 },
     },
   })
 
   yPos = (doc as any).lastAutoTable.finalY + 15
 
   // Property Information Section
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
   doc.text(t.propertyInfo, 15, yPos)
   yPos += 10
 
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(11)
   doc.setTextColor(40, 40, 40)
   const propertyData = [
@@ -167,21 +182,28 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
     head: [],
     body: propertyData,
     theme: "plain",
-    styles: { fontSize: 10, cellPadding: 3 },
+    styles: {
+      font: "DejaVuSans",
+      fontStyle: "normal",
+      fontSize: 10,
+      cellPadding: 3
+    },
     columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
+      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 60 },
+      1: { font: "DejaVuSans", cellWidth: 120 },
     },
   })
 
   yPos = (doc as any).lastAutoTable.finalY + 15
 
   // Financial Information Section
+  doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
   doc.text(t.financialInfo, 15, yPos)
   yPos += 10
 
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(11)
   doc.setTextColor(40, 40, 40)
   const financialData = [
@@ -194,10 +216,15 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
     head: [],
     body: financialData,
     theme: "plain",
-    styles: { fontSize: 10, cellPadding: 3 },
+    styles: {
+      font: "DejaVuSans",
+      fontStyle: "normal",
+      fontSize: 10,
+      cellPadding: 3
+    },
     columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
+      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 60 },
+      1: { font: "DejaVuSans", cellWidth: 120 },
     },
   })
 
@@ -205,11 +232,13 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
 
   // Additional Information
   if (data.additionalInfo) {
+    doc.setFont("DejaVuSans", "bold")
     doc.setFontSize(14)
     doc.setTextColor(0, 102, 204)
     doc.text(t.additionalInfo, 15, yPos)
     yPos += 8
 
+    doc.setFont("DejaVuSans", "normal")
     doc.setFontSize(10)
     doc.setTextColor(40, 40, 40)
     const splitText = doc.splitTextToSize(data.additionalInfo, 180)
@@ -218,6 +247,7 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
   }
 
   // Footer
+  doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(9)
   doc.setTextColor(150, 150, 150)
   doc.text(`${t.generatedDate} ${new Date().toLocaleDateString()}`, 15, 280)
@@ -226,9 +256,11 @@ export const generateF0100214PDF = (data: F0100214Data, language: string = "uk")
   window.open(doc.output("bloburl"), "_blank")
 }
 
-export const generateF0121214PDF = (data: F0121214Data, language: string = "uk") => {
+export const generateF0121214PDF = async (data: F0121214Data, language: string = "uk") => {
   const doc = new jsPDF()
 
+  // Setup Ukrainian fonts for Cyrillic support
+  await setupUkrainianFonts(doc)
 
   const labels = {
     uk: {
@@ -337,10 +369,15 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
     head: [],
     body: personalData,
     theme: "plain",
-    styles: { fontSize: 10, cellPadding: 3 },
+    styles: {
+      font: "DejaVuSans",
+      fontStyle: "normal",
+      fontSize: 10,
+      cellPadding: 3
+    },
     columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 50 },
-      1: { cellWidth: 130 },
+      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 50 },
+      1: { font: "DejaVuSans", cellWidth: 130 },
     },
   })
 
@@ -401,10 +438,15 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
       head: [],
       body: positionData,
       theme: "striped",
-      styles: { fontSize: 9, cellPadding: 2 },
+      styles: {
+        font: "DejaVuSans",
+        fontStyle: "normal",
+        fontSize: 9,
+        cellPadding: 2
+      },
       columnStyles: {
-        0: { fontStyle: "bold", cellWidth: 50 },
-        1: { cellWidth: 130 },
+        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 50 },
+        1: { font: "DejaVuSans", cellWidth: 130 },
       },
     })
 
@@ -439,10 +481,15 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
     head: [],
     body: taxData,
     theme: "plain",
-    styles: { fontSize: 10, cellPadding: 3 },
+    styles: {
+      font: "DejaVuSans",
+      fontStyle: "normal",
+      fontSize: 10,
+      cellPadding: 3
+    },
     columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 70 },
-      1: { cellWidth: 110, halign: "right" },
+      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 70 },
+      1: { font: "DejaVuSans", cellWidth: 110, halign: "right" },
     },
   })
 
@@ -454,10 +501,16 @@ export const generateF0121214PDF = (data: F0121214Data, language: string = "uk")
     head: [],
     body: [[t.totalTax, `${data.calculations.total.toFixed(2)} UAH`]],
     theme: "grid",
-    styles: { fontSize: 11, cellPadding: 4, fontStyle: "bold", fillColor: [240, 240, 255] },
+    styles: {
+      font: "DejaVuSans",
+      fontSize: 11,
+      cellPadding: 4,
+      fontStyle: "bold",
+      fillColor: [240, 240, 255]
+    },
     columnStyles: {
-      0: { cellWidth: 70 },
-      1: { cellWidth: 110, halign: "right" },
+      0: { font: "DejaVuSans", cellWidth: 70 },
+      1: { font: "DejaVuSans", cellWidth: 110, halign: "right" },
     },
   })
 
