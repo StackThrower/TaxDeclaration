@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { FileText, Heart, Menu, X, Home, HelpCircle, Shield, Globe, MapPin } from "lucide-react"
+import { FileText, Heart, Menu, X, Home, HelpCircle, Calculator, Globe, MapPin } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
 import { ThemeToggle } from "./theme-toggle"
@@ -35,8 +35,8 @@ export function Header() {
           <Link href={`/${locale}#forms`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.forms")}
           </Link>
-          <Link href={`/${locale}/privacy`} className="hover:text-accent transition-colors whitespace-nowrap">
-            {t(language, "header.info")}
+          <Link href={`/${locale}#calculator`} className="hover:text-accent transition-colors whitespace-nowrap">
+            {t(language, "header.calculator")}
           </Link>
           <Link href={`/${locale}/help`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.help")}
@@ -105,14 +105,14 @@ export function Header() {
                   </Link>
 
                   <Link
-                    href={`/${locale}/privacy`}
+                    href={`/${locale}#calculator`}
                     className="flex items-center gap-4 px-4 py-3.5 text-base font-medium rounded-lg hover:bg-accent/10 hover:text-accent transition-all duration-200 group"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                      <Shield className="w-4 h-4 text-accent" />
+                      <Calculator className="w-4 h-4 text-accent" />
                     </div>
-                    <span className="flex-1">{t(language, "header.info")}</span>
+                    <span className="flex-1">{t(language, "header.calculator")}</span>
                   </Link>
 
                   <Link
@@ -132,7 +132,7 @@ export function Header() {
                 {/* Settings Section */}
                 <div className="space-y-3 mb-6">
                   <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 mb-3">
-                    {language === "uk" ? "Налаштування" : language === "ru" ? "Настройки" : "Settings"}
+                    {language === "uk" ? "Налаштування" : "Settings"}
                   </h3>
 
                   <div className="flex items-center justify-between px-4 py-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors">
@@ -141,7 +141,7 @@ export function Header() {
                         <Globe className="w-4 h-4 text-foreground" />
                       </div>
                       <span className="text-sm font-medium">
-                        {language === "uk" ? "Мова" : language === "ru" ? "Язык" : "Language"}
+                        {language === "uk" ? "Мова" : "Language"}
                       </span>
                     </div>
                     <LanguageSwitcher />
@@ -153,7 +153,7 @@ export function Header() {
                         <MapPin className="w-4 h-4 text-foreground" />
                       </div>
                       <span className="text-sm font-medium">
-                        {language === "uk" ? "Країна" : language === "ru" ? "Страна" : "Country"}
+                        {language === "uk" ? "Країна" : "Country"}
                       </span>
                     </div>
                     <CountrySwitcher />

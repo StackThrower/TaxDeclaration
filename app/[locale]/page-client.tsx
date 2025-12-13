@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { FormsSection } from "@/components/forms-section"
+import { TaxCalculator } from "@/components/tax-calculator"
 import { Footer } from "@/components/footer"
 import { useI18n } from "@/lib/i18n-context"
 import { getCountry, getDefaultCountryForLanguage, type CountryCode } from "@/lib/countries"
@@ -101,6 +102,7 @@ export default function LocalePageClient({ locale }: { locale: string }) {
       <Header />
       <Hero />
       <FormsSection country={country} />
+      <TaxCalculator countryCode={countryCode} />
       <Footer />
     </main>
   )
