@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -63,8 +63,6 @@ export function FormF0121214() {
     setPositions((prev) =>
       prev.map((pos) => (pos.id === id ? { ...pos, [field]: value } : pos))
     )
-    // Recalculate taxes whenever a position changes
-    setTimeout(() => calculateAllTaxes(), 0)
   }
 
   const addPosition = () => {
@@ -85,11 +83,11 @@ export function FormF0121214() {
   const removePosition = (id: string) => {
     if (positions.length > 1) {
       setPositions((prev) => prev.filter((pos) => pos.id !== id))
-      setTimeout(() => calculateAllTaxes(), 0)
     }
   }
 
-  const calculateAllTaxes = () => {
+  // Автоматический пересчет налогов при изменении позиций
+  useEffect(() => {
     let totalProfit = 0
 
     positions.forEach((pos) => {
@@ -97,13 +95,33 @@ export function FormF0121214() {
       const salePrice = Number.parseFloat(pos.salePrice) || 0
       const expenses = Number.parseFloat(pos.expenses) || 0
 
-      const positionProfit = Math.max(0, salePrice - purchasePrice - expenses)
+      // Разрешаем отрицательные значения (убытки)
+      const positionProfit = salePrice - purchasePrice - expenses
       totalProfit += positionProfit
+
+      // Логування для відлагодження
+      if (purchasePrice > 0 || salePrice > 0 || expenses > 0) {
+        console.log(`Позиція ${pos.id}:`, {
+          купівля: purchasePrice,
+          продаж: salePrice,
+          витрати: expenses,
+          прибуток: positionProfit,
+          тип: positionProfit >= 0 ? '✅ прибуток' : '❌ збиток'
+        })
+      }
     })
 
-    const pdfo = totalProfit * 0.18 // 18% income tax
-    const militaryTax = totalProfit * 0.05 // 5% military tax
+    // Налоги платятся только с прибыли
+    const pdfo = totalProfit > 0 ? totalProfit * 0.18 : 0 // 18% income tax
+    const militaryTax = totalProfit > 0 ? totalProfit * 0.05 : 0 // 5% military tax
     const total = pdfo + militaryTax
+
+    console.log('Загальні розрахунки:', {
+      'загальний прибуток': totalProfit,
+      'ПДФО (18%)': pdfo,
+      'Військовий збір (5%)': militaryTax,
+      'всього до сплати': total
+    })
 
     setCalculations({
       profit: totalProfit,
@@ -111,7 +129,9 @@ export function FormF0121214() {
       militaryTax,
       total,
     })
-  }
+  }, [positions])
+
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -309,13 +329,6 @@ export function FormF0121214() {
         salePrice: "Verkaufspreis (UAH)",
         expensesOp: "Betriebsausgaben (UAH)",
         taxCalculation: "Berechnung der Steuerschuld",
-        profit: "Gewinn",
-        pdfo: "Einkommensteuer (18%)",
-        military: "Wehrbeitrag (5%)",
-        total: "Gesamtzahlbar",
-        additionalInfo: "Zusätzliche Informationen",
-        notes: "Notizen und Klarstellungen",
-        save: "PDF erstellen",
         profit: "Gewinn",
         pdfo: "Einkommensteuer (18%)",
         military: "Wehrbeitrag (5%)",
@@ -566,8 +579,12 @@ export function FormF0121214() {
           <div className="grid md:grid-cols-4 gap-4">
             <div className="space-y-2 bg-background p-4 rounded-lg border border-border">
               <Label className="text-xs font-semibold uppercase">{getLabel("profit")}</Label>
-              <p className="text-2xl font-bold text-primary">{calculations.profit.toFixed(2)}</p>
-              <p className="text-xs text-foreground/60">грн</p>
+              <p className={`text-2xl font-bold ${calculations.profit >= 0 ? 'text-primary' : 'text-red-600'}`}>
+                {calculations.profit >= 0 ? '' : '-'}{Math.abs(calculations.profit).toFixed(2)}
+              </p>
+              <p className="text-xs text-foreground/60">
+                {calculations.profit >= 0 ? 'грн (прибуток)' : 'грн (збиток)'}
+              </p>
             </div>
             <div className="space-y-2 bg-background p-4 rounded-lg border border-border">
               <Label className="text-xs font-semibold uppercase">{getLabel("pdfo")}</Label>
