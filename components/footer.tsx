@@ -4,10 +4,13 @@ import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
 import { countries, type CountryCode } from "@/lib/countries"
 import { useState } from "react"
+import { useParams } from "next/navigation"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
 export function Footer() {
   const { language } = useI18n()
+  const params = useParams()
+  const locale = params?.locale as string || `${language}-ua`
   const [expandedCountry, setExpandedCountry] = useState<CountryCode | null>(null)
 
   return (
@@ -18,7 +21,7 @@ export function Footer() {
             <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base">{t(language, "footer.about")}</h3>
             <ul className="space-y-2 text-xs md:text-sm opacity-75">
               <li>
-                <a href="#" className="hover:opacity-100 transition-opacity">
+                <a href={`/${locale}/about`} className="hover:opacity-100 transition-opacity hover:underline">
                   {t(language, "footer.about")}
                 </a>
               </li>
@@ -62,7 +65,7 @@ export function Footer() {
             <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base">Help</h3>
             <ul className="space-y-2 text-xs md:text-sm opacity-75">
               <li>
-                <a href={`/${language}-ua/help`} className="hover:opacity-100 transition-opacity hover:underline">
+                <a href={`/${locale}/help`} className="hover:opacity-100 transition-opacity hover:underline">
                   {t(language, "help.title")}
                 </a>
               </li>
