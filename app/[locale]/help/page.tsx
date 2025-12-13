@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { getCountry, type CountryCode } from "@/lib/countries"
-import { type Language } from "@/lib/i18n"
+import { type Language, t } from "@/lib/i18n"
 import { generateHelpMetadata } from "@/lib/seo-metadata"
 import HelpPageClient from "./page-client"
 
@@ -46,7 +46,97 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function HelpPage({ params }: Props) {
   const { locale } = await params
-  return <HelpPageClient locale={locale} />
+
+  // Parse locale
+  const parts = locale?.toLowerCase().split("-") || []
+  const [langCode] = parts
+  const lang = langCode as Language
+
+  // Generate FAQ schema.org structured data
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": t(lang, "help.getting-started.title"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t(lang, "help.getting-started.content")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t(lang, "help.forms.title"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t(lang, "help.forms.content")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t(lang, "help.filling.title"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t(lang, "help.filling.content")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t(lang, "help.export.title"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t(lang, "help.export.content")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t(lang, "help.privacy.title"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t(lang, "help.privacy.content")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t(lang, "help.support.title"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t(lang, "help.support.content")
+        }
+      }
+    ]
+  }
+
+  // Generate WebPage schema
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang, "help.title"),
+    "description": t(lang, "help.intro"),
+    "url": `https://monegoo.com/${locale}/help`,
+    "inLanguage": langCode,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Monegoo Tax Declaration",
+      "url": "https://monegoo.com"
+    }
+  }
+
+  return (
+    <>
+      {/* Schema.org JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <HelpPageClient locale={locale} />
+    </>
+  )
 }
 
 

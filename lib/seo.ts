@@ -157,3 +157,79 @@ export function generateSlug(text: string): string {
     .trim()
 }
 
+/**
+ * Generate SoftwareApplication schema (for tax calculator tools)
+ */
+export function generateSoftwareApplicationSchema(data: {
+  name: string
+  description: string
+  url: string
+  applicationCategory: string
+  operatingSystem?: string
+  offers?: {
+    price: string
+    priceCurrency?: string
+  }
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": data.name,
+    "description": data.description,
+    "url": data.url,
+    "applicationCategory": data.applicationCategory,
+    "operatingSystem": data.operatingSystem || "Any",
+    "offers": data.offers ? {
+      "@type": "Offer",
+      "price": data.offers.price,
+      "priceCurrency": data.offers.priceCurrency || "USD",
+    } : {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+    },
+  }
+}
+
+/**
+ * Generate FAQPage schema
+ */
+export function generateFAQPageSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
+  }
+}
+
+/**
+ * Generate WebPage schema
+ */
+export function generateWebPageSchema(data: {
+  name: string
+  description: string
+  url: string
+  inLanguage?: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": data.name,
+    "description": data.description,
+    "url": data.url,
+    "inLanguage": data.inLanguage || "en",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Monegoo Tax Declaration",
+      "url": "https://monegoo.com",
+    },
+  }
+}
+

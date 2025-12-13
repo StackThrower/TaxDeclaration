@@ -76,6 +76,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params
-  return <AboutPageClient locale={locale} />
+
+  // Parse locale
+  const parts = locale?.toLowerCase().split("-") || []
+  const [langCode] = parts
+  const lang = langCode as Language
+
+  // Generate schema.org WebPage structured data
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang, "about.title"),
+    "description": t(lang, "about.intro"),
+    "url": `https://monegoo.com/${locale}/about`,
+    "inLanguage": langCode,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Monegoo Tax Declaration",
+      "url": "https://monegoo.com"
+    }
+  }
+
+  return (
+    <>
+      {/* Schema.org JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <AboutPageClient locale={locale} />
+    </>
+  )
 }
 
