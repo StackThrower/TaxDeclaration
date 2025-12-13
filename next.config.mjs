@@ -53,15 +53,36 @@ const nextConfig = {
     ]
   },
 
-  // Redirects (можно добавить позже)
-  // async redirects() {
-  //   return []
-  // },
-
-  // Rewrites (можно добавить позже)
-  // async rewrites() {
-  //   return []
-  // },
+  // Permanent redirects for www to non-www and http to https
+  async redirects() {
+    return [
+      // Redirect www to non-www (works with both http and https)
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.(?<domain>.*)',
+          },
+        ],
+        destination: 'https://:domain/:path*',
+        permanent: true, // 308 redirect
+      },
+      // Redirect http to https
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'header',
+            key: 'x-forwarded-proto',
+            value: 'http',
+          },
+        ],
+        destination: 'https://:host/:path*',
+        permanent: true, // 308 redirect
+      },
+    ]
+  },
 }
 
 export default nextConfig
