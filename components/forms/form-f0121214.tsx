@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n-context"
-import { Trash2, Plus } from "lucide-react"
+import { Trash2, Plus, FileText } from "lucide-react"
+import { generateF0121214PDF } from "@/lib/pdf-generator"
 
 interface FinancialPosition {
   id: string
@@ -114,10 +115,19 @@ export function FormF0121214() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form data:", formData)
-    console.log("Positions:", positions)
-    console.log("Calculations:", calculations)
-    alert("Form saved! ID: " + Date.now())
+
+    // Generate PDF with current form data
+    generateF0121214PDF(
+      {
+        fullName: formData.fullName,
+        taxNumber: formData.taxNumber,
+        year: formData.year,
+        notes: formData.notes,
+        positions: positions,
+        calculations: calculations,
+      },
+      language
+    )
   }
 
   const getLabel = (key: string): string => {
@@ -143,7 +153,7 @@ export function FormF0121214() {
         total: "Всього до сплати",
         additionalInfo: "Додаткова інформація",
         notes: "Примітки та уточнення",
-        save: "Зберегти форму Ф1",
+        save: "Сформувати PDF",
         clear: "Очистити форму",
         addPosition: "Додати позицію",
         removePosition: "Видалити позицію",
@@ -170,7 +180,7 @@ export function FormF0121214() {
         total: "Total Due",
         additionalInfo: "Additional Information",
         notes: "Notes and Clarifications",
-        save: "Save Form F1",
+        save: "Generate PDF",
         clear: "Clear Form",
         addPosition: "Add Position",
         removePosition: "Remove Position",
@@ -197,7 +207,7 @@ export function FormF0121214() {
         total: "Montant total dû",
         additionalInfo: "Informations supplémentaires",
         notes: "Notes et clarifications",
-        save: "Enregistrer le formulaire F1",
+        save: "Générer PDF",
         clear: "Effacer le formulaire",
         addPosition: "Ajouter une position",
         removePosition: "Supprimer la position",
@@ -224,7 +234,7 @@ export function FormF0121214() {
         total: "Razem do zapłaty",
         additionalInfo: "Dodatkowe informacje",
         notes: "Uwagi i wyjaśnienia",
-        save: "Zapisz formularz F1",
+        save: "Generuj PDF",
         clear: "Wyczyść formularz",
         addPosition: "Dodaj pozycję",
         removePosition: "Usuń pozycję",
@@ -251,7 +261,7 @@ export function FormF0121214() {
         total: "Total a pagar",
         additionalInfo: "Información adicional",
         notes: "Notas y aclaraciones",
-        save: "Guardar formulario F1",
+        save: "Generar PDF",
         clear: "Limpiar formulario",
         addPosition: "Agregar posición",
         removePosition: "Eliminar posición",
@@ -278,7 +288,7 @@ export function FormF0121214() {
         total: "Total a pagar",
         additionalInfo: "Informações adicionais",
         notes: "Notas e esclarecimentos",
-        save: "Salvar formulário F1",
+        save: "Gerar PDF",
         clear: "Limpar formulário",
         addPosition: "Adicionar posição",
         removePosition: "Remover posição",
@@ -305,7 +315,14 @@ export function FormF0121214() {
         total: "Gesamtzahlbar",
         additionalInfo: "Zusätzliche Informationen",
         notes: "Notizen und Klarstellungen",
-        save: "Formular F1 speichern",
+        save: "PDF erstellen",
+        profit: "Gewinn",
+        pdfo: "Einkommensteuer (18%)",
+        military: "Wehrbeitrag (5%)",
+        total: "Gesamtzahlbar",
+        additionalInfo: "Zusätzliche Informationen",
+        notes: "Notizen und Klarstellungen",
+        save: "PDF erstellen",
         clear: "Formular löschen",
         addPosition: "Position hinzufügen",
         removePosition: "Position entfernen",
@@ -589,7 +606,8 @@ export function FormF0121214() {
       </Card>
 
       <div className="flex gap-4 pt-6">
-        <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90">
+        <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
+          <FileText className="h-5 w-5" />
           {getLabel("save")}
         </Button>
         <Button type="reset" variant="outline" size="lg">

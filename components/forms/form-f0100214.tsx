@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n-context"
+import { FileText } from "lucide-react"
+import { generateF0100214PDF } from "@/lib/pdf-generator"
 
 export function FormF0100214() {
   const { language } = useI18n()
@@ -37,8 +39,24 @@ export function FormF0100214() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form data:", formData)
-    alert("Form saved! ID: " + Date.now())
+
+    // Generate PDF with current form data
+    generateF0100214PDF(
+      {
+        fullName: formData.fullName,
+        taxNumber: formData.taxNumber,
+        passportNumber: formData.passportNumber,
+        residence: formData.residence,
+        year: formData.year,
+        realEstate: formData.realEstate,
+        vehicles: formData.vehicles,
+        otherProperty: formData.otherProperty,
+        totalIncome: formData.totalIncome,
+        expenses: formData.expenses,
+        additionalInfo: formData.additionalInfo,
+      },
+      language
+    )
   }
 
   const translations: Record<string, { label: string; placeholder: string }> = {
@@ -447,20 +465,21 @@ export function FormF0100214() {
       </Card>
 
       <div className="flex gap-4 pt-6">
-        <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90">
+        <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 gap-2">
+          <FileText className="h-5 w-5" />
           {language === "uk"
-            ? "Зберегти декларацію"
+            ? "Сформувати PDF"
             : language === "en"
-              ? "Save Declaration"
+              ? "Generate PDF"
               : language === "fr"
-                ? "Enregistrer la déclaration"
+                ? "Générer PDF"
                 : language === "pl"
-                  ? "Zapisz deklarację"
+                  ? "Generuj PDF"
                   : language === "es"
-                    ? "Guardar declaración"
+                    ? "Generar PDF"
                     : language === "pt"
-                      ? "Salvar declaração"
-                      : "Deklaration speichern"}
+                      ? "Gerar PDF"
+                      : "PDF erstellen"}
         </Button>
         <Button type="reset" variant="outline" size="lg">
           {language === "uk"
