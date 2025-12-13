@@ -1,72 +1,52 @@
-"use client"
-
-import { useEffect } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { Header } from "@/components/header"
-import { Hero } from "@/components/hero"
-import { FormsSection } from "@/components/forms-section"
-import { Footer } from "@/components/footer"
-import { useI18n } from "@/lib/i18n-context"
-import { getCountry, getDefaultCountryForLanguage, type CountryCode } from "@/lib/countries"
+import type { Metadata } from "next"
+import LocalePageClient from "./page-client"
+import { getCountry, type CountryCode } from "@/lib/countries"
 import { type Language } from "@/lib/i18n"
+import { generatePageMetadata } from "@/lib/seo-metadata"
 
-export default function LocalePage() {
-  const params = useParams()
-  const router = useRouter()
-  const { language, setLanguage } = useI18n()
+type Props = {
+  params: Promise<{ locale: string }>
+}
 
-  const locale = params.locale as string
+// Generate dynamic metadata based on locale
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
 
-  useEffect(() => {
-    if (!locale) {
-      // Redirect to default locale
-      const defaultCountry = getDefaultCountryForLanguage(language)
-      router.replace(`/${language}-${defaultCountry}`)
-      return
+  if (!locale) {
+    return {
+      title: "Monegoo - Tax Declaration",
+      description: "Online system for filing tax declarations",
     }
-
-    // Parse locale (e.g., "en-us" -> ["en", "us"])
-    const parts = locale.toLowerCase().split("-")
-
-    if (parts.length !== 2) {
-      // Invalid locale format, redirect to default
-      const defaultCountry = getDefaultCountryForLanguage(language)
-      router.replace(`/${language}-${defaultCountry}`)
-      return
-    }
-
-    const [langCode, countryCode] = parts
-
-    // Validate country code
-    const country = getCountry(countryCode)
-    if (!country) {
-      // Invalid country, redirect to default
-      const defaultCountry = getDefaultCountryForLanguage(language)
-      router.replace(`/${langCode}-${defaultCountry}`)
-      return
-    }
-
-    // Update language if different
-    if (langCode !== language) {
-      setLanguage(langCode as Language)
-    }
-  }, [locale, language, setLanguage, router])
-
-  // Get current country from locale
-  const countryCode = locale?.split("-")[1] as CountryCode
-  const country = getCountry(countryCode)
-
-  if (!country) {
-    return null // Will redirect in useEffect
   }
 
-  return (
-    <main className="min-h-screen bg-background">
-      <Header />
-      <Hero />
-      <FormsSection country={country} />
-      <Footer />
-    </main>
-  )
+  // Parse locale (e.g., "en-us" -> ["en", "us"])
+  const parts = locale.toLowerCase().split("-")
+
+  if (parts.length !== 2) {
+    return {
+      title: "Monegoo - Tax Declaration",
+      description: "Online system for filing tax declarations",
+    }
+  }
+
+  const [langCode, countryCode] = parts
+
+  // Validate country code
+  const country = getCountry(countryCode)
+  if (!country) {
+    return {
+      title: "Monegoo - Tax Declaration",
+      description: "Online system for filing tax declarations",
+    }
+  }
+
+  // Generate SEO-friendly metadata
+  return generatePageMetadata(countryCode as CountryCode, langCode as Language, locale)
+}
+
+
+export default async function LocalePage({ params }: Props) {
+  const { locale } = await params
+  return <LocalePageClient locale={locale} />
 }
 

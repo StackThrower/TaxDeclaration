@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "next-themes"
 import { I18nProvider } from "@/lib/i18n-context"
+import { DynamicHtmlLang } from "@/components/dynamic-html-lang"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -144,6 +145,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <I18nProvider>
+            <DynamicHtmlLang />
             {children}
             <Analytics />
           </I18nProvider>
