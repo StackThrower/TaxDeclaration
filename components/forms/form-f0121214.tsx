@@ -9,6 +9,17 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n-context"
+import { Trash2, Plus } from "lucide-react"
+
+interface FinancialPosition {
+  id: string
+  assetType: string
+  purchaseDate: string
+  saleDate: string
+  purchasePrice: string
+  salePrice: string
+  expenses: string
+}
 
 export function FormF0121214() {
   const { language } = useI18n()
@@ -16,14 +27,20 @@ export function FormF0121214() {
     fullName: "",
     taxNumber: "",
     year: "2024",
-    assetType: "",
-    purchaseDate: "",
-    saleDate: "",
-    purchasePrice: "",
-    salePrice: "",
-    expenses: "",
     notes: "",
   })
+
+  const [positions, setPositions] = useState<FinancialPosition[]>([
+    {
+      id: Date.now().toString(),
+      assetType: "",
+      purchaseDate: "",
+      saleDate: "",
+      purchasePrice: "",
+      salePrice: "",
+      expenses: "",
+    },
+  ])
 
   const [calculations, setCalculations] = useState({
     profit: 0,
@@ -35,41 +52,70 @@ export function FormF0121214() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    calculateTaxes(name, value)
   }
 
   const handleSelect = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const calculateTaxes = (fieldName: string, value: string) => {
-    const numValue = Number.parseFloat(value) || 0
-    const purchasePrice = Number.parseFloat(formData.purchasePrice) || 0
-    const salePrice = Number.parseFloat(formData.salePrice) || 0
-    const expenses = Number.parseFloat(formData.expenses) || 0
+  const handlePositionChange = (id: string, field: keyof FinancialPosition, value: string) => {
+    setPositions((prev) =>
+      prev.map((pos) => (pos.id === id ? { ...pos, [field]: value } : pos))
+    )
+    // Recalculate taxes whenever a position changes
+    setTimeout(() => calculateAllTaxes(), 0)
+  }
 
-    if (fieldName === "salePrice" || fieldName === "purchasePrice" || fieldName === "expenses") {
-      const newSalePrice = fieldName === "salePrice" ? numValue : salePrice
-      const newPurchasePrice = fieldName === "purchasePrice" ? numValue : purchasePrice
-      const newExpenses = fieldName === "expenses" ? numValue : expenses
+  const addPosition = () => {
+    setPositions((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        assetType: "",
+        purchaseDate: "",
+        saleDate: "",
+        purchasePrice: "",
+        salePrice: "",
+        expenses: "",
+      },
+    ])
+  }
 
-      const profit = Math.max(0, newSalePrice - newPurchasePrice - newExpenses)
-      const pdfo = profit * 0.18
-      const militaryTax = profit * 0.015
-      const total = pdfo + militaryTax
-
-      setCalculations({
-        profit,
-        pdfo,
-        militaryTax,
-        total,
-      })
+  const removePosition = (id: string) => {
+    if (positions.length > 1) {
+      setPositions((prev) => prev.filter((pos) => pos.id !== id))
+      setTimeout(() => calculateAllTaxes(), 0)
     }
+  }
+
+  const calculateAllTaxes = () => {
+    let totalProfit = 0
+
+    positions.forEach((pos) => {
+      const purchasePrice = Number.parseFloat(pos.purchasePrice) || 0
+      const salePrice = Number.parseFloat(pos.salePrice) || 0
+      const expenses = Number.parseFloat(pos.expenses) || 0
+
+      const positionProfit = Math.max(0, salePrice - purchasePrice - expenses)
+      totalProfit += positionProfit
+    })
+
+    const pdfo = totalProfit * 0.18 // 18% income tax
+    const militaryTax = totalProfit * 0.05 // 5% military tax
+    const total = pdfo + militaryTax
+
+    setCalculations({
+      profit: totalProfit,
+      pdfo,
+      militaryTax,
+      total,
+    })
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Form data:", formData)
+    console.log("Positions:", positions)
     console.log("Calculations:", calculations)
     alert("Form saved! ID: " + Date.now())
   }
@@ -93,12 +139,15 @@ export function FormF0121214() {
         taxCalculation: "Розрахунок податкових зобов'язань",
         profit: "Прибуток",
         pdfo: "ПДФО (18%)",
-        military: "Військ. збір (1.5%)",
+        military: "Військ. збір (5%)",
         total: "Всього до сплати",
         additionalInfo: "Додаткова інформація",
         notes: "Примітки та уточнення",
         save: "Зберегти форму Ф1",
         clear: "Очистити форму",
+        addPosition: "Додати позицію",
+        removePosition: "Видалити позицію",
+        position: "Позиція",
       },
       en: {
         personalData: "Personal Data",
@@ -117,12 +166,15 @@ export function FormF0121214() {
         taxCalculation: "Tax Obligation Calculation",
         profit: "Profit",
         pdfo: "Personal Income Tax (18%)",
-        military: "Military Levy (1.5%)",
+        military: "Military Levy (5%)",
         total: "Total Due",
         additionalInfo: "Additional Information",
         notes: "Notes and Clarifications",
         save: "Save Form F1",
         clear: "Clear Form",
+        addPosition: "Add Position",
+        removePosition: "Remove Position",
+        position: "Position",
       },
       fr: {
         personalData: "Données personnelles",
@@ -141,12 +193,15 @@ export function FormF0121214() {
         taxCalculation: "Calcul de l'obligation fiscale",
         profit: "Bénéfice",
         pdfo: "Impôt sur le revenu (18%)",
-        military: "Prélèvement militaire (1.5%)",
+        military: "Prélèvement militaire (5%)",
         total: "Montant total dû",
         additionalInfo: "Informations supplémentaires",
         notes: "Notes et clarifications",
         save: "Enregistrer le formulaire F1",
         clear: "Effacer le formulaire",
+        addPosition: "Ajouter une position",
+        removePosition: "Supprimer la position",
+        position: "Position",
       },
       pl: {
         personalData: "Dane osobowe",
@@ -165,12 +220,15 @@ export function FormF0121214() {
         taxCalculation: "Obliczenie zobowiązania podatkowego",
         profit: "Zysk",
         pdfo: "PIT (18%)",
-        military: "Opłata wojskowa (1.5%)",
+        military: "Opłata wojskowa (5%)",
         total: "Razem do zapłaty",
         additionalInfo: "Dodatkowe informacje",
         notes: "Uwagi i wyjaśnienia",
         save: "Zapisz formularz F1",
         clear: "Wyczyść formularz",
+        addPosition: "Dodaj pozycję",
+        removePosition: "Usuń pozycję",
+        position: "Pozycja",
       },
       es: {
         personalData: "Datos personales",
@@ -189,12 +247,15 @@ export function FormF0121214() {
         taxCalculation: "Cálculo de obligación fiscal",
         profit: "Ganancia",
         pdfo: "IRPF (18%)",
-        military: "Gravamen militar (1.5%)",
+        military: "Gravamen militar (5%)",
         total: "Total a pagar",
         additionalInfo: "Información adicional",
         notes: "Notas y aclaraciones",
         save: "Guardar formulario F1",
         clear: "Limpiar formulario",
+        addPosition: "Agregar posición",
+        removePosition: "Eliminar posición",
+        position: "Posición",
       },
       pt: {
         personalData: "Dados pessoais",
@@ -213,12 +274,15 @@ export function FormF0121214() {
         taxCalculation: "Cálculo de obrigação fiscal",
         profit: "Lucro",
         pdfo: "IR (18%)",
-        military: "Taxa militar (1.5%)",
+        military: "Taxa militar (5%)",
         total: "Total a pagar",
         additionalInfo: "Informações adicionais",
         notes: "Notas e esclarecimentos",
         save: "Salvar formulário F1",
         clear: "Limpar formulário",
+        addPosition: "Adicionar posição",
+        removePosition: "Remover posição",
+        position: "Posição",
       },
       de: {
         personalData: "Persönliche Daten",
@@ -237,12 +301,15 @@ export function FormF0121214() {
         taxCalculation: "Berechnung der Steuerschuld",
         profit: "Gewinn",
         pdfo: "Einkommensteuer (18%)",
-        military: "Wehrbeitrag (1.5%)",
+        military: "Wehrbeitrag (5%)",
         total: "Gesamtzahlbar",
         additionalInfo: "Zusätzliche Informationen",
         notes: "Notizen und Klarstellungen",
         save: "Formular F1 speichern",
         clear: "Formular löschen",
+        addPosition: "Position hinzufügen",
+        removePosition: "Position entfernen",
+        position: "Position",
       },
     }
 
@@ -283,24 +350,53 @@ export function FormF0121214() {
 
       <Card className="border-border/50">
         <CardContent className="pt-6 space-y-4">
-          <h3 className="text-lg font-semibold text-accent">{getLabel("periodAsset")}</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="year">{getLabel("year")}</Label>
-              <Select value={formData.year} onValueChange={(value) => handleSelect("year", value)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2022">2022</SelectItem>
-                  <SelectItem value="2023">2023</SelectItem>
-                  <SelectItem value="2024">2024</SelectItem>
-                </SelectContent>
-              </Select>
+          <h3 className="text-lg font-semibold text-accent">{getLabel("year")}</h3>
+          <div className="space-y-2">
+            <Label htmlFor="year">{getLabel("year")}</Label>
+            <Select value={formData.year} onValueChange={(value) => handleSelect("year", value)}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2022">2022</SelectItem>
+                <SelectItem value="2023">2023</SelectItem>
+                <SelectItem value="2024">2024</SelectItem>
+                <SelectItem value="2025">2025</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Multiple Financial Positions */}
+      {positions.map((position, index) => (
+        <Card key={position.id} className="border-border/50 relative">
+          <CardContent className="pt-6 space-y-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-accent">
+                {getLabel("position")} #{index + 1}
+              </h3>
+              {positions.length > 1 && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => removePosition(position.id)}
+                  className="gap-2"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  {getLabel("removePosition")}
+                </Button>
+              )}
             </div>
+
+            {/* Asset Type */}
             <div className="space-y-2">
-              <Label htmlFor="assetType">{getLabel("assetType")}</Label>
-              <Select value={formData.assetType} onValueChange={(value) => handleSelect("assetType", value)}>
+              <Label htmlFor={`assetType-${position.id}`}>{getLabel("assetType")}</Label>
+              <Select
+                value={position.assetType}
+                onValueChange={(value) => handlePositionChange(position.id, "assetType", value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -369,76 +465,84 @@ export function FormF0121214() {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      <Card className="border-border/50">
-        <CardContent className="pt-6 space-y-4">
-          <h3 className="text-lg font-semibold text-accent">{getLabel("operationDates")}</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="purchaseDate">{getLabel("purchaseDate")}</Label>
-              <Input
-                id="purchaseDate"
-                name="purchaseDate"
-                type="date"
-                value={formData.purchaseDate}
-                onChange={handleChange}
-              />
+            {/* Operation Dates */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor={`purchaseDate-${position.id}`}>{getLabel("purchaseDate")}</Label>
+                <Input
+                  id={`purchaseDate-${position.id}`}
+                  type="date"
+                  value={position.purchaseDate}
+                  onChange={(e) => handlePositionChange(position.id, "purchaseDate", e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor={`saleDate-${position.id}`}>{getLabel("saleDate")}</Label>
+                <Input
+                  id={`saleDate-${position.id}`}
+                  type="date"
+                  value={position.saleDate}
+                  onChange={(e) => handlePositionChange(position.id, "saleDate", e.target.value)}
+                />
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="saleDate">{getLabel("saleDate")}</Label>
-              <Input id="saleDate" name="saleDate" type="date" value={formData.saleDate} onChange={handleChange} />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      <Card className="border-border/50">
-        <CardContent className="pt-6 space-y-4">
-          <h3 className="text-lg font-semibold text-accent">{getLabel("financialIndicators")}</h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="purchasePrice">{getLabel("purchasePrice")}</Label>
-              <Input
-                id="purchasePrice"
-                name="purchasePrice"
-                type="number"
-                step="0.01"
-                placeholder="0.00"
-                value={formData.purchasePrice}
-                onChange={handleChange}
-              />
+            {/* Financial Indicators */}
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor={`purchasePrice-${position.id}`}>{getLabel("purchasePrice")}</Label>
+                <Input
+                  id={`purchasePrice-${position.id}`}
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  value={position.purchasePrice}
+                  onChange={(e) => handlePositionChange(position.id, "purchasePrice", e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor={`salePrice-${position.id}`}>{getLabel("salePrice")}</Label>
+                <Input
+                  id={`salePrice-${position.id}`}
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  value={position.salePrice}
+                  onChange={(e) => handlePositionChange(position.id, "salePrice", e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor={`expenses-${position.id}`}>{getLabel("expensesOp")}</Label>
+                <Input
+                  id={`expenses-${position.id}`}
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  value={position.expenses}
+                  onChange={(e) => handlePositionChange(position.id, "expenses", e.target.value)}
+                />
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="salePrice">{getLabel("salePrice")}</Label>
-              <Input
-                id="salePrice"
-                name="salePrice"
-                type="number"
-                step="0.01"
-                placeholder="0.00"
-                value={formData.salePrice}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="expenses">{getLabel("expensesOp")}</Label>
-              <Input
-                id="expenses"
-                name="expenses"
-                type="number"
-                step="0.01"
-                placeholder="0.00"
-                value={formData.expenses}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      ))}
 
+      {/* Add Position Button */}
+      <div className="flex justify-center">
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          onClick={addPosition}
+          className="gap-2 border-dashed border-2"
+        >
+          <Plus className="h-5 w-5" />
+          {getLabel("addPosition")}
+        </Button>
+      </div>
+
+      {/* Tax Calculation Summary */}
       <Card className="border-border/50 bg-primary/5">
         <CardContent className="pt-6 space-y-4">
           <h3 className="text-lg font-semibold text-accent">{getLabel("taxCalculation")}</h3>
