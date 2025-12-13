@@ -14,11 +14,6 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
-          // Block all search engines from indexing
-          {
-            key: 'X-Robots-Tag',
-            value: 'noindex, nofollow, noarchive, nosnippet, noimageindex',
-          },
           // Security headers (like WordPress security plugins)
           {
             key: 'X-DNS-Prefetch-Control',

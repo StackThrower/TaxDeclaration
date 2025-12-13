@@ -5,13 +5,12 @@ export function middleware(_request: NextRequest) {
   // Clone the response
   const response = NextResponse.next()
 
-  // Add X-Robots-Tag header to block all indexing
-  response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet, noimageindex')
+  // Allow indexing by search engines
+  // Remove noindex directives and allow caching
+  response.headers.set('X-Robots-Tag', 'index, follow')
 
-  // Add Cache-Control headers
-  response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
-  response.headers.set('Pragma', 'no-cache')
-  response.headers.set('Expires', '0')
+  // Set reasonable cache control (allow caching)
+  response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
 
   return response
 }

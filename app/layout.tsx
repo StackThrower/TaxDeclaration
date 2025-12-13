@@ -35,17 +35,15 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  // Block all search engines from indexing
+  // Allow search engines to index
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
+      index: true,
+      follow: true,
       "max-video-preview": -1,
-      "max-image-preview": "none",
+      "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
@@ -103,19 +101,6 @@ export default function RootLayout({
   return (
     <html lang="uk" suppressHydrationWarning>
       <head>
-        {/* Block all search engines from indexing */}
-        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta name="bingbot" content="noindex, nofollow" />
-        <meta name="yandex" content="noindex, nofollow" />
-
-        {/* Prevent page caching */}
-        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-        <meta httpEquiv="Pragma" content="no-cache" />
-        <meta httpEquiv="Expires" content="0" />
-
-        {/* X-Robots-Tag equivalent */}
-        <meta name="rating" content="general" />
 
         <script
           dangerouslySetInnerHTML={{
