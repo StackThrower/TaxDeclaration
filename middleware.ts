@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(_request: NextRequest) {
+export function middleware(request: NextRequest) {
   // Clone the response
   const response = NextResponse.next()
 
@@ -11,6 +11,10 @@ export function middleware(_request: NextRequest) {
 
   // Set reasonable cache control (allow caching)
   response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
+
+  // Add pathname to headers so root layout can access it (for dynamic lang attribute)
+  const pathname = request.nextUrl.pathname
+  response.headers.set('x-pathname', pathname)
 
   return response
 }

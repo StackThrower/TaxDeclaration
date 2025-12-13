@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "next-themes"
 import { I18nProvider } from "@/lib/i18n-context"
 import { DynamicHtmlLang } from "@/components/dynamic-html-lang"
+import { headers } from "next/headers"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -93,13 +94,26 @@ export const metadata: Metadata = {
   // },
 }
 
-export default function RootLayout({
+// Extract language from URL path (e.g., /uk-ua -> uk, /en-us -> en)
+function getLanguageFromPath(pathname: string): string {
+  const localeMatch = pathname.match(/^\/([a-z]{2})-[a-z]{2}/)
+  return localeMatch ? localeMatch[1] : 'en'
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Get current pathname from headers (SSR)
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') || ''
+
+  // Extract language code from pathname (e.g., /uk-ua -> uk, /en-us -> en)
+  const lang = getLanguageFromPath(pathname)
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
 
         <script
