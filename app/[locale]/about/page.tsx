@@ -62,13 +62,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `/${locale}/about`,
       languages: {
+        "x-default": "/uk-ua/about",
         "uk-UA": "/uk-ua/about",
         "en-US": "/en-us/about",
+        "en-GB": "/en-gb/about",
+        "en-CA": "/en-ca/about",
         "fr-FR": "/fr-fr/about",
         "pl-PL": "/pl-pl/about",
         "es-ES": "/es-es/about",
         "pt-PT": "/pt-pt/about",
         "de-DE": "/de-de/about",
+        "sv-SE": "/sv-se/about",
       },
     },
   }
