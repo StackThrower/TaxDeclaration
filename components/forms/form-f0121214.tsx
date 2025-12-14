@@ -944,7 +944,7 @@ export function FormF0121214() {
             <Upload className="h-5 w-5" />
             {isImporting
               ? (language === "uk" ? "Імпорт..." : "Importing...")
-              : (language === "uk" ? "Імпортувати дані" : "Import Data")
+              : (language === "uk" ? "Імпортувати дані (Interactive Brokers)" : "Import Data (Interactive Brokers)")
             }
           </Button>
           <Button
@@ -958,6 +958,16 @@ export function FormF0121214() {
             {getLabel("addPosition")}
           </Button>
         </div>
+
+        {/* Import Info */}
+        {!isImporting && (
+          <div className="text-center text-sm text-muted-foreground">
+            {language === "uk"
+              ? "Завантажте XML файл з Interactive Brokers (FlexQuery Report з закритими позиціями)"
+              : "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
+            }
+          </div>
+        )}
 
         {/* Import Progress Bar */}
         {isImporting && (
