@@ -961,20 +961,20 @@ export function FormF0121214() {
 
         {/* Import Progress Bar */}
         {isImporting && (
-          <Card className="border-primary/50 bg-primary/5 animate-pulse">
+          <Card className="border-primary/50 bg-primary/5 shadow-lg">
             <CardContent className="pt-6 pb-6 space-y-3">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 rounded-full bg-primary animate-spin border-2 border-primary-foreground border-t-transparent"></div>
+                  <div className="h-4 w-4 rounded-full bg-primary animate-spin border-2 border-background border-t-transparent"></div>
                   <span className="text-sm font-medium text-foreground">
                     {importStatus}
                   </span>
                 </div>
-                <span className="text-sm font-bold text-primary">
+                <span className="text-sm font-bold text-primary tabular-nums">
                   {Math.round(importProgress)}%
                 </span>
               </div>
-              <Progress value={importProgress} className="h-3" />
+              <Progress value={importProgress} className="h-3 transition-all duration-300" />
               <p className="text-xs text-muted-foreground text-center mt-2">
                 {language === "uk"
                   ? "Будь ласка, зачекайте. Це може зайняти кілька секунд..."
