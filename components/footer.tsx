@@ -107,7 +107,7 @@ export function Footer() {
                 <LinkedInIcon className="w-5 h-5" />
               </a>
               <a
-                href="https://www.youtube.com/"
+                href="https://www.youtube.com/channel/UC-EGlDZD2b8cUOq6oDhR2Bw"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="opacity-75 hover:opacity-100 transition-opacity"
