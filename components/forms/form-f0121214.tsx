@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
 import { Trash2, Plus, FileText, Upload } from "lucide-react"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
@@ -44,6 +45,8 @@ export function FormF0121214() {
   const { language } = useI18n()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isImporting, setIsImporting] = useState(false)
+  const [importProgress, setImportProgress] = useState(0)
+  const [importStatus, setImportStatus] = useState("")
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -213,12 +216,17 @@ export function FormF0121214() {
     if (!file) return
 
     setIsImporting(true)
+    setImportProgress(0)
+    setImportStatus(language === "uk" ? "Читання файлу..." : "Reading file...")
 
     try {
       // Read file content
+      setImportProgress(10)
       const xmlContent = await readFileAsText(file)
 
       // Parse XML
+      setImportProgress(20)
+      setImportStatus(language === "uk" ? "Парсинг XML..." : "Parsing XML...")
       const parsedData = parseIBXML(xmlContent)
 
       if (parsedData.trades.length === 0) {
@@ -229,24 +237,94 @@ export function FormF0121214() {
       }
 
       // Convert trades to form positions
+      setImportProgress(30)
+      setImportStatus(language === "uk" ? "Конвертація позицій..." : "Converting positions...")
       const newPositions = parsedData.trades.map(trade => convertToFormPosition(trade))
 
       // Replace existing positions with imported ones
       setPositions(newPositions)
 
-      // Show success message
-      const totals = calculateTradeTotals(parsedData.trades)
-      const message = language === "uk"
-        ? `Успішно імпортовано ${parsedData.trades.length} позиції(й).\n\nЗагальний прибуток/збиток: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}`
-        : `Successfully imported ${parsedData.trades.length} position(s).\n\nTotal profit/loss: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}`
+      setImportProgress(40)
+      setImportStatus(language === "uk"
+        ? `Імпортовано ${parsedData.trades.length} позиції(й). Завантаження курсів НБУ...`
+        : `Imported ${parsedData.trades.length} position(s). Fetching NBU rates...`)
 
-      alert(message)
+      // Fetch rates for each position and update state progressively
+      const updatedPositions = [...newPositions]
+      const totalPositions = updatedPositions.length
+      const progressPerPosition = 60 / totalPositions // Remaining 60% for rate fetching
+
+      for (let i = 0; i < updatedPositions.length; i++) {
+        const position = updatedPositions[i]
+        const currentProgress = 40 + ((i + 1) * progressPerPosition)
+
+        setImportProgress(currentProgress)
+        setImportStatus(language === "uk"
+          ? `Завантаження курсів НБУ... (${i + 1}/${totalPositions})`
+          : `Fetching NBU rates... (${i + 1}/${totalPositions})`)
+
+        if (position.currency !== "UAH" && position.purchaseDate && position.saleDate) {
+          try {
+            // Fetch purchase rate
+            const purchaseRate = await fetchNBUExchangeRate(position.purchaseDate, position.currency)
+            if (purchaseRate !== null) {
+              const foreignPurchaseAmount = parseFloat(position.purchasePriceForeign) || 0
+              const uahPurchaseAmount = convertToUAH(foreignPurchaseAmount, purchaseRate)
+
+              updatedPositions[i] = {
+                ...position,
+                purchaseRate: purchaseRate.toFixed(4),
+                purchasePrice: uahPurchaseAmount.toFixed(2)
+              }
+            }
+
+            // Fetch sale rate
+            const saleRate = await fetchNBUExchangeRate(position.saleDate, position.currency)
+            if (saleRate !== null) {
+              const foreignSaleAmount = parseFloat(position.salePriceForeign) || 0
+              const uahSaleAmount = convertToUAH(foreignSaleAmount, saleRate)
+
+              updatedPositions[i] = {
+                ...updatedPositions[i],
+                saleRate: saleRate.toFixed(4),
+                salePrice: uahSaleAmount.toFixed(2)
+              }
+            }
+          } catch (error) {
+            console.error(`Error fetching rates for position ${position.id}:`, error)
+          }
+        }
+      }
+
+      // Force update with completely new array to trigger useEffect
+      setImportProgress(95)
+      setImportStatus(language === "uk" ? "Фінальні розрахунки..." : "Final calculations...")
+      setPositions(updatedPositions.map(pos => ({...pos})))
+
+      // Calculate totals for summary message
+      const totals = calculateTradeTotals(parsedData.trades)
+
+      // Show success message
+      setImportProgress(100)
+      setImportStatus(language === "uk" ? "Завершено!" : "Complete!")
+
+      setTimeout(() => {
+        const message = language === "uk"
+          ? `✅ Успішно імпортовано ${parsedData.trades.length} позиції(й)!\n\nЗагальний прибуток/збиток: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\nКурси НБУ завантажено та суми конвертовано в гривні.`
+          : `✅ Successfully imported ${parsedData.trades.length} position(s)!\n\nTotal profit/loss: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\nNBU rates fetched and amounts converted to UAH.`
+
+        alert(message)
+        setImportProgress(0)
+        setImportStatus("")
+      }, 500)
 
     } catch (error) {
       console.error("Error importing XML:", error)
       alert(language === "uk"
         ? `Помилка при імпорті файлу: ${error instanceof Error ? error.message : "Невідома помилка"}`
         : `Error importing file: ${error instanceof Error ? error.message : "Unknown error"}`)
+      setImportProgress(0)
+      setImportStatus("")
     } finally {
       setIsImporting(false)
       // Reset file input
@@ -846,38 +924,66 @@ export function FormF0121214() {
       ))}
 
       {/* Import and Add Position Buttons */}
-      <div className="flex justify-center gap-4">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".xml"
-          onChange={handleImportXML}
-          className="hidden"
-        />
-        <Button
-          type="button"
-          variant="secondary"
-          size="lg"
-          onClick={triggerFileInput}
-          disabled={isImporting}
-          className="gap-2"
-        >
-          <Upload className="h-5 w-5" />
-          {isImporting
-            ? (language === "uk" ? "Імпорт..." : "Importing...")
-            : (language === "uk" ? "Імпортувати дані" : "Import Data")
-          }
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          onClick={addPosition}
-          className="gap-2 border-dashed border-2"
-        >
-          <Plus className="h-5 w-5" />
-          {getLabel("addPosition")}
-        </Button>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-center gap-4">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".xml"
+            onChange={handleImportXML}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            onClick={triggerFileInput}
+            disabled={isImporting}
+            className="gap-2"
+          >
+            <Upload className="h-5 w-5" />
+            {isImporting
+              ? (language === "uk" ? "Імпорт..." : "Importing...")
+              : (language === "uk" ? "Імпортувати дані" : "Import Data")
+            }
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={addPosition}
+            className="gap-2 border-dashed border-2"
+          >
+            <Plus className="h-5 w-5" />
+            {getLabel("addPosition")}
+          </Button>
+        </div>
+
+        {/* Import Progress Bar */}
+        {isImporting && (
+          <Card className="border-primary/50 bg-primary/5 animate-pulse">
+            <CardContent className="pt-6 pb-6 space-y-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full bg-primary animate-spin border-2 border-primary-foreground border-t-transparent"></div>
+                  <span className="text-sm font-medium text-foreground">
+                    {importStatus}
+                  </span>
+                </div>
+                <span className="text-sm font-bold text-primary">
+                  {Math.round(importProgress)}%
+                </span>
+              </div>
+              <Progress value={importProgress} className="h-3" />
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                {language === "uk"
+                  ? "Будь ласка, зачекайте. Це може зайняти кілька секунд..."
+                  : "Please wait. This may take a few seconds..."
+                }
+              </p>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Tax Calculation Summary */}
