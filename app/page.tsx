@@ -1,66 +1,190 @@
-"use client"
-
-import { useEffect, useState } from "react"
+import type { Metadata } from "next"
+import { headers } from "next/headers"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { FormsSection } from "@/components/forms-section"
 import { TaxCalculator } from "@/components/tax-calculator"
 import { Footer } from "@/components/footer"
-import { useI18n } from "@/lib/i18n-context"
 import { getCountry, type CountryCode } from "@/lib/countries"
-import { generateSEOMetadata } from "@/lib/seo-metadata"
+
+// Generate beautiful SSR metadata for root page based on browser language
+export async function generateMetadata(): Promise<Metadata> {
+  // Get browser's Accept-Language header
+  const headersList = await headers()
+  const acceptLanguage = headersList.get('accept-language') || ''
+
+  // Parse language from Accept-Language header
+  const browserLang = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase() || 'uk'
+
+  const currentYear = new Date().getFullYear()
+
+  // Beautiful multilingual titles and descriptions with emojis
+  const metadata: Record<string, { title: string; description: string; keywords: string[] }> = {
+    uk: {
+      title: `Monegoo - Податкова декларація онлайн ${currentYear} | Безкоштовно для України`,
+      description: `✨ Заповніть декларацію F0100214 та F0121214 легко і швидко! Безкоштовний онлайн сервіс для громадян України 🇺🇦 | Розрахунок ПДФО та військового збору | Ваші дані залишаються тільки у вас 🔒 | Експорт в PDF за 5 хвилин`,
+      keywords: [
+        "податкова декларація україна",
+        "F0100214 онлайн",
+        "F0121214 безкоштовно",
+        "ПДФО розрахунок",
+        "військовий збір 2025",
+        "декларація про доходи",
+        "податки україна онлайн",
+        "заповнити декларацію",
+      ],
+    },
+    en: {
+      title: `Monegoo - Free Online Tax Declaration ${currentYear} | Easy & Fast`,
+      description: `✨ Fill out tax declaration F0100214 & F0121214 easily and quickly! Free online service 🌍 | Calculate income tax & military duty | Your data stays private 🔒 | Export to PDF in 5 minutes | Privacy-first approach`,
+      keywords: [
+        "free tax declaration",
+        "online tax filing",
+        "F0100214 form",
+        "F0121214 calculator",
+        "income tax online",
+        "tax return 2025",
+        "privacy tax service",
+      ],
+    },
+    fr: {
+      title: `Monegoo - Déclaration d'impôts gratuite ${currentYear} | Simple et rapide`,
+      description: `✨ Remplissez votre déclaration d'impôts facilement! Service en ligne 100% gratuit 🎁 | Vos données restent chez vous 🔒 | Export PDF en 5 minutes | Protection de la vie privée garantie`,
+      keywords: [
+        "déclaration impôts gratuite",
+        "déclaration en ligne",
+        "service fiscal gratuit",
+        "impôts 2025",
+        "confidentialité garantie",
+      ],
+    },
+    pl: {
+      title: `Monegoo - Darmowe rozliczenie PIT ${currentYear} | Łatwo i szybko`,
+      description: `✨ Wypełnij deklarację podatkową PIT łatwo i szybko! Darmowy serwis online 🎁 | Twoje dane pozostają u Ciebie 🔒 | Export do PDF w 5 minut | Prywatność na pierwszym miejscu`,
+      keywords: [
+        "darmowe rozliczenie PIT",
+        "PIT online",
+        "deklaracja podatkowa",
+        "podatki 2025",
+        "bezpieczne rozliczenie",
+      ],
+    },
+    es: {
+      title: `Monegoo - Declaración de impuestos gratis ${currentYear} | Fácil y rápido`,
+      description: `✨ Complete su declaración de impuestos fácilmente! Servicio online 100% gratuito 🎁 | Sus datos permanecen privados 🔒 | Exportar a PDF en 5 minutos | Privacidad garantizada`,
+      keywords: [
+        "declaración impuestos gratis",
+        "declaración online",
+        "IRPF online",
+        "impuestos 2025",
+        "privacidad garantizada",
+      ],
+    },
+    pt: {
+      title: `Monegoo - Declaração de impostos grátis ${currentYear} | Fácil e rápido`,
+      description: `✨ Preencha sua declaração IRS facilmente! Serviço online 100% gratuito 🎁 | Seus dados permanecem privados 🔒 | Exportar para PDF em 5 minutos | Privacidade garantida`,
+      keywords: [
+        "declaração IRS grátis",
+        "IRS online",
+        "declaração impostos",
+        "impostos 2025",
+        "privacidade garantida",
+      ],
+    },
+    de: {
+      title: `Monegoo - Kostenlose Steuererklärung ${currentYear} | Einfach und schnell`,
+      description: `✨ Füllen Sie Ihre Steuererklärung einfach aus! 100% kostenloser Online-Service 🎁 | Ihre Daten bleiben privat 🔒 | PDF-Export in 5 Minuten | Datenschutz garantiert`,
+      keywords: [
+        "kostenlose Steuererklärung",
+        "Steuererklärung online",
+        "Einkommensteuer",
+        "Steuern 2025",
+        "Datenschutz garantiert",
+      ],
+    },
+    sv: {
+      title: `Monegoo - Gratis skattedeklaration ${currentYear} | Enkelt och snabbt`,
+      description: `✨ Fyll i din skattedeklaration enkelt! 100% gratis online-tjänst 🎁 | Dina data förblir privata 🔒 | PDF-export på 5 minuter | Integritetsskydd garanterat`,
+      keywords: [
+        "gratis skattedeklaration",
+        "skattedeklaration online",
+        "inkomstdeklaration",
+        "skatt 2025",
+        "integritetsskydd",
+      ],
+    },
+  }
+
+  const meta = metadata[browserLang] || metadata.uk
+  const locale = browserLang === 'uk' ? 'uk_UA' : `${browserLang}_${browserLang.toUpperCase()}`
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    openGraph: {
+      type: "website",
+      locale: locale,
+      url: "https://monegoo.com",
+      title: meta.title,
+      description: meta.description,
+      siteName: "Monegoo Tax Declaration",
+      images: [
+        {
+          url: "/placeholder-logo.png",
+          width: 1200,
+          height: 630,
+          alt: "Monegoo - Free Online Tax Declaration",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: ["/placeholder-logo.png"],
+      creator: "@monegoo",
+    },
+    alternates: {
+      canonical: "https://monegoo.com",
+      languages: {
+        "uk-UA": "/uk-ua",
+        "en-US": "/en-us",
+        "en-GB": "/en-gb",
+        "en-CA": "/en-ca",
+        "fr-FR": "/fr-fr",
+        "pl-PL": "/pl-pl",
+        "es-ES": "/es-es",
+        "pt-PT": "/pt-pt",
+        "de-DE": "/de-de",
+        "sv-SE": "/sv-se",
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    authors: [{ name: "Monegoo", url: "https://monegoo.com" }],
+    creator: "Monegoo",
+    publisher: "Monegoo",
+    category: "Finance",
+  }
+}
 
 export default function Home() {
-  const { language } = useI18n()
-  const [mounted, setMounted] = useState(false)
-
   // Default country is always Ukraine
   const countryCode: CountryCode = "ua"
   const country = getCountry(countryCode)
 
-  useEffect(() => {
-    setMounted(true)
-
-    // Update document title and meta description dynamically based on browser language
-    const seo = generateSEOMetadata(countryCode, language)
-    document.title = seo.title
-
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-      metaDescription.setAttribute('content', seo.description)
-    }
-
-    // Update meta keywords
-    const metaKeywords = document.querySelector('meta[name="keywords"]')
-    if (metaKeywords) {
-      metaKeywords.setAttribute('content', seo.keywords.join(', '))
-    }
-
-    // Update Open Graph
-    const ogTitle = document.querySelector('meta[property="og:title"]')
-    if (ogTitle) {
-      ogTitle.setAttribute('content', seo.title)
-    }
-
-    const ogDescription = document.querySelector('meta[property="og:description"]')
-    if (ogDescription) {
-      ogDescription.setAttribute('content', seo.description)
-    }
-
-    // Update Twitter
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]')
-    if (twitterTitle) {
-      twitterTitle.setAttribute('content', seo.title)
-    }
-
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]')
-    if (twitterDescription) {
-      twitterDescription.setAttribute('content', seo.description)
-    }
-  }, [language, countryCode])
-
-  if (!mounted || !country) {
+  if (!country) {
     return null
   }
 
@@ -74,5 +198,4 @@ export default function Home() {
     </main>
   )
 }
-
 
