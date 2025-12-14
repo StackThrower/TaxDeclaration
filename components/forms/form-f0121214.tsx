@@ -274,31 +274,50 @@ export function FormF0121214() {
           ? `Завантаження курсів НБУ... (${i + 1}/${totalPositions})`
           : `Fetching NBU rates... (${i + 1}/${totalPositions})`)
 
-        if (position.currency !== "UAH" && position.purchaseDate && position.saleDate) {
+        if (position.currency !== "UAH" && position.saleDate) {
           try {
-            // Fetch purchase rate
-            const purchaseRate = await fetchNBUExchangeRate(position.purchaseDate, position.currency)
-            if (purchaseRate !== null) {
-              const foreignPurchaseAmount = parseFloat(position.purchasePriceForeign) || 0
-              const uahPurchaseAmount = convertToUAH(foreignPurchaseAmount, purchaseRate)
+            // For dividends, only fetch sale rate (payment date)
+            // For other assets, fetch both rates
+            if (position.assetType === "dividends") {
+              // Only fetch sale rate for dividends
+              const saleRate = await fetchNBUExchangeRate(position.saleDate, position.currency)
+              if (saleRate !== null) {
+                const foreignSaleAmount = parseFloat(position.salePriceForeign) || 0
+                const uahSaleAmount = convertToUAH(foreignSaleAmount, saleRate)
 
-              updatedPositions[i] = {
-                ...position,
-                purchaseRate: purchaseRate.toFixed(4),
-                purchasePrice: uahPurchaseAmount.toFixed(2)
+                updatedPositions[i] = {
+                  ...position,
+                  saleRate: saleRate.toFixed(4),
+                  salePrice: uahSaleAmount.toFixed(2)
+                }
               }
-            }
+            } else {
+              // For other assets, fetch both rates
+              if (position.purchaseDate) {
+                const purchaseRate = await fetchNBUExchangeRate(position.purchaseDate, position.currency)
+                if (purchaseRate !== null) {
+                  const foreignPurchaseAmount = parseFloat(position.purchasePriceForeign) || 0
+                  const uahPurchaseAmount = convertToUAH(foreignPurchaseAmount, purchaseRate)
 
-            // Fetch sale rate
-            const saleRate = await fetchNBUExchangeRate(position.saleDate, position.currency)
-            if (saleRate !== null) {
-              const foreignSaleAmount = parseFloat(position.salePriceForeign) || 0
-              const uahSaleAmount = convertToUAH(foreignSaleAmount, saleRate)
+                  updatedPositions[i] = {
+                    ...position,
+                    purchaseRate: purchaseRate.toFixed(4),
+                    purchasePrice: uahPurchaseAmount.toFixed(2)
+                  }
+                }
+              }
 
-              updatedPositions[i] = {
-                ...updatedPositions[i],
-                saleRate: saleRate.toFixed(4),
-                salePrice: uahSaleAmount.toFixed(2)
+              // Fetch sale rate
+              const saleRate = await fetchNBUExchangeRate(position.saleDate, position.currency)
+              if (saleRate !== null) {
+                const foreignSaleAmount = parseFloat(position.salePriceForeign) || 0
+                const uahSaleAmount = convertToUAH(foreignSaleAmount, saleRate)
+
+                updatedPositions[i] = {
+                  ...updatedPositions[i],
+                  saleRate: saleRate.toFixed(4),
+                  salePrice: uahSaleAmount.toFixed(2)
+                }
               }
             }
           } catch (error) {
@@ -372,6 +391,17 @@ export function FormF0121214() {
       if (pos.assetType === "dividends") {
         // Для дивидендов считаем только полученную сумму
         totalDividends += salePrice
+
+        // Логування для дивідендів
+        if (salePrice > 0) {
+          console.log(`Дивіденд ${pos.id}:`, {
+            тип: 'dividends',
+            сума: salePrice,
+            валюта: pos.currency,
+            'сума (валюта)': pos.salePriceForeign,
+            'курс НБУ': pos.saleRate
+          })
+        }
       } else {
         // Для трейдов разрешаем отрицательные значения (убытки)
         const positionProfit = salePrice - purchasePrice - expenses
@@ -859,18 +889,12 @@ export function FormF0121214() {
             </div>
 
             {/* Operation Dates */}
-            <div className="grid md:grid-cols-2 gap-4">
+            {position.assetType === "dividends" ? (
+              // For dividends, only show payment date
               <div className="space-y-2">
-                <Label htmlFor={`purchaseDate-${position.id}`}>{getLabel("purchaseDate")}</Label>
-                <Input
-                  id={`purchaseDate-${position.id}`}
-                  type="date"
-                  value={position.purchaseDate}
-                  onChange={(e) => handlePositionChange(position.id, "purchaseDate", e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor={`saleDate-${position.id}`}>{getLabel("saleDate")}</Label>
+                <Label htmlFor={`saleDate-${position.id}`}>
+                  {language === "uk" ? "Дата отримання дивідендів" : "Dividend Payment Date"}
+                </Label>
                 <Input
                   id={`saleDate-${position.id}`}
                   type="date"
@@ -878,35 +902,40 @@ export function FormF0121214() {
                   onChange={(e) => handlePositionChange(position.id, "saleDate", e.target.value)}
                 />
               </div>
-            </div>
+            ) : (
+              // For other assets, show both dates
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor={`purchaseDate-${position.id}`}>{getLabel("purchaseDate")}</Label>
+                  <Input
+                    id={`purchaseDate-${position.id}`}
+                    type="date"
+                    value={position.purchaseDate}
+                    onChange={(e) => handlePositionChange(position.id, "purchaseDate", e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`saleDate-${position.id}`}>{getLabel("saleDate")}</Label>
+                  <Input
+                    id={`saleDate-${position.id}`}
+                    type="date"
+                    value={position.saleDate}
+                    onChange={(e) => handlePositionChange(position.id, "saleDate", e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Foreign Currency Amounts (if not UAH) */}
             {position.currency !== "UAH" && (
               <>
                 <div className="pt-2">
                   <h4 className="text-sm font-semibold text-accent mb-3">{getLabel("foreignAmounts")}</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor={`purchasePriceForeign-${position.id}`}>
-                        {getLabel("purchasePriceForeign")}
-                      </Label>
-                      <div className="flex gap-2">
-                        <Input
-                          id={`purchasePriceForeign-${position.id}`}
-                          type="number"
-                          step="0.01"
-                          placeholder="0.00"
-                          value={position.purchasePriceForeign}
-                          onChange={(e) => handlePositionChange(position.id, "purchasePriceForeign", e.target.value)}
-                        />
-                        <div className="flex items-center px-3 bg-muted rounded-md min-w-[60px] justify-center">
-                          <span className="text-sm font-medium">{getCurrencySymbol(position.currency)}</span>
-                        </div>
-                      </div>
-                    </div>
+                  {position.assetType === "dividends" ? (
+                    // For dividends, only show received amount
                     <div className="space-y-2">
                       <Label htmlFor={`salePriceForeign-${position.id}`}>
-                        {getLabel("salePriceForeign")}
+                        {language === "uk" ? "Сума отримана (валюта)" : "Amount Received (foreign)"}
                       </Label>
                       <div className="flex gap-2">
                         <Input
@@ -922,53 +951,93 @@ export function FormF0121214() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    // For other assets, show both amounts
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`purchasePriceForeign-${position.id}`}>
+                          {getLabel("purchasePriceForeign")}
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id={`purchasePriceForeign-${position.id}`}
+                            type="number"
+                            step="0.01"
+                            placeholder="0.00"
+                            value={position.purchasePriceForeign}
+                            onChange={(e) => handlePositionChange(position.id, "purchasePriceForeign", e.target.value)}
+                          />
+                          <div className="flex items-center px-3 bg-muted rounded-md min-w-[60px] justify-center">
+                            <span className="text-sm font-medium">{getCurrencySymbol(position.currency)}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor={`salePriceForeign-${position.id}`}>
+                          {getLabel("salePriceForeign")}
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id={`salePriceForeign-${position.id}`}
+                            type="number"
+                            step="0.01"
+                            placeholder="0.00"
+                            value={position.salePriceForeign}
+                            onChange={(e) => handlePositionChange(position.id, "salePriceForeign", e.target.value)}
+                          />
+                          <div className="flex items-center px-3 bg-muted rounded-md min-w-[60px] justify-center">
+                            <span className="text-sm font-medium">{getCurrencySymbol(position.currency)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-2">
                   <h4 className="text-sm font-semibold text-accent mb-3">{getLabel("exchangeRates")}</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  {position.assetType === "dividends" ? (
+                    // For dividends, only show one rate
                     <div className="space-y-2">
-                      <Label>{getLabel("purchaseRate")}</Label>
-                      <div className="p-3 bg-muted rounded-md">
-                        <span className="text-sm font-mono">
-                          {formatExchangeRate(parseFloat(position.purchaseRate) || null, position.currency)} ₴
-                        </span>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>{getLabel("saleRate")}</Label>
+                      <Label>{language === "uk" ? "Курс НБУ на дату отримання" : "NBU Rate on Payment Date"}</Label>
                       <div className="p-3 bg-muted rounded-md">
                         <span className="text-sm font-mono">
                           {formatExchangeRate(parseFloat(position.saleRate) || null, position.currency)} ₴
                         </span>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    // For other assets, show both rates
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>{getLabel("purchaseRate")}</Label>
+                        <div className="p-3 bg-muted rounded-md">
+                          <span className="text-sm font-mono">
+                            {formatExchangeRate(parseFloat(position.purchaseRate) || null, position.currency)} ₴
+                          </span>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>{getLabel("saleRate")}</Label>
+                        <div className="p-3 bg-muted rounded-md">
+                          <span className="text-sm font-mono">
+                            {formatExchangeRate(parseFloat(position.saleRate) || null, position.currency)} ₴
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             )}
 
             {/* Financial Indicators */}
-            <div className="grid md:grid-cols-3 gap-4">
+            {position.assetType === "dividends" ? (
+              // For dividends, only show received amount
               <div className="space-y-2">
-                <Label htmlFor={`purchasePrice-${position.id}`}>{getLabel("purchasePrice")}</Label>
-                <Input
-                  id={`purchasePrice-${position.id}`}
-                  type="number"
-                  step="0.01"
-                  placeholder="0.00"
-                  value={position.purchasePrice}
-                  onChange={(e) => handlePositionChange(position.id, "purchasePrice", e.target.value)}
-                  readOnly={position.currency !== "UAH"}
-                  className={position.currency !== "UAH" ? "bg-muted cursor-not-allowed" : ""}
-                />
-                {position.currency !== "UAH" && (
-                  <p className="text-xs text-muted-foreground">Автоматично розраховано</p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor={`salePrice-${position.id}`}>{getLabel("salePrice")}</Label>
+                <Label htmlFor={`salePrice-${position.id}`}>
+                  {language === "uk" ? "Сума отримана (грн)" : "Amount Received (UAH)"}
+                </Label>
                 <Input
                   id={`salePrice-${position.id}`}
                   type="number"
@@ -982,19 +1051,63 @@ export function FormF0121214() {
                 {position.currency !== "UAH" && (
                   <p className="text-xs text-muted-foreground">Автоматично розраховано</p>
                 )}
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
+                  <p className="text-xs text-blue-700 dark:text-blue-300">
+                    💡 {language === "uk"
+                      ? "Для дивідендів: ПДФО 9% + Військовий збір 5%"
+                      : "For dividends: PIT 9% + Military Levy 5%"
+                    }
+                  </p>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor={`expenses-${position.id}`}>{getLabel("expensesOp")}</Label>
-                <Input
-                  id={`expenses-${position.id}`}
-                  type="number"
-                  step="0.01"
-                  placeholder="0.00"
-                  value={position.expenses}
-                  onChange={(e) => handlePositionChange(position.id, "expenses", e.target.value)}
-                />
+            ) : (
+              // For other assets, show all fields
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor={`purchasePrice-${position.id}`}>{getLabel("purchasePrice")}</Label>
+                  <Input
+                    id={`purchasePrice-${position.id}`}
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={position.purchasePrice}
+                    onChange={(e) => handlePositionChange(position.id, "purchasePrice", e.target.value)}
+                    readOnly={position.currency !== "UAH"}
+                    className={position.currency !== "UAH" ? "bg-muted cursor-not-allowed" : ""}
+                  />
+                  {position.currency !== "UAH" && (
+                    <p className="text-xs text-muted-foreground">Автоматично розраховано</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`salePrice-${position.id}`}>{getLabel("salePrice")}</Label>
+                  <Input
+                    id={`salePrice-${position.id}`}
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={position.salePrice}
+                    onChange={(e) => handlePositionChange(position.id, "salePrice", e.target.value)}
+                    readOnly={position.currency !== "UAH"}
+                    className={position.currency !== "UAH" ? "bg-muted cursor-not-allowed" : ""}
+                  />
+                  {position.currency !== "UAH" && (
+                    <p className="text-xs text-muted-foreground">Автоматично розраховано</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`expenses-${position.id}`}>{getLabel("expensesOp")}</Label>
+                  <Input
+                    id={`expenses-${position.id}`}
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={position.expenses}
+                    onChange={(e) => handlePositionChange(position.id, "expenses", e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
       ))}
@@ -1104,6 +1217,104 @@ export function FormF0121214() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Detailed Tax Breakdown */}
+      {(calculations.profitFromTrades !== 0 || (calculations.dividends !== undefined && calculations.dividends > 0)) && (
+        <Card className="border-border/50 bg-blue-50 dark:bg-blue-950/20">
+          <CardContent className="pt-6 space-y-4">
+            <h3 className="text-lg font-semibold text-accent">
+              {language === "uk" ? "Деталізація податків" : "Tax Breakdown"}
+            </h3>
+
+            {/* Trades Section */}
+            {calculations.profitFromTrades !== undefined && calculations.profitFromTrades !== 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                  <h4 className="font-semibold text-sm">
+                    {language === "uk" ? "Трейди (Акції, Опціони, Облігації)" : "Trades (Stocks, Options, Bonds)"}
+                  </h4>
+                </div>
+                <div className="grid md:grid-cols-3 gap-3 pl-4">
+                  <div className="space-y-1 bg-background p-3 rounded-md border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      {language === "uk" ? "Прибуток/Збиток" : "Profit/Loss"}
+                    </p>
+                    <p className={`text-lg font-bold ${calculations.profitFromTrades >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {calculations.profitFromTrades >= 0 ? '' : '-'}{Math.abs(calculations.profitFromTrades).toFixed(2)} ₴
+                    </p>
+                  </div>
+                  <div className="space-y-1 bg-background p-3 rounded-md border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      {language === "uk" ? "ПДФО (18%)" : "PIT (18%)"}
+                    </p>
+                    <p className="text-lg font-bold text-blue-600">
+                      {calculations.pdfoFromTrades.toFixed(2)} ₴
+                    </p>
+                  </div>
+                  <div className="space-y-1 bg-background p-3 rounded-md border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      {language === "uk" ? "Військовий збір (5%)" : "Military Levy (5%)"}
+                    </p>
+                    <p className="text-lg font-bold text-orange-600">
+                      {calculations.militaryTaxFromTrades.toFixed(2)} ₴
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Dividends Section */}
+            {calculations.dividends !== undefined && calculations.dividends > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                  <h4 className="font-semibold text-sm">
+                    {language === "uk" ? "Дивіденди" : "Dividends"}
+                  </h4>
+                </div>
+                <div className="grid md:grid-cols-3 gap-3 pl-4">
+                  <div className="space-y-1 bg-background p-3 rounded-md border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      {language === "uk" ? "Отримано дивідендів" : "Dividends Received"}
+                    </p>
+                    <p className="text-lg font-bold text-purple-600">
+                      {calculations.dividends.toFixed(2)} ₴
+                    </p>
+                  </div>
+                  <div className="space-y-1 bg-background p-3 rounded-md border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      {language === "uk" ? "ПДФО (9%)" : "PIT (9%)"}
+                    </p>
+                    <p className="text-lg font-bold text-blue-600">
+                      {calculations.pdfoFromDividends.toFixed(2)} ₴
+                    </p>
+                  </div>
+                  <div className="space-y-1 bg-background p-3 rounded-md border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      {language === "uk" ? "Військовий збір (5%)" : "Military Levy (5%)"}
+                    </p>
+                    <p className="text-lg font-bold text-orange-600">
+                      {calculations.militaryTaxFromDividends.toFixed(2)} ₴
+                    </p>
+                  </div>
+                </div>
+                <div className="pl-4 pt-2">
+                  <div className="flex items-center gap-2 p-2 bg-purple-100 dark:bg-purple-950/30 rounded-md">
+                    <span className="text-lg">💡</span>
+                    <p className="text-xs text-purple-900 dark:text-purple-100">
+                      {language === "uk"
+                        ? "Для дивідендів застосовується знижена ставка ПДФО 9% замість стандартних 18%"
+                        : "For dividends, a reduced PIT rate of 9% is applied instead of the standard 18%"
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="border-border/50">
         <CardContent className="pt-6 space-y-4">
