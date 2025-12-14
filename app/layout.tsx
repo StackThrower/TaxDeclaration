@@ -20,6 +20,7 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://monegoo.com"),
   title: {
     default: "Monegoo - F0100214 & F0121214",
     template: "%s | Monegoo",
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
   generator: "Next.js",
   applicationName: "Monegoo Tax Declaration",
   referrer: "origin-when-cross-origin",
-  keywords: ["tax declaration", "F0100214", "F0121214", "income declaration", "property status"],
-  authors: [{ name: "Monegoo" }],
+  keywords: ["tax declaration", "F0100214", "F0121214", "income declaration", "property status", "tax calculator", "online tax filing"],
+  authors: [{ name: "Monegoo", url: "https://monegoo.com" }],
   creator: "Monegoo",
   publisher: "Monegoo",
   formatDetection: {
@@ -41,6 +42,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -88,6 +90,24 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
+  // Alternate languages
+  alternates: {
+    canonical: "https://monegoo.com",
+    languages: {
+      "uk-UA": "/uk-ua",
+      "en-US": "/en-us",
+      "en-GB": "/en-gb",
+      "en-CA": "/en-ca",
+      "fr-FR": "/fr-fr",
+      "pl-PL": "/pl-pl",
+      "es-ES": "/es-es",
+      "pt-PT": "/pt-pt",
+      "de-DE": "/de-de",
+      "sv-SE": "/sv-se",
+    },
+  },
+  // Additional metadata
+  category: "Finance",
   // Verification (можно добавить позже)
   // verification: {
   //   google: "google-site-verification-code",
@@ -113,10 +133,74 @@ export default async function RootLayout({
   // Extract language code from pathname (e.g., /uk-ua -> uk, /en-us -> en)
   const lang = getLanguageFromPath(pathname)
 
+  // Generate structured data for Organization and WebSite
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Monegoo",
+    "url": "https://monegoo.com",
+    "logo": "https://monegoo.com/placeholder-logo.png",
+    "description": "Free and open tax declaration system for everyone",
+    "sameAs": [
+      "https://twitter.com/monegoo",
+    ],
+  }
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Monegoo Tax Declaration",
+    "url": "https://monegoo.com",
+    "description": "Online system for filing tax declarations on property status, income, and investment transactions",
+    "inLanguage": lang,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Monegoo",
+      "url": "https://monegoo.com",
+    },
+  }
+
+  const webApplicationSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Monegoo Tax Declaration",
+    "url": "https://monegoo.com",
+    "description": "Online system for filing tax declarations on property status, income, and investment transactions",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+    },
+    "featureList": [
+      "Fill tax declarations online",
+      "F0100214 - Property and Income Declaration",
+      "F0121214 - Tax Calculation Annex",
+      "Export to PDF",
+      "Privacy-first: All data stays in your browser",
+    ],
+  }
+
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
-
+        {/* Structured Data - Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        {/* Structured Data - WebSite */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        {/* Structured Data - WebApplication */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        />
+        {/* Theme initialization script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `

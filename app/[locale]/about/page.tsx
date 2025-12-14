@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { getCountry } from "@/lib/countries"
+import { getCountry, type CountryCode } from "@/lib/countries"
 import { type Language, t } from "@/lib/i18n"
+import { generateAboutMetadata } from "@/lib/seo-metadata"
 import AboutPageClient from "./page-client"
 
 type Props = {
@@ -39,43 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const lang = langCode as Language
-
   // Generate SEO-friendly metadata for about page
-  const title = `${t(lang, "about.title")} - Monegoo`
-  const description = t(lang, "about.intro")
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      locale: locale,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-    alternates: {
-      canonical: `/${locale}/about`,
-      languages: {
-        "x-default": "/uk-ua/about",
-        "uk-UA": "/uk-ua/about",
-        "en-US": "/en-us/about",
-        "en-GB": "/en-gb/about",
-        "en-CA": "/en-ca/about",
-        "fr-FR": "/fr-fr/about",
-        "pl-PL": "/pl-pl/about",
-        "es-ES": "/es-es/about",
-        "pt-PT": "/pt-pt/about",
-        "de-DE": "/de-de/about",
-        "sv-SE": "/sv-se/about",
-      },
-    },
-  }
+  return generateAboutMetadata(countryCode as CountryCode, langCode as Language, locale)
 }
 
 export default async function AboutPage({ params }: Props) {
@@ -101,12 +67,48 @@ export default async function AboutPage({ params }: Props) {
     }
   }
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": `https://monegoo.com/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": t(lang, "about.title"),
+        "item": `https://monegoo.com/${locale}/about`,
+      },
+    ],
+  }
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Monegoo",
+    "url": "https://monegoo.com",
+    "logo": "https://monegoo.com/placeholder-logo.png",
+    "description": "Free and open tax declaration system for everyone",
+  }
+
   return (
     <>
       {/* Schema.org JSON-LD structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
       <AboutPageClient locale={locale} />
     </>

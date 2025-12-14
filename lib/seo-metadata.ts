@@ -619,6 +619,22 @@ export function generatePageMetadata(
         "sv-SE": "/sv-se",
       },
     },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    authors: [{ name: "Monegoo", url: "https://monegoo.com" }],
+    creator: "Monegoo",
+    publisher: "Monegoo",
+    category: "Finance",
   }
 }
 
@@ -1297,6 +1313,689 @@ export function generateHelpPageMetadata(
   }
 
   return metadata[language]?.[countryCode] || metadata.en[countryCode]
+}
+
+// Generate SEO metadata for the about page
+export function generateAboutPageMetadata(
+  countryCode: CountryCode,
+  language: Language
+): SEOMetadata {
+  const country = countries[countryCode]
+  const currentYear = new Date().getFullYear()
+
+  const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
+    uk: {
+      ua: {
+        title: `Про Monegoo - Безкоштовна система податкових декларацій України ${currentYear}`,
+        description: `Monegoo - це безкоштовна відкрита онлайн система для заповнення податкових декларацій F0100214 та F0121214. Ми створюємо доступні інструменти для громадян України. Ваші дані залишаються тільки у вас.`,
+        keywords: [
+          "про Monegoo",
+          "безкоштовні податкові декларації",
+          "відкрита система",
+          "про нас",
+          "місія",
+          "цінності",
+          "приватність даних",
+          "безпека",
+          "F0100214",
+          "F0121214",
+          "Україна",
+        ],
+      },
+      pl: {
+        title: `O Monegoo - Bezpłatny system rozliczeń podatkowych Polska ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych PIT. Tworzymy dostępne narzędzia dla obywateli Polski. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: [
+          "o Monegoo",
+          "bezpłatne deklaracje podatkowe",
+          "otwarty system",
+          "o nas",
+          "misja",
+          "wartości",
+          "prywatność danych",
+          "Polska",
+        ],
+      },
+      fr: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales France ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Nous créons des outils accessibles pour les citoyens français. Vos données restent chez vous.`,
+        keywords: [
+          "à propos de Monegoo",
+          "déclarations fiscales gratuites",
+          "système ouvert",
+          "à propos",
+          "mission",
+          "valeurs",
+          "confidentialité",
+          "France",
+        ],
+      },
+      de: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Deutschland ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Wir schaffen zugängliche Tools für deutsche Bürger. Ihre Daten bleiben bei Ihnen.`,
+        keywords: [
+          "über Monegoo",
+          "kostenlose Steuererklärungen",
+          "offenes System",
+          "über uns",
+          "Mission",
+          "Werte",
+          "Datenschutz",
+          "Deutschland",
+        ],
+      },
+      pt: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Portugal ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Criamos ferramentas acessíveis para cidadãos portugueses. Seus dados permanecem com você.`,
+        keywords: [
+          "sobre Monegoo",
+          "declarações fiscais gratuitas",
+          "sistema aberto",
+          "sobre nós",
+          "missão",
+          "valores",
+          "privacidade",
+          "Portugal",
+        ],
+      },
+      es: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales España ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Creamos herramientas accesibles para ciudadanos españoles. Sus datos permanecen con usted.`,
+        keywords: [
+          "acerca de Monegoo",
+          "declaraciones fiscales gratuitas",
+          "sistema abierto",
+          "acerca de",
+          "misión",
+          "valores",
+          "privacidad",
+          "España",
+        ],
+      },
+      se: {
+        title: `Om Monegoo - Gratis system för skattedeklarationer Sverige ${currentYear}`,
+        description: `Monegoo är ett gratis öppet online-system för att fylla i skattedeklarationer. Vi skapar tillgängliga verktyg för svenska medborgare. Dina data stannar hos dig.`,
+        keywords: [
+          "om Monegoo",
+          "gratis skattedeklarationer",
+          "öppet system",
+          "om oss",
+          "mission",
+          "värderingar",
+          "integritet",
+          "Sverige",
+        ],
+      },
+      gb: {
+        title: `About Monegoo - Free Tax Return System UK ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for UK citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "UK",
+          "self assessment",
+        ],
+      },
+      us: {
+        title: `About Monegoo - Free Tax Return System USA ${currentYear}`,
+        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for US taxpayers. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "USA",
+        ],
+      },
+      ca: {
+        title: `About Monegoo - Free Tax Return System Canada ${currentYear}`,
+        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for Canadian taxpayers. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Canada",
+        ],
+      },
+    },
+    en: {
+      ua: {
+        title: `About Monegoo - Free Tax Declaration System Ukraine ${currentYear}`,
+        description: `Monegoo is a free and open online system for filling out tax declarations F0100214 and F0121214. We create accessible tools for Ukrainian citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax declarations",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "security",
+          "F0100214",
+          "F0121214",
+          "Ukraine",
+        ],
+      },
+      pl: {
+        title: `About Monegoo - Free Tax Return System Poland ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing PIT tax returns. We create accessible tools for Polish citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Poland",
+        ],
+      },
+      fr: {
+        title: `About Monegoo - Free Tax Return System France ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for French citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "France",
+        ],
+      },
+      de: {
+        title: `About Monegoo - Free Tax Return System Germany ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for German citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Germany",
+        ],
+      },
+      pt: {
+        title: `About Monegoo - Free Tax Return System Portugal ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing IRS declarations. We create accessible tools for Portuguese citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Portugal",
+        ],
+      },
+      es: {
+        title: `About Monegoo - Free Tax Return System Spain ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for Spanish citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Spain",
+        ],
+      },
+      se: {
+        title: `About Monegoo - Free Tax Return System Sweden ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing income declarations. We create accessible tools for Swedish citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Sweden",
+        ],
+      },
+      gb: {
+        title: `About Monegoo - Free Tax Return System UK ${currentYear}`,
+        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for UK citizens. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "UK",
+          "self assessment",
+        ],
+      },
+      us: {
+        title: `About Monegoo - Free Tax Return System USA ${currentYear}`,
+        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for US taxpayers. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "USA",
+        ],
+      },
+      ca: {
+        title: `About Monegoo - Free Tax Return System Canada ${currentYear}`,
+        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for Canadian taxpayers. Your data stays with you.`,
+        keywords: [
+          "about Monegoo",
+          "free tax returns",
+          "open system",
+          "about us",
+          "mission",
+          "values",
+          "privacy",
+          "Canada",
+        ],
+      },
+    },
+    fr: {
+      ua: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Ukraine ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales F0100214 et F0121214. Nous créons des outils accessibles pour les citoyens ukrainiens. Vos données restent chez vous.`,
+        keywords: [
+          "à propos de Monegoo",
+          "déclarations fiscales gratuites",
+          "système ouvert",
+          "F0100214",
+          "F0121214",
+          "Ukraine",
+        ],
+      },
+      pl: {
+        title: `À propos de Monegoo - Système gratuit de déclarations PIT Pologne ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations PIT. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "PIT", "Pologne"],
+      },
+      fr: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales France ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Nous créons des outils accessibles pour les citoyens français. Vos données restent chez vous.`,
+        keywords: [
+          "à propos de Monegoo",
+          "déclarations fiscales gratuites",
+          "système ouvert",
+          "à propos",
+          "mission",
+          "valeurs",
+          "confidentialité",
+          "France",
+        ],
+      },
+      de: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Allemagne ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "Allemagne"],
+      },
+      pt: {
+        title: `À propos de Monegoo - Système gratuit de déclarations IRS Portugal ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations IRS. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "IRS", "Portugal"],
+      },
+      es: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Espagne ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "Espagne"],
+      },
+      se: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Suède ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations de revenus. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "Suède"],
+      },
+      gb: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Royaume-Uni ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "Royaume-Uni"],
+      },
+      us: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales États-Unis ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "États-Unis"],
+      },
+      ca: {
+        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Canada ${currentYear}`,
+        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Monegoo", "Canada"],
+      },
+    },
+    pl: {
+      ua: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Ukraina ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych F0100214 i F0121214. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "F0100214", "F0121214", "Ukraina"],
+      },
+      pl: {
+        title: `O Monegoo - Bezpłatny system rozliczeń podatkowych Polska ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych PIT. Tworzymy dostępne narzędzia dla obywateli Polski. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: [
+          "o Monegoo",
+          "bezpłatne deklaracje podatkowe",
+          "otwarty system",
+          "o nas",
+          "misja",
+          "wartości",
+          "prywatność danych",
+          "Polska",
+        ],
+      },
+      fr: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Francja ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "Francja"],
+      },
+      de: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Niemcy ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "Niemcy"],
+      },
+      pt: {
+        title: `O Monegoo - Bezpłatny system deklaracji IRS Portugalia ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji IRS. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "IRS", "Portugalia"],
+      },
+      es: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Hiszpania ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "Hiszpania"],
+      },
+      se: {
+        title: `O Monegoo - Bezpłatny system deklaracji dochodów Szwecja ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji dochodów. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "Szwecja"],
+      },
+      gb: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Wielka Brytania ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "Wielka Brytania"],
+      },
+      us: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych USA ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "USA"],
+      },
+      ca: {
+        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Kanada ${currentYear}`,
+        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Monegoo", "Kanada"],
+      },
+    },
+    es: {
+      ua: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Ucrania ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales F0100214 y F0121214. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "F0100214", "F0121214", "Ucrania"],
+      },
+      pl: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones PIT Polonia ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones PIT. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "PIT", "Polonia"],
+      },
+      fr: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Francia ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "Francia"],
+      },
+      de: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Alemania ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "Alemania"],
+      },
+      pt: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones IRS Portugal ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones IRS. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "IRS", "Portugal"],
+      },
+      es: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales España ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Creamos herramientas accesibles para ciudadanos españoles. Sus datos permanecen con usted.`,
+        keywords: [
+          "acerca de Monegoo",
+          "declaraciones fiscales gratuitas",
+          "sistema abierto",
+          "acerca de",
+          "misión",
+          "valores",
+          "privacidad",
+          "España",
+        ],
+      },
+      se: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Suecia ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones de ingresos. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "Suecia"],
+      },
+      gb: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Reino Unido ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "Reino Unido"],
+      },
+      us: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Estados Unidos ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "Estados Unidos"],
+      },
+      ca: {
+        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Canadá ${currentYear}`,
+        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Monegoo", "Canadá"],
+      },
+    },
+    pt: {
+      ua: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Ucrânia ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais F0100214 e F0121214. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "F0100214", "F0121214", "Ucrânia"],
+      },
+      pl: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações PIT Polónia ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações PIT. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "PIT", "Polónia"],
+      },
+      fr: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais França ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "França"],
+      },
+      de: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Alemanha ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "Alemanha"],
+      },
+      pt: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Portugal ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Criamos ferramentas acessíveis para cidadãos portugueses. Seus dados permanecem com você.`,
+        keywords: [
+          "sobre Monegoo",
+          "declarações fiscais gratuitas",
+          "sistema aberto",
+          "sobre nós",
+          "missão",
+          "valores",
+          "privacidade",
+          "Portugal",
+        ],
+      },
+      es: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Espanha ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "Espanha"],
+      },
+      se: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Suécia ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações de rendimentos. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "Suécia"],
+      },
+      gb: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Reino Unido ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "Reino Unido"],
+      },
+      us: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Estados Unidos ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "Estados Unidos"],
+      },
+      ca: {
+        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Canadá ${currentYear}`,
+        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Monegoo", "Canadá"],
+      },
+    },
+    de: {
+      ua: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Ukraine ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen F0100214 und F0121214. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "F0100214", "F0121214", "Ukraine"],
+      },
+      pl: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Polen ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von PIT-Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "PIT", "Polen"],
+      },
+      fr: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Frankreich ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "Frankreich"],
+      },
+      de: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Deutschland ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Wir schaffen zugängliche Tools für deutsche Bürger. Ihre Daten bleiben bei Ihnen.`,
+        keywords: [
+          "über Monegoo",
+          "kostenlose Steuererklärungen",
+          "offenes System",
+          "über uns",
+          "Mission",
+          "Werte",
+          "Datenschutz",
+          "Deutschland",
+        ],
+      },
+      pt: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Portugal ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "Portugal"],
+      },
+      es: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Spanien ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "Spanien"],
+      },
+      se: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Schweden ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Einkommenserklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "Schweden"],
+      },
+      gb: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Vereinigtes Königreich ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "Vereinigtes Königreich"],
+      },
+      us: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Vereinigte Staaten ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "USA"],
+      },
+      ca: {
+        title: `Über Monegoo - Kostenloses Steuererklärungssystem Kanada ${currentYear}`,
+        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Monegoo", "Kanada"],
+      },
+    },
+  }
+
+  return metadata[language]?.[countryCode] || metadata.en[countryCode]
+}
+
+// Generate complete Next.js metadata object for about page
+export function generateAboutMetadata(
+  countryCode: CountryCode,
+  language: Language,
+  locale: string
+): Metadata {
+  const seo = generateAboutPageMetadata(countryCode, language)
+
+  return {
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    openGraph: {
+      type: "website",
+      locale: `${language}_${countryCode.toUpperCase()}`,
+      url: `https://monegoo.com/${locale}/about`,
+      title: seo.title,
+      description: seo.description,
+      siteName: "Monegoo Tax Declaration",
+      images: [
+        {
+          url: "/placeholder-logo.png",
+          width: 1200,
+          height: 630,
+          alt: seo.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+      images: ["/placeholder-logo.png"],
+      creator: "@monegoo",
+    },
+    alternates: {
+      canonical: `https://monegoo.com/${locale}/about`,
+      languages: {
+        "x-default": "/uk-ua/about",
+        "uk-UA": "/uk-ua/about",
+        "en-US": "/en-us/about",
+        "en-GB": "/en-gb/about",
+        "en-CA": "/en-ca/about",
+        "fr-FR": "/fr-fr/about",
+        "pl-PL": "/pl-pl/about",
+        "es-ES": "/es-es/about",
+        "pt-PT": "/pt-pt/about",
+        "de-DE": "/de-de/about",
+        "sv-SE": "/sv-se/about",
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  }
 }
 
 // Generate complete Next.js metadata object for help page

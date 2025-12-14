@@ -123,6 +123,25 @@ export default async function HelpPage({ params }: Props) {
     }
   }
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": `https://monegoo.com/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": t(lang, "help.title"),
+        "item": `https://monegoo.com/${locale}/help`,
+      },
+    ],
+  }
+
   return (
     <>
       {/* Schema.org JSON-LD structured data */}
@@ -133,6 +152,10 @@ export default async function HelpPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <HelpPageClient locale={locale} />
     </>
