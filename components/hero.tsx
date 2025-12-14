@@ -1,11 +1,19 @@
 "use client"
 
+import Link from "next/link"
+import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
+import { type CountryCode } from "@/lib/countries"
 
 export function Hero() {
   const { language } = useI18n()
+  const params = useParams()
+
+  // Parse current locale to get country code
+  const locale = params?.locale as string
+  const currentCountryCode = (locale?.split("-")[1] as CountryCode) || "ua"
 
   return (
     <section className="bg-gradient-to-b from-primary/10 to-background py-12 md:py-16 lg:py-20 px-4">
@@ -22,9 +30,11 @@ export function Hero() {
           <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
             {t(language, "hero.start")}
           </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto">
-            {t(language, "hero.learn")}
-          </Button>
+          <Link href={`/${language}-${currentCountryCode}/about`}>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto">
+              {t(language, "hero.learn")}
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
