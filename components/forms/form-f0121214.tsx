@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n-context"
-import { Trash2, Plus, FileText } from "lucide-react"
+import { Trash2, Plus, FileText, Upload } from "lucide-react"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
 import {
   fetchNBUExchangeRate,
@@ -18,6 +18,12 @@ import {
   formatExchangeRate,
   getCurrencySymbol
 } from "@/lib/nbu-exchange-rates"
+import {
+  parseIBXML,
+  convertToFormPosition,
+  readFileAsText,
+  calculateTradeTotals
+} from "@/lib/ib-xml-parser"
 
 interface FinancialPosition {
   id: string
@@ -36,6 +42,9 @@ interface FinancialPosition {
 
 export function FormF0121214() {
   const { language } = useI18n()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isImporting, setIsImporting] = useState(false)
+
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
@@ -197,6 +206,58 @@ export function FormF0121214() {
     if (positions.length > 1) {
       setPositions((prev) => prev.filter((pos) => pos.id !== id))
     }
+  }
+
+  const handleImportXML = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setIsImporting(true)
+
+    try {
+      // Read file content
+      const xmlContent = await readFileAsText(file)
+
+      // Parse XML
+      const parsedData = parseIBXML(xmlContent)
+
+      if (parsedData.trades.length === 0) {
+        alert(language === "uk"
+          ? "У файлі не знайдено закритих позицій для імпорту"
+          : "No closed positions found in the file")
+        return
+      }
+
+      // Convert trades to form positions
+      const newPositions = parsedData.trades.map(trade => convertToFormPosition(trade))
+
+      // Replace existing positions with imported ones
+      setPositions(newPositions)
+
+      // Show success message
+      const totals = calculateTradeTotals(parsedData.trades)
+      const message = language === "uk"
+        ? `Успішно імпортовано ${parsedData.trades.length} позиції(й).\n\nЗагальний прибуток/збиток: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}`
+        : `Successfully imported ${parsedData.trades.length} position(s).\n\nTotal profit/loss: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}`
+
+      alert(message)
+
+    } catch (error) {
+      console.error("Error importing XML:", error)
+      alert(language === "uk"
+        ? `Помилка при імпорті файлу: ${error instanceof Error ? error.message : "Невідома помилка"}`
+        : `Error importing file: ${error instanceof Error ? error.message : "Unknown error"}`)
+    } finally {
+      setIsImporting(false)
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
+    }
+  }
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click()
   }
 
   // Автоматический пересчет налогов при изменении позиций
@@ -784,8 +845,29 @@ export function FormF0121214() {
         </Card>
       ))}
 
-      {/* Add Position Button */}
-      <div className="flex justify-center">
+      {/* Import and Add Position Buttons */}
+      <div className="flex justify-center gap-4">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".xml"
+          onChange={handleImportXML}
+          className="hidden"
+        />
+        <Button
+          type="button"
+          variant="secondary"
+          size="lg"
+          onClick={triggerFileInput}
+          disabled={isImporting}
+          className="gap-2"
+        >
+          <Upload className="h-5 w-5" />
+          {isImporting
+            ? (language === "uk" ? "Імпорт..." : "Importing...")
+            : (language === "uk" ? "Імпортувати дані" : "Import Data")
+          }
+        </Button>
         <Button
           type="button"
           variant="outline"
