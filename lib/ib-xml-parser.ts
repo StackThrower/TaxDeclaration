@@ -18,8 +18,19 @@ export interface IBTrade {
   subCategory: string
 }
 
+export interface IBDividend {
+  symbol: string
+  description: string
+  amount: number
+  date: string
+  currency: string
+  assetCategory: string
+  subCategory: string
+}
+
 export interface ParsedIBData {
   trades: IBTrade[]
+  dividends: IBDividend[]
   accountId: string
   fromDate: string
   toDate: string
@@ -91,8 +102,37 @@ export function parseIBXML(xmlContent: string): ParsedIBData {
     trades.push(trade)
   })
 
+  // Extract dividends
+  const dividends: IBDividend[] = []
+  const cashTransactions = xmlDoc.querySelectorAll("CashTransactions > CashTransaction")
+
+  cashTransactions.forEach((transaction) => {
+    const type = transaction.getAttribute("type") || ""
+
+    // Only process dividends (exclude withholding tax)
+    if (type === "Dividends") {
+      const amount = parseFloat(transaction.getAttribute("amount") || "0")
+
+      // Only process positive amounts (received dividends)
+      if (amount > 0) {
+        const dividend: IBDividend = {
+          symbol: transaction.getAttribute("symbol") || "",
+          description: transaction.getAttribute("description") || "",
+          amount: amount,
+          date: formatDate(transaction.getAttribute("dateTime")?.split(";")[0] || ""),
+          currency: transaction.getAttribute("currency") || "USD",
+          assetCategory: transaction.getAttribute("assetCategory") || "STK",
+          subCategory: transaction.getAttribute("subCategory") || "ETF",
+        }
+
+        dividends.push(dividend)
+      }
+    }
+  })
+
   return {
     trades,
+    dividends,
     accountId,
     fromDate: formatDate(fromDate),
     toDate: formatDate(toDate),
@@ -146,8 +186,41 @@ function parseIBXMLRegex(xmlContent: string): ParsedIBData {
     trades.push(trade)
   })
 
+  // Extract dividends
+  const cashTransactionRegex = /<CashTransaction[^>]*>/g
+  const cashTransactions = xmlContent.match(cashTransactionRegex) || []
+  const dividends: IBDividend[] = []
+
+  cashTransactions.forEach((transactionTag) => {
+    const getAttribute = (name: string): string => {
+      const match = transactionTag.match(new RegExp(`${name}="([^"]*)"`, 'i'))
+      return match?.[1] || ""
+    }
+
+    const type = getAttribute("type")
+    if (type === "Dividends") {
+      const amount = parseFloat(getAttribute("amount") || "0")
+
+      if (amount > 0) {
+        const dateTime = getAttribute("dateTime")
+        const dividend: IBDividend = {
+          symbol: getAttribute("symbol"),
+          description: getAttribute("description"),
+          amount: amount,
+          date: formatDate(dateTime.split(";")[0]),
+          currency: getAttribute("currency") || "USD",
+          assetCategory: getAttribute("assetCategory") || "STK",
+          subCategory: getAttribute("subCategory") || "ETF",
+        }
+
+        dividends.push(dividend)
+      }
+    }
+  })
+
   return {
     trades,
+    dividends,
     accountId,
     fromDate,
     toDate,
@@ -218,15 +291,51 @@ export function calculateTradeTotals(trades: IBTrade[]) {
 }
 
 /**
+ * Determine asset type from IB trade data
+ */
+export function determineAssetType(assetCategory: string, subCategory: string): string {
+  // Options
+  if (assetCategory === "OPT") {
+    return "options"
+  }
+
+  // Stocks
+  if (assetCategory === "STK") {
+    if (subCategory === "ETF") {
+      return "stocks" // ETFs are treated as stocks
+    }
+    if (subCategory === "REIT") {
+      return "stocks" // REITs are treated as stocks
+    }
+    return "stocks"
+  }
+
+  // Bonds
+  if (assetCategory === "BOND" || subCategory === "BOND") {
+    return "bonds"
+  }
+
+  // Crypto (if exists in IB)
+  if (assetCategory === "CRYPTO" || assetCategory === "CRYPTOCURRENCY") {
+    return "crypto"
+  }
+
+  // Default to stocks for unknown types
+  return "stocks"
+}
+
+/**
  * Convert IB trade to form position format
  */
 export function convertToFormPosition(trade: IBTrade) {
   const quantity = Math.abs(trade.quantity)
   const salePrice = quantity * trade.tradePrice
+  const assetType = determineAssetType(trade.assetCategory, trade.subCategory)
 
   return {
     id: Date.now().toString() + Math.random().toString(36).substring(7),
-    assetType: `${trade.symbol} - ${trade.description} (${trade.assetCategory}${trade.subCategory ? `/${trade.subCategory}` : ""})`,
+    assetType: assetType,
+    assetDescription: `${trade.symbol} - ${trade.description} (${trade.assetCategory}${trade.subCategory ? `/${trade.subCategory}` : ""})`,
     currency: trade.currency,
     purchaseDate: trade.openDateTime,
     saleDate: trade.tradeDate,
@@ -235,6 +344,27 @@ export function convertToFormPosition(trade: IBTrade) {
     purchaseRate: "",
     saleRate: "",
     purchasePrice: "",
+    salePrice: "",
+    expenses: "0",
+  }
+}
+
+/**
+ * Convert IB dividend to form position format
+ */
+export function convertDividendToFormPosition(dividend: IBDividend) {
+  return {
+    id: Date.now().toString() + Math.random().toString(36).substring(7),
+    assetType: "dividends",
+    assetDescription: `${dividend.symbol} - ${dividend.description}`,
+    currency: dividend.currency,
+    purchaseDate: "", // Not applicable for dividends
+    saleDate: dividend.date, // Use dividend date as "sale" date
+    purchasePriceForeign: "0",
+    salePriceForeign: dividend.amount.toFixed(2),
+    purchaseRate: "",
+    saleRate: "",
+    purchasePrice: "0",
     salePrice: "",
     expenses: "0",
   }

@@ -36,6 +36,7 @@ export interface F0100214Data {
 export interface F0121214Position {
   id: string
   assetType: string
+  assetDescription?: string
   currency: string
   purchaseDate: string
   saleDate: string
@@ -59,6 +60,12 @@ export interface F0121214Data {
     pdfo: number
     militaryTax: number
     total: number
+    profitFromTrades?: number
+    dividends?: number
+    pdfoFromTrades?: number
+    pdfoFromDividends?: number
+    militaryTaxFromTrades?: number
+    militaryTaxFromDividends?: number
   }
 }
 
@@ -294,9 +301,15 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       assetTypes: {
         stocks: "Акції",
         bonds: "Облігації",
+        options: "Опціони",
+        dividends: "Дивіденди",
         crypto: "Крипто активи",
         real_estate: "Нерухоме майно",
         other: "Інше",
+      },
+      taxRates: {
+        trades: "Трейди (18% ПДФО + 5% ВЗ)",
+        dividends: "Дивіденди (9% ПДФО + 5% ВЗ)",
       },
     },
     en: {
@@ -330,9 +343,15 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       assetTypes: {
         stocks: "Stocks",
         bonds: "Bonds",
+        options: "Options",
+        dividends: "Dividends",
         crypto: "Crypto Assets",
         real_estate: "Real Estate",
         other: "Other",
+      },
+      taxRates: {
+        trades: "Trades (18% PIT + 5% ML)",
+        dividends: "Dividends (9% PIT + 5% ML)",
       },
     },
   }
@@ -398,7 +417,11 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
     const purchasePrice = parseFloat(position.purchasePrice) || 0
     const salePrice = parseFloat(position.salePrice) || 0
     const expenses = parseFloat(position.expenses) || 0
-    const profit = Math.max(0, salePrice - purchasePrice - expenses)
+
+    // For dividends, profit is just the received amount (no purchase cost)
+    const profit = position.assetType === "dividends"
+      ? salePrice
+      : Math.max(0, salePrice - purchasePrice - expenses)
 
     const assetTypeLabel =
       t.assetTypes[position.assetType as keyof typeof t.assetTypes] || position.assetType || "-"
@@ -418,25 +441,49 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
     const positionData = [
       [t.assetType, assetTypeLabel],
       [t.currency, currency],
-      [t.purchaseDate, position.purchaseDate || "-"],
-      [t.saleDate, position.saleDate || "-"],
     ]
 
-    // Add foreign currency amounts if not UAH
-    if (currency !== "UAH") {
+    // For non-dividends, show purchase and sale dates
+    if (position.assetType !== "dividends") {
       positionData.push(
-        [t.purchasePriceForeign, purchasePriceForeign > 0 ? `${purchasePriceForeign.toFixed(2)} ${currency}` : "-"],
-        [t.salePriceForeign, salePriceForeign > 0 ? `${salePriceForeign.toFixed(2)} ${currency}` : "-"],
-        [t.purchaseRate, purchaseRate > 0 ? `${purchaseRate.toFixed(4)}` : "-"],
-        [t.saleRate, saleRate > 0 ? `${saleRate.toFixed(4)}` : "-"]
+        [t.purchaseDate, position.purchaseDate || "-"],
+        [t.saleDate, position.saleDate || "-"]
+      )
+    } else {
+      // For dividends, only show payment date
+      positionData.push(
+        [t.saleDate, position.saleDate || "-"]
       )
     }
 
+    // Add foreign currency amounts if not UAH
+    if (currency !== "UAH") {
+      if (position.assetType !== "dividends" && purchasePriceForeign > 0) {
+        positionData.push(
+          [t.purchasePriceForeign, `${purchasePriceForeign.toFixed(2)} ${currency}`],
+          [t.purchaseRate, purchaseRate > 0 ? `${purchaseRate.toFixed(4)}` : "-"]
+        )
+      }
+      if (salePriceForeign > 0) {
+        positionData.push(
+          [position.assetType === "dividends" ? "Дивіденди (валюта):" : t.salePriceForeign, `${salePriceForeign.toFixed(2)} ${currency}`],
+          [position.assetType === "dividends" ? "Курс НБУ:" : t.saleRate, saleRate > 0 ? `${saleRate.toFixed(4)}` : "-"]
+        )
+      }
+    }
+
+    // Add UAH amounts
+    if (position.assetType !== "dividends" && purchasePrice > 0) {
+      positionData.push([t.purchasePrice, `${purchasePrice.toFixed(2)} UAH`])
+    }
     positionData.push(
-      [t.purchasePrice, purchasePrice > 0 ? `${purchasePrice.toFixed(2)} UAH` : "-"],
-      [t.salePrice, salePrice > 0 ? `${salePrice.toFixed(2)} UAH` : "-"],
-      [t.expenses, expenses > 0 ? `${expenses.toFixed(2)} UAH` : "-"],
-      [t.positionProfit, `${profit.toFixed(2)} UAH`]
+      [position.assetType === "dividends" ? "Дивіденди (UAH):" : t.salePrice, `${salePrice.toFixed(2)} UAH`]
+    )
+    if (position.assetType !== "dividends" && expenses > 0) {
+      positionData.push([t.expenses, `${expenses.toFixed(2)} UAH`])
+    }
+    positionData.push(
+      [position.assetType === "dividends" ? "Оподатковувана сума:" : t.positionProfit, `${profit.toFixed(2)} UAH`]
     )
 
     autoTable(doc, {
@@ -477,11 +524,33 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   doc.text(t.taxSummary, 15, yPos)
   yPos += 10
 
-  const taxData = [
+  const taxData = []
+
+  // Add trades breakdown if exists
+  if (data.calculations.profitFromTrades !== undefined && data.calculations.profitFromTrades !== 0) {
+    taxData.push(
+      [`${language === "uk" ? "Прибуток від трейдів:" : "Profit from trades:"}`, `${(data.calculations.profitFromTrades || 0).toFixed(2)} UAH`],
+      [`${language === "uk" ? "  - ПДФО (18%):" : "  - PIT (18%):"}`, `${(data.calculations.pdfoFromTrades || 0).toFixed(2)} UAH`],
+      [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromTrades || 0).toFixed(2)} UAH`]
+    )
+  }
+
+  // Add dividends breakdown if exists
+  if (data.calculations.dividends !== undefined && data.calculations.dividends > 0) {
+    taxData.push(
+      [`${language === "uk" ? "Дивіденди отримано:" : "Dividends received:"}`, `${(data.calculations.dividends || 0).toFixed(2)} UAH`],
+      [`${language === "uk" ? "  - ПДФО (9%):" : "  - PIT (9%):"}`, `${(data.calculations.pdfoFromDividends || 0).toFixed(2)} UAH`],
+      [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromDividends || 0).toFixed(2)} UAH`]
+    )
+  }
+
+  // Add totals
+  taxData.push(
+    ["", ""],
     [t.totalProfit, `${data.calculations.profit.toFixed(2)} UAH`],
     [t.pdfo, `${data.calculations.pdfo.toFixed(2)} UAH`],
-    [t.militaryTax, `${data.calculations.militaryTax.toFixed(2)} UAH`],
-  ]
+    [t.militaryTax, `${data.calculations.militaryTax.toFixed(2)} UAH`]
+  )
 
   autoTable(doc, {
     startY: yPos,

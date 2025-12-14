@@ -22,6 +22,7 @@ import {
 import {
   parseIBXML,
   convertToFormPosition,
+  convertDividendToFormPosition,
   readFileAsText,
   calculateTradeTotals
 } from "@/lib/ib-xml-parser"
@@ -29,6 +30,7 @@ import {
 interface FinancialPosition {
   id: string
   assetType: string
+  assetDescription?: string
   currency: string
   purchaseDate: string
   saleDate: string
@@ -77,6 +79,12 @@ export function FormF0121214() {
     pdfo: 0,
     militaryTax: 0,
     total: 0,
+    profitFromTrades: 0,
+    dividends: 0,
+    pdfoFromTrades: 0,
+    pdfoFromDividends: 0,
+    militaryTaxFromTrades: 0,
+    militaryTaxFromDividends: 0,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -229,25 +237,28 @@ export function FormF0121214() {
       setImportStatus(language === "uk" ? "Парсинг XML..." : "Parsing XML...")
       const parsedData = parseIBXML(xmlContent)
 
-      if (parsedData.trades.length === 0) {
+      if (parsedData.trades.length === 0 && parsedData.dividends.length === 0) {
         alert(language === "uk"
-          ? "У файлі не знайдено закритих позицій для імпорту"
-          : "No closed positions found in the file")
+          ? "У файлі не знайдено закритих позицій або дивідендів для імпорту"
+          : "No closed positions or dividends found in the file")
         return
       }
 
       // Convert trades to form positions
       setImportProgress(30)
       setImportStatus(language === "uk" ? "Конвертація позицій..." : "Converting positions...")
-      const newPositions = parsedData.trades.map(trade => convertToFormPosition(trade))
+      const tradePositions = parsedData.trades.map(trade => convertToFormPosition(trade))
+      const dividendPositions = parsedData.dividends.map(dividend => convertDividendToFormPosition(dividend))
+      const newPositions = [...tradePositions, ...dividendPositions]
 
       // Replace existing positions with imported ones
       setPositions(newPositions)
 
       setImportProgress(40)
+      const totalItems = parsedData.trades.length + parsedData.dividends.length
       setImportStatus(language === "uk"
-        ? `Імпортовано ${parsedData.trades.length} позиції(й). Завантаження курсів НБУ...`
-        : `Imported ${parsedData.trades.length} position(s). Fetching NBU rates...`)
+        ? `Імпортовано ${totalItems} позиції(й) (трейди: ${parsedData.trades.length}, дивіденди: ${parsedData.dividends.length}). Завантаження курсів НБУ...`
+        : `Imported ${totalItems} position(s) (trades: ${parsedData.trades.length}, dividends: ${parsedData.dividends.length}). Fetching NBU rates...`)
 
       // Fetch rates for each position and update state progressively
       const updatedPositions = [...newPositions]
@@ -309,9 +320,18 @@ export function FormF0121214() {
       setImportStatus(language === "uk" ? "Завершено!" : "Complete!")
 
       setTimeout(() => {
+        const totalItems = parsedData.trades.length + parsedData.dividends.length
         const message = language === "uk"
-          ? `✅ Успішно імпортовано ${parsedData.trades.length} позиції(й)!\n\nЗагальний прибуток/збиток: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\nКурси НБУ завантажено та суми конвертовано в гривні.`
-          : `✅ Successfully imported ${parsedData.trades.length} position(s)!\n\nTotal profit/loss: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\nNBU rates fetched and amounts converted to UAH.`
+          ? `✅ Успішно імпортовано ${totalItems} позиції(й)!\n\n` +
+            `Трейди: ${parsedData.trades.length}\n` +
+            `Дивіденди: ${parsedData.dividends.length}\n\n` +
+            (parsedData.trades.length > 0 ? `Загальний прибуток/збиток від трейдів: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\n` : '') +
+            `Курси НБУ завантажено та суми конвертовано в гривні.`
+          : `✅ Successfully imported ${totalItems} position(s)!\n\n` +
+            `Trades: ${parsedData.trades.length}\n` +
+            `Dividends: ${parsedData.dividends.length}\n\n` +
+            (parsedData.trades.length > 0 ? `Total profit/loss from trades: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\n` : '') +
+            `NBU rates fetched and amounts converted to UAH.`
 
         alert(message)
         setImportProgress(0)
@@ -340,46 +360,72 @@ export function FormF0121214() {
 
   // Автоматический пересчет налогов при изменении позиций
   useEffect(() => {
-    let totalProfit = 0
+    let totalProfitFromTrades = 0
+    let totalDividends = 0
 
     positions.forEach((pos) => {
       const purchasePrice = Number.parseFloat(pos.purchasePrice) || 0
       const salePrice = Number.parseFloat(pos.salePrice) || 0
       const expenses = Number.parseFloat(pos.expenses) || 0
 
-      // Разрешаем отрицательные значения (убытки)
-      const positionProfit = salePrice - purchasePrice - expenses
-      totalProfit += positionProfit
+      // Разделяем дивиденды и остальные операции
+      if (pos.assetType === "dividends") {
+        // Для дивидендов считаем только полученную сумму
+        totalDividends += salePrice
+      } else {
+        // Для трейдов разрешаем отрицательные значения (убытки)
+        const positionProfit = salePrice - purchasePrice - expenses
+        totalProfitFromTrades += positionProfit
 
-      // Логування для відлагодження
-      if (purchasePrice > 0 || salePrice > 0 || expenses > 0) {
-        console.log(`Позиція ${pos.id}:`, {
-          купівля: purchasePrice,
-          продаж: salePrice,
-          витрати: expenses,
-          прибуток: positionProfit,
-          тип: positionProfit >= 0 ? '✅ прибуток' : '❌ збиток'
-        })
+        // Логування для відлагодження
+        if (purchasePrice > 0 || salePrice > 0 || expenses > 0) {
+          console.log(`Позиція ${pos.id}:`, {
+            купівля: purchasePrice,
+            продаж: salePrice,
+            витрати: expenses,
+            прибуток: positionProfit,
+            тип: positionProfit >= 0 ? '✅ прибуток' : '❌ збиток'
+          })
+        }
       }
     })
 
-    // Налоги платятся только с прибыли
-    const pdfo = totalProfit > 0 ? totalProfit * 0.18 : 0 // 18% income tax
-    const militaryTax = totalProfit > 0 ? totalProfit * 0.05 : 0 // 5% military tax
-    const total = pdfo + militaryTax
+    // Налоги для трейдов: 18% ПДФО + 5% военный сбор
+    const pdfoFromTrades = totalProfitFromTrades > 0 ? totalProfitFromTrades * 0.18 : 0
+    const militaryTaxFromTrades = totalProfitFromTrades > 0 ? totalProfitFromTrades * 0.05 : 0
+
+    // Налоги для дивидендов: 9% ПДФО + 5% военный сбор
+    const pdfoFromDividends = totalDividends > 0 ? totalDividends * 0.09 : 0
+    const militaryTaxFromDividends = totalDividends > 0 ? totalDividends * 0.05 : 0
+
+    // Общие налоги
+    const totalPdfo = pdfoFromTrades + pdfoFromDividends
+    const totalMilitaryTax = militaryTaxFromTrades + militaryTaxFromDividends
+    const total = totalPdfo + totalMilitaryTax
 
     console.log('Загальні розрахунки:', {
-      'загальний прибуток': totalProfit,
-      'ПДФО (18%)': pdfo,
-      'Військовий збір (5%)': militaryTax,
+      'прибуток від трейдів': totalProfitFromTrades,
+      'дивіденди': totalDividends,
+      'ПДФО від трейдів (18%)': pdfoFromTrades,
+      'ПДФО від дивідендів (9%)': pdfoFromDividends,
+      'ПДФО загалом': totalPdfo,
+      'Військовий збір від трейдів (5%)': militaryTaxFromTrades,
+      'Військовий збір від дивідендів (5%)': militaryTaxFromDividends,
+      'Військовий збір загалом': totalMilitaryTax,
       'всього до сплати': total
     })
 
     setCalculations({
-      profit: totalProfit,
-      pdfo,
-      militaryTax,
+      profit: totalProfitFromTrades + totalDividends,
+      pdfo: totalPdfo,
+      militaryTax: totalMilitaryTax,
       total,
+      profitFromTrades: totalProfitFromTrades,
+      dividends: totalDividends,
+      pdfoFromTrades: pdfoFromTrades,
+      pdfoFromDividends: pdfoFromDividends,
+      militaryTaxFromTrades: militaryTaxFromTrades,
+      militaryTaxFromDividends: militaryTaxFromDividends,
     })
   }, [positions])
 
@@ -726,6 +772,36 @@ export function FormF0121214() {
                               : language === "pt"
                                 ? "Títulos"
                                 : "Anleihen"}
+                  </SelectItem>
+                  <SelectItem value="options">
+                    {language === "uk"
+                      ? "Опціони"
+                      : language === "en"
+                        ? "Options"
+                        : language === "fr"
+                          ? "Options"
+                          : language === "pl"
+                            ? "Opcje"
+                            : language === "es"
+                              ? "Opciones"
+                              : language === "pt"
+                                ? "Opções"
+                                : "Optionen"}
+                  </SelectItem>
+                  <SelectItem value="dividends">
+                    {language === "uk"
+                      ? "Дивіденди"
+                      : language === "en"
+                        ? "Dividends"
+                        : language === "fr"
+                          ? "Dividendes"
+                          : language === "pl"
+                            ? "Dywidendy"
+                            : language === "es"
+                              ? "Dividendos"
+                              : language === "pt"
+                                ? "Dividendos"
+                                : "Dividenden"}
                   </SelectItem>
                   <SelectItem value="crypto">
                     {language === "uk"
