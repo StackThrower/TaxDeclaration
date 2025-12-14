@@ -5,6 +5,7 @@ import { Hero } from "@/components/hero"
 import { FormsSection } from "@/components/forms-section"
 import { TaxCalculator } from "@/components/tax-calculator"
 import { Footer } from "@/components/footer"
+import { DynamicSEO } from "@/components/dynamic-seo"
 import { getCountry, type CountryCode } from "@/lib/countries"
 
 // Generate beautiful SSR metadata for root page based on browser language
@@ -190,6 +191,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
+      <DynamicSEO isRootPage={true} />
       <Header />
       <Hero />
       <FormsSection country={country} />
