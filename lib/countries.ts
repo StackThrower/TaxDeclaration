@@ -442,6 +442,6 @@ export function getCountryCodes(): CountryCode[] {
 
 // Get default country for language
 export function getDefaultCountryForLanguage(lang: string): CountryCode {
-  return languageToCountryMap[lang] || "us"
+  return languageToCountryMap[lang] || "ua"
 }
 

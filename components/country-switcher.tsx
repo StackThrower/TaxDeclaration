@@ -14,11 +14,11 @@ export function CountrySwitcher() {
 
   // Parse current locale to get country code
   const locale = params?.locale as string
-  const currentCountryCode = locale?.split("-")[1] as CountryCode || "ua"
+  const currentCountryCode = (locale?.split("-")[1] as CountryCode) || "ua"
   const currentCountry = countries[currentCountryCode]
 
   const handleCountryChange = (countryCode: CountryCode) => {
-    // Navigate to new locale with language-country format
+    // Navigate to locale-specific page with language-country format
     router.push(`/${language}-${countryCode}`)
   }
 

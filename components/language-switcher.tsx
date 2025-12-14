@@ -1,6 +1,6 @@
 "use client"
 
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useRouter, usePathname } from "next/navigation"
 import { useI18n } from "@/lib/i18n-context"
 import { languages, type Language } from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
@@ -22,6 +22,10 @@ export function LanguageSwitcher() {
   const { language, setLanguage } = useI18n()
   const router = useRouter()
   const params = useParams()
+  const pathname = usePathname()
+
+  // Check if we're on the root page (no locale)
+  const isRootPage = pathname === "/"
 
   // Parse current locale to get country code
   const locale = params?.locale as string
@@ -29,7 +33,14 @@ export function LanguageSwitcher() {
 
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang)
-    // Navigate to new locale with language-country format
+
+    // If on root page, stay on root page (just update language)
+    if (isRootPage) {
+      // Language will be updated by context, page will re-render with new language
+      return
+    }
+
+    // Otherwise navigate to new locale with language-country format
     router.push(`/${lang}-${currentCountryCode}`)
   }
 
