@@ -263,7 +263,7 @@ export const generateF0100214PDF = async (data: F0100214Data, language: string =
   window.open(doc.output("bloburl"), "_blank")
 }
 
-export const generateF0121214PDF = async (data: F0121214Data, language: string = "uk") => {
+export const generateF0121214PDF = async (data: F0121214Data, language: string = "uk", createCopy: boolean = true) => {
   const doc = new jsPDF()
 
   // Setup Ukrainian fonts for Cyrillic support
@@ -271,86 +271,98 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
 
   const labels = {
     uk: {
-      title: "Податкова декларація Ф0121214 (Ф1)",
-      subtitle: "Декларація про інвестиційні активи",
-      personalData: "Персональні дані",
-      fullName: "Прізвище та ім'я:",
-      taxNumber: "ІПН:",
-      year: "Рік звіту:",
-      positions: "Фінансові позиції",
+      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ",
+      formNumber: "Ф0121214 (Ф1)",
+      subtitle: "про майновий стан і доходи",
+      officialNote: "Додаток Ф1 до річної податкової декларації",
+      copyLabel: "КОПІЯ",
+      originalLabel: "ОРИГІНАЛ",
+      personalData: "I. ВІДОМОСТІ ПРО ПЛАТНИКА ПОДАТКУ",
+      fullName: "Прізвище, ім'я, по батькові:",
+      taxNumber: "Реєстраційний номер облікової картки платника податків (ІПН):",
+      year: "Звітний (податковий) період (рік):",
+      positions: "II. ВІДОМОСТІ ПРО ІНВЕСТИЦІЙНІ ПРИБУТКИ",
       position: "Позиція",
-      assetType: "Тип активу:",
+      assetType: "Вид активу:",
       currency: "Валюта:",
       purchaseDate: "Дата придбання:",
-      saleDate: "Дата продажу:",
+      saleDate: "Дата продажу/отримання:",
       purchasePriceForeign: "Сума купівлі (валюта):",
       salePriceForeign: "Сума продажу (валюта):",
-      purchaseRate: "Курс НБУ купівлі:",
-      saleRate: "Курс НБУ продажу:",
-      purchasePrice: "Вартість придбання:",
-      salePrice: "Вартість продажу:",
-      expenses: "Витрати:",
-      positionProfit: "Прибуток позиції:",
-      taxSummary: "Підсумок податкових зобов'язань",
-      totalProfit: "Загальний прибуток:",
-      pdfo: "ПДФО (18%):",
-      militaryTax: "Військовий збір (5%):",
-      totalTax: "Всього до сплати:",
-      notes: "Примітки:",
-      generatedDate: "Дата формування:",
+      purchaseRate: "Курс НБУ на дату придбання:",
+      saleRate: "Курс НБУ на дату продажу:",
+      purchasePrice: "Вартість придбання (грн):",
+      salePrice: "Вартість продажу (грн):",
+      expenses: "Документально підтверджені витрати (грн):",
+      positionProfit: "Фінансовий результат (грн):",
+      taxSummary: "III. РОЗРАХУНОК ПОДАТКОВИХ ЗОБОВ'ЯЗАНЬ",
+      totalProfit: "Загальний інвестиційний прибуток:",
+      pdfo: "Податок на доходи фізичних осіб (ПДФО):",
+      militaryTax: "Військовий збір:",
+      totalTax: "ЗАГАЛЬНА СУМА ДО СПЛАТИ:",
+      notes: "IV. ДОДАТКОВА ІНФОРМАЦІЯ",
+      generatedDate: "Дата формування декларації:",
+      signature: "Підпис платника податку",
+      signatureLine: "_________________",
       assetTypes: {
         stocks: "Акції",
         bonds: "Облігації",
         options: "Опціони",
         dividends: "Дивіденди",
-        crypto: "Крипто активи",
+        crypto: "Криптовалюта",
         real_estate: "Нерухоме майно",
         other: "Інше",
       },
       taxRates: {
-        trades: "Трейди (18% ПДФО + 5% ВЗ)",
+        trades: "Операції з цінними паперами (18% ПДФО + 5% ВЗ)",
         dividends: "Дивіденди (9% ПДФО + 5% ВЗ)",
       },
     },
     en: {
-      title: "Tax Declaration F0121214 (F1)",
-      subtitle: "Declaration of investment assets",
-      personalData: "Personal Data",
-      fullName: "Full Name:",
-      taxNumber: "Tax ID:",
-      year: "Reporting Year:",
-      positions: "Financial Positions",
+      title: "TAX DECLARATION",
+      formNumber: "F0121214 (F1)",
+      subtitle: "on property status and income",
+      officialNote: "Appendix F1 to annual tax return",
+      copyLabel: "COPY",
+      originalLabel: "ORIGINAL",
+      personalData: "I. INFORMATION ABOUT THE TAXPAYER",
+      fullName: "Full name:",
+      taxNumber: "Taxpayer identification number (TIN):",
+      year: "Reporting (tax) period (year):",
+      positions: "II. INFORMATION ABOUT INVESTMENT INCOME",
       position: "Position",
-      assetType: "Asset Type:",
+      assetType: "Asset type:",
       currency: "Currency:",
-      purchaseDate: "Purchase Date:",
-      saleDate: "Sale Date:",
-      purchasePriceForeign: "Purchase amount (foreign):",
-      salePriceForeign: "Sale amount (foreign):",
-      purchaseRate: "NBU purchase rate:",
-      saleRate: "NBU sale rate:",
-      purchasePrice: "Purchase Price:",
-      salePrice: "Sale Price:",
-      expenses: "Expenses:",
-      positionProfit: "Position Profit:",
-      taxSummary: "Tax Obligations Summary",
-      totalProfit: "Total Profit:",
-      pdfo: "Personal Income Tax (18%):",
-      militaryTax: "Military Levy (5%):",
-      totalTax: "Total Due:",
-      notes: "Notes:",
-      generatedDate: "Generated Date:",
+      purchaseDate: "Purchase date:",
+      saleDate: "Sale/receipt date:",
+      purchasePriceForeign: "Purchase amount (foreign currency):",
+      salePriceForeign: "Sale amount (foreign currency):",
+      purchaseRate: "NBU rate on purchase date:",
+      saleRate: "NBU rate on sale date:",
+      purchasePrice: "Purchase cost (UAH):",
+      salePrice: "Sale value (UAH):",
+      expenses: "Documented expenses (UAH):",
+      positionProfit: "Financial result (UAH):",
+      taxSummary: "III. TAX LIABILITY CALCULATION",
+      totalProfit: "Total investment profit:",
+      pdfo: "Personal income tax (PIT):",
+      militaryTax: "Military levy:",
+      totalTax: "TOTAL AMOUNT DUE:",
+      notes: "IV. ADDITIONAL INFORMATION",
+      generatedDate: "Declaration date:",
+      signature: "Taxpayer signature",
+      signatureLine: "_________________",
       assetTypes: {
         stocks: "Stocks",
         bonds: "Bonds",
         options: "Options",
         dividends: "Dividends",
-        crypto: "Crypto Assets",
+        crypto: "Cryptocurrency",
         real_estate: "Real Estate",
         other: "Other",
       },
       taxRates: {
-        trades: "Trades (18% PIT + 5% ML)",
+        trades: "Securities transactions (18% PIT + 5% ML)",
         dividends: "Dividends (9% PIT + 5% ML)",
       },
     },
@@ -358,271 +370,335 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
 
   const t = labels[language as keyof typeof labels] || labels.en
 
-  // Header
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(18)
-  doc.setTextColor(40, 40, 40)
-  doc.text(t.title, 105, 20, { align: "center" })
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text(t.subtitle, 105, 28, { align: "center" })
-
-  let yPos = 45
-
-  // Personal Data Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.personalData, 15, yPos)
-  yPos += 10
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(11)
-  doc.setTextColor(40, 40, 40)
-  const personalData = [
-    [t.fullName, data.fullName || "-"],
-    [t.taxNumber, data.taxNumber || "-"],
-    [t.year, data.year || "-"],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    head: [],
-    body: personalData,
-    theme: "plain",
-    styles: {
-      font: "DejaVuSans",
-      fontStyle: "normal",
-      fontSize: 10,
-      cellPadding: 3
-    },
-    columnStyles: {
-      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 50 },
-      1: { font: "DejaVuSans", cellWidth: 130 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Positions Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.positions, 15, yPos)
-  yPos += 10
-
-  data.positions.forEach((position, index) => {
-    const purchasePrice = parseFloat(position.purchasePrice) || 0
-    const salePrice = parseFloat(position.salePrice) || 0
-    const expenses = parseFloat(position.expenses) || 0
-
-    // For dividends, profit is just the received amount (no purchase cost)
-    const profit = position.assetType === "dividends"
-      ? salePrice
-      : Math.max(0, salePrice - purchasePrice - expenses)
-
-    const assetTypeLabel =
-      t.assetTypes[position.assetType as keyof typeof t.assetTypes] || position.assetType || "-"
-
-    const currency = position.currency || "UAH"
-    const purchasePriceForeign = parseFloat(position.purchasePriceForeign) || 0
-    const salePriceForeign = parseFloat(position.salePriceForeign) || 0
-    const purchaseRate = parseFloat(position.purchaseRate) || 0
-    const saleRate = parseFloat(position.saleRate) || 0
-
+  // Function to generate document content (original or copy)
+  const generateContent = (isCopy: boolean) => {
+    // Header - Official format
     doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(12)
-    doc.setTextColor(60, 60, 60)
-    doc.text(`${t.position} #${index + 1}`, 15, yPos)
-    yPos += 8
+    doc.setFontSize(16)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.title, 105, 15, { align: "center" })
 
-    const positionData = [
-      [t.assetType, assetTypeLabel],
-      [t.currency, currency],
+    doc.setFontSize(13)
+    doc.text(t.formNumber, 105, 23, { align: "center" })
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(11)
+    doc.text(t.subtitle, 105, 30, { align: "center" })
+
+    // Official note
+    doc.setFontSize(9)
+    doc.setTextColor(80, 80, 80)
+    doc.text(t.officialNote, 105, 36, { align: "center" })
+
+    // Original/Copy marker
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(11)
+    if (isCopy) {
+      doc.setTextColor(200, 0, 0)
+      doc.text(t.copyLabel, 180, 15, { align: "right" })
+    } else {
+      doc.setTextColor(0, 100, 0)
+      doc.text(t.originalLabel, 180, 15, { align: "right" })
+    }
+
+    let yPos = 48
+
+    // Personal Data Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.personalData, 15, yPos)
+    yPos += 10
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(10)
+    doc.setTextColor(40, 40, 40)
+    const personalData = [
+      [t.fullName, data.fullName || "-"],
+      [t.taxNumber, data.taxNumber || "-"],
+      [t.year, data.year || "-"],
     ]
 
-    // For non-dividends, show purchase and sale dates
-    if (position.assetType !== "dividends") {
+    autoTable(doc, {
+      startY: yPos,
+      head: [],
+      body: personalData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontStyle: "normal",
+        fontSize: 9,
+        cellPadding: 3
+      },
+      columnStyles: {
+        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 80 },
+        1: { font: "DejaVuSans", cellWidth: 100 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 12
+
+    // Positions Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.positions, 15, yPos)
+    yPos += 8
+
+    data.positions.forEach((position, index) => {
+      const purchasePrice = parseFloat(position.purchasePrice) || 0
+      const salePrice = parseFloat(position.salePrice) || 0
+      const expenses = parseFloat(position.expenses) || 0
+
+      const profit = position.assetType === "dividends"
+        ? salePrice
+        : Math.max(0, salePrice - purchasePrice - expenses)
+
+      const assetTypeLabel =
+        t.assetTypes[position.assetType as keyof typeof t.assetTypes] || position.assetType || "-"
+
+      const currency = position.currency || "UAH"
+      const purchasePriceForeign = parseFloat(position.purchasePriceForeign) || 0
+      const salePriceForeign = parseFloat(position.salePriceForeign) || 0
+      const purchaseRate = parseFloat(position.purchaseRate) || 0
+      const saleRate = parseFloat(position.saleRate) || 0
+
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(11)
+      doc.setTextColor(60, 60, 60)
+      doc.text(`${t.position} #${index + 1}`, 15, yPos)
+      yPos += 7
+
+      const positionData = [
+        [t.assetType, assetTypeLabel],
+        [t.currency, currency],
+      ]
+
+      if (position.assetType !== "dividends") {
+        positionData.push(
+          [t.purchaseDate, position.purchaseDate || "-"],
+          [t.saleDate, position.saleDate || "-"]
+        )
+      } else {
+        positionData.push([t.saleDate, position.saleDate || "-"])
+      }
+
+      if (currency !== "UAH") {
+        if (position.assetType !== "dividends" && purchasePriceForeign > 0) {
+          positionData.push(
+            [t.purchasePriceForeign, `${purchasePriceForeign.toFixed(2)} ${currency}`],
+            [t.purchaseRate, purchaseRate > 0 ? `${purchaseRate.toFixed(4)}` : "-"]
+          )
+        }
+        if (salePriceForeign > 0) {
+          positionData.push(
+            [position.assetType === "dividends" ? "Дивіденди (валюта):" : t.salePriceForeign, `${salePriceForeign.toFixed(2)} ${currency}`],
+            [position.assetType === "dividends" ? "Курс НБУ:" : t.saleRate, saleRate > 0 ? `${saleRate.toFixed(4)}` : "-"]
+          )
+        }
+      }
+
+      if (position.assetType !== "dividends" && purchasePrice > 0) {
+        positionData.push([t.purchasePrice, `${purchasePrice.toFixed(2)} UAH`])
+      }
       positionData.push(
-        [t.purchaseDate, position.purchaseDate || "-"],
-        [t.saleDate, position.saleDate || "-"]
+        [position.assetType === "dividends" ? "Дивіденди (UAH):" : t.salePrice, `${salePrice.toFixed(2)} UAH`]
       )
-    } else {
-      // For dividends, only show payment date
+      if (position.assetType !== "dividends" && expenses > 0) {
+        positionData.push([t.expenses, `${expenses.toFixed(2)} UAH`])
+      }
       positionData.push(
-        [t.saleDate, position.saleDate || "-"]
+        [position.assetType === "dividends" ? "Оподатковувана сума:" : t.positionProfit, `${profit.toFixed(2)} UAH`]
+      )
+
+      autoTable(doc, {
+        startY: yPos,
+        head: [],
+        body: positionData,
+        theme: "striped",
+        styles: {
+          font: "DejaVuSans",
+          fontStyle: "normal",
+          fontSize: 8,
+          cellPadding: 2
+        },
+        columnStyles: {
+          0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 80 },
+          1: { font: "DejaVuSans", cellWidth: 100 },
+        },
+      })
+
+      yPos = (doc as any).lastAutoTable.finalY + 8
+
+      if (yPos > 250 && index < data.positions.length - 1) {
+        doc.addPage()
+        yPos = 20
+      }
+    })
+
+    // Tax Summary Section
+    if (yPos > 220) {
+      doc.addPage()
+      yPos = 20
+    }
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.taxSummary, 15, yPos)
+    yPos += 8
+
+    const taxData = []
+
+    if (data.calculations.profitFromTrades !== undefined && data.calculations.profitFromTrades !== 0) {
+      taxData.push(
+        [`${language === "uk" ? "Прибуток від операцій з ЦП:" : "Profit from securities:"}`, `${(data.calculations.profitFromTrades || 0).toFixed(2)} UAH`],
+        [`${language === "uk" ? "  - ПДФО (18%):" : "  - PIT (18%):"}`, `${(data.calculations.pdfoFromTrades || 0).toFixed(2)} UAH`],
+        [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromTrades || 0).toFixed(2)} UAH`]
       )
     }
 
-    // Add foreign currency amounts if not UAH
-    if (currency !== "UAH") {
-      if (position.assetType !== "dividends" && purchasePriceForeign > 0) {
-        positionData.push(
-          [t.purchasePriceForeign, `${purchasePriceForeign.toFixed(2)} ${currency}`],
-          [t.purchaseRate, purchaseRate > 0 ? `${purchaseRate.toFixed(4)}` : "-"]
-        )
-      }
-      if (salePriceForeign > 0) {
-        positionData.push(
-          [position.assetType === "dividends" ? "Дивіденди (валюта):" : t.salePriceForeign, `${salePriceForeign.toFixed(2)} ${currency}`],
-          [position.assetType === "dividends" ? "Курс НБУ:" : t.saleRate, saleRate > 0 ? `${saleRate.toFixed(4)}` : "-"]
-        )
-      }
+    if (data.calculations.dividends !== undefined && data.calculations.dividends > 0) {
+      taxData.push(
+        [`${language === "uk" ? "Дивіденди отримано:" : "Dividends received:"}`, `${(data.calculations.dividends || 0).toFixed(2)} UAH`],
+        [`${language === "uk" ? "  - ПДФО (9%):" : "  - PIT (9%):"}`, `${(data.calculations.pdfoFromDividends || 0).toFixed(2)} UAH`],
+        [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromDividends || 0).toFixed(2)} UAH`]
+      )
     }
 
-    // Add UAH amounts
-    if (position.assetType !== "dividends" && purchasePrice > 0) {
-      positionData.push([t.purchasePrice, `${purchasePrice.toFixed(2)} UAH`])
-    }
-    positionData.push(
-      [position.assetType === "dividends" ? "Дивіденди (UAH):" : t.salePrice, `${salePrice.toFixed(2)} UAH`]
-    )
-    if (position.assetType !== "dividends" && expenses > 0) {
-      positionData.push([t.expenses, `${expenses.toFixed(2)} UAH`])
-    }
-    positionData.push(
-      [position.assetType === "dividends" ? "Оподатковувана сума:" : t.positionProfit, `${profit.toFixed(2)} UAH`]
+    taxData.push(
+      ["", ""],
+      [t.totalProfit, `${data.calculations.profit.toFixed(2)} UAH`],
+      [t.pdfo, `${data.calculations.pdfo.toFixed(2)} UAH`],
+      [t.militaryTax, `${data.calculations.militaryTax.toFixed(2)} UAH`]
     )
 
     autoTable(doc, {
       startY: yPos,
       head: [],
-      body: positionData,
-      theme: "striped",
+      body: taxData,
+      theme: "plain",
       styles: {
         font: "DejaVuSans",
         fontStyle: "normal",
         fontSize: 9,
-        cellPadding: 2
+        cellPadding: 3
       },
       columnStyles: {
-        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 50 },
-        1: { font: "DejaVuSans", cellWidth: 130 },
+        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 80 },
+        1: { font: "DejaVuSans", cellWidth: 100, halign: "right" },
       },
     })
 
-    yPos = (doc as any).lastAutoTable.finalY + 10
+    yPos = (doc as any).lastAutoTable.finalY + 5
 
-    // Add new page if needed
-    if (yPos > 250 && index < data.positions.length - 1) {
+    autoTable(doc, {
+      startY: yPos,
+      head: [],
+      body: [[t.totalTax, `${data.calculations.total.toFixed(2)} UAH`]],
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontSize: 10,
+        cellPadding: 4,
+        fontStyle: "bold",
+        fillColor: [240, 240, 255]
+      },
+      columnStyles: {
+        0: { font: "DejaVuSans", cellWidth: 80 },
+        1: { font: "DejaVuSans", cellWidth: 100, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 12
+
+    // Notes
+    if (data.notes) {
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(11)
+      doc.setTextColor(0, 0, 0)
+      doc.text(t.notes, 15, yPos)
+      yPos += 7
+
+      doc.setFont("DejaVuSans", "normal")
+      doc.setFontSize(9)
+      doc.setTextColor(40, 40, 40)
+      const splitText = doc.splitTextToSize(data.notes, 180)
+      doc.text(splitText, 15, yPos)
+      yPos += splitText.length * 4 + 10
+    }
+
+    // Signature section
+    if (yPos > 250) {
       doc.addPage()
       yPos = 20
+    } else {
+      yPos += 8
     }
-  })
-
-  // Tax Summary Section
-  if (yPos > 220) {
-    doc.addPage()
-    yPos = 20
-  }
-
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.taxSummary, 15, yPos)
-  yPos += 10
-
-  const taxData = []
-
-  // Add trades breakdown if exists
-  if (data.calculations.profitFromTrades !== undefined && data.calculations.profitFromTrades !== 0) {
-    taxData.push(
-      [`${language === "uk" ? "Прибуток від трейдів:" : "Profit from trades:"}`, `${(data.calculations.profitFromTrades || 0).toFixed(2)} UAH`],
-      [`${language === "uk" ? "  - ПДФО (18%):" : "  - PIT (18%):"}`, `${(data.calculations.pdfoFromTrades || 0).toFixed(2)} UAH`],
-      [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromTrades || 0).toFixed(2)} UAH`]
-    )
-  }
-
-  // Add dividends breakdown if exists
-  if (data.calculations.dividends !== undefined && data.calculations.dividends > 0) {
-    taxData.push(
-      [`${language === "uk" ? "Дивіденди отримано:" : "Dividends received:"}`, `${(data.calculations.dividends || 0).toFixed(2)} UAH`],
-      [`${language === "uk" ? "  - ПДФО (9%):" : "  - PIT (9%):"}`, `${(data.calculations.pdfoFromDividends || 0).toFixed(2)} UAH`],
-      [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromDividends || 0).toFixed(2)} UAH`]
-    )
-  }
-
-  // Add totals
-  taxData.push(
-    ["", ""],
-    [t.totalProfit, `${data.calculations.profit.toFixed(2)} UAH`],
-    [t.pdfo, `${data.calculations.pdfo.toFixed(2)} UAH`],
-    [t.militaryTax, `${data.calculations.militaryTax.toFixed(2)} UAH`]
-  )
-
-  autoTable(doc, {
-    startY: yPos,
-    head: [],
-    body: taxData,
-    theme: "plain",
-    styles: {
-      font: "DejaVuSans",
-      fontStyle: "normal",
-      fontSize: 10,
-      cellPadding: 3
-    },
-    columnStyles: {
-      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 70 },
-      1: { font: "DejaVuSans", cellWidth: 110, halign: "right" },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 5
-
-  // Total Tax (highlighted)
-  autoTable(doc, {
-    startY: yPos,
-    head: [],
-    body: [[t.totalTax, `${data.calculations.total.toFixed(2)} UAH`]],
-    theme: "grid",
-    styles: {
-      font: "DejaVuSans",
-      fontSize: 11,
-      cellPadding: 4,
-      fontStyle: "bold",
-      fillColor: [240, 240, 255]
-    },
-    columnStyles: {
-      0: { font: "DejaVuSans", cellWidth: 70 },
-      1: { font: "DejaVuSans", cellWidth: 110, halign: "right" },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Notes
-  if (data.notes) {
-    doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(12)
-    doc.setTextColor(0, 102, 204)
-    doc.text(t.notes, 15, yPos)
-    yPos += 8
 
     doc.setFont("DejaVuSans", "normal")
-    doc.setFontSize(10)
+    doc.setFontSize(9)
     doc.setTextColor(40, 40, 40)
-    const splitText = doc.splitTextToSize(data.notes, 180)
-    doc.text(splitText, 15, yPos)
+    doc.text(t.signature, 15, yPos)
+    doc.text(t.signatureLine, 80, yPos)
+
+    return (doc as any).internal.getNumberOfPages()
   }
 
-  // Footer
+  // Generate original
+  const originalPages = generateContent(false)
+
+  // Add footer to original pages
   doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(9)
   doc.setTextColor(150, 150, 150)
-  const pageCount = (doc as any).internal.getNumberOfPages()
-  for (let i = 1; i <= pageCount; i++) {
+  for (let i = 1; i <= originalPages; i++) {
     doc.setPage(i)
     doc.text(
-      `${t.generatedDate} ${new Date().toLocaleDateString()} | Сторінка ${i} з ${pageCount}`,
+      `${t.generatedDate} ${new Date().toLocaleDateString()} | Сторінка ${i} з ${originalPages}`,
       105,
       285,
       { align: "center" }
     )
   }
 
-  // Open in new window
+  // Generate copy if requested
+  if (createCopy) {
+    // Add separator page
+    doc.addPage()
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(20)
+    doc.setTextColor(100, 100, 100)
+    doc.text("--- КОПІЯ / COPY ---", 105, 140, { align: "center" })
+
+    // Generate copy content
+    doc.addPage()
+    const copyStartPage = originalPages + 2
+    const copyEndPage = generateContent(true) + copyStartPage - 1
+
+    // Add footer to copy pages
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
+    doc.setTextColor(150, 150, 150)
+    for (let i = copyStartPage; i <= copyEndPage; i++) {
+      doc.setPage(i)
+      const pageNum = i - copyStartPage + 1
+      const totalCopyPages = copyEndPage - copyStartPage + 1
+      doc.text(
+        `${t.copyLabel} | ${t.generatedDate} ${new Date().toLocaleDateString()} | Сторінка ${pageNum} з ${totalCopyPages}`,
+        105,
+        285,
+        { align: "center" }
+      )
+    }
+  }
+
+  // Generate filename with timestamp
+  const timestamp = new Date().toISOString().split('T')[0]
+  const filename = `F0121214_${data.taxNumber || 'NN'}_${data.year}_${timestamp}.pdf`
+
+  // Save and open
+  doc.save(filename)
   window.open(doc.output("bloburl"), "_blank")
 }
 
@@ -1033,121 +1109,121 @@ export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl")
     uk: {
       title: "PIT-38 - Податкова декларація",
       subtitle: "Декларація про доходи з капіталів",
-      personalData: "Особисті дані",
-      fullName: "ПІБ:",
+      personalData: "I. ВІДОМОСТІ ПРО ПЛАТНИКА ПОДАТКУ",
+      fullName: "Прізвище, ім'я, по батькові:",
       pesel: "PESEL:",
       nip: "NIP:",
       address: "Адреса:",
       year: "Звітний рік:",
-      capitalIncome: "Доходи з капіталів",
+      capitalIncome: "II. ДОХОДИ З КАПІТАЛІВ",
       dividends: "Дивіденди:",
       interest: "Відсотки:",
       stockSales: "Продаж акцій:",
       bonds: "Облігації:",
-      otherCapital: "Інші:",
+      otherCapital: "Інші доходи з капіталів:",
       totalIncome: "Загальний дохід:",
-      costs: "Витрати",
+      costs: "III. ВИТРАТИ",
       stockCosts: "Витрати на акції:",
       otherCosts: "Інші витрати:",
       losses: "Збитки з минулих років:",
       totalCosts: "Загальні витрати:",
-      taxPaid: "Сплачений податок",
+      taxPaid: "IV. СПЛАЧЕНИЙ ПОДАТОК",
       advanceTax: "Авансовий податок:",
       foreignTax: "Податок за кордоном:",
-      taxBase: "База оподаткування:",
+      taxBase: "Податкова база:",
       calculatedTax: "Розрахований податок (19%):",
       taxToPay: "До сплати:",
-      additionalInfo: "Додаткова інформація:",
+      additionalInfo: "V. ДОДАТКОВА ІНФОРМАЦІЯ",
       generatedDate: "Дата формування:",
     },
     en: {
       title: "PIT-38 - Tax Return",
       subtitle: "Capital Income",
-      personalData: "Personal Data",
-      fullName: "Full Name:",
+      personalData: "I. INFORMATION ABOUT THE TAXPAYER",
+      fullName: "Full name:",
       pesel: "PESEL:",
       nip: "NIP:",
       address: "Address:",
       year: "Tax Year:",
-      capitalIncome: "Capital Income",
+      capitalIncome: "II. CAPITAL INCOME",
       dividends: "Dividends:",
       interest: "Interest:",
       stockSales: "Stock Sales:",
       bonds: "Bonds:",
-      otherCapital: "Other:",
+      otherCapital: "Other capital income:",
       totalIncome: "Total Income:",
-      costs: "Costs",
-      stockCosts: "Stock Costs:",
-      otherCosts: "Other Costs:",
-      losses: "Previous Year Losses:",
+      costs: "III. COSTS",
+      stockCosts: "Stock costs:",
+      otherCosts: "Other costs:",
+      losses: "Previous year losses:",
       totalCosts: "Total Costs:",
-      taxPaid: "Tax Paid",
+      taxPaid: "IV. TAX PAID",
       advanceTax: "Advance Tax:",
       foreignTax: "Foreign Tax:",
       taxBase: "Tax Base:",
       calculatedTax: "Calculated Tax (19%):",
       taxToPay: "Tax to Pay:",
-      additionalInfo: "Additional Information:",
+      additionalInfo: "V. ADDITIONAL INFORMATION",
       generatedDate: "Generated Date:",
     },
     pl: {
       title: "PIT-38 - Zeznanie podatkowe",
       subtitle: "Dochody z kapitałów pieniężnych",
-      personalData: "Dane osobowe",
+      personalData: "I. DANE OSOBOWE",
       fullName: "Imię i nazwisko:",
       pesel: "PESEL:",
       nip: "NIP:",
       address: "Adres:",
       year: "Rok podatkowy:",
-      capitalIncome: "Przychody z kapitałów",
+      capitalIncome: "II. DOCHODY Z KAPITAŁÓW",
       dividends: "Dywidendy:",
       interest: "Odsetki:",
       stockSales: "Sprzedaż akcji:",
       bonds: "Obligacje:",
-      otherCapital: "Inne:",
+      otherCapital: "Inne dochody z kapitałów:",
       totalIncome: "Suma przychodów:",
-      costs: "Koszty",
+      costs: "III. KOSZTY",
       stockCosts: "Koszty nabycia akcji:",
       otherCosts: "Inne koszty:",
       losses: "Straty z lat poprzednich:",
       totalCosts: "Suma kosztów:",
-      taxPaid: "Podatek zapłacony",
+      taxPaid: "IV. PODATEK ZAPŁACONY",
       advanceTax: "Zaliczki na podatek:",
       foreignTax: "Podatek za granicą:",
       taxBase: "Podstawa opodatkowania:",
       calculatedTax: "Obliczony podatek (19%):",
       taxToPay: "Do zapłaty:",
-      additionalInfo: "Informacje dodatkowe:",
+      additionalInfo: "V. INFORMACJE DODATKOWE",
       generatedDate: "Data wygenerowania:",
     },
     fr: {
       title: "PIT-38 - Déclaration fiscale",
       subtitle: "Revenus de capitaux",
-      personalData: "Données personnelles",
+      personalData: "I. DONNÉES PERSONNELLES",
       fullName: "Nom complet:",
       pesel: "PESEL:",
       nip: "NIP:",
       address: "Adresse:",
       year: "Année fiscale:",
-      capitalIncome: "Revenus de capitaux",
+      capitalIncome: "II. REVENUS DE CAPITAUX",
       dividends: "Dividendes:",
       interest: "Intérêts:",
       stockSales: "Vente d'actions:",
       bonds: "Obligations:",
-      otherCapital: "Autres:",
+      otherCapital: "Autres revenus de capitaux:",
       totalIncome: "Total des revenus:",
-      costs: "Frais",
+      costs: "III. FRAIS",
       stockCosts: "Frais d'achat d'actions:",
       otherCosts: "Autres frais:",
       losses: "Pertes des années précédentes:",
       totalCosts: "Total des frais:",
-      taxPaid: "Impôt payé",
+      taxPaid: "IV. IMPÔT PAYÉ",
       advanceTax: "Acomptes d'impôt:",
       foreignTax: "Impôt à l'étranger:",
       taxBase: "Base d'imposition:",
       calculatedTax: "Impôt calculé (19%):",
       taxToPay: "À payer:",
-      additionalInfo: "Informations complémentaires:",
+      additionalInfo: "V. INFORMATIONS COMPLÉMENTAIRES",
       generatedDate: "Date de génération:",
     },
   }
@@ -1550,7 +1626,7 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl")
 
   yPos = (doc as any).lastAutoTable.finalY + 15
 
-  // Property Sales
+  // Property Sales Section
   doc.setFont("DejaVuSans", "bold")
   doc.setFontSize(14)
   doc.setTextColor(0, 102, 204)
