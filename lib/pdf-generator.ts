@@ -69,7 +69,7 @@ export interface F0121214Data {
   }
 }
 
-export const generateF0100214PDF = async (data: F0100214Data, language: string = "uk") => {
+export const generateF0100214PDF = async (data: F0100214Data, language: string = "uk", createCopy: boolean = true) => {
   const doc = new jsPDF()
 
   // Setup Ukrainian fonts for Cyrillic support
@@ -77,189 +77,297 @@ export const generateF0100214PDF = async (data: F0100214Data, language: string =
 
   const labels = {
     uk: {
-      title: "Податкова декларація Ф0100214",
-      subtitle: "Декларація про майновий стан і доходи",
-      personalData: "Персональні дані",
-      fullName: "Прізвище та ім'я:",
-      taxNumber: "ІПН:",
-      passport: "Номер паспорта:",
-      residence: "Місце проживання:",
-      year: "Рік звіту:",
-      propertyInfo: "Інформація про майно",
-      realEstate: "Нерухоме майно:",
-      vehicles: "Транспортні засоби:",
-      otherProperty: "Інше майно:",
-      financialInfo: "Фінансова інформація",
-      totalIncome: "Загальний дохід (грн):",
-      expenses: "Витрати (грн):",
-      additionalInfo: "Додаткова інформація:",
-      generatedDate: "Дата формування:",
+      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ",
+      formNumber: "Ф0100214",
+      subtitle: "про майновий стан і доходи",
+      officialNote: "Річна податкова декларація про майновий стан і доходи",
+      copyLabel: "КОПІЯ",
+      originalLabel: "ОРИГІНАЛ",
+      personalData: "I. ВІДОМОСТІ ПРО ПЛАТНИКА ПОДАТКУ",
+      fullName: "Прізвище, ім'я, по батькові:",
+      taxNumber: "Реєстраційний номер облікової картки платника податків (ІПН):",
+      passport: "Серія та номер паспорта:",
+      residence: "Місце проживання (реєстрації):",
+      year: "Звітний (податковий) період (рік):",
+      propertyInfo: "II. ВІДОМОСТІ ПРО МАЙНО",
+      realEstate: "Нерухоме майно (адреса, площа, м²):",
+      vehicles: "Транспортні засоби (марка, модель, рік випуску):",
+      otherProperty: "Інше майно (опис):",
+      financialInfo: "III. ФІНАНСОВА ІНФОРМАЦІЯ",
+      totalIncome: "Загальний дохід за рік (грн):",
+      expenses: "Документально підтверджені витрати (грн):",
+      netIncome: "Чистий дохід (грн):",
+      additionalInfo: "IV. ДОДАТКОВА ІНФОРМАЦІЯ",
+      generatedDate: "Дата формування декларації:",
+      signature: "Підпис платника податку",
+      signatureLine: "_________________",
+      date: "Дата",
     },
     en: {
-      title: "Tax Declaration F0100214",
-      subtitle: "Declaration of property status and income",
-      personalData: "Personal Data",
-      fullName: "Full Name:",
-      taxNumber: "Tax ID:",
-      passport: "Passport Number:",
-      residence: "Place of Residence:",
-      year: "Reporting Year:",
-      propertyInfo: "Property Information",
-      realEstate: "Real Estate:",
-      vehicles: "Vehicles:",
-      otherProperty: "Other Property:",
-      financialInfo: "Financial Information",
-      totalIncome: "Total Income (UAH):",
-      expenses: "Expenses (UAH):",
-      additionalInfo: "Additional Information:",
-      generatedDate: "Generated Date:",
+      title: "TAX DECLARATION",
+      formNumber: "F0100214",
+      subtitle: "on property status and income",
+      officialNote: "Annual tax declaration on property status and income",
+      copyLabel: "COPY",
+      originalLabel: "ORIGINAL",
+      personalData: "I. INFORMATION ABOUT THE TAXPAYER",
+      fullName: "Full name:",
+      taxNumber: "Taxpayer identification number (TIN):",
+      passport: "Passport series and number:",
+      residence: "Place of residence (registration):",
+      year: "Reporting (tax) period (year):",
+      propertyInfo: "II. PROPERTY INFORMATION",
+      realEstate: "Real estate (address, area, m²):",
+      vehicles: "Vehicles (brand, model, year):",
+      otherProperty: "Other property (description):",
+      financialInfo: "III. FINANCIAL INFORMATION",
+      totalIncome: "Total annual income (UAH):",
+      expenses: "Documented expenses (UAH):",
+      netIncome: "Net income (UAH):",
+      additionalInfo: "IV. ADDITIONAL INFORMATION",
+      generatedDate: "Declaration date:",
+      signature: "Taxpayer signature",
+      signatureLine: "_________________",
+      date: "Date",
     },
   }
 
   const t = labels[language as keyof typeof labels] || labels.en
 
-  // Header
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(18)
-  doc.setTextColor(40, 40, 40)
-  doc.text(t.title, 105, 20, { align: "center" })
+  // Calculate net income
+  const totalIncome = parseFloat(data.totalIncome) || 0
+  const expenses = parseFloat(data.expenses) || 0
+  const netIncome = totalIncome - expenses
 
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text(t.subtitle, 105, 28, { align: "center" })
-
-  let yPos = 45
-
-  // Personal Data Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.personalData, 15, yPos)
-  yPos += 10
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(11)
-  doc.setTextColor(40, 40, 40)
-  const personalData = [
-    [t.fullName, data.fullName || "-"],
-    [t.taxNumber, data.taxNumber || "-"],
-    [t.passport, data.passportNumber || "-"],
-    [t.residence, data.residence || "-"],
-    [t.year, data.year || "-"],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    head: [],
-    body: personalData,
-    theme: "plain",
-    styles: {
-      font: "DejaVuSans",
-      fontStyle: "normal",
-      fontSize: 10,
-      cellPadding: 3
-    },
-    columnStyles: {
-      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 60 },
-      1: { font: "DejaVuSans", cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Property Information Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.propertyInfo, 15, yPos)
-  yPos += 10
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(11)
-  doc.setTextColor(40, 40, 40)
-  const propertyData = [
-    [t.realEstate, data.realEstate || "-"],
-    [t.vehicles, data.vehicles || "-"],
-    [t.otherProperty, data.otherProperty || "-"],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    head: [],
-    body: propertyData,
-    theme: "plain",
-    styles: {
-      font: "DejaVuSans",
-      fontStyle: "normal",
-      fontSize: 10,
-      cellPadding: 3
-    },
-    columnStyles: {
-      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 60 },
-      1: { font: "DejaVuSans", cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Financial Information Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.financialInfo, 15, yPos)
-  yPos += 10
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(11)
-  doc.setTextColor(40, 40, 40)
-  const financialData = [
-    [t.totalIncome, data.totalIncome ? `${data.totalIncome} UAH` : "-"],
-    [t.expenses, data.expenses ? `${data.expenses} UAH` : "-"],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    head: [],
-    body: financialData,
-    theme: "plain",
-    styles: {
-      font: "DejaVuSans",
-      fontStyle: "normal",
-      fontSize: 10,
-      cellPadding: 3
-    },
-    columnStyles: {
-      0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 60 },
-      1: { font: "DejaVuSans", cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Additional Information
-  if (data.additionalInfo) {
+  // Function to generate document content (original or copy)
+  const generateContent = (isCopy: boolean) => {
+    // Header - Official format
     doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(14)
-    doc.setTextColor(0, 102, 204)
-    doc.text(t.additionalInfo, 15, yPos)
-    yPos += 8
+    doc.setFontSize(16)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.title, 105, 15, { align: "center" })
+
+    doc.setFontSize(13)
+    doc.text(t.formNumber, 105, 23, { align: "center" })
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(11)
+    doc.text(t.subtitle, 105, 30, { align: "center" })
+
+    // Official note
+    doc.setFontSize(9)
+    doc.setTextColor(80, 80, 80)
+    doc.text(t.officialNote, 105, 36, { align: "center" })
+
+    // Original/Copy marker
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(11)
+    if (isCopy) {
+      doc.setTextColor(200, 0, 0)
+      doc.text(t.copyLabel, 180, 15, { align: "right" })
+    } else {
+      doc.setTextColor(0, 100, 0)
+      doc.text(t.originalLabel, 180, 15, { align: "right" })
+    }
+
+    let yPos = 48
+
+    // Personal Data Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.personalData, 15, yPos)
+    yPos += 10
 
     doc.setFont("DejaVuSans", "normal")
     doc.setFontSize(10)
     doc.setTextColor(40, 40, 40)
-    const splitText = doc.splitTextToSize(data.additionalInfo, 180)
-    doc.text(splitText, 15, yPos)
-    yPos += splitText.length * 5 + 10
+    const personalData = [
+      [t.fullName, data.fullName || "-"],
+      [t.taxNumber, data.taxNumber || "-"],
+      [t.passport, data.passportNumber || "-"],
+      [t.residence, data.residence || "-"],
+      [t.year, data.year || "-"],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      head: [],
+      body: personalData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontStyle: "normal",
+        fontSize: 9,
+        cellPadding: 3
+      },
+      columnStyles: {
+        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 80 },
+        1: { font: "DejaVuSans", cellWidth: 100 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 12
+
+    // Property Information Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.propertyInfo, 15, yPos)
+    yPos += 10
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(10)
+    doc.setTextColor(40, 40, 40)
+    const propertyData = [
+      [t.realEstate, data.realEstate || "-"],
+      [t.vehicles, data.vehicles || "-"],
+      [t.otherProperty, data.otherProperty || "-"],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      head: [],
+      body: propertyData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontStyle: "normal",
+        fontSize: 9,
+        cellPadding: 3
+      },
+      columnStyles: {
+        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 80 },
+        1: { font: "DejaVuSans", cellWidth: 100 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 12
+
+    // Financial Information Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.financialInfo, 15, yPos)
+    yPos += 10
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(10)
+    doc.setTextColor(40, 40, 40)
+    const financialData = [
+      [t.totalIncome, totalIncome > 0 ? `${totalIncome.toFixed(2)} UAH` : "-"],
+      [t.expenses, expenses > 0 ? `${expenses.toFixed(2)} UAH` : "-"],
+      [t.netIncome, netIncome > 0 ? `${netIncome.toFixed(2)} UAH` : "-"],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      head: [],
+      body: financialData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontStyle: "normal",
+        fontSize: 9,
+        cellPadding: 3
+      },
+      columnStyles: {
+        0: { font: "DejaVuSans", fontStyle: "bold", cellWidth: 80 },
+        1: { font: "DejaVuSans", cellWidth: 100 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 12
+
+    // Additional Information
+    if (data.additionalInfo) {
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(13)
+      doc.setTextColor(0, 0, 0)
+      doc.text(t.additionalInfo, 15, yPos)
+      yPos += 8
+
+      doc.setFont("DejaVuSans", "normal")
+      doc.setFontSize(9)
+      doc.setTextColor(40, 40, 40)
+      const splitText = doc.splitTextToSize(data.additionalInfo, 180)
+      doc.text(splitText, 15, yPos)
+      yPos += splitText.length * 4 + 10
+    }
+
+    // Signature section
+    if (yPos > 240) {
+      doc.addPage()
+      yPos = 20
+    } else {
+      yPos += 10
+    }
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
+    doc.setTextColor(40, 40, 40)
+    doc.text(t.signature, 15, yPos)
+    doc.text(t.signatureLine, 80, yPos)
+    doc.text(t.date, 140, yPos)
+    doc.text("_______________", 155, yPos)
+
+    return (doc as any).internal.getNumberOfPages()
   }
 
-  // Footer
+  // Generate original
+  const originalPages = generateContent(false)
+
+  // Add footer to original pages
   doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(9)
   doc.setTextColor(150, 150, 150)
-  doc.text(`${t.generatedDate} ${new Date().toLocaleDateString()}`, 15, 280)
+  for (let i = 1; i <= originalPages; i++) {
+    doc.setPage(i)
+    doc.text(
+      `${t.generatedDate} ${new Date().toLocaleDateString()} | Сторінка ${i} з ${originalPages}`,
+      105,
+      285,
+      { align: "center" }
+    )
+  }
 
-  // Open in new window
+  // Generate copy if requested
+  if (createCopy) {
+    // Add separator page
+    doc.addPage()
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(20)
+    doc.setTextColor(100, 100, 100)
+    doc.text("--- КОПІЯ / COPY ---", 105, 140, { align: "center" })
+
+    // Generate copy content
+    doc.addPage()
+    const copyStartPage = originalPages + 2
+    const copyEndPage = generateContent(true) + copyStartPage - 1
+
+    // Add footer to copy pages
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
+    doc.setTextColor(150, 150, 150)
+    for (let i = copyStartPage; i <= copyEndPage; i++) {
+      doc.setPage(i)
+      const pageNum = i - copyStartPage + 1
+      const totalCopyPages = copyEndPage - copyStartPage + 1
+      doc.text(
+        `${t.copyLabel} | ${t.generatedDate} ${new Date().toLocaleDateString()} | Сторінка ${pageNum} з ${totalCopyPages}`,
+        105,
+        285,
+        { align: "center" }
+      )
+    }
+  }
+
+  // Generate filename with timestamp
+  const timestamp = new Date().toISOString().split('T')[0]
+  const filename = `F0100214_${data.taxNumber || 'NN'}_${data.year}_${timestamp}.pdf`
+
+  // Save and open
+  doc.save(filename)
   window.open(doc.output("bloburl"), "_blank")
 }
 
