@@ -93,7 +93,7 @@ export function parseIBXML(xmlContent: string): ParsedIBData {
       openDateTime: formatDateTime(lot.getAttribute("openDateTime") || ""),
       reportDate: formatDate(lot.getAttribute("reportDate") || ""),
       currency: lot.getAttribute("currency") || "USD",
-      cost: Math.abs(parseFloat(lot.getAttribute("cost") || "0")),
+      cost: parseFloat(lot.getAttribute("cost") || "0"),
       fifoPnlRealized: parseFloat(lot.getAttribute("fifoPnlRealized") || "0"),
       assetCategory,
       subCategory,
@@ -177,7 +177,7 @@ function parseIBXMLRegex(xmlContent: string): ParsedIBData {
       openDateTime: formatDateTime(getAttribute("openDateTime")),
       reportDate: formatDate(getAttribute("reportDate")),
       currency: getAttribute("currency") || "USD",
-      cost: Math.abs(parseFloat(getAttribute("cost") || "0")),
+      cost: parseFloat(getAttribute("cost") || "0"),
       fifoPnlRealized: parseFloat(getAttribute("fifoPnlRealized") || "0"),
       assetCategory: getAttribute("assetCategory"),
       subCategory: getAttribute("subCategory"),
@@ -275,10 +275,19 @@ export function calculateTradeTotals(trades: IBTrade[]) {
   let totalProfit = 0
 
   trades.forEach((trade) => {
-    const quantity = Math.abs(trade.quantity)
-    const revenue = quantity * trade.tradePrice
+    const assetType = determineAssetType(trade.assetCategory, trade.subCategory)
 
-    totalCost += trade.cost
+    // For stocks, use absolute value of cost
+    // For options, preserve the sign (negative = received premium)
+    const purchaseCost = assetType === "stocks" ? Math.abs(trade.cost) : trade.cost
+
+    // For stocks: revenue = cost + fifoPnlRealized
+    // For options: revenue = fifoPnlRealized (directly)
+    const revenue = assetType === "stocks"
+      ? Math.abs(trade.cost) + trade.fifoPnlRealized
+      : trade.fifoPnlRealized
+
+    totalCost += purchaseCost
     totalRevenue += revenue
     totalProfit += trade.fifoPnlRealized
   })
@@ -328,9 +337,23 @@ export function determineAssetType(assetCategory: string, subCategory: string): 
  * Convert IB trade to form position format
  */
 export function convertToFormPosition(trade: IBTrade) {
-  const quantity = Math.abs(trade.quantity)
-  const salePrice = quantity * trade.tradePrice
   const assetType = determineAssetType(trade.assetCategory, trade.subCategory)
+
+  let purchasePrice: number
+  let salePrice: number
+
+  if (assetType === "stocks") {
+    // For stocks: cost is always positive (purchase cost)
+    // Sale price = cost + fifoPnlRealized (actual sale proceeds)
+    purchasePrice = Math.abs(trade.cost)
+    salePrice = purchasePrice + trade.fifoPnlRealized
+  } else {
+    // For options:
+    // Purchase price = cost (with sign: negative = received premium, positive = paid premium)
+    // Sale price = fifoPnlRealized (realized profit/loss in currency)
+    purchasePrice = trade.cost
+    salePrice = trade.fifoPnlRealized
+  }
 
   return {
     id: Date.now().toString() + Math.random().toString(36).substring(7),
@@ -339,7 +362,7 @@ export function convertToFormPosition(trade: IBTrade) {
     currency: trade.currency,
     purchaseDate: trade.openDateTime,
     saleDate: trade.tradeDate,
-    purchasePriceForeign: trade.cost.toFixed(2),
+    purchasePriceForeign: purchasePrice.toFixed(2),
     salePriceForeign: salePrice.toFixed(2),
     purchaseRate: "",
     saleRate: "",
