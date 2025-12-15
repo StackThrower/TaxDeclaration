@@ -503,7 +503,7 @@ export function FormF0121214() {
         expensesOp: "Витрати на операцію (грн)",
         taxCalculation: "Розрахунок податкових зобов'язань",
         profit: "Прибуток",
-        pdfo: "ПДФО (18%)",
+        pdfo: "ПДФО (18% + 9%)",
         military: "Військ. збір (5%)",
         total: "Всього до сплати",
         additionalInfo: "Додаткова інформація",
