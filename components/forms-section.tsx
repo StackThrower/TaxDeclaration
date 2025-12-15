@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormF0100214 } from "./forms/form-f0100214"
@@ -21,6 +21,15 @@ interface FormsSectionProps {
 export function FormsSection({ country }: FormsSectionProps) {
   const [activeTab, setActiveTab] = useState(country.taxForms[0]?.id || "f0100214")
   const { language } = useI18n()
+  const tabsRef = useRef<HTMLDivElement>(null)
+
+  const handleCardClick = (formId: string) => {
+    setActiveTab(formId)
+    // Scroll to the tabs section with smooth animation
+    setTimeout(() => {
+      tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 100)
+  }
 
   return (
     <section id="forms" className="py-12 md:py-16 px-4 max-w-6xl mx-auto">
@@ -36,7 +45,11 @@ export function FormsSection({ country }: FormsSectionProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
           {country.taxForms.map((form, index) => (
-            <Card key={form.id} className="border-border hover:border-primary/50 transition-colors">
+            <Card
+              key={form.id}
+              className="border-border hover:border-primary/50 transition-colors cursor-pointer"
+              onClick={() => handleCardClick(form.id)}
+            >
               <CardHeader className="space-y-1.5">
                 <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                   <FileText className={`w-5 h-5 flex-shrink-0 ${index === 0 ? "text-primary" : "text-accent"}`} />
@@ -62,7 +75,7 @@ export function FormsSection({ country }: FormsSectionProps) {
         </div>
 
         {country.taxForms.length > 0 && (
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs ref={tabsRef} value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className={`grid w-full max-w-md mx-auto bg-muted h-auto`} style={{ gridTemplateColumns: `repeat(${Math.min(country.taxForms.length, 3)}, 1fr)` }}>
               {country.taxForms.slice(0, 3).map((form) => (
                 <TabsTrigger key={form.id} value={form.id} className="text-sm md:text-base py-2">
