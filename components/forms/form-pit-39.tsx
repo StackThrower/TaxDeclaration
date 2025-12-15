@@ -655,47 +655,83 @@ export function FormPIT39() {
         </CardContent>
       </Card>
 
-      {/* Import from Interactive Brokers */}
-      <Card className="border-border/50">
-        <CardContent className="pt-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-primary">{translations.importXML}</h3>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImportXML}
-              accept=".xml"
-              style={{ display: "none" }}
-            />
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isImporting}
-              className="gap-2"
-            >
-              <Upload className="w-4 h-4" />
-              {isImporting ? translations.importing : translations.importButton}
-            </Button>
-          </div>
-          {isImporting && (
-            <div className="space-y-2">
-              <Progress value={importProgress} className="w-full" />
-              <p className="text-sm text-foreground/70">{importStatus}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Sprzedaż majątku */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-primary">{translations.propertySales}</h3>
-          <Button type="button" variant="outline" size="sm" onClick={addPropertySale} className="gap-2">
-            <Plus className="w-4 h-4" />
+      {/* Import and Add Position Buttons */}
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-center gap-4">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".xml"
+            onChange={handleImportXML}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isImporting}
+            className="gap-2"
+          >
+            <Upload className="h-5 w-5" />
+            {isImporting ? translations.importing : translations.importButton}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={addPropertySale}
+            className="gap-2 border-dashed border-2"
+          >
+            <Plus className="h-5 w-5" />
             {translations.addSale}
           </Button>
         </div>
+
+        {/* Import Info */}
+        {!isImporting && (
+          <div className="text-center text-sm text-muted-foreground">
+            {language === "uk"
+              ? "Завантажте XML файл з Interactive Brokers (FlexQuery Report з закритими позиціями)"
+              : language === "pl"
+                ? "Wczytaj plik XML z Interactive Brokers (FlexQuery Report z zamkniętymi pozycjami)"
+                : "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
+            }
+          </div>
+        )}
+
+        {/* Import Progress Bar */}
+        {isImporting && (
+          <Card className="border-primary/50 bg-primary/5 shadow-lg">
+            <CardContent className="pt-6 pb-6 space-y-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full bg-primary animate-spin border-2 border-background border-t-transparent"></div>
+                  <span className="text-sm font-medium text-foreground">
+                    {importStatus}
+                  </span>
+                </div>
+                <span className="text-sm font-bold text-primary tabular-nums">
+                  {Math.round(importProgress)}%
+                </span>
+              </div>
+              <Progress value={importProgress} className="h-3 transition-all duration-300" />
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                {language === "uk"
+                  ? "Будь ласка, зачекайте. Це може зайняти кілька секунд..."
+                  : language === "pl"
+                    ? "Proszę czekać. To może potrwać kilka sekund..."
+                    : "Please wait. This may take a few seconds..."
+                }
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+
+      {/* Sprzedaż majątku */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-primary">{translations.propertySales}</h3>
 
         {propertySales.map((sale, index) => (
           <Card key={sale.id} className="border-border/50">
@@ -887,13 +923,13 @@ export function FormPIT39() {
       </Card>
 
       {/* Buttons */}
-      <div className="flex gap-4 justify-end">
-        <Button type="button" variant="outline" onClick={handleClear}>
-          {translations.clear}
-        </Button>
-        <Button type="submit" className="gap-2">
-          <FileText className="w-4 h-4" />
+      <div className="flex gap-4 pt-6">
+        <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
+          <FileText className="h-5 w-5" />
           {translations.generate}
+        </Button>
+        <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
+          {translations.clear}
         </Button>
       </div>
     </form>
