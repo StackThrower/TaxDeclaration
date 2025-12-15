@@ -280,7 +280,7 @@ type CountryCode = "ua" | "pl" | "fr" | "de" | "pt" | "es" | "se" | "gb" | "us" 
 
 export function TaxCalculator({ countryCode }: { countryCode: CountryCode }) {
   const { language } = useI18n()
-  const [income, setIncome] = useState<string>("")
+  const [income, setIncome] = useState<string>("100000")
   const [selectedCountry, setSelectedCountry] = useState<CountryCode>(countryCode)
   const [result, setResult] = useState<any>(null)
 
