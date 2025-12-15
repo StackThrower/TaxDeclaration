@@ -347,10 +347,25 @@ export function convertToFormPosition(trade: IBTrade) {
     // Sale price = cost + fifoPnlRealized (actual sale proceeds)
     purchasePrice = Math.abs(trade.cost)
     salePrice = purchasePrice + trade.fifoPnlRealized
+  } else if (assetType === "options") {
+    // For options with negative quantity (sold/written options):
+    // - We sold the option first (received premium)
+    // - Then bought it back to close
+    // Purchase price = absolute value of fifoPnlRealized
+    // Sale price = absolute value of cost
+    if (trade.quantity < 0) {
+      purchasePrice = Math.abs(trade.fifoPnlRealized)
+      salePrice = Math.abs(trade.cost)
+    } else {
+      // For options with positive quantity (bought options):
+      // Purchase price = cost (with sign: negative = received premium, positive = paid premium)
+      // Sale price = fifoPnlRealized (realized profit/loss in currency)
+      purchasePrice = trade.cost
+      salePrice = trade.fifoPnlRealized
+    }
   } else {
-    // For options:
-    // Purchase price = cost (with sign: negative = received premium, positive = paid premium)
-    // Sale price = fifoPnlRealized (realized profit/loss in currency)
+    // For other asset types (bonds, crypto, etc.):
+    // Use the same logic as options
     purchasePrice = trade.cost
     salePrice = trade.fifoPnlRealized
   }
