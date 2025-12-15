@@ -1,23 +1,40 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
-import { FileText, Plus, Trash2 } from "lucide-react"
+import { FileText, Plus, Trash2, Upload } from "lucide-react"
 import { generatePIT39PDF } from "@/lib/pdf-generator"
+import {
+  fetchNBPExchangeRate,
+  convertToPLN,
+  SUPPORTED_CURRENCIES_PLN,
+  formatExchangeRatePLN,
+  getCurrencySymbolPLN
+} from "@/lib/nbp-exchange-rates"
+import {
+  parseIBXML,
+  readFileAsText
+} from "@/lib/ib-xml-parser"
 
 interface PropertySale {
   id: string
   type: string
   description: string
+  currency: string
   purchaseDate: string
   saleDate: string
+  purchasePriceForeign: string
+  salePriceForeign: string
+  purchaseRate: string
+  saleRate: string
   purchasePrice: string
   salePrice: string
   improvements: string
@@ -26,6 +43,10 @@ interface PropertySale {
 
 export function FormPIT39() {
   const { language } = useI18n()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isImporting, setIsImporting] = useState(false)
+  const [importProgress, setImportProgress] = useState(0)
+  const [importStatus, setImportStatus] = useState("")
   const [formData, setFormData] = useState({
     // Dane identyfikacyjne
     firstName: "",
@@ -44,8 +65,13 @@ export function FormPIT39() {
       id: "1",
       type: "property",
       description: "",
+      currency: "PLN",
       purchaseDate: "",
       saleDate: "",
+      purchasePriceForeign: "",
+      salePriceForeign: "",
+      purchaseRate: "1",
+      saleRate: "1",
       purchasePrice: "",
       salePrice: "",
       improvements: "",
@@ -66,6 +92,97 @@ export function FormPIT39() {
     setPropertySales((prev) =>
       prev.map((sale) => (sale.id === id ? { ...sale, [field]: value } : sale))
     )
+
+    // Fetch exchange rates when currency or dates change
+    if (field === "currency" || field === "purchaseDate" || field === "saleDate") {
+      const sale = propertySales.find(s => s.id === id)
+      if (!sale) return
+
+      const currency = field === "currency" ? value : sale.currency
+
+      if (currency !== "PLN") {
+        // Fetch purchase rate
+        if ((field === "currency" || field === "purchaseDate") && (field === "purchaseDate" ? value : sale.purchaseDate)) {
+          const purchaseDate = field === "purchaseDate" ? value : sale.purchaseDate
+          fetchNBPExchangeRate(purchaseDate, currency).then(rate => {
+            if (rate !== null) {
+              setPropertySales(prev => prev.map(s => {
+                if (s.id === id) {
+                  const updatedSale = { ...s, purchaseRate: rate.toFixed(4) }
+                  // Auto-convert if foreign amount exists
+                  if (s.purchasePriceForeign) {
+                    const foreignAmount = parseFloat(s.purchasePriceForeign)
+                    updatedSale.purchasePrice = convertToPLN(foreignAmount, rate).toFixed(2)
+                  }
+                  return updatedSale
+                }
+                return s
+              }))
+            }
+          })
+        }
+
+        // Fetch sale rate
+        if ((field === "currency" || field === "saleDate") && (field === "saleDate" ? value : sale.saleDate)) {
+          const saleDate = field === "saleDate" ? value : sale.saleDate
+          fetchNBPExchangeRate(saleDate, currency).then(rate => {
+            if (rate !== null) {
+              setPropertySales(prev => prev.map(s => {
+                if (s.id === id) {
+                  const updatedSale = { ...s, saleRate: rate.toFixed(4) }
+                  // Auto-convert if foreign amount exists
+                  if (s.salePriceForeign) {
+                    const foreignAmount = parseFloat(s.salePriceForeign)
+                    updatedSale.salePrice = convertToPLN(foreignAmount, rate).toFixed(2)
+                  }
+                  return updatedSale
+                }
+                return s
+              }))
+            }
+          })
+        }
+      } else {
+        // Reset rates to 1 for PLN
+        setPropertySales(prev => prev.map(s => {
+          if (s.id === id) {
+            return {
+              ...s,
+              purchaseRate: "1",
+              saleRate: "1",
+              purchasePrice: s.purchasePriceForeign || s.purchasePrice,
+              salePrice: s.salePriceForeign || s.salePrice
+            }
+          }
+          return s
+        }))
+      }
+    }
+
+    // Auto-convert when foreign amounts change
+    if (field === "purchasePriceForeign") {
+      const sale = propertySales.find(s => s.id === id)
+      if (sale && sale.currency !== "PLN") {
+        const foreignAmount = parseFloat(value) || 0
+        const rate = parseFloat(sale.purchaseRate) || 1
+        const plnAmount = convertToPLN(foreignAmount, rate).toFixed(2)
+        setPropertySales(prev => prev.map(s =>
+          s.id === id ? { ...s, purchasePrice: plnAmount } : s
+        ))
+      }
+    }
+
+    if (field === "salePriceForeign") {
+      const sale = propertySales.find(s => s.id === id)
+      if (sale && sale.currency !== "PLN") {
+        const foreignAmount = parseFloat(value) || 0
+        const rate = parseFloat(sale.saleRate) || 1
+        const plnAmount = convertToPLN(foreignAmount, rate).toFixed(2)
+        setPropertySales(prev => prev.map(s =>
+          s.id === id ? { ...s, salePrice: plnAmount } : s
+        ))
+      }
+    }
   }
 
   const addPropertySale = () => {
@@ -76,8 +193,13 @@ export function FormPIT39() {
         id: newId,
         type: "property",
         description: "",
+        currency: "PLN",
         purchaseDate: "",
         saleDate: "",
+        purchasePriceForeign: "",
+        salePriceForeign: "",
+        purchaseRate: "1",
+        saleRate: "1",
         purchasePrice: "",
         salePrice: "",
         improvements: "",
@@ -88,6 +210,159 @@ export function FormPIT39() {
 
   const removePropertySale = (id: string) => {
     setPropertySales((prev) => prev.filter((sale) => sale.id !== id))
+  }
+
+  const handleImportXML = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setIsImporting(true)
+    setImportProgress(0)
+    setImportStatus(language === "uk" ? "Читання файлу..." : language === "pl" ? "Odczytywanie pliku..." : "Reading file...")
+
+    try {
+      // Read file content
+      setImportProgress(10)
+      const xmlContent = await readFileAsText(file)
+
+      // Parse XML
+      setImportProgress(20)
+      setImportStatus(language === "uk" ? "Парсинг XML..." : language === "pl" ? "Parsowanie XML..." : "Parsing XML...")
+      const parsedData = parseIBXML(xmlContent)
+
+      if (parsedData.trades.length === 0) {
+        alert(language === "uk"
+          ? "У файлі не знайдено закритих позицій для імпорту"
+          : language === "pl"
+            ? "Nie znaleziono zamkniętych pozycji w pliku"
+            : "No closed positions found in the file")
+        setIsImporting(false)
+        return
+      }
+
+      // Convert trades to property sales
+      setImportProgress(30)
+      setImportStatus(language === "uk" ? "Конвертація позицій..." : language === "pl" ? "Konwersja pozycji..." : "Converting positions...")
+
+      const newSales: PropertySale[] = parsedData.trades.map(trade => ({
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+        type: trade.assetCategory === "STK" ? "stocks" : "other",
+        description: `${trade.symbol} - ${trade.description}`,
+        currency: trade.currency,
+        purchaseDate: trade.openDateTime,
+        saleDate: trade.tradeDate,
+        purchasePriceForeign: Math.abs(trade.cost).toFixed(2),
+        salePriceForeign: (Math.abs(trade.cost) + trade.fifoPnlRealized).toFixed(2),
+        purchaseRate: "1",
+        saleRate: "1",
+        purchasePrice: "",
+        salePrice: "",
+        improvements: "0",
+        saleCosts: "0",
+      }))
+
+      // Replace existing sales with imported ones
+      setPropertySales(newSales)
+
+      setImportProgress(40)
+      setImportStatus(language === "uk"
+        ? `Імпортовано ${newSales.length} позиції(й). Завантаження курсів NBP...`
+        : language === "pl"
+          ? `Zaimportowano ${newSales.length} pozycji. Pobieranie kursów NBP...`
+          : `Imported ${newSales.length} position(s). Fetching NBP rates...`)
+
+      // Fetch rates for each sale and update state progressively
+      const updatedSales = [...newSales]
+      const totalSales = updatedSales.length
+      const progressPerSale = 60 / totalSales // Remaining 60% for rate fetching
+
+      for (let i = 0; i < updatedSales.length; i++) {
+        const sale = updatedSales[i]
+        const currentProgress = 40 + ((i + 1) * progressPerSale)
+
+        setImportProgress(currentProgress)
+        setImportStatus(language === "uk"
+          ? `Завантаження курсів NBP... (${i + 1}/${totalSales})`
+          : language === "pl"
+            ? `Pobieranie kursów NBP... (${i + 1}/${totalSales})`
+            : `Fetching NBP rates... (${i + 1}/${totalSales})`)
+
+        if (sale.currency !== "PLN") {
+          try {
+            // Fetch purchase rate
+            if (sale.purchaseDate) {
+              const purchaseRate = await fetchNBPExchangeRate(sale.purchaseDate, sale.currency)
+              if (purchaseRate !== null) {
+                const foreignPurchaseAmount = parseFloat(sale.purchasePriceForeign) || 0
+                const plnPurchaseAmount = convertToPLN(foreignPurchaseAmount, purchaseRate)
+
+                updatedSales[i] = {
+                  ...sale,
+                  purchaseRate: purchaseRate.toFixed(4),
+                  purchasePrice: plnPurchaseAmount.toFixed(2)
+                }
+              }
+            }
+
+            // Fetch sale rate
+            if (sale.saleDate) {
+              const saleRate = await fetchNBPExchangeRate(sale.saleDate, sale.currency)
+              if (saleRate !== null) {
+                const foreignSaleAmount = parseFloat(sale.salePriceForeign) || 0
+                const plnSaleAmount = convertToPLN(foreignSaleAmount, saleRate)
+
+                updatedSales[i] = {
+                  ...updatedSales[i],
+                  saleRate: saleRate.toFixed(4),
+                  salePrice: plnSaleAmount.toFixed(2)
+                }
+              }
+            }
+
+            // Update state after each sale is processed
+            setPropertySales([...updatedSales])
+          } catch (error) {
+            console.error(`Error fetching rates for sale ${i}:`, error)
+          }
+        } else {
+          // For PLN, just copy the foreign amounts
+          updatedSales[i] = {
+            ...sale,
+            purchasePrice: sale.purchasePriceForeign,
+            salePrice: sale.salePriceForeign
+          }
+          setPropertySales([...updatedSales])
+        }
+      }
+
+      setImportProgress(100)
+      setImportStatus(language === "uk"
+        ? `Імпорт завершено! Імпортовано ${newSales.length} позиції(й)`
+        : language === "pl"
+          ? `Import zakończony! Zaimportowano ${newSales.length} pozycji`
+          : `Import completed! Imported ${newSales.length} position(s)`)
+
+      setTimeout(() => {
+        setIsImporting(false)
+        setImportProgress(0)
+        setImportStatus("")
+      }, 2000)
+    } catch (error) {
+      console.error("Error importing XML:", error)
+      alert(language === "uk"
+        ? `Помилка імпорту: ${error instanceof Error ? error.message : "Невідома помилка"}`
+        : language === "pl"
+          ? `Błąd importu: ${error instanceof Error ? error.message : "Nieznany błąd"}`
+          : `Import error: ${error instanceof Error ? error.message : "Unknown error"}`)
+      setIsImporting(false)
+      setImportProgress(0)
+      setImportStatus("")
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,8 +387,13 @@ export function FormPIT39() {
         id: "1",
         type: "property",
         description: "",
+        currency: "PLN",
         purchaseDate: "",
         saleDate: "",
+        purchasePriceForeign: "",
+        salePriceForeign: "",
+        purchaseRate: "1",
+        saleRate: "1",
         purchasePrice: "",
         salePrice: "",
         improvements: "",
@@ -152,6 +432,14 @@ export function FormPIT39() {
       additionalInfo: "Додаткова інформація",
       generate: "Сформувати PDF",
       clear: "Очистити",
+      importXML: "Імпорт з Interactive Brokers",
+      importButton: "Завантажити XML",
+      importing: "Імпорт...",
+      currency: "Валюта",
+      purchasePriceForeign: "Ціна придбання (валюта)",
+      salePriceForeign: "Ціна продажу (валюта)",
+      purchaseRate: "Курс NBP (придбання)",
+      saleRate: "Курс NBP (продаж)",
     },
     en: {
       title: "PIT-39",
@@ -182,6 +470,14 @@ export function FormPIT39() {
       additionalInfo: "Additional Information",
       generate: "Generate PDF",
       clear: "Clear",
+      importXML: "Import from Interactive Brokers",
+      importButton: "Upload XML",
+      importing: "Importing...",
+      currency: "Currency",
+      purchasePriceForeign: "Purchase Price (currency)",
+      salePriceForeign: "Sale Price (currency)",
+      purchaseRate: "NBP Rate (purchase)",
+      saleRate: "NBP Rate (sale)",
     },
     pl: {
       title: "PIT-39",
@@ -212,6 +508,14 @@ export function FormPIT39() {
       additionalInfo: "Informacje dodatkowe",
       generate: "Generuj PDF",
       clear: "Wyczyść",
+      importXML: "Import z Interactive Brokers",
+      importButton: "Wczytaj XML",
+      importing: "Importowanie...",
+      currency: "Waluta",
+      purchasePriceForeign: "Cena nabycia (waluta)",
+      salePriceForeign: "Cena sprzedaży (waluta)",
+      purchaseRate: "Kurs NBP (nabycie)",
+      saleRate: "Kurs NBP (sprzedaż)",
     },
     fr: {
       title: "PIT-39",
@@ -242,6 +546,14 @@ export function FormPIT39() {
       additionalInfo: "Informations complémentaires",
       generate: "Générer PDF",
       clear: "Effacer",
+      importXML: "Importer depuis Interactive Brokers",
+      importButton: "Charger XML",
+      importing: "Importation...",
+      currency: "Devise",
+      purchasePriceForeign: "Prix d'achat (devise)",
+      salePriceForeign: "Prix de vente (devise)",
+      purchaseRate: "Taux NBP (achat)",
+      saleRate: "Taux NBP (vente)",
     },
   }
 
@@ -343,6 +655,38 @@ export function FormPIT39() {
         </CardContent>
       </Card>
 
+      {/* Import from Interactive Brokers */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-primary">{translations.importXML}</h3>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImportXML}
+              accept=".xml"
+              style={{ display: "none" }}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isImporting}
+              className="gap-2"
+            >
+              <Upload className="w-4 h-4" />
+              {isImporting ? translations.importing : translations.importButton}
+            </Button>
+          </div>
+          {isImporting && (
+            <div className="space-y-2">
+              <Progress value={importProgress} className="w-full" />
+              <p className="text-sm text-foreground/70">{importStatus}</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Sprzedaż majątku */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -392,6 +736,24 @@ export function FormPIT39() {
                   </Select>
                 </div>
                 <div className="space-y-2">
+                  <Label>{translations.currency}</Label>
+                  <Select
+                    value={sale.currency}
+                    onValueChange={(value) => handlePropertyChange(sale.id, "currency", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SUPPORTED_CURRENCIES_PLN.map((curr) => (
+                        <SelectItem key={curr.code} value={curr.code}>
+                          {curr.code} - {curr.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2 md:col-span-2">
                   <Label>{translations.description}</Label>
                   <Input
                     value={sale.description}
@@ -414,22 +776,74 @@ export function FormPIT39() {
                     onChange={(e) => handlePropertyChange(sale.id, "saleDate", e.target.value)}
                   />
                 </div>
+                {sale.currency !== "PLN" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>{translations.purchasePriceForeign}</Label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={sale.purchasePriceForeign}
+                        onChange={(e) => handlePropertyChange(sale.id, "purchasePriceForeign", e.target.value)}
+                        placeholder={`0.00 ${getCurrencySymbolPLN(sale.currency)}`}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>{translations.purchaseRate}</Label>
+                      <Input
+                        type="number"
+                        step="0.0001"
+                        value={sale.purchaseRate}
+                        onChange={(e) => handlePropertyChange(sale.id, "purchaseRate", e.target.value)}
+                        placeholder="1.0000"
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="space-y-2">
-                  <Label>{translations.purchasePrice}</Label>
+                  <Label>{sale.currency !== "PLN" ? translations.purchasePrice : translations.purchasePrice}</Label>
                   <Input
                     type="number"
                     step="0.01"
                     value={sale.purchasePrice}
                     onChange={(e) => handlePropertyChange(sale.id, "purchasePrice", e.target.value)}
+                    placeholder="0.00 PLN"
+                    readOnly={sale.currency !== "PLN"}
                   />
                 </div>
+                {sale.currency !== "PLN" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label>{translations.salePriceForeign}</Label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={sale.salePriceForeign}
+                        onChange={(e) => handlePropertyChange(sale.id, "salePriceForeign", e.target.value)}
+                        placeholder={`0.00 ${getCurrencySymbolPLN(sale.currency)}`}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>{translations.saleRate}</Label>
+                      <Input
+                        type="number"
+                        step="0.0001"
+                        value={sale.saleRate}
+                        onChange={(e) => handlePropertyChange(sale.id, "saleRate", e.target.value)}
+                        placeholder="1.0000"
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="space-y-2">
-                  <Label>{translations.salePrice}</Label>
+                  <Label>{sale.currency !== "PLN" ? translations.salePrice : translations.salePrice}</Label>
                   <Input
                     type="number"
                     step="0.01"
                     value={sale.salePrice}
                     onChange={(e) => handlePropertyChange(sale.id, "salePrice", e.target.value)}
+                    placeholder="0.00 PLN"
+                    readOnly={sale.currency !== "PLN"}
                   />
                 </div>
                 <div className="space-y-2">
