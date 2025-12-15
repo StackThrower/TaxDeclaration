@@ -478,6 +478,48 @@ export function FormF0121214() {
     )
   }
 
+  const handleClear = () => {
+    // Очищаємо основні дані форми
+    setFormData({
+      fullName: "",
+      taxNumber: "",
+      year: "2024",
+      notes: "",
+    })
+
+    // Очищаємо всі позиції і повертаємо одну порожню
+    setPositions([
+      {
+        id: Date.now().toString(),
+        assetType: "",
+        currency: "UAH",
+        purchaseDate: "",
+        saleDate: "",
+        purchasePriceForeign: "",
+        salePriceForeign: "",
+        purchaseRate: "1",
+        saleRate: "1",
+        purchasePrice: "",
+        salePrice: "",
+        expenses: "",
+      },
+    ])
+
+    // Очищаємо розрахунки
+    setCalculations({
+      profit: 0,
+      pdfo: 0,
+      militaryTax: 0,
+      total: 0,
+      profitFromTrades: 0,
+      dividends: 0,
+      pdfoFromTrades: 0,
+      pdfoFromDividends: 0,
+      militaryTaxFromTrades: 0,
+      militaryTaxFromDividends: 0,
+    })
+  }
+
   const getLabel = (key: string): string => {
     const translations: Record<string, Record<string, string>> = {
       uk: {
@@ -1338,7 +1380,7 @@ export function FormF0121214() {
           <FileText className="h-5 w-5" />
           {getLabel("save")}
         </Button>
-        <Button type="reset" variant="outline" size="lg">
+        <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
           {getLabel("clear")}
         </Button>
       </div>

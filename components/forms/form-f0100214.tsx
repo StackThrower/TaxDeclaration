@@ -59,6 +59,22 @@ export function FormF0100214() {
     )
   }
 
+  const handleClear = () => {
+    setFormData({
+      fullName: "",
+      taxNumber: "",
+      passportNumber: "",
+      residence: "",
+      year: "2024",
+      realEstate: "",
+      vehicles: "",
+      otherProperty: "",
+      totalIncome: "",
+      expenses: "",
+      additionalInfo: "",
+    })
+  }
+
   const translations: Record<string, { label: string; placeholder: string }> = {
     uk: {
       label: "Персональні дані",
@@ -481,7 +497,7 @@ export function FormF0100214() {
                       ? "Gerar PDF"
                       : "PDF erstellen"}
         </Button>
-        <Button type="reset" variant="outline" size="lg">
+        <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
           {language === "uk"
             ? "Очистити форму"
             : language === "en"

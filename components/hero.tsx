@@ -27,7 +27,14 @@ export function Hero() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-4 px-4">
-          <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
+          <Button
+            size="lg"
+            className="bg-primary hover:bg-primary/90 w-full sm:w-auto"
+            onClick={() => {
+              const formsSection = document.getElementById('forms')
+              formsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }}
+          >
             {t(language, "hero.start")}
           </Button>
           <Link href={`/${language}-${currentCountryCode}/about`}>
