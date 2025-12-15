@@ -835,138 +835,127 @@ export interface PIT37Data {
   additionalInfo: string
 }
 
-export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl") => {
+export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl", createCopy: boolean = true) => {
   const doc = new jsPDF()
   await setupUkrainianFonts(doc)
 
   const labels = {
-    uk: {
-      title: "PIT-37 - Податкова декларація",
-      subtitle: "Декларація про доходи з праці та інших джерел",
-      personalData: "Особисті дані",
-      fullName: "ПІБ:",
-      pesel: "PESEL:",
-      nip: "NIP:",
-      birthDate: "Дата народження:",
-      address: "Адреса:",
-      year: "Звітний рік:",
-      income: "Доходи",
-      employmentIncome: "Дохід з праці:",
-      pensionIncome: "Пенсії та ренти:",
-      otherIncome: "Інші доходи:",
-      totalIncome: "Загальний дохід:",
-      costs: "Витрати",
-      employmentCosts: "Витрати з праці:",
-      otherCosts: "Інші витрати:",
-      totalCosts: "Загальні витрати:",
-      contributions: "Внески",
-      socialSecurity: "Соціальне страхування:",
-      healthInsurance: "Медичне страхування:",
-      reliefs: "Податкові пільги",
-      children: "Кількість дітей:",
-      childRelief: "Пільга на дітей:",
-      internetRelief: "Пільга за інтернет:",
-      donationsRelief: "Пільга за пожертви:",
-      taxBase: "База оподаткування:",
-      calculatedTax: "Розрахований податок:",
-      additionalInfo: "Додаткова інформація:",
-      generatedDate: "Дата формування:",
-    },
-    en: {
-      title: "PIT-37 - Tax Return",
-      subtitle: "Income from Employment and Other Sources",
-      personalData: "Personal Data",
-      fullName: "Full Name:",
-      pesel: "PESEL:",
-      nip: "NIP:",
-      birthDate: "Date of Birth:",
-      address: "Address:",
-      year: "Tax Year:",
-      income: "Income",
-      employmentIncome: "Employment Income:",
-      pensionIncome: "Pensions and Annuities:",
-      otherIncome: "Other Income:",
-      totalIncome: "Total Income:",
-      costs: "Costs",
-      employmentCosts: "Employment Costs:",
-      otherCosts: "Other Costs:",
-      totalCosts: "Total Costs:",
-      contributions: "Contributions",
-      socialSecurity: "Social Security:",
-      healthInsurance: "Health Insurance:",
-      reliefs: "Tax Reliefs",
-      children: "Number of Children:",
-      childRelief: "Child Relief:",
-      internetRelief: "Internet Relief:",
-      donationsRelief: "Donations Relief:",
-      taxBase: "Tax Base:",
-      calculatedTax: "Calculated Tax:",
-      additionalInfo: "Additional Information:",
-      generatedDate: "Generated Date:",
-    },
     pl: {
-      title: "PIT-37 - Zeznanie podatkowe",
-      subtitle: "Dochody z pracy i innych źródeł",
-      personalData: "Dane osobowe",
-      fullName: "Imię i nazwisko:",
+      title: "ZEZNANIE PODATKOWE PIT-37",
+      subtitle: "Zeznanie o wysokości osiągniętego dochodu (w tym z działalności gospodarczej)",
+      officialNote: "Urząd Skarbowy - Roczne zeznanie podatkowe",
+      copyLabel: "KOPIA",
+      originalLabel: "ORYGINAŁ",
+      personalData: "A. DANE PODATNIKA",
+      fullName: "Nazwisko i imię:",
       pesel: "PESEL:",
       nip: "NIP:",
       birthDate: "Data urodzenia:",
-      address: "Adres:",
+      address: "Adres zamieszkania:",
       year: "Rok podatkowy:",
-      income: "Przychody",
-      employmentIncome: "Przychody z pracy:",
+      income: "B. PRZYCHODY",
+      employmentIncome: "Przychody z umowy o pracę:",
       pensionIncome: "Emerytury i renty:",
       otherIncome: "Inne przychody:",
       totalIncome: "Suma przychodów:",
-      costs: "Koszty",
+      costs: "C. KOSZTY UZYSKANIA PRZYCHODÓW",
       employmentCosts: "Koszty z pracy:",
       otherCosts: "Inne koszty:",
       totalCosts: "Suma kosztów:",
-      contributions: "Składki",
-      socialSecurity: "Ubezpieczenia społeczne:",
-      healthInsurance: "Ubezpieczenie zdrowotne:",
-      reliefs: "Ulgi podatkowe",
+      contributions: "D. SKŁADKI",
+      socialSecurity: "Składki na ubezpieczenia społeczne:",
+      healthInsurance: "Składki na ubezpieczenie zdrowotne:",
+      reliefs: "E. ULGI PODATKOWE",
       children: "Liczba dzieci:",
       childRelief: "Ulga na dzieci:",
       internetRelief: "Ulga internetowa:",
-      donationsRelief: "Ulga na darowizny:",
+      donationsRelief: "Darowizny:",
+      taxCalculation: "F. OBLICZENIE PODATKU",
       taxBase: "Podstawa opodatkowania:",
-      calculatedTax: "Obliczony podatek:",
-      additionalInfo: "Informacje dodatkowe:",
-      generatedDate: "Data wygenerowania:",
+      calculatedTax: "Podatek należny (17%):",
+      taxToPay: "Podatek do zapłaty:",
+      additionalInfo: "G. INFORMACJE DODATKOWE",
+      generatedDate: "Data sporządzenia:",
+      signature: "Podpis podatnika",
+      signatureLine: "_________________",
     },
-    fr: {
-      title: "PIT-37 - Déclaration fiscale",
-      subtitle: "Revenus du travail et autres sources",
-      personalData: "Données personnelles",
-      fullName: "Nom complet:",
+    en: {
+      title: "TAX RETURN PIT-37",
+      subtitle: "Declaration of income achieved",
+      officialNote: "Tax Office - Annual tax return",
+      copyLabel: "COPY",
+      originalLabel: "ORIGINAL",
+      personalData: "A. TAXPAYER DATA",
+      fullName: "Name and surname:",
       pesel: "PESEL:",
       nip: "NIP:",
-      birthDate: "Date de naissance:",
-      address: "Adresse:",
-      year: "Année fiscale:",
-      income: "Revenus",
-      employmentIncome: "Revenus du travail:",
-      pensionIncome: "Pensions et rentes:",
-      otherIncome: "Autres revenus:",
-      totalIncome: "Total des revenus:",
-      costs: "Frais",
-      employmentCosts: "Frais de travail:",
-      otherCosts: "Autres frais:",
-      totalCosts: "Total des frais:",
-      contributions: "Cotisations",
-      socialSecurity: "Sécurité sociale:",
-      healthInsurance: "Assurance maladie:",
-      reliefs: "Allégements fiscaux",
-      children: "Nombre d'enfants:",
-      childRelief: "Allégement pour enfants:",
-      internetRelief: "Allégement internet:",
-      donationsRelief: "Allégement pour dons:",
-      taxBase: "Base d'imposition:",
-      calculatedTax: "Impôt calculé:",
-      additionalInfo: "Informations complémentaires:",
-      generatedDate: "Date de génération:",
+      birthDate: "Date of birth:",
+      address: "Residential address:",
+      year: "Tax year:",
+      income: "B. INCOME",
+      employmentIncome: "Employment income:",
+      pensionIncome: "Pensions and annuities:",
+      otherIncome: "Other income:",
+      totalIncome: "Total income:",
+      costs: "C. TAX DEDUCTIBLE COSTS",
+      employmentCosts: "Employment costs:",
+      otherCosts: "Other costs:",
+      totalCosts: "Total costs:",
+      contributions: "D. CONTRIBUTIONS",
+      socialSecurity: "Social security contributions:",
+      healthInsurance: "Health insurance contributions:",
+      reliefs: "E. TAX RELIEFS",
+      children: "Number of children:",
+      childRelief: "Child relief:",
+      internetRelief: "Internet relief:",
+      donationsRelief: "Donations:",
+      taxCalculation: "F. TAX CALCULATION",
+      taxBase: "Tax base:",
+      calculatedTax: "Tax due (17%):",
+      taxToPay: "Tax to pay:",
+      additionalInfo: "G. ADDITIONAL INFORMATION",
+      generatedDate: "Date prepared:",
+      signature: "Taxpayer signature",
+      signatureLine: "_________________",
+    },
+    uk: {
+      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ PIT-37",
+      subtitle: "Zeznanie o wysokości osiągniętego dochodu",
+      officialNote: "Urząd Skarbowy - Roczne zeznanie podatkowe",
+      copyLabel: "KOPIA",
+      originalLabel: "ORYGINAŁ",
+      personalData: "A. DANE PODATНІКА",
+      fullName: "Nazwisko i imię:",
+      pesel: "PESEL:",
+      nip: "NIP:",
+      birthDate: "Data urodzenia:",
+      address: "Adres zamieszkania:",
+      year: "Rok podatkowy:",
+      income: "B. PRZYCHODY",
+      employmentIncome: "Przychody z umowy o pracę:",
+      pensionIncome: "Emerytury i renty:",
+      otherIncome: "Inne przychody:",
+      totalIncome: "Suma przychodów:",
+      costs: "C. KOSZTY УЗИСКАННЯ ПРИХОДІВ",
+      employmentCosts: "Кошти з праці:",
+      otherCosts: "Інші кошти:",
+      totalCosts: "Сума коштів:",
+      contributions: "D. СКЛАДКИ",
+      socialSecurity: "Складки на соціальне страхування:",
+      healthInsurance: "Складки на медичне страхування:",
+      reliefs: "E. ПІЛЬГИ ПОДАТКОВІ",
+      children: "Кількість дітей:",
+      childRelief: "Пільга на дітей:",
+      internetRelief: "Пільга інтернетова:",
+      donationsRelief: "Дарунки:",
+      taxCalculation: "F. ОБЧИСЛЕННЯ ПОДАТКУ",
+      taxBase: "Податкова база:",
+      calculatedTax: "Податок належний (17%):",
+      taxToPay: "Податок до сплати:",
+      additionalInfo: "G. ДОДАТКОВА ІНФОРМАЦІЯ",
+      generatedDate: "Дата складання:",
+      signature: "Підпис платника податку",
+      signatureLine: "_________________",
     },
   }
 
@@ -991,198 +980,287 @@ export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl")
   const totalReliefs = childRelief + internetRelief + donationsRelief
 
   const taxBase = Math.max(0, totalIncome - totalCosts - socialSecurity - totalReliefs)
-  const calculatedTax = taxBase * 0.17 // Simplified 17% tax rate
+  const calculatedTax = taxBase * 0.17
+  const taxToPay = Math.max(0, calculatedTax - healthInsurance)
 
-  // Header
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(18)
-  doc.setTextColor(40, 40, 40)
-  doc.text(t.title, 105, 20, { align: "center" })
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text(t.subtitle, 105, 28, { align: "center" })
-
-  let yPos = 45
-
-  // Personal Data
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.personalData, 15, yPos)
-  yPos += 10
-
-  const personalData = [
-    [t.fullName, `${data.firstName} ${data.lastName}`],
-    [t.pesel, data.pesel || "-"],
-    [t.nip, data.nip || "-"],
-    [t.birthDate, data.birthDate || "-"],
-    [t.address, `${data.address}, ${data.postalCode} ${data.city}`],
-    [t.year, data.year],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: personalData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Income Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.income, 15, yPos)
-  yPos += 10
-
-  const incomeData = [
-    [t.employmentIncome, `${employmentIncome.toFixed(2)} PLN`],
-    [t.pensionIncome, `${pensionIncome.toFixed(2)} PLN`],
-    [t.otherIncome, `${otherIncome.toFixed(2)} PLN`],
-    [t.totalIncome, `${totalIncome.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: incomeData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Costs Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.costs, 15, yPos)
-  yPos += 10
-
-  const costsData = [
-    [t.employmentCosts, `${employmentCosts.toFixed(2)} PLN`],
-    [t.otherCosts, `${otherCosts.toFixed(2)} PLN`],
-    [t.totalCosts, `${totalCosts.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: costsData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Contributions
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.contributions, 15, yPos)
-  yPos += 10
-
-  const contributionsData = [
-    [t.socialSecurity, `${socialSecurity.toFixed(2)} PLN`],
-    [t.healthInsurance, `${healthInsurance.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: contributionsData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Tax Reliefs
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.reliefs, 15, yPos)
-  yPos += 10
-
-  const reliefsData = [
-    [t.children, data.childrenNumber],
-    [t.childRelief, `${childRelief.toFixed(2)} PLN`],
-    [t.internetRelief, `${internetRelief.toFixed(2)} PLN`],
-    [t.donationsRelief, `${donationsRelief.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: reliefsData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Tax Calculation
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(12)
-  doc.setTextColor(220, 38, 38)
-  const taxCalcData = [
-    [t.taxBase, `${taxBase.toFixed(2)} PLN`],
-    [t.calculatedTax, `${calculatedTax.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: taxCalcData,
-    theme: "grid",
-    styles: { font: "DejaVuSans", fontSize: 11, cellPadding: 4 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { fontStyle: "bold", cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Additional Info
-  if (data.additionalInfo) {
+  // Function to generate document content
+  const generateContent = (isCopy: boolean) => {
+    // Header - Official format
     doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(12)
-    doc.setTextColor(0, 102, 204)
-    doc.text(t.additionalInfo, 15, yPos)
-    yPos += 8
+    doc.setFontSize(16)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.title, 105, 15, { align: "center" })
 
     doc.setFont("DejaVuSans", "normal")
     doc.setFontSize(10)
+    doc.text(t.subtitle, 105, 23, { align: "center" })
+
+    doc.setFontSize(9)
+    doc.setTextColor(80, 80, 80)
+    doc.text(t.officialNote, 105, 30, { align: "center" })
+
+    // Copy/Original marker
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(11)
+    if (isCopy) {
+      doc.setTextColor(200, 0, 0)
+      doc.text(t.copyLabel, 180, 15, { align: "right" })
+    } else {
+      doc.setTextColor(0, 100, 0)
+      doc.text(t.originalLabel, 180, 15, { align: "right" })
+    }
+
+    let yPos = 42
+
+    // Personal Data
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.personalData, 15, yPos)
+    yPos += 8
+
+    const personalData = [
+      [t.fullName, `${data.firstName} ${data.lastName}`],
+      [t.pesel, data.pesel || "-"],
+      [t.nip, data.nip || "-"],
+      [t.birthDate, data.birthDate || "-"],
+      [t.address, `${data.address}, ${data.postalCode} ${data.city}`],
+      [t.year, data.year],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: personalData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    // Income Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.income, 15, yPos)
+    yPos += 8
+
+    const incomeData = [
+      [t.employmentIncome, `${employmentIncome.toFixed(2)} PLN`],
+      [t.pensionIncome, `${pensionIncome.toFixed(2)} PLN`],
+      [t.otherIncome, `${otherIncome.toFixed(2)} PLN`],
+      [t.totalIncome, `${totalIncome.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: incomeData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    // Costs Section
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.costs, 15, yPos)
+    yPos += 8
+
+    const costsData = [
+      [t.employmentCosts, `${employmentCosts.toFixed(2)} PLN`],
+      [t.otherCosts, `${otherCosts.toFixed(2)} PLN`],
+      [t.totalCosts, `${totalCosts.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: costsData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    // Contributions
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.contributions, 15, yPos)
+    yPos += 8
+
+    const contributionsData = [
+      [t.socialSecurity, `${socialSecurity.toFixed(2)} PLN`],
+      [t.healthInsurance, `${healthInsurance.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: contributionsData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    // Tax Reliefs
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.reliefs, 15, yPos)
+    yPos += 8
+
+    const reliefsData = [
+      [t.children, data.childrenNumber || "0"],
+      [t.childRelief, `${childRelief.toFixed(2)} PLN`],
+      [t.internetRelief, `${internetRelief.toFixed(2)} PLN`],
+      [t.donationsRelief, `${donationsRelief.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: reliefsData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    // Tax Calculation
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.taxCalculation, 15, yPos)
+    yPos += 8
+
+    const taxCalcData = [
+      [t.taxBase, `${taxBase.toFixed(2)} PLN`],
+      [t.calculatedTax, `${calculatedTax.toFixed(2)} PLN`],
+      [t.taxToPay, `${taxToPay.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: taxCalcData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontSize: 10,
+        cellPadding: 4,
+        fontStyle: "bold",
+        fillColor: [240, 240, 255]
+      },
+      columnStyles: {
+        0: { cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    // Additional Info
+    if (data.additionalInfo) {
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(13)
+      doc.setTextColor(0, 0, 0)
+      doc.text(t.additionalInfo, 15, yPos)
+      yPos += 7
+
+      doc.setFont("DejaVuSans", "normal")
+      doc.setFontSize(9)
+      doc.setTextColor(40, 40, 40)
+      const lines = doc.splitTextToSize(data.additionalInfo, 180)
+      doc.text(lines, 15, yPos)
+      yPos += lines.length * 4 + 10
+    }
+
+    // Signature section
+    if (yPos > 240) {
+      doc.addPage()
+      yPos = 20
+    } else {
+      yPos += 8
+    }
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
     doc.setTextColor(40, 40, 40)
-    const lines = doc.splitTextToSize(data.additionalInfo, 180)
-    doc.text(lines, 15, yPos)
+    doc.text(t.signature, 15, yPos)
+    doc.text(t.signatureLine, 80, yPos)
+
+    return (doc as any).internal.getNumberOfPages()
   }
 
-  // Footer
+  // Generate original
+  const originalPages = generateContent(false)
+
+  // Add footer to original pages
   doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(9)
-  doc.setTextColor(100, 100, 100)
-  doc.text(`${t.generatedDate} ${new Date().toLocaleDateString()}`, 105, 285, { align: "center" })
+  doc.setTextColor(150, 150, 150)
+  for (let i = 1; i <= originalPages; i++) {
+    doc.setPage(i)
+    doc.text(
+      `${t.generatedDate} ${new Date().toLocaleDateString()} | Strona ${i} z ${originalPages}`,
+      105,
+      285,
+      { align: "center" }
+    )
+  }
 
+  // Generate copy if requested
+  if (createCopy) {
+    doc.addPage()
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(20)
+    doc.setTextColor(100, 100, 100)
+    doc.text("--- KOPIA / COPY ---", 105, 140, { align: "center" })
+
+    doc.addPage()
+    const copyStartPage = originalPages + 2
+    const copyEndPage = generateContent(true) + copyStartPage - 1
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
+    doc.setTextColor(150, 150, 150)
+    for (let i = copyStartPage; i <= copyEndPage; i++) {
+      doc.setPage(i)
+      const pageNum = i - copyStartPage + 1
+      const totalCopyPages = copyEndPage - copyStartPage + 1
+      doc.text(
+        `${t.copyLabel} | ${t.generatedDate} ${new Date().toLocaleDateString()} | Strona ${pageNum} z ${totalCopyPages}`,
+        105,
+        285,
+        { align: "center" }
+      )
+    }
+  }
+
+  // Generate filename with timestamp
+  const timestamp = new Date().toISOString().split('T')[0]
+  const filename = `PIT-37_${data.nip || data.pesel || 'NN'}_${data.year}_${timestamp}.pdf`
+
+  doc.save(filename)
   window.open(doc.output("bloburl"), "_blank")
 }
 
@@ -1209,130 +1287,118 @@ export interface PIT38Data {
   additionalInfo: string
 }
 
-export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl") => {
+export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl", createCopy: boolean = true) => {
   const doc = new jsPDF()
   await setupUkrainianFonts(doc)
 
   const labels = {
-    uk: {
-      title: "PIT-38 - Податкова декларація",
-      subtitle: "Декларація про доходи з капіталів",
-      personalData: "I. ВІДОМОСТІ ПРО ПЛАТНИКА ПОДАТКУ",
-      fullName: "Прізвище, ім'я, по батькові:",
-      pesel: "PESEL:",
-      nip: "NIP:",
-      address: "Адреса:",
-      year: "Звітний рік:",
-      capitalIncome: "II. ДОХОДИ З КАПІТАЛІВ",
-      dividends: "Дивіденди:",
-      interest: "Відсотки:",
-      stockSales: "Продаж акцій:",
-      bonds: "Облігації:",
-      otherCapital: "Інші доходи з капіталів:",
-      totalIncome: "Загальний дохід:",
-      costs: "III. ВИТРАТИ",
-      stockCosts: "Витрати на акції:",
-      otherCosts: "Інші витрати:",
-      losses: "Збитки з минулих років:",
-      totalCosts: "Загальні витрати:",
-      taxPaid: "IV. СПЛАЧЕНИЙ ПОДАТОК",
-      advanceTax: "Авансовий податок:",
-      foreignTax: "Податок за кордоном:",
-      taxBase: "Податкова база:",
-      calculatedTax: "Розрахований податок (19%):",
-      taxToPay: "До сплати:",
-      additionalInfo: "V. ДОДАТКОВА ІНФОРМАЦІЯ",
-      generatedDate: "Дата формування:",
-    },
-    en: {
-      title: "PIT-38 - Tax Return",
-      subtitle: "Capital Income",
-      personalData: "I. INFORMATION ABOUT THE TAXPAYER",
-      fullName: "Full name:",
-      pesel: "PESEL:",
-      nip: "NIP:",
-      address: "Address:",
-      year: "Tax Year:",
-      capitalIncome: "II. CAPITAL INCOME",
-      dividends: "Dividends:",
-      interest: "Interest:",
-      stockSales: "Stock Sales:",
-      bonds: "Bonds:",
-      otherCapital: "Other capital income:",
-      totalIncome: "Total Income:",
-      costs: "III. COSTS",
-      stockCosts: "Stock costs:",
-      otherCosts: "Other costs:",
-      losses: "Previous year losses:",
-      totalCosts: "Total Costs:",
-      taxPaid: "IV. TAX PAID",
-      advanceTax: "Advance Tax:",
-      foreignTax: "Foreign Tax:",
-      taxBase: "Tax Base:",
-      calculatedTax: "Calculated Tax (19%):",
-      taxToPay: "Tax to Pay:",
-      additionalInfo: "V. ADDITIONAL INFORMATION",
-      generatedDate: "Generated Date:",
-    },
     pl: {
-      title: "PIT-38 - Zeznanie podatkowe",
-      subtitle: "Dochody z kapitałów pieniężnych",
-      personalData: "I. DANE OSOBOWE",
-      fullName: "Imię i nazwisko:",
+      title: "ZEZNANIE PODATKOWE PIT-38",
+      subtitle: "Zeznanie o wysokości osiągniętego dochodu z kapitałów pieniężnych",
+      officialNote: "Urząd Skarbowy - Dochody z kapitałów pieniężnych",
+      copyLabel: "KOPIA",
+      originalLabel: "ORYGINAŁ",
+      personalData: "A. DANE PODATNIKA",
+      fullName: "Nazwisko i imię:",
       pesel: "PESEL:",
       nip: "NIP:",
-      address: "Adres:",
+      address: "Adres zamieszkania:",
       year: "Rok podatkowy:",
-      capitalIncome: "II. DOCHODY Z KAPITAŁÓW",
+      capitalIncome: "B. PRZYCHODY Z KAPITAŁÓW PIENIĘŻNYCH",
       dividends: "Dywidendy:",
       interest: "Odsetki:",
       stockSales: "Sprzedaż akcji:",
       bonds: "Obligacje:",
-      otherCapital: "Inne dochody z kapitałów:",
+      otherCapital: "Inne przychody:",
       totalIncome: "Suma przychodów:",
-      costs: "III. KOSZTY",
+      costs: "C. KOSZTY UZYSKANIA PRZYCHODÓW",
       stockCosts: "Koszty nabycia akcji:",
       otherCosts: "Inne koszty:",
-      losses: "Straty z lat poprzednich:",
+      losses: "Straty z lat ubiegłych:",
       totalCosts: "Suma kosztów:",
-      taxPaid: "IV. PODATEK ZAPŁACONY",
+      taxPaid: "D. PODATEK ZAPŁACONY",
       advanceTax: "Zaliczki na podatek:",
       foreignTax: "Podatek za granicą:",
+      taxCalculation: "E. OBLICZENIE PODATKU",
       taxBase: "Podstawa opodatkowania:",
-      calculatedTax: "Obliczony podatek (19%):",
-      taxToPay: "Do zapłaty:",
-      additionalInfo: "V. INFORMACJE DODATKOWE",
-      generatedDate: "Data wygenerowania:",
+      calculatedTax: "Podatek należny (19%):",
+      taxToPay: "Podatek do zapłaty:",
+      additionalInfo: "F. INFORMACJE DODATKOWE",
+      generatedDate: "Data sporządzenia:",
+      signature: "Podpis podatnika",
+      signatureLine: "_________________",
     },
-    fr: {
-      title: "PIT-38 - Déclaration fiscale",
-      subtitle: "Revenus de capitaux",
-      personalData: "I. DONNÉES PERSONNELLES",
-      fullName: "Nom complet:",
+    en: {
+      title: "TAX RETURN PIT-38",
+      subtitle: "Declaration of income from capital",
+      officialNote: "Tax Office - Income from capital",
+      copyLabel: "COPY",
+      originalLabel: "ORIGINAL",
+      personalData: "A. TAXPAYER DATA",
+      fullName: "Name and surname:",
       pesel: "PESEL:",
       nip: "NIP:",
-      address: "Adresse:",
-      year: "Année fiscale:",
-      capitalIncome: "II. REVENUS DE CAPITAUX",
-      dividends: "Dividendes:",
-      interest: "Intérêts:",
-      stockSales: "Vente d'actions:",
-      bonds: "Obligations:",
-      otherCapital: "Autres revenus de capitaux:",
-      totalIncome: "Total des revenus:",
-      costs: "III. FRAIS",
-      stockCosts: "Frais d'achat d'actions:",
-      otherCosts: "Autres frais:",
-      losses: "Pertes des années précédentes:",
-      totalCosts: "Total des frais:",
-      taxPaid: "IV. IMPÔT PAYÉ",
-      advanceTax: "Acomptes d'impôt:",
-      foreignTax: "Impôt à l'étranger:",
-      taxBase: "Base d'imposition:",
-      calculatedTax: "Impôt calculé (19%):",
-      taxToPay: "À payer:",
-      additionalInfo: "V. INFORMATIONS COMPLÉMENTAIRES",
-      generatedDate: "Date de génération:",
+      address: "Residential address:",
+      year: "Tax year:",
+      capitalIncome: "B. INCOME FROM CAPITAL",
+      dividends: "Dividends:",
+      interest: "Interest:",
+      stockSales: "Stock sales:",
+      bonds: "Bonds:",
+      otherCapital: "Other income:",
+      totalIncome: "Total income:",
+      costs: "C. TAX DEDUCTIBLE COSTS",
+      stockCosts: "Stock purchase costs:",
+      otherCosts: "Other costs:",
+      losses: "Previous year losses:",
+      totalCosts: "Total costs:",
+      taxPaid: "D. TAX PAID",
+      advanceTax: "Advance tax:",
+      foreignTax: "Foreign tax:",
+      taxCalculation: "E. TAX CALCULATION",
+      taxBase: "Tax base:",
+      calculatedTax: "Tax due (19%):",
+      taxToPay: "Tax to pay:",
+      additionalInfo: "F. ADDITIONAL INFORMATION",
+      generatedDate: "Date prepared:",
+      signature: "Taxpayer signature",
+      signatureLine: "_________________",
+    },
+    uk: {
+      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ PIT-38",
+      subtitle: "Zeznanie o wysokości osiągniętego dochodu z kapitałów pieniężnych",
+      officialNote: "Urząd Skarbowy - Dochody z kapitałów pieniężnych",
+      copyLabel: "KOPIA",
+      originalLabel: "ORYGINAŁ",
+      personalData: "A. DANE PODATNIKA",
+      fullName: "Nazwisko i imię:",
+      pesel: "PESEL:",
+      nip: "NIP:",
+      address: "Adres zamieszkania:",
+      year: "Rok podatkowy:",
+      capitalIncome: "B. PRZYCHODY Z KAPITAŁÓW PIENIĘŻNYCH",
+      dividends: "Dywidendy:",
+      interest: "Odsetki:",
+      stockSales: "Sprzedaż akcji:",
+      bonds: "Obligacje:",
+      otherCapital: "Inne przychody:",
+      totalIncome: "Suma przychodów:",
+      costs: "C. KOSZTY UZYSKANIA PRZYCHODÓW",
+      stockCosts: "Koszty nabycia akcji:",
+      otherCosts: "Inne koszty:",
+      losses: "Straty z lat ubiegłych:",
+      totalCosts: "Suma kosztów:",
+      taxPaid: "D. PODATEK ZAPŁACONY",
+      advanceTax: "Zaliczki na podatek:",
+      foreignTax: "Podatek za granicą:",
+      taxCalculation: "E. OBLICZENIE PODATKU",
+      taxBase: "Podstawa opodatkowania:",
+      calculatedTax: "Podatek należny (19%):",
+      taxToPay: "Podatek do zapłaty:",
+      additionalInfo: "F. INFORMACJE DODATKOWE",
+      generatedDate: "Data sporządzenia:",
+      signature: "Podpis podatnika",
+      signatureLine: "_________________",
     },
   }
 
@@ -1355,172 +1421,249 @@ export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl")
   const foreignTax = parseFloat(data.foreignTaxPaid) || 0
 
   const taxBase = Math.max(0, totalIncome - totalCosts)
-  const calculatedTax = taxBase * 0.19 // 19% flat tax on capital gains
+  const calculatedTax = taxBase * 0.19
   const taxToPay = Math.max(0, calculatedTax - advanceTax - foreignTax)
 
-  // Header
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(18)
-  doc.setTextColor(40, 40, 40)
-  doc.text(t.title, 105, 20, { align: "center" })
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text(t.subtitle, 105, 28, { align: "center" })
-
-  let yPos = 45
-
-  // Personal Data
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.personalData, 15, yPos)
-  yPos += 10
-
-  const personalData = [
-    [t.fullName, `${data.firstName} ${data.lastName}`],
-    [t.pesel, data.pesel || "-"],
-    [t.nip, data.nip || "-"],
-    [t.address, `${data.address}, ${data.postalCode} ${data.city}`],
-    [t.year, data.year],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: personalData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Capital Income Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.capitalIncome, 15, yPos)
-  yPos += 10
-
-  const incomeData = [
-    [t.dividends, `${dividends.toFixed(2)} PLN`],
-    [t.interest, `${interest.toFixed(2)} PLN`],
-    [t.stockSales, `${stockSales.toFixed(2)} PLN`],
-    [t.bonds, `${bonds.toFixed(2)} PLN`],
-    [t.otherCapital, `${otherCapital.toFixed(2)} PLN`],
-    [t.totalIncome, `${totalIncome.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: incomeData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Costs Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.costs, 15, yPos)
-  yPos += 10
-
-  const costsData = [
-    [t.stockCosts, `${stockCosts.toFixed(2)} PLN`],
-    [t.otherCosts, `${otherCosts.toFixed(2)} PLN`],
-    [t.losses, `${losses.toFixed(2)} PLN`],
-    [t.totalCosts, `${totalCosts.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: costsData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Tax Paid Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.taxPaid, 15, yPos)
-  yPos += 10
-
-  const taxPaidData = [
-    [t.advanceTax, `${advanceTax.toFixed(2)} PLN`],
-    [t.foreignTax, `${foreignTax.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: taxPaidData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Tax Calculation
-  const taxCalcData = [
-    [t.taxBase, `${taxBase.toFixed(2)} PLN`],
-    [t.calculatedTax, `${calculatedTax.toFixed(2)} PLN`],
-    [t.taxToPay, `${taxToPay.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: taxCalcData,
-    theme: "grid",
-    styles: { font: "DejaVuSans", fontSize: 11, cellPadding: 4 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { fontStyle: "bold", cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Additional Info
-  if (data.additionalInfo && yPos < 250) {
+  // Function to generate document content
+  const generateContent = (isCopy: boolean) => {
     doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(12)
-    doc.setTextColor(0, 102, 204)
-    doc.text(t.additionalInfo, 15, yPos)
-    yPos += 8
+    doc.setFontSize(16)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.title, 105, 15, { align: "center" })
 
     doc.setFont("DejaVuSans", "normal")
     doc.setFontSize(10)
+    doc.text(t.subtitle, 105, 23, { align: "center" })
+
+    doc.setFontSize(9)
+    doc.setTextColor(80, 80, 80)
+    doc.text(t.officialNote, 105, 30, { align: "center" })
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(11)
+    if (isCopy) {
+      doc.setTextColor(200, 0, 0)
+      doc.text(t.copyLabel, 180, 15, { align: "right" })
+    } else {
+      doc.setTextColor(0, 100, 0)
+      doc.text(t.originalLabel, 180, 15, { align: "right" })
+    }
+
+    let yPos = 42
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.personalData, 15, yPos)
+    yPos += 8
+
+    const personalData = [
+      [t.fullName, `${data.firstName} ${data.lastName}`],
+      [t.pesel, data.pesel || "-"],
+      [t.nip, data.nip || "-"],
+      [t.address, `${data.address}, ${data.postalCode} ${data.city}`],
+      [t.year, data.year],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: personalData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.capitalIncome, 15, yPos)
+    yPos += 8
+
+    const incomeData = [
+      [t.dividends, `${dividends.toFixed(2)} PLN`],
+      [t.interest, `${interest.toFixed(2)} PLN`],
+      [t.stockSales, `${stockSales.toFixed(2)} PLN`],
+      [t.bonds, `${bonds.toFixed(2)} PLN`],
+      [t.otherCapital, `${otherCapital.toFixed(2)} PLN`],
+      [t.totalIncome, `${totalIncome.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: incomeData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.costs, 15, yPos)
+    yPos += 8
+
+    const costsData = [
+      [t.stockCosts, `${stockCosts.toFixed(2)} PLN`],
+      [t.otherCosts, `${otherCosts.toFixed(2)} PLN`],
+      [t.losses, `${losses.toFixed(2)} PLN`],
+      [t.totalCosts, `${totalCosts.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: costsData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.taxPaid, 15, yPos)
+    yPos += 8
+
+    const taxPaidData = [
+      [t.advanceTax, `${advanceTax.toFixed(2)} PLN`],
+      [t.foreignTax, `${foreignTax.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: taxPaidData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.taxCalculation, 15, yPos)
+    yPos += 8
+
+    const taxCalcData = [
+      [t.taxBase, `${taxBase.toFixed(2)} PLN`],
+      [t.calculatedTax, `${calculatedTax.toFixed(2)} PLN`],
+      [t.taxToPay, `${taxToPay.toFixed(2)} PLN`],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: taxCalcData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontSize: 10,
+        cellPadding: 4,
+        fontStyle: "bold",
+        fillColor: [240, 240, 255]
+      },
+      columnStyles: {
+        0: { cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    if (data.additionalInfo) {
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(13)
+      doc.setTextColor(0, 0, 0)
+      doc.text(t.additionalInfo, 15, yPos)
+      yPos += 7
+
+      doc.setFont("DejaVuSans", "normal")
+      doc.setFontSize(9)
+      doc.setTextColor(40, 40, 40)
+      const lines = doc.splitTextToSize(data.additionalInfo, 180)
+      doc.text(lines, 15, yPos)
+      yPos += lines.length * 4 + 10
+    }
+
+    if (yPos > 240) {
+      doc.addPage()
+      yPos = 20
+    } else {
+      yPos += 8
+    }
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
     doc.setTextColor(40, 40, 40)
-    const lines = doc.splitTextToSize(data.additionalInfo, 180)
-    doc.text(lines, 15, yPos)
+    doc.text(t.signature, 15, yPos)
+    doc.text(t.signatureLine, 80, yPos)
+
+    return (doc as any).internal.getNumberOfPages()
   }
 
-  // Footer
+  const originalPages = generateContent(false)
+
   doc.setFont("DejaVuSans", "normal")
   doc.setFontSize(9)
-  doc.setTextColor(100, 100, 100)
-  doc.text(`${t.generatedDate} ${new Date().toLocaleDateString()}`, 105, 285, { align: "center" })
+  doc.setTextColor(150, 150, 150)
+  for (let i = 1; i <= originalPages; i++) {
+    doc.setPage(i)
+    doc.text(
+      `${t.generatedDate} ${new Date().toLocaleDateString()} | Strona ${i} z ${originalPages}`,
+      105,
+      285,
+      { align: "center" }
+    )
+  }
 
+  if (createCopy) {
+    doc.addPage()
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(20)
+    doc.setTextColor(100, 100, 100)
+    doc.text("--- KOPIA / COPY ---", 105, 140, { align: "center" })
+
+    doc.addPage()
+    const copyStartPage = originalPages + 2
+    const copyEndPage = generateContent(true) + copyStartPage - 1
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
+    doc.setTextColor(150, 150, 150)
+    for (let i = copyStartPage; i <= copyEndPage; i++) {
+      doc.setPage(i)
+      const pageNum = i - copyStartPage + 1
+      const totalCopyPages = copyEndPage - copyStartPage + 1
+      doc.text(
+        `${t.copyLabel} | ${t.generatedDate} ${new Date().toLocaleDateString()} | Strona ${pageNum} z ${totalCopyPages}`,
+        105,
+        285,
+        { align: "center" }
+      )
+    }
+  }
+
+  const timestamp = new Date().toISOString().split('T')[0]
+  const filename = `PIT-38_${data.nip || data.pesel || 'NN'}_${data.year}_${timestamp}.pdf`
+
+  doc.save(filename)
   window.open(doc.output("bloburl"), "_blank")
 }
 
@@ -1550,85 +1693,24 @@ export interface PIT39Data {
   additionalInfo: string
 }
 
-export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl") => {
+export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl", createCopy: boolean = true) => {
   const doc = new jsPDF()
   await setupUkrainianFonts(doc)
 
   const labels = {
-    uk: {
-      title: "PIT-39 - Податкова декларація",
-      subtitle: "Декларація про доходи від відчуження майна",
-      personalData: "Особисті дані",
-      fullName: "ПІБ:",
-      pesel: "PESEL:",
-      nip: "NIP:",
-      address: "Адреса:",
-      year: "Звітний рік:",
-      propertySales: "Продаж майна",
-      saleNo: "Продаж №",
-      type: "Тип:",
-      description: "Опис:",
-      purchaseDate: "Дата придбання:",
-      saleDate: "Дата продажу:",
-      purchasePrice: "Ціна придбання:",
-      salePrice: "Ціна продажу:",
-      improvements: "Витрати на поліпшення:",
-      saleCosts: "Витрати на продаж:",
-      profit: "Прибуток:",
-      loss: "Збиток:",
-      summary: "Підсумок",
-      totalRevenue: "Загальний дохід:",
-      totalCosts: "Загальні витрати:",
-      totalProfit: "Загальний прибуток:",
-      calculatedTax: "Розрахований податок (19%):",
-      typeProperty: "Нерухомість",
-      typeStocks: "Акції",
-      typeOther: "Інше",
-      additionalInfo: "Додаткова інформація:",
-      generatedDate: "Дата формування:",
-    },
-    en: {
-      title: "PIT-39 - Tax Return",
-      subtitle: "Income from Property Disposal",
-      personalData: "Personal Data",
-      fullName: "Full Name:",
-      pesel: "PESEL:",
-      nip: "NIP:",
-      address: "Address:",
-      year: "Tax Year:",
-      propertySales: "Property Sales",
-      saleNo: "Sale No.",
-      type: "Type:",
-      description: "Description:",
-      purchaseDate: "Purchase Date:",
-      saleDate: "Sale Date:",
-      purchasePrice: "Purchase Price:",
-      salePrice: "Sale Price:",
-      improvements: "Improvements:",
-      saleCosts: "Sale Costs:",
-      profit: "Profit:",
-      loss: "Loss:",
-      summary: "Summary",
-      totalRevenue: "Total Revenue:",
-      totalCosts: "Total Costs:",
-      totalProfit: "Total Profit:",
-      calculatedTax: "Calculated Tax (19%):",
-      typeProperty: "Real Estate",
-      typeStocks: "Stocks",
-      typeOther: "Other",
-      additionalInfo: "Additional Information:",
-      generatedDate: "Generated Date:",
-    },
     pl: {
-      title: "PIT-39 - Zeznanie podatkowe",
-      subtitle: "Dochody z odpłatnego zbycia",
-      personalData: "Dane osobowe",
-      fullName: "Imię i nazwisko:",
+      title: "ZEZNANIE PODATKOWE PIT-39",
+      subtitle: "Zeznanie o wysokości osiągniętego dochodu (przychodu) z odpłatnego zbycia nieruchomości",
+      officialNote: "Urząd Skarbowy - Dochody z odpłatnego zbycia",
+      copyLabel: "KOPIA",
+      originalLabel: "ORYGINAŁ",
+      personalData: "A. DANE PODATNIKA",
+      fullName: "Nazwisko i imię:",
       pesel: "PESEL:",
       nip: "NIP:",
-      address: "Adres:",
+      address: "Adres zamieszkania:",
       year: "Rok podatkowy:",
-      propertySales: "Sprzedaż majątku",
+      propertySales: "B. SPRZEDAŻ MAJĄTKU",
       saleNo: "Sprzedaż nr",
       type: "Rodzaj:",
       description: "Opis:",
@@ -1640,7 +1722,7 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl")
       saleCosts: "Koszty sprzedaży:",
       profit: "Zysk:",
       loss: "Strata:",
-      summary: "Podsumowanie",
+      summary: "C. PODSUMOWANIE",
       totalRevenue: "Suma przychodów:",
       totalCosts: "Suma kosztów:",
       totalProfit: "Suma zysków:",
@@ -1648,40 +1730,84 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl")
       typeProperty: "Nieruchomość",
       typeStocks: "Akcje",
       typeOther: "Inne",
-      additionalInfo: "Informacje dodatkowe:",
-      generatedDate: "Data wygenerowania:",
+      additionalInfo: "D. INFORMACJE DODATKOWE",
+      generatedDate: "Data sporządzenia:",
+      signature: "Podpis podatnika",
+      signatureLine: "_________________",
     },
-    fr: {
-      title: "PIT-39 - Déclaration fiscale",
-      subtitle: "Revenus de cession de biens",
-      personalData: "Données personnelles",
-      fullName: "Nom complet:",
+    en: {
+      title: "TAX RETURN PIT-39",
+      subtitle: "Declaration of income from property disposal",
+      officialNote: "Tax Office - Income from property disposal",
+      copyLabel: "COPY",
+      originalLabel: "ORIGINAL",
+      personalData: "A. TAXPAYER DATA",
+      fullName: "Name and surname:",
       pesel: "PESEL:",
       nip: "NIP:",
-      address: "Adresse:",
-      year: "Année fiscale:",
-      propertySales: "Ventes de biens",
-      saleNo: "Vente n°",
+      address: "Residential address:",
+      year: "Tax year:",
+      propertySales: "B. PROPERTY SALES",
+      saleNo: "Sale no.",
       type: "Type:",
       description: "Description:",
-      purchaseDate: "Date d'achat:",
-      saleDate: "Date de vente:",
-      purchasePrice: "Prix d'achat:",
-      salePrice: "Prix de vente:",
-      improvements: "Frais d'amélioration:",
-      saleCosts: "Frais de vente:",
+      purchaseDate: "Purchase date:",
+      saleDate: "Sale date:",
+      purchasePrice: "Purchase price:",
+      salePrice: "Sale price:",
+      improvements: "Improvements:",
+      saleCosts: "Sale costs:",
       profit: "Profit:",
-      loss: "Perte:",
-      summary: "Résumé",
-      totalRevenue: "Total des revenus:",
-      totalCosts: "Total des frais:",
-      totalProfit: "Total des profits:",
-      calculatedTax: "Impôt calculé (19%):",
-      typeProperty: "Immobilier",
-      typeStocks: "Actions",
-      typeOther: "Autre",
-      additionalInfo: "Informations complémentaires:",
-      generatedDate: "Date de génération:",
+      loss: "Loss:",
+      summary: "C. SUMMARY",
+      totalRevenue: "Total revenue:",
+      totalCosts: "Total costs:",
+      totalProfit: "Total profit:",
+      calculatedTax: "Calculated tax (19%):",
+      typeProperty: "Real Estate",
+      typeStocks: "Stocks",
+      typeOther: "Other",
+      additionalInfo: "D. ADDITIONAL INFORMATION",
+      generatedDate: "Date prepared:",
+      signature: "Taxpayer signature",
+      signatureLine: "_________________",
+    },
+    uk: {
+      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ PIT-39",
+      subtitle: "Zeznanie o wysokości osiągniętego dochodu z odpłatnego zbycia nieruchomości",
+      officialNote: "Urząd Skarbowy - Dochody z odpłatnego zbycia",
+      copyLabel: "KOPIA",
+      originalLabel: "ORYGINAŁ",
+      personalData: "A. DANE PODATNIKA",
+      fullName: "Nazwisko i imię:",
+      pesel: "PESEL:",
+      nip: "NIP:",
+      address: "Adres zamieszkania:",
+      year: "Rok podatkowy:",
+      propertySales: "B. SPRZEDAŻ MAJĄTKU",
+      saleNo: "Sprzedaż nr",
+      type: "Rodzaj:",
+      description: "Opis:",
+      purchaseDate: "Data nabycia:",
+      saleDate: "Data sprzedaży:",
+      purchasePrice: "Cena nabycia:",
+      salePrice: "Cena sprzedaży:",
+      improvements: "Wydatki na ulepszenie:",
+      saleCosts: "Koszty sprzedaży:",
+      profit: "Zysk:",
+      loss: "Strata:",
+      summary: "C. PODSUMOWANIE",
+      totalRevenue: "Suma przychodów:",
+      totalCosts: "Suma kosztów:",
+      totalProfit: "Suma zysków:",
+      calculatedTax: "Obliczony podatek (19%):",
+      typeProperty: "Nieruchomość",
+      typeStocks: "Akcje",
+      typeOther: "Inne",
+      additionalInfo: "D. INFORMACJE DODATKOWE",
+      generatedDate: "Data sporządzenia:",
+      signature: "Podpis podatnika",
+      signatureLine: "_________________",
     },
   }
 
@@ -1693,59 +1819,12 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl")
     return t.typeOther
   }
 
-  // Header
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(18)
-  doc.setTextColor(40, 40, 40)
-  doc.text(t.title, 105, 20, { align: "center" })
-
-  doc.setFont("DejaVuSans", "normal")
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text(t.subtitle, 105, 28, { align: "center" })
-
-  let yPos = 45
-
-  // Personal Data
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.personalData, 15, yPos)
-  yPos += 10
-
-  const personalData = [
-    [t.fullName, `${data.firstName} ${data.lastName}`],
-    [t.pesel, data.pesel || "-"],
-    [t.nip, data.nip || "-"],
-    [t.address, `${data.address}, ${data.postalCode} ${data.city}`],
-    [t.year, data.year],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: personalData,
-    theme: "plain",
-    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Property Sales Section
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.propertySales, 15, yPos)
-  yPos += 10
-
+  // Calculate totals
   let totalRevenue = 0
   let totalCosts = 0
   let totalProfit = 0
 
-  data.propertySales.forEach((sale, index) => {
+  data.propertySales.forEach((sale) => {
     const purchasePrice = parseFloat(sale.purchasePrice) || 0
     const salePrice = parseFloat(sale.salePrice) || 0
     const improvements = parseFloat(sale.improvements) || 0
@@ -1757,108 +1836,229 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl")
     totalRevenue += salePrice
     totalCosts += totalSaleCosts
     totalProfit += profit
+  })
 
-    // Check if we need a new page
-    if (yPos > 230) {
+  // Function to generate document content
+  const generateContent = (isCopy: boolean) => {
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(16)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.title, 105, 15, { align: "center" })
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(10)
+    doc.text(t.subtitle, 105, 23, { align: "center" })
+
+    doc.setFontSize(9)
+    doc.setTextColor(80, 80, 80)
+    doc.text(t.officialNote, 105, 30, { align: "center" })
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(11)
+    if (isCopy) {
+      doc.setTextColor(200, 0, 0)
+      doc.text(t.copyLabel, 180, 15, { align: "right" })
+    } else {
+      doc.setTextColor(0, 100, 0)
+      doc.text(t.originalLabel, 180, 15, { align: "right" })
+    }
+
+    let yPos = 42
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.personalData, 15, yPos)
+    yPos += 8
+
+    const personalData = [
+      [t.fullName, `${data.firstName} ${data.lastName}`],
+      [t.pesel, data.pesel || "-"],
+      [t.nip, data.nip || "-"],
+      [t.address, `${data.address}, ${data.postalCode} ${data.city}`],
+      [t.year, data.year],
+    ]
+
+    autoTable(doc, {
+      startY: yPos,
+      body: personalData,
+      theme: "grid",
+      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 3 },
+      columnStyles: {
+        0: { fontStyle: "bold", cellWidth: 70 },
+        1: { cellWidth: 110 },
+      },
+    })
+
+    yPos = (doc as any).lastAutoTable.finalY + 10
+
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.propertySales, 15, yPos)
+    yPos += 8
+
+    data.propertySales.forEach((sale, index) => {
+      const purchasePrice = parseFloat(sale.purchasePrice) || 0
+      const salePrice = parseFloat(sale.salePrice) || 0
+      const improvements = parseFloat(sale.improvements) || 0
+      const saleCosts = parseFloat(sale.saleCosts) || 0
+
+      const totalSaleCosts = purchasePrice + improvements + saleCosts
+      const profit = salePrice - totalSaleCosts
+
+      if (yPos > 230) {
+        doc.addPage()
+        yPos = 20
+      }
+
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(11)
+      doc.setTextColor(60, 60, 60)
+      doc.text(`${t.saleNo} ${index + 1}`, 15, yPos)
+      yPos += 7
+
+      const saleData = [
+        [t.type, getTypeLabel(sale.type)],
+        [t.description, sale.description || "-"],
+        [t.purchaseDate, sale.purchaseDate || "-"],
+        [t.saleDate, sale.saleDate || "-"],
+        [t.salePrice, `${salePrice.toFixed(2)} PLN`],
+        [t.purchasePrice, `${purchasePrice.toFixed(2)} PLN`],
+        [t.improvements, `${improvements.toFixed(2)} PLN`],
+        [t.saleCosts, `${saleCosts.toFixed(2)} PLN`],
+        [profit >= 0 ? t.profit : t.loss, `${Math.abs(profit).toFixed(2)} PLN`],
+      ]
+
+      autoTable(doc, {
+        startY: yPos,
+        body: saleData,
+        theme: "grid",
+        styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 2 },
+        columnStyles: {
+          0: { fontStyle: "bold", cellWidth: 70 },
+          1: { cellWidth: 110 },
+        },
+      })
+
+      yPos = (doc as any).lastAutoTable.finalY + 8
+    })
+
+    if (yPos > 220) {
       doc.addPage()
       yPos = 20
     }
 
     doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(12)
-    doc.setTextColor(40, 40, 40)
-    doc.text(`${t.saleNo} ${index + 1}`, 15, yPos)
+    doc.setFontSize(13)
+    doc.setTextColor(0, 0, 0)
+    doc.text(t.summary, 15, yPos)
     yPos += 8
 
-    const saleData = [
-      [t.type, getTypeLabel(sale.type)],
-      [t.description, sale.description || "-"],
-      [t.purchaseDate, sale.purchaseDate || "-"],
-      [t.saleDate, sale.saleDate || "-"],
-      [t.salePrice, `${salePrice.toFixed(2)} PLN`],
-      [t.purchasePrice, `${purchasePrice.toFixed(2)} PLN`],
-      [t.improvements, `${improvements.toFixed(2)} PLN`],
-      [t.saleCosts, `${saleCosts.toFixed(2)} PLN`],
-      [profit >= 0 ? t.profit : t.loss, `${Math.abs(profit).toFixed(2)} PLN`],
+    const calculatedTax = Math.max(0, totalProfit * 0.19)
+
+    const summaryData = [
+      [t.totalRevenue, `${totalRevenue.toFixed(2)} PLN`],
+      [t.totalCosts, `${totalCosts.toFixed(2)} PLN`],
+      [t.totalProfit, `${totalProfit.toFixed(2)} PLN`],
+      [t.calculatedTax, `${calculatedTax.toFixed(2)} PLN`],
     ]
 
     autoTable(doc, {
       startY: yPos,
-      body: saleData,
-      theme: "plain",
-      styles: { font: "DejaVuSans", fontSize: 9, cellPadding: 2 },
+      body: summaryData,
+      theme: "grid",
+      styles: {
+        font: "DejaVuSans",
+        fontSize: 10,
+        cellPadding: 4,
+        fontStyle: "bold",
+        fillColor: [240, 240, 255]
+      },
       columnStyles: {
-        0: { fontStyle: "bold", cellWidth: 60 },
-        1: { cellWidth: 120 },
+        0: { cellWidth: 70 },
+        1: { cellWidth: 110, halign: "right" },
       },
     })
 
     yPos = (doc as any).lastAutoTable.finalY + 10
-  })
 
-  // Summary
-  if (yPos > 220) {
-    doc.addPage()
-    yPos = 20
-  }
+    if (data.additionalInfo) {
+      doc.setFont("DejaVuSans", "bold")
+      doc.setFontSize(13)
+      doc.setTextColor(0, 0, 0)
+      doc.text(t.additionalInfo, 15, yPos)
+      yPos += 7
 
-  doc.setFont("DejaVuSans", "bold")
-  doc.setFontSize(14)
-  doc.setTextColor(0, 102, 204)
-  doc.text(t.summary, 15, yPos)
-  yPos += 10
+      doc.setFont("DejaVuSans", "normal")
+      doc.setFontSize(9)
+      doc.setTextColor(40, 40, 40)
+      const lines = doc.splitTextToSize(data.additionalInfo, 180)
+      doc.text(lines, 15, yPos)
+      yPos += lines.length * 4 + 10
+    }
 
-  const calculatedTax = Math.max(0, totalProfit * 0.19)
+    if (yPos > 240) {
+      doc.addPage()
+      yPos = 20
+    } else {
+      yPos += 8
+    }
 
-  const summaryData = [
-    [t.totalRevenue, `${totalRevenue.toFixed(2)} PLN`],
-    [t.totalCosts, `${totalCosts.toFixed(2)} PLN`],
-    [t.totalProfit, `${totalProfit.toFixed(2)} PLN`],
-    [t.calculatedTax, `${calculatedTax.toFixed(2)} PLN`],
-  ]
-
-  autoTable(doc, {
-    startY: yPos,
-    body: summaryData,
-    theme: "grid",
-    styles: { font: "DejaVuSans", fontSize: 11, cellPadding: 4 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 60 },
-      1: { fontStyle: "bold", cellWidth: 120 },
-    },
-  })
-
-  yPos = (doc as any).lastAutoTable.finalY + 15
-
-  // Additional Info
-  if (data.additionalInfo && yPos < 250) {
-    doc.setFont("DejaVuSans", "bold")
-    doc.setFontSize(12)
-    doc.setTextColor(0, 102, 204)
-    doc.text(t.additionalInfo, 15, yPos)
-    yPos += 8
-
-    doc.setFont("DejaVuSans", "normal")
-    doc.setFontSize(10)
-    doc.setTextColor(40, 40, 40)
-    const lines = doc.splitTextToSize(data.additionalInfo, 180)
-    doc.text(lines, 15, yPos)
-  }
-
-  // Footer on each page
-  const pageCount = doc.getNumberOfPages()
-  for (let i = 1; i <= pageCount; i++) {
-    doc.setPage(i)
     doc.setFont("DejaVuSans", "normal")
     doc.setFontSize(9)
-    doc.setTextColor(100, 100, 100)
+    doc.setTextColor(40, 40, 40)
+    doc.text(t.signature, 15, yPos)
+    doc.text(t.signatureLine, 80, yPos)
+
+    return (doc as any).internal.getNumberOfPages()
+  }
+
+  const originalPages = generateContent(false)
+
+  doc.setFont("DejaVuSans", "normal")
+  doc.setFontSize(9)
+  doc.setTextColor(150, 150, 150)
+  for (let i = 1; i <= originalPages; i++) {
+    doc.setPage(i)
     doc.text(
-      `${t.generatedDate} ${new Date().toLocaleDateString()} | ${t.saleNo.replace("No.", "")} ${i}/${pageCount}`,
+      `${t.generatedDate} ${new Date().toLocaleDateString()} | Strona ${i} z ${originalPages}`,
       105,
       285,
       { align: "center" }
     )
   }
 
+  if (createCopy) {
+    doc.addPage()
+    doc.setFont("DejaVuSans", "bold")
+    doc.setFontSize(20)
+    doc.setTextColor(100, 100, 100)
+    doc.text("--- KOPIA / COPY ---", 105, 140, { align: "center" })
+
+    doc.addPage()
+    const copyStartPage = originalPages + 2
+    const copyEndPage = generateContent(true) + copyStartPage - 1
+
+    doc.setFont("DejaVuSans", "normal")
+    doc.setFontSize(9)
+    doc.setTextColor(150, 150, 150)
+    for (let i = copyStartPage; i <= copyEndPage; i++) {
+      doc.setPage(i)
+      const pageNum = i - copyStartPage + 1
+      const totalCopyPages = copyEndPage - copyStartPage + 1
+      doc.text(
+        `${t.copyLabel} | ${t.generatedDate} ${new Date().toLocaleDateString()} | Strona ${pageNum} z ${totalCopyPages}`,
+        105,
+        285,
+        { align: "center" }
+      )
+    }
+  }
+
+  const timestamp = new Date().toISOString().split('T')[0]
+  const filename = `PIT-39_${data.nip || data.pesel || 'NN'}_${data.year}_${timestamp}.pdf`
+
+  doc.save(filename)
   window.open(doc.output("bloburl"), "_blank")
 }
