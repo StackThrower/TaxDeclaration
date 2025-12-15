@@ -1133,7 +1133,7 @@ export function FormF0121214() {
             <Upload className="h-5 w-5" />
             {isImporting
               ? (language === "uk" ? "Імпорт..." : "Importing...")
-              : (language === "uk" ? "Імпортувати дані (Interactive Brokers)" : "Import Data (Interactive Brokers)")
+              : (language === "uk" ? "Імпортувати дані" : "Import Data")
             }
           </Button>
           <Button
