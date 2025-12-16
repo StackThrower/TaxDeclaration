@@ -29,15 +29,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  const canonicalUrl = `https://monegoo.com/${locale}/knowledge/${slug}`
+
   return {
     title: `${article.title} | Monegoo`,
     description: article.description,
     keywords: article.keywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: article.title,
       description: article.description,
       type: "article",
       locale: locale,
+      url: canonicalUrl,
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt || article.publishedAt,
     },

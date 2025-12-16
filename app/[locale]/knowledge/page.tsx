@@ -29,8 +29,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     de: "Steuerliche Wissensdatenbank | Monegoo",
   }
 
+  const descriptions: Record<Language, string> = {
+    uk: "Дізнайтеся більше про податкове законодавство, як правильно заповнювати декларації та оптимізувати податкові зобов'язання",
+    en: "Learn more about tax legislation, how to properly fill out declarations and optimize tax obligations",
+    fr: "En savoir plus sur la législation fiscale, comment remplir correctement les déclarations et optimiser les obligations fiscales",
+    pl: "Dowiedz się więcej o przepisах podatkowych, jak prawidłowo wypełniać deklaracje i optymalizować zobowiązania podatkowe",
+    es: "Aprende más sobre la legislación fiscal, cómo completar correctamente las declaraciones y optimizar las obligaciones fiscales",
+    pt: "Saiba mais sobre legislação tributária, como preencher corretamente as declarações e otimizar obrigações fiscais",
+    de: "Erfahren Sie mehr über Steuergesetzgebung, wie Sie Erklärungen korrekt ausfüllen und Steuerverpflichtungen optimieren",
+  }
+
+  const canonicalUrl = `https://monegoo.com/${locale}/knowledge`
+
   return {
     title: titles[language] || titles.en,
+    description: descriptions[language] || descriptions.en,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: titles[language] || titles.en,
+      description: descriptions[language] || descriptions.en,
+      url: canonicalUrl,
+      type: "website",
+      locale: locale,
+    },
   }
 }
 
