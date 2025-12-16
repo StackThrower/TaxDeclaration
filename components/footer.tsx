@@ -47,6 +47,11 @@ export function Footer() {
                   {t(language, "footer.about")}
                 </a>
               </li>
+              <li>
+                <a href={`/${locale}/knowledge`} className="hover:opacity-100 transition-opacity hover:underline">
+                  {t(language, "knowledge.base")}
+                </a>
+              </li>
             </ul>
           </div>
           <div className="md:col-span-2">
