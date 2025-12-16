@@ -634,6 +634,14 @@ Filing your US tax return doesn't have to be overwhelming:
 
 **Pro tip:** File early to get refund faster and avoid identity theft!
 
+## Official Resources
+
+- **[IRS Official Website](https://www.irs.gov)** - Forms, instructions, and tax information
+- **[Internal Revenue Code](https://www.law.cornell.edu/uscode/text/26)** - Federal tax law
+- **[IRS Free File](https://www.irs.gov/filing/free-file-do-your-federal-taxes-for-free)** - Free tax preparation software
+- **[Taxpayer Advocate Service](https://www.taxpayeradvocate.irs.gov)** - Help with IRS issues
+- **[IRS Form 1040 Instructions](https://www.irs.gov/forms-pubs/about-form-1040)** - Official instructions
+
 ---
 
 *Need help with your taxes? Use our free tax calculator or consult a licensed tax professional.*

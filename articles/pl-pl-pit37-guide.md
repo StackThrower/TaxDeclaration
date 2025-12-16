@@ -284,6 +284,8 @@ Składki ZUS są odliczane od dochodu przed opodatkowaniem:
 
 **Krok 3:** Możesz przekazać 1% i 1.5% (dwie organizacje)
 
+Jeśli masz dzieci, koniecznie sprawdź nasz przewodnik po [uldze na dziecko](/pl-pl/knowledge/child-benefit), aby zmaksymalizować swoje korzyści podatkowe.
+
 **Krok 4:** Nie kosztuje cię to nic – to część twojego podatku
 
 **Popularne organizacje:**
@@ -335,6 +337,16 @@ Rozliczenie roczne PIT-37 nie musi być skomplikowane. Kluczowe kroki:
 5. ✅ Złóż zeznanie przed 30 kwietnia
 
 **Pamiętaj:** Prawidłowe rozliczenie może przynieść ci znaczny zwrot podatku. Nie rezygnuj z przysługujących ci ulg!
+
+Szczegółowe informacje o [uldze na dziecko znajdziesz tutaj](/pl-pl/knowledge/child-benefit).
+
+## Oficjalne źródła
+
+- **[Ministerstwo Finansów](https://www.gov.pl/web/finanse)** - Oficjalna strona resortu
+- **[Krajowa Administracja Skarbowa](https://www.gov.pl/web/kas)** - Portal podatkowy
+- **[Ustawa o podatku dochodowym od osób fizycznych](https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19910800350)** - Akty prawne
+- **[e-PIT - usługa online](https://www.podatki.gov.pl/pit/twoj-e-pit/)** - Składanie deklaracji online
+- **[Infolinia KAS: 22 330 0 330](tel:223300330)** - Pomoc telefoniczna
 
 ---
 

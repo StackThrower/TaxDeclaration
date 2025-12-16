@@ -330,11 +330,11 @@ Conservez pendant **3 ans minimum :**
 - **economie.gouv.fr** – Actualités fiscales
 
 ### Applications mobiles :
-- **impots.gouv** – App officielle des impôts
-- **FranceConnect** – Connexion sécurisée
+- **[impots.gouv](https://www.impots.gouv.fr/portail/mobile)** – App officielle des impôts
+- **[FranceConnect](https://franceconnect.gouv.fr)** – Connexion sécurisée
 
 ### Assistance :
-📞 **0809 401 401** – Impôts Service (gratuit)
+📞 **[0809 401 401](tel:0809401401)** – Impôts Service (gratuit)
 💬 **Messagerie sécurisée** – Via votre espace particulier
 📍 **Centre des finances publiques** – Rendez-vous physique
 
@@ -348,6 +348,14 @@ La déclaration d'impôts en France peut sembler complexe, mais en suivant ces �
 4. ✅ Profiter des avantages fiscaux légaux
 
 **Conseil final :** N'attendez pas la dernière minute et utilisez la déclaration en ligne pour plus de simplicité!
+
+## Sources officielles
+
+- **[Service Public - Impôts](https://www.service-public.fr/particuliers/vosdroits/N247)** - Informations officielles
+- **[Code général des impôts](https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006069577/)** - Législation fiscale
+- **[impots.gouv.fr](https://www.impots.gouv.fr)** - Site officiel de la DGFiP
+- **[Formulaire 2042](https://www.impots.gouv.fr/portail/formulaire/2042/declaration-des-revenus)** - Déclaration en ligne
+- **Assistance: 0809 401 401** - Service gratuit
 
 ---
 

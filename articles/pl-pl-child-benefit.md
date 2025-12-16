@@ -193,6 +193,8 @@ Płacenie alimentów nie daje automatycznie prawa do ulgi. Prawo do ulgi ma rodz
 
 **Możesz korzystać z obu jednocześnie!**
 
+Aby dowiedzieć się więcej o rozliczeniu rocznym, przeczytaj nasz [kompletny przewodnik po PIT-37](/pl-pl/knowledge/pit37-guide).
+
 ### Ulga na dziecko vs. Ulga dla młodych
 
 **Ulga dla młodych (do 26 lat):**
@@ -261,6 +263,15 @@ Rząd rozważa:
 ✅ Wykorzystaj ulgę w pełni – to twoje prawo!
 
 **Wskazówka:** Jeśli masz jakiekolwiek wątpliwości, skonsultuj się z doradcą podatkowym lub skorzystaj z infolinii KAS: 22 330 0 330.
+
+Więcej o rozliczeniu rocznym przeczytasz w naszym [przewodniku po PIT-37](/pl-pl/knowledge/pit37-guide).
+
+## Oficjalne źródła
+
+- **[Krajowa Administracja Skarbowa](https://www.gov.pl/web/kas)** - Portal podatkowy
+- **[Ustawa o PIT - Art. 27f](https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19910800350)** - Przepisy o uldze prorodzinnej
+- **[e-PIT - rozliczenie online](https://www.podatki.gov.pl/pit/twoj-e-pit/)** - Automatyczne rozliczenie
+- **[Infolinia KAS: 22 330 0 330](tel:223300330)** - Pomoc podatkowa
 
 ---
 

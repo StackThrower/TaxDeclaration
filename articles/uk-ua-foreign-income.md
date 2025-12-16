@@ -215,9 +215,16 @@ keywords:
 ## Корисні інструменти
 
 **Офіційні ресурси:**
-- Електронний кабінет платника податків (cabinet.tax.gov.ua)
-- Офіційний курс НБУ (bank.gov.ua)
-- Список угод про уникнення подвійного оподаткування (ДПС)
+- [Електронний кабінет платника податків](https://cabinet.tax.gov.ua)
+- [Офіційний курс НБУ](https://bank.gov.ua)
+- [Список угод про уникнення подвійного оподаткування](https://tax.gov.ua/baneryi/mijnarodne-opodatkuvannya/ugodi-pro-uniknennya-podiynogo-opodatkuvannya/)
+- [Податковий кодекс України](https://zakon.rada.gov.ua/laws/show/2755-17)
+
+**Корисні статті:**
+- [Податки для фрілансерів та самозайнятих](/uk-ua/knowledge/freelance-taxes)
+- [Основи оподаткування в Україні](/uk-ua/knowledge/tax-basics)
+- [Оподаткування інвестиційних доходів](/uk-ua/knowledge/investment-income)
+- [Податок на криптовалюту](/uk-ua/knowledge/crypto-tax)
 
 **Калькулятори:**
 - Калькулятор податків Monegoo

@@ -465,6 +465,15 @@ Declarar o IRS em Portugal pode ser simples se:
 
 **Dica final:** Use o simulador antes de submeter para otimizar sua declaração!
 
+## Fontes oficiais
+
+- **[Portal das Finanças](https://www.portaldasfinancas.gov.pt)** - Site oficial da AT
+- **[Código do IRS](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs/)** - Legislação fiscal
+- **[IRS Automático](https://www.portaldasfinancas.gov.pt/at/html/index.html)** - Declaração automática
+- **[e-fatura](https://faturas.portaldasfinancas.gov.pt)** - Gestão de faturas
+- **[AT - Autoridade Tributária](https://www.at.gov.pt)** - Informações e contactos
+- **Linha de Apoio: 217 206 707** - Atendimento telefônico
+
 ---
 
 *Precisa de ajuda com o IRS? Use nossa calculadora gratuita ou consulte um contabilista certificado.*

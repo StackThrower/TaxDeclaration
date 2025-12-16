@@ -294,9 +294,16 @@ keywords:
 
 ### Онлайн-ресурси:
 
-- **tax.gov.ua** – офіційний сайт ДПС
-- **cabinet.tax.gov.ua** – електронний кабінет
-- **diia.gov.ua** – державні послуги
+- **[tax.gov.ua](https://tax.gov.ua)** – офіційний сайт ДПС
+- **[cabinet.tax.gov.ua](https://cabinet.tax.gov.ua)** – електронний кабінет
+- **[diia.gov.ua](https://diia.gov.ua)** – державні послуги
+- **[Податковий кодекс України](https://zakon.rada.gov.ua/laws/show/2755-17)**
+
+### Корисні статті на нашому сайті:
+- [Основи оподаткування в Україні](/uk-ua/knowledge/tax-basics)
+- [Як задекларувати дохід з-за кордону](/uk-ua/knowledge/foreign-income)
+- [Оподаткування інвестиційних доходів](/uk-ua/knowledge/investment-income)
+- [Податок на криптовалюту](/uk-ua/knowledge/crypto-tax)
 
 ### Telegram-боти:
 

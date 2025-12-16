@@ -455,6 +455,14 @@ La Declaración de la Renta en España puede ser sencilla si:
 
 **Consejo final:** Reventa siempre el borrador. Hacienda puede no tener toda la información de deducciones a las que tienes derecho.
 
+## Fuentes oficiales
+
+- **[Agencia Tributaria](https://www.agenciatributaria.es)** - Portal oficial de Hacienda
+- **[Ley del IRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764)** - Legislación fiscal
+- **[Renta Web](https://www.agenciatributaria.es/AEAT.internet/Renta.shtml)** - Declaración online
+- **[Sede Electrónica AEAT](https://sede.agenciatributaria.gob.es)** - Trámites electrónicos
+- **Teléfono información: 91 535 73 26** - Asistencia telefónica
+
 ---
 
 *¿Necesitas ayuda con tu declaración? Usa nuestra calculadora gratuita o consulta con un asesor fiscal.*

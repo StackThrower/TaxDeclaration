@@ -400,9 +400,9 @@ Variiert je nach Bundesland – Nummer auf Finanzamt-Website
 
 ### Online-Hilfe:
 
-🌐 **elster.de** – ELSTER Portal
-🌐 **bundesfinanzministerium.de** – Informationen
-🌐 **formulare-bfinv.de** – Formulare zum Download
+🌐 **[elster.de](https://www.elster.de)** – ELSTER Portal für elektronische Steuererklärung
+🌐 **[bundesfinanzministerium.de](https://www.bundesfinanzministerium.de)** – Offizielle Informationen
+🌐 **[formulare-bfinv.de](https://www.formulare-bfinv.de)** – Formulare zum Download
 
 ## Zusammenfassung
 
@@ -415,6 +415,14 @@ Die Steuererklärung in Deutschland kann komplex sein, aber mit diesem Leitfaden
 5. ✅ Durchschnittlich 1,095 € Rückerstattung erhalten!
 
 **Abschließender Tipp:** Auch wenn Sie nicht müssen – machen Sie die Steuererklärung! In den meisten Fällen lohnt es sich.
+
+## Offizielle Quellen
+
+- **[Bundesministerium der Finanzen](https://www.bundesfinanzministerium.de)** - Finanzministerium
+- **[Einkommensteuergesetz (EStG)](https://www.gesetze-im-internet.de/estg/)** - Steuerrecht
+- **[ELSTER - Elektronische Steuererklärung](https://www.elster.de)** - Online-Portal
+- **[Bundeszentralamt für Steuern](https://www.bzst.de)** - Steuerverwaltung
+- **Telefonische Hilfe:** Ihr lokales Finanzamt
 
 ---
 
