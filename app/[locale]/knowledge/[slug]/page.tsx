@@ -11,6 +11,7 @@ import { getArticle, getRelatedArticles } from "@/lib/articles"
 import { Language } from "@/lib/i18n"
 import { CountryCode } from "@/lib/countries"
 import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>
@@ -170,6 +171,7 @@ export default async function ArticlePage({ params }: Props) {
         {/* Article content */}
         <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
           <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />,
               h2: ({ node, ...props }) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
@@ -197,15 +199,24 @@ export default async function ArticlePage({ params }: Props) {
                 )
               },
               table: ({ node, ...props }) => (
-                <div className="overflow-x-auto my-4">
-                  <table className="min-w-full divide-y divide-border" {...props} />
+                <div className="overflow-x-auto my-6">
+                  <table className="min-w-full border-collapse border border-border" {...props} />
                 </div>
               ),
+              thead: ({ node, ...props }) => (
+                <thead className="bg-muted" {...props} />
+              ),
+              tbody: ({ node, ...props }) => (
+                <tbody {...props} />
+              ),
+              tr: ({ node, ...props }) => (
+                <tr className="border-b border-border" {...props} />
+              ),
               th: ({ node, ...props }) => (
-                <th className="px-4 py-2 bg-muted text-left font-semibold" {...props} />
+                <th className="px-4 py-3 text-left font-semibold border border-border bg-muted" {...props} />
               ),
               td: ({ node, ...props }) => (
-                <td className="px-4 py-2 border-t border-border" {...props} />
+                <td className="px-4 py-3 border border-border" {...props} />
               ),
             }}
           >

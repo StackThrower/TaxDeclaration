@@ -355,7 +355,6 @@ La déclaration d'impôts en France peut sembler complexe, mais en suivant ces �
 - **[Code général des impôts](https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006069577/)** - Législation fiscale
 - **[impots.gouv.fr](https://www.impots.gouv.fr)** - Site officiel de la DGFiP
 - **[Formulaire 2042](https://www.impots.gouv.fr/portail/formulaire/2042/declaration-des-revenus)** - Déclaration en ligne
-- **Assistance: 0809 401 401** - Service gratuit
 
 ---
 

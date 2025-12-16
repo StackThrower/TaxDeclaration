@@ -146,4 +146,31 @@
   * {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Стили для таблиц в markdown */
+  table {
+    @apply w-full border-collapse;
+  }
+
+  th, td {
+    @apply text-left;
+  }
+
+  /* Улучшенный скроллинг для таблиц на мобильных */
+  .overflow-x-auto {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted));
+  }
+
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-track {
+    @apply bg-muted rounded;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground rounded;
+  }
 }

@@ -400,7 +400,6 @@ Variiert je nach Bundesland – Nummer auf Finanzamt-Website
 
 ### Online-Hilfe:
 
-🌐 **[elster.de](https://www.elster.de)** – ELSTER Portal für elektronische Steuererklärung
 🌐 **[bundesfinanzministerium.de](https://www.bundesfinanzministerium.de)** – Offizielle Informationen
 🌐 **[formulare-bfinv.de](https://www.formulare-bfinv.de)** – Formulare zum Download
 

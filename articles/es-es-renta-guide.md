@@ -461,7 +461,6 @@ La Declaración de la Renta en España puede ser sencilla si:
 - **[Ley del IRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764)** - Legislación fiscal
 - **[Renta Web](https://www.agenciatributaria.es/AEAT.internet/Renta.shtml)** - Declaración online
 - **[Sede Electrónica AEAT](https://sede.agenciatributaria.gob.es)** - Trámites electrónicos
-- **Teléfono información: 91 535 73 26** - Asistencia telefónica
 
 ---
 
