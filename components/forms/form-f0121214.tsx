@@ -10,7 +10,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
-import { Trash2, Plus, FileText, Upload, FileSpreadsheet } from "lucide-react"
+import { Trash2, Plus, FileText, Upload, FileSpreadsheet, HelpCircle } from "lucide-react"
+import Link from "next/link"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
 import { generateTaxCalculationExcel } from "@/lib/excel-generator"
 import {
@@ -1229,11 +1230,34 @@ export function FormF0121214() {
 
         {/* Import Info */}
         {!isImporting && (
-          <div className="text-center text-sm text-muted-foreground">
-            {language === "uk"
-              ? "Завантажте XML файл з Interactive Brokers (FlexQuery Report з закритими позиціями)"
-              : "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
-            }
+          <div className="text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+            <span>
+              {language === "uk" ? (
+                <>
+                  Завантажте XML файл з Interactive Brokers (
+                  <Link
+                    href="/uk-ua/knowledge/flex-report-ib"
+                    className="text-primary hover:underline font-medium"
+                    target="_blank"
+                  >
+                    FlexQuery Report з закритими позиціями
+                  </Link>
+                  )
+                </>
+              ) : (
+                "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
+              )}
+            </span>
+            {language === "uk" && (
+              <Link
+                href="/uk-ua/knowledge/flex-report-ib"
+                className="text-primary hover:text-primary/80 transition-colors"
+                target="_blank"
+                title="Детальна інструкція про FlexQuery Report"
+              >
+                <HelpCircle className="h-4 w-4" />
+              </Link>
+            )}
           </div>
         )}
 

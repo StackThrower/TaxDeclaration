@@ -10,7 +10,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
-import { FileText, Plus, Trash2, Upload, FileSpreadsheet } from "lucide-react"
+import { FileText, Plus, Trash2, Upload, FileSpreadsheet, HelpCircle } from "lucide-react"
+import Link from "next/link"
 import { generatePIT39PDF } from "@/lib/pdf-generator"
 import { generatePIT39Excel } from "@/lib/excel-generator"
 import {
@@ -906,13 +907,36 @@ export function FormPIT39() {
 
         {/* Import Info */}
         {!isImporting && (
-          <div className="text-center text-sm text-muted-foreground">
-            {language === "uk"
-              ? "Завантажте XML файл з Interactive Brokers (FlexQuery Report з закритими позиціями)"
-              : language === "pl"
-                ? "Wczytaj plik XML z Interactive Brokers (FlexQuery Report z zamkniętymi pozycjami)"
-                : "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
-            }
+          <div className="text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+            <span>
+              {language === "uk" ? (
+                "Завантажте XML файл з Interactive Brokers (FlexQuery Report з закритими позиціями)"
+              ) : language === "pl" ? (
+                <>
+                  Wczytaj plik XML z Interactive Brokers (
+                  <Link
+                    href="/pl-pl/knowledge/flex-report-ib"
+                    className="text-primary hover:underline font-medium"
+                    target="_blank"
+                  >
+                    FlexQuery Report z zamkniętymi pozycjami
+                  </Link>
+                  )
+                </>
+              ) : (
+                "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
+              )}
+            </span>
+            {language === "pl" && (
+              <Link
+                href="/pl-pl/knowledge/flex-report-ib"
+                className="text-primary hover:text-primary/80 transition-colors"
+                target="_blank"
+                title="Szczegółowa instrukcja dotycząca FlexQuery Report"
+              >
+                <HelpCircle className="h-4 w-4" />
+              </Link>
+            )}
           </div>
         )}
 
