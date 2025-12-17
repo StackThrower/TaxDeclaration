@@ -10,8 +10,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
-import { FileText, Plus, Trash2, Upload } from "lucide-react"
+import { FileText, Plus, Trash2, Upload, FileSpreadsheet } from "lucide-react"
 import { generatePIT39PDF } from "@/lib/pdf-generator"
+import { generatePIT39Excel } from "@/lib/excel-generator"
 import {
   fetchNBPExchangeRate,
   convertToPLN,
@@ -370,6 +371,35 @@ export function FormPIT39() {
     await generatePIT39PDF({ ...formData, propertySales }, language)
   }
 
+  const handleExportExcel = () => {
+    // Validate that we have required data
+    if (!formData.firstName || !formData.lastName) {
+      alert(language === "uk"
+        ? "Будь ласка, заповніть ім'я та прізвище перед експортом"
+        : language === "pl"
+          ? "Proszę wypełnić imię i nazwisko przed eksportem"
+          : "Please fill in first and last name before export")
+      return
+    }
+
+    // Generate Excel file
+    generatePIT39Excel(
+      {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        pesel: formData.pesel,
+        nip: formData.nip,
+        address: formData.address,
+        city: formData.city,
+        postalCode: formData.postalCode,
+        year: formData.year,
+        additionalInfo: formData.additionalInfo,
+        propertySales: propertySales,
+      },
+      language
+    )
+  }
+
   const handleClear = () => {
     setFormData({
       firstName: "",
@@ -431,6 +461,7 @@ export function FormPIT39() {
       remove: "Видалити",
       additionalInfo: "Додаткова інформація",
       generate: "Сформувати PDF",
+      exportExcel: "Експорт в Excel",
       clear: "Очистити",
       importXML: "Імпорт з Interactive Brokers",
       importButton: "Завантажити XML",
@@ -469,6 +500,7 @@ export function FormPIT39() {
       remove: "Remove",
       additionalInfo: "Additional Information",
       generate: "Generate PDF",
+      exportExcel: "Export to Excel",
       clear: "Clear",
       importXML: "Import from Interactive Brokers",
       importButton: "Upload XML",
@@ -507,6 +539,7 @@ export function FormPIT39() {
       remove: "Usuń",
       additionalInfo: "Informacje dodatkowe",
       generate: "Generuj PDF",
+      exportExcel: "Eksport do Excel",
       clear: "Wyczyść",
       importXML: "Import z Interactive Brokers",
       importButton: "Wczytaj XML",
@@ -545,6 +578,7 @@ export function FormPIT39() {
       remove: "Supprimer",
       additionalInfo: "Informations complémentaires",
       generate: "Générer PDF",
+      exportExcel: "Exporter vers Excel",
       clear: "Effacer",
       importXML: "Importer depuis Interactive Brokers",
       importButton: "Charger XML",
@@ -928,6 +962,16 @@ export function FormPIT39() {
         <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
           <FileText className="h-5 w-5" />
           {translations.generate}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          onClick={handleExportExcel}
+          className="gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950"
+        >
+          <FileSpreadsheet className="h-5 w-5" />
+          {translations.exportExcel}
         </Button>
         <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
           {translations.clear}

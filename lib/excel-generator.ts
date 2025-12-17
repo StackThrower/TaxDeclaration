@@ -718,3 +718,650 @@ function getTranslations(language: string) {
   return translations[language] || translations['en']
 }
 
+// PIT-39 Excel Generation
+interface PropertySale {
+  id: string
+  type: string
+  description: string
+  currency: string
+  purchaseDate: string
+  saleDate: string
+  purchasePriceForeign: string
+  salePriceForeign: string
+  purchaseRate: string
+  saleRate: string
+  purchasePrice: string
+  salePrice: string
+  improvements: string
+  saleCosts: string
+}
+
+interface PIT39FormData {
+  firstName: string
+  lastName: string
+  pesel: string
+  nip: string
+  address: string
+  city: string
+  postalCode: string
+  year: string
+  additionalInfo: string
+  propertySales: PropertySale[]
+}
+
+export function generatePIT39Excel(formData: PIT39FormData, language: string = 'pl') {
+  // Create a new workbook
+  const wb = XLSX.utils.book_new()
+
+  // Translations
+  const t = getPIT39Translations(language)
+
+  // Calculate totals
+  let totalPurchasePricePLN = 0
+  let totalSalePricePLN = 0
+  let totalImprovements = 0
+  let totalSaleCosts = 0
+  let totalIncome = 0
+  let totalTax = 0
+
+  formData.propertySales.forEach(sale => {
+    const purchasePrice = parseFloat(sale.purchasePrice) || 0
+    const salePrice = parseFloat(sale.salePrice) || 0
+    const improvements = parseFloat(sale.improvements) || 0
+    const saleCosts = parseFloat(sale.saleCosts) || 0
+
+    const income = salePrice - purchasePrice - improvements - saleCosts
+    const tax = income > 0 ? income * 0.19 : 0
+
+    totalPurchasePricePLN += purchasePrice
+    totalSalePricePLN += salePrice
+    totalImprovements += improvements
+    totalSaleCosts += saleCosts
+    totalIncome += income > 0 ? income : 0
+    totalTax += tax
+  })
+
+  // Sheet 1: Summary
+  const summaryData = [
+    [t.title, '', '', ''],
+    ['', '', '', ''],
+    [t.personalInfo, '', '', ''],
+    [t.fullName, `${formData.firstName} ${formData.lastName}`, '', ''],
+    [t.pesel, formData.pesel, '', ''],
+    [t.nip, formData.nip, '', ''],
+    [t.address, formData.address, '', ''],
+    [t.city, formData.city, '', ''],
+    [t.postalCode, formData.postalCode, '', ''],
+    [t.year, formData.year, '', ''],
+    ['', '', '', ''],
+    [t.taxSummary, '', '', ''],
+    [t.totalPurchasePrice, totalPurchasePricePLN.toFixed(2), t.pln, ''],
+    [t.totalSalePrice, totalSalePricePLN.toFixed(2), t.pln, ''],
+    [t.totalImprovements, totalImprovements.toFixed(2), t.pln, ''],
+    [t.totalSaleCosts, totalSaleCosts.toFixed(2), t.pln, ''],
+    [t.totalIncome, totalIncome.toFixed(2), t.pln, ''],
+    [t.totalTax, totalTax.toFixed(2), t.pln, t.taxRate],
+    ['', '', '', ''],
+  ]
+
+  const wsSummary = XLSX.utils.aoa_to_sheet(summaryData)
+
+  // Set column widths for summary
+  wsSummary['!cols'] = [
+    { wch: 30 },
+    { wch: 25 },
+    { wch: 10 },
+    { wch: 15 }
+  ]
+
+  XLSX.utils.book_append_sheet(wb, wsSummary, t.summarySheet)
+
+  // Sheet 2: Detailed Calculations
+  const detailsHeader = [
+    [t.detailedCalculations],
+    [''],
+    [
+      '№',
+      t.propertyType,
+      t.description,
+      t.currency,
+      t.purchaseDate,
+      t.saleDate,
+      t.purchasePriceForeign,
+      t.purchaseRate,
+      t.purchasePricePLN,
+      t.salePriceForeign,
+      t.saleRate,
+      t.salePricePLN,
+      t.improvements,
+      t.saleCosts,
+      t.totalCosts,
+      t.income,
+      t.tax
+    ]
+  ]
+
+  const detailsData = formData.propertySales.map((sale, index) => {
+    const purchasePrice = parseFloat(sale.purchasePrice) || 0
+    const salePrice = parseFloat(sale.salePrice) || 0
+    const improvements = parseFloat(sale.improvements) || 0
+    const saleCosts = parseFloat(sale.saleCosts) || 0
+    const purchasePriceForeign = parseFloat(sale.purchasePriceForeign) || 0
+    const salePriceForeign = parseFloat(sale.salePriceForeign) || 0
+    const purchaseRate = parseFloat(sale.purchaseRate) || 1
+    const saleRate = parseFloat(sale.saleRate) || 1
+
+    const totalCosts = purchasePrice + improvements + saleCosts
+    const income = salePrice - totalCosts
+    const tax = income > 0 ? income * 0.19 : 0
+
+    const typeLabel = getPropertyTypeLabel(sale.type, language)
+
+    return [
+      index + 1,
+      typeLabel,
+      sale.description,
+      sale.currency,
+      sale.purchaseDate,
+      sale.saleDate,
+      purchasePriceForeign.toFixed(2),
+      purchaseRate.toFixed(4),
+      purchasePrice.toFixed(2),
+      salePriceForeign.toFixed(2),
+      saleRate.toFixed(4),
+      salePrice.toFixed(2),
+      improvements.toFixed(2),
+      saleCosts.toFixed(2),
+      totalCosts.toFixed(2),
+      income.toFixed(2),
+      tax.toFixed(2)
+    ]
+  })
+
+  const allDetailsData = [...detailsHeader, ...detailsData]
+
+  // Add totals row
+  allDetailsData.push([''])
+  allDetailsData.push([
+    '',
+    t.total,
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    totalPurchasePricePLN.toFixed(2),
+    '',
+    '',
+    totalSalePricePLN.toFixed(2),
+    totalImprovements.toFixed(2),
+    totalSaleCosts.toFixed(2),
+    (totalPurchasePricePLN + totalImprovements + totalSaleCosts).toFixed(2),
+    totalIncome.toFixed(2),
+    totalTax.toFixed(2)
+  ])
+
+  const wsDetails = XLSX.utils.aoa_to_sheet(allDetailsData)
+
+  // Set column widths for details
+  wsDetails['!cols'] = [
+    { wch: 5 },   // №
+    { wch: 15 },  // Property Type
+    { wch: 30 },  // Description
+    { wch: 10 },  // Currency
+    { wch: 12 },  // Purchase Date
+    { wch: 12 },  // Sale Date
+    { wch: 18 },  // Purchase Price Foreign
+    { wch: 12 },  // Purchase Rate
+    { wch: 18 },  // Purchase Price PLN
+    { wch: 18 },  // Sale Price Foreign
+    { wch: 12 },  // Sale Rate
+    { wch: 18 },  // Sale Price PLN
+    { wch: 15 },  // Improvements
+    { wch: 15 },  // Sale Costs
+    { wch: 15 },  // Total Costs
+    { wch: 15 },  // Income
+    { wch: 15 }   // Tax
+  ]
+
+  XLSX.utils.book_append_sheet(wb, wsDetails, t.detailsSheet)
+
+  // Sheet 3: Tax Formulas and Information
+  const formulasData = [
+    [t.formulasTitle],
+    [''],
+    [t.taxInfo],
+    [t.taxRateInfo, '19%'],
+    [''],
+    [t.calculationMethodTitle],
+    [''],
+    [t.step1, t.calculateIncome],
+    ['', t.incomeFormula],
+    [t.step2, t.calculateTax],
+    ['', t.taxFormula],
+    [''],
+    [t.example],
+    [t.purchasePrice, '300,000', t.pln],
+    [t.salePrice, '500,000', t.pln],
+    [t.improvements, '50,000', t.pln],
+    [t.saleCosts, '10,000', t.pln],
+    [t.totalCosts, '360,000', t.pln, '(300,000 + 50,000 + 10,000)'],
+    [t.income, '140,000', t.pln, '(500,000 - 360,000)'],
+    [t.tax, '26,600', t.pln, '(140,000 × 19%)'],
+    [''],
+    [t.note],
+    [t.noteText]
+  ]
+
+  const wsFormulas = XLSX.utils.aoa_to_sheet(formulasData)
+
+  // Set column widths for formulas
+  wsFormulas['!cols'] = [
+    { wch: 35 },
+    { wch: 20 },
+    { wch: 10 },
+    { wch: 40 }
+  ]
+
+  XLSX.utils.book_append_sheet(wb, wsFormulas, t.formulasSheet)
+
+  // Sheet 4: Breakdown by Property Type
+  const typeBreakdown = new Map<string, {
+    count: number
+    totalPurchase: number
+    totalSale: number
+    totalImprovements: number
+    totalSaleCosts: number
+    totalIncome: number
+    totalTax: number
+  }>()
+
+  // Calculate breakdown by property type
+  formData.propertySales.forEach((sale) => {
+    const typeLabel = getPropertyTypeLabel(sale.type, language)
+    if (!typeBreakdown.has(typeLabel)) {
+      typeBreakdown.set(typeLabel, {
+        count: 0,
+        totalPurchase: 0,
+        totalSale: 0,
+        totalImprovements: 0,
+        totalSaleCosts: 0,
+        totalIncome: 0,
+        totalTax: 0
+      })
+    }
+
+    const stats = typeBreakdown.get(typeLabel)!
+    const purchasePrice = parseFloat(sale.purchasePrice) || 0
+    const salePrice = parseFloat(sale.salePrice) || 0
+    const improvements = parseFloat(sale.improvements) || 0
+    const saleCosts = parseFloat(sale.saleCosts) || 0
+
+    stats.count++
+    stats.totalPurchase += purchasePrice
+    stats.totalSale += salePrice
+    stats.totalImprovements += improvements
+    stats.totalSaleCosts += saleCosts
+
+    const income = salePrice - purchasePrice - improvements - saleCosts
+    if (income > 0) {
+      stats.totalIncome += income
+      stats.totalTax += income * 0.19
+    }
+  })
+
+  const breakdownData = [
+    [t.propertyTypeBreakdown],
+    [''],
+    [
+      t.propertyType,
+      t.positionCount,
+      t.totalPurchasePrice,
+      t.totalSalePrice,
+      t.totalImprovements,
+      t.totalSaleCosts,
+      t.totalIncome,
+      t.totalTax
+    ]
+  ]
+
+  Array.from(typeBreakdown.entries()).forEach(([propertyType, stats]) => {
+    breakdownData.push([
+      propertyType,
+      stats.count,
+      stats.totalPurchase.toFixed(2),
+      stats.totalSale.toFixed(2),
+      stats.totalImprovements.toFixed(2),
+      stats.totalSaleCosts.toFixed(2),
+      stats.totalIncome.toFixed(2),
+      stats.totalTax.toFixed(2)
+    ])
+  })
+
+  // Add totals row
+  const grandTotals = Array.from(typeBreakdown.values()).reduce((acc, stats) => ({
+    count: acc.count + stats.count,
+    totalPurchase: acc.totalPurchase + stats.totalPurchase,
+    totalSale: acc.totalSale + stats.totalSale,
+    totalImprovements: acc.totalImprovements + stats.totalImprovements,
+    totalSaleCosts: acc.totalSaleCosts + stats.totalSaleCosts,
+    totalIncome: acc.totalIncome + stats.totalIncome,
+    totalTax: acc.totalTax + stats.totalTax
+  }), {
+    count: 0,
+    totalPurchase: 0,
+    totalSale: 0,
+    totalImprovements: 0,
+    totalSaleCosts: 0,
+    totalIncome: 0,
+    totalTax: 0
+  })
+
+  breakdownData.push([''])
+  breakdownData.push([
+    t.total,
+    grandTotals.count,
+    grandTotals.totalPurchase.toFixed(2),
+    grandTotals.totalSale.toFixed(2),
+    grandTotals.totalImprovements.toFixed(2),
+    grandTotals.totalSaleCosts.toFixed(2),
+    grandTotals.totalIncome.toFixed(2),
+    grandTotals.totalTax.toFixed(2)
+  ])
+
+  const wsBreakdown = XLSX.utils.aoa_to_sheet(breakdownData)
+
+  // Set column widths for breakdown
+  wsBreakdown['!cols'] = [
+    { wch: 20 },  // Property Type
+    { wch: 12 },  // Count
+    { wch: 18 },  // Total Purchase
+    { wch: 18 },  // Total Sale
+    { wch: 18 },  // Total Improvements
+    { wch: 18 },  // Total Sale Costs
+    { wch: 18 },  // Total Income
+    { wch: 15 }   // Total Tax
+  ]
+
+  XLSX.utils.book_append_sheet(wb, wsBreakdown, t.breakdownSheet)
+
+  // Generate and download the file
+  const fileName = `PIT-39_${formData.firstName}_${formData.lastName}_${formData.year}.xlsx`
+  XLSX.writeFile(wb, fileName)
+}
+
+function getPropertyTypeLabel(propertyType: string, language: string): string {
+  const labels: Record<string, Record<string, string>> = {
+    uk: {
+      'property': 'Нерухомість',
+      'stocks': 'Акції',
+      'other': 'Інше'
+    },
+    en: {
+      'property': 'Real Estate',
+      'stocks': 'Stocks',
+      'other': 'Other'
+    },
+    pl: {
+      'property': 'Nieruchomość',
+      'stocks': 'Akcje',
+      'other': 'Inne'
+    },
+    fr: {
+      'property': 'Immobilier',
+      'stocks': 'Actions',
+      'other': 'Autre'
+    }
+  }
+
+  return labels[language]?.[propertyType] || labels['pl'][propertyType] || propertyType
+}
+
+function getPIT39Translations(language: string) {
+  const translations: Record<string, any> = {
+    uk: {
+      title: 'PIT-39 - Декларація про доходи від відчуження майна',
+      personalInfo: 'Особисті дані',
+      fullName: 'ПІБ',
+      pesel: 'PESEL',
+      nip: 'NIP',
+      address: 'Адреса',
+      city: 'Місто',
+      postalCode: 'Поштовий індекс',
+      year: 'Звітний рік',
+      taxSummary: 'Податковий підсумок',
+      totalPurchasePrice: 'Загальна ціна придбання',
+      totalSalePrice: 'Загальна ціна продажу',
+      totalImprovements: 'Загальні витрати на поліпшення',
+      totalSaleCosts: 'Загальні витрати на продаж',
+      totalIncome: 'Загальний дохід',
+      totalTax: 'Загальний податок',
+      taxRate: '(19%)',
+      pln: 'PLN',
+      summarySheet: 'Підсумок',
+      detailedCalculations: 'Детальні розрахунки по кожній позиції',
+      propertyType: 'Тип майна',
+      description: 'Опис',
+      currency: 'Валюта',
+      purchaseDate: 'Дата придбання',
+      saleDate: 'Дата продажу',
+      purchasePriceForeign: 'Ціна придбання (валюта)',
+      purchaseRate: 'Курс NBP (придбання)',
+      purchasePricePLN: 'Ціна придбання (PLN)',
+      salePriceForeign: 'Ціна продажу (валюта)',
+      saleRate: 'Курс NBP (продаж)',
+      salePricePLN: 'Ціна продажу (PLN)',
+      improvements: 'Поліпшення',
+      saleCosts: 'Витрати на продаж',
+      totalCosts: 'Загальні витрати',
+      income: 'Дохід',
+      tax: 'Податок (19%)',
+      total: 'Всього',
+      detailsSheet: 'Детальні розрахунки',
+      formulasTitle: 'Формули розрахунку податку',
+      taxInfo: 'Інформація про податок:',
+      taxRateInfo: 'Ставка податку від продажу майна',
+      calculationMethodTitle: 'Методика розрахунку:',
+      step1: 'Крок 1:',
+      step2: 'Крок 2:',
+      calculateIncome: 'Розрахунок доходу',
+      incomeFormula: 'Дохід = Ціна продажу - Ціна придбання - Поліпшення - Витрати на продаж',
+      calculateTax: 'Розрахунок податку',
+      taxFormula: 'Податок = Дохід × 19% (якщо дохід > 0)',
+      example: 'Приклад розрахунку:',
+      purchasePrice: 'Ціна придбання',
+      salePrice: 'Ціна продажу',
+      note: 'Примітка:',
+      noteText: 'Податок PIT-39 сплачується тільки при додатному доході. Збитки не зменшують податкову базу.',
+      formulasSheet: 'Формули',
+      propertyTypeBreakdown: 'Розбивка по типах майна',
+      positionCount: 'Кількість позицій',
+      breakdownSheet: 'По типах майна',
+      fileName: 'PIT-39'
+    },
+    en: {
+      title: 'PIT-39 - Tax Return for Income from Property Disposal',
+      personalInfo: 'Personal Information',
+      fullName: 'Full Name',
+      pesel: 'PESEL',
+      nip: 'NIP',
+      address: 'Address',
+      city: 'City',
+      postalCode: 'Postal Code',
+      year: 'Tax Year',
+      taxSummary: 'Tax Summary',
+      totalPurchasePrice: 'Total Purchase Price',
+      totalSalePrice: 'Total Sale Price',
+      totalImprovements: 'Total Improvements',
+      totalSaleCosts: 'Total Sale Costs',
+      totalIncome: 'Total Income',
+      totalTax: 'Total Tax',
+      taxRate: '(19%)',
+      pln: 'PLN',
+      summarySheet: 'Summary',
+      detailedCalculations: 'Detailed Calculations for Each Position',
+      propertyType: 'Property Type',
+      description: 'Description',
+      currency: 'Currency',
+      purchaseDate: 'Purchase Date',
+      saleDate: 'Sale Date',
+      purchasePriceForeign: 'Purchase Price (foreign)',
+      purchaseRate: 'NBP Rate (purchase)',
+      purchasePricePLN: 'Purchase Price (PLN)',
+      salePriceForeign: 'Sale Price (foreign)',
+      saleRate: 'NBP Rate (sale)',
+      salePricePLN: 'Sale Price (PLN)',
+      improvements: 'Improvements',
+      saleCosts: 'Sale Costs',
+      totalCosts: 'Total Costs',
+      income: 'Income',
+      tax: 'Tax (19%)',
+      total: 'Total',
+      detailsSheet: 'Detailed Calculations',
+      formulasTitle: 'Tax Calculation Formulas',
+      taxInfo: 'Tax Information:',
+      taxRateInfo: 'Tax rate on property disposal',
+      calculationMethodTitle: 'Calculation Method:',
+      step1: 'Step 1:',
+      step2: 'Step 2:',
+      calculateIncome: 'Calculate Income',
+      incomeFormula: 'Income = Sale Price - Purchase Price - Improvements - Sale Costs',
+      calculateTax: 'Calculate Tax',
+      taxFormula: 'Tax = Income × 19% (if income > 0)',
+      example: 'Calculation Example:',
+      purchasePrice: 'Purchase Price',
+      salePrice: 'Sale Price',
+      note: 'Note:',
+      noteText: 'PIT-39 tax is only paid on positive income. Losses do not reduce the tax base.',
+      formulasSheet: 'Formulas',
+      propertyTypeBreakdown: 'Breakdown by Property Type',
+      positionCount: 'Number of Positions',
+      breakdownSheet: 'By Property Type',
+      fileName: 'PIT-39'
+    },
+    pl: {
+      title: 'PIT-39 - Zeznanie o dochodach z odpłatnego zbycia',
+      personalInfo: 'Dane osobowe',
+      fullName: 'Imię i nazwisko',
+      pesel: 'PESEL',
+      nip: 'NIP',
+      address: 'Adres',
+      city: 'Miejscowość',
+      postalCode: 'Kod pocztowy',
+      year: 'Rok podatkowy',
+      taxSummary: 'Podsumowanie podatkowe',
+      totalPurchasePrice: 'Łączna cena nabycia',
+      totalSalePrice: 'Łączna cena sprzedaży',
+      totalImprovements: 'Łączne wydatki na ulepszenie',
+      totalSaleCosts: 'Łączne koszty sprzedaży',
+      totalIncome: 'Łączny dochód',
+      totalTax: 'Łączny podatek',
+      taxRate: '(19%)',
+      pln: 'PLN',
+      summarySheet: 'Podsumowanie',
+      detailedCalculations: 'Szczegółowe obliczenia dla każdej pozycji',
+      propertyType: 'Rodzaj majątku',
+      description: 'Opis',
+      currency: 'Waluta',
+      purchaseDate: 'Data nabycia',
+      saleDate: 'Data sprzedaży',
+      purchasePriceForeign: 'Cena nabycia (waluta)',
+      purchaseRate: 'Kurs NBP (nabycie)',
+      purchasePricePLN: 'Cena nabycia (PLN)',
+      salePriceForeign: 'Cena sprzedaży (waluta)',
+      saleRate: 'Kurs NBP (sprzedaż)',
+      salePricePLN: 'Cena sprzedaży (PLN)',
+      improvements: 'Ulepszenia',
+      saleCosts: 'Koszty sprzedaży',
+      totalCosts: 'Koszty łącznie',
+      income: 'Dochód',
+      tax: 'Podatek (19%)',
+      total: 'Razem',
+      detailsSheet: 'Szczegółowe obliczenia',
+      formulasTitle: 'Formuły obliczania podatku',
+      taxInfo: 'Informacje o podatku:',
+      taxRateInfo: 'Stawka podatku od sprzedaży majątku',
+      calculationMethodTitle: 'Metodyka obliczeń:',
+      step1: 'Krok 1:',
+      step2: 'Krok 2:',
+      calculateIncome: 'Obliczenie dochodu',
+      incomeFormula: 'Dochód = Cena sprzedaży - Cena nabycia - Ulepszenia - Koszty sprzedaży',
+      calculateTax: 'Obliczenie podatku',
+      taxFormula: 'Podatek = Dochód × 19% (jeśli dochód > 0)',
+      example: 'Przykład obliczenia:',
+      purchasePrice: 'Cena nabycia',
+      salePrice: 'Cena sprzedaży',
+      note: 'Uwaga:',
+      noteText: 'Podatek PIT-39 płacony jest tylko od dodatniego dochodu. Straty nie pomniejszają podstawy opodatkowania.',
+      formulasSheet: 'Formuły',
+      propertyTypeBreakdown: 'Podział według rodzaju majątku',
+      positionCount: 'Liczba pozycji',
+      breakdownSheet: 'Według rodzaju majątku',
+      fileName: 'PIT-39'
+    },
+    fr: {
+      title: 'PIT-39 - Déclaration de revenus de cession de biens',
+      personalInfo: 'Données personnelles',
+      fullName: 'Nom complet',
+      pesel: 'PESEL',
+      nip: 'NIP',
+      address: 'Adresse',
+      city: 'Ville',
+      postalCode: 'Code postal',
+      year: 'Année fiscale',
+      taxSummary: 'Résumé fiscal',
+      totalPurchasePrice: 'Prix d\'achat total',
+      totalSalePrice: 'Prix de vente total',
+      totalImprovements: 'Améliorations totales',
+      totalSaleCosts: 'Frais de vente totaux',
+      totalIncome: 'Revenu total',
+      totalTax: 'Impôt total',
+      taxRate: '(19%)',
+      pln: 'PLN',
+      summarySheet: 'Résumé',
+      detailedCalculations: 'Calculs détaillés pour chaque position',
+      propertyType: 'Type de bien',
+      description: 'Description',
+      currency: 'Devise',
+      purchaseDate: 'Date d\'achat',
+      saleDate: 'Date de vente',
+      purchasePriceForeign: 'Prix d\'achat (devise)',
+      purchaseRate: 'Taux NBP (achat)',
+      purchasePricePLN: 'Prix d\'achat (PLN)',
+      salePriceForeign: 'Prix de vente (devise)',
+      saleRate: 'Taux NBP (vente)',
+      salePricePLN: 'Prix de vente (PLN)',
+      improvements: 'Améliorations',
+      saleCosts: 'Frais de vente',
+      totalCosts: 'Coûts totaux',
+      income: 'Revenu',
+      tax: 'Impôt (19%)',
+      total: 'Total',
+      detailsSheet: 'Calculs détaillés',
+      formulasTitle: 'Formules de calcul d\'impôt',
+      taxInfo: 'Informations fiscales:',
+      taxRateInfo: 'Taux d\'imposition sur la cession de biens',
+      calculationMethodTitle: 'Méthode de calcul:',
+      step1: 'Étape 1:',
+      step2: 'Étape 2:',
+      calculateIncome: 'Calculer le revenu',
+      incomeFormula: 'Revenu = Prix de vente - Prix d\'achat - Améliorations - Frais de vente',
+      calculateTax: 'Calculer l\'impôt',
+      taxFormula: 'Impôt = Revenu × 19% (si revenu > 0)',
+      example: 'Exemple de calcul:',
+      purchasePrice: 'Prix d\'achat',
+      salePrice: 'Prix de vente',
+      note: 'Note:',
+      noteText: 'L\'impôt PIT-39 n\'est payé que sur les revenus positifs. Les pertes ne réduisent pas la base imposable.',
+      formulasSheet: 'Formules',
+      propertyTypeBreakdown: 'Répartition par type de bien',
+      positionCount: 'Nombre de positions',
+      breakdownSheet: 'Par type de bien',
+      fileName: 'PIT-39'
+    }
+  }
+
+  return translations[language] || translations['pl']
+}
+
