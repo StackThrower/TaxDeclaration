@@ -23,7 +23,7 @@ export function FormPIT38() {
     address: "",
     city: "",
     postalCode: "",
-    year: "2024",
+    year: "2025",
 
     // Przychody z kapitałów pieniężnych
     dividendsIncome: "",
@@ -70,7 +70,7 @@ export function FormPIT38() {
       address: "",
       city: "",
       postalCode: "",
-      year: "2024",
+      year: "2025",
       dividendsIncome: "",
       interestIncome: "",
       stockSalesIncome: "",

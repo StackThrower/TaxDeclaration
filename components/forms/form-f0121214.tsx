@@ -55,7 +55,7 @@ export function FormF0121214() {
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
-    year: "2024",
+    year: "2025",
     notes: "",
   })
 
@@ -485,7 +485,7 @@ export function FormF0121214() {
     setFormData({
       fullName: "",
       taxNumber: "",
-      year: "2024",
+      year: "2025",
       notes: "",
     })
 
