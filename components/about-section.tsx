@@ -3,7 +3,7 @@
 import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Target, Lightbulb, Code, Mail, Shield, DollarSign, FileText, Calculator, Languages } from "lucide-react"
+import {Target, Lightbulb, Mail, Shield, DollarSign, FileText, Calculator, Languages, Code} from "lucide-react"
 
 export function AboutSection() {
   const { language } = useI18n()
@@ -18,20 +18,12 @@ export function AboutSection() {
       title: t(language, "about.features.free"),
     },
     {
-      icon: Code,
-      title: t(language, "about.features.opensource"),
-    },
-    {
       icon: Languages,
       title: t(language, "about.features.multilang"),
     },
     {
       icon: Calculator,
       title: t(language, "about.features.calculator"),
-    },
-    {
-      icon: FileText,
-      title: t(language, "about.features.forms"),
     },
   ]
 
