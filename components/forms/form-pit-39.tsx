@@ -472,7 +472,7 @@ export function FormPIT39() {
       salePriceForeign: "Ціна продажу (валюта)",
       purchaseRate: "Курс NBP (придбання)",
       saleRate: "Курс NBP (продаж)",
-      disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів.",
+      disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних.",
     },
     en: {
       title: "PIT-39",
@@ -512,7 +512,7 @@ export function FormPIT39() {
       salePriceForeign: "Sale Price (currency)",
       purchaseRate: "NBP Rate (purchase)",
       saleRate: "NBP Rate (sale)",
-      disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities.",
+      disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities. By using this service, you agree to the processing of personal data.",
     },
     pl: {
       title: "PIT-39",
@@ -552,7 +552,7 @@ export function FormPIT39() {
       salePriceForeign: "Cena sprzedaży (waluta)",
       purchaseRate: "Kurs NBP (nabycie)",
       saleRate: "Kurs NBP (sprzedaż)",
-      disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego.",
+      disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego. Korzystając z usługi, zgadzasz się na przetwarzanie danych osobowych.",
     },
     fr: {
       title: "PIT-39",
@@ -592,7 +592,7 @@ export function FormPIT39() {
       salePriceForeign: "Prix de vente (devise)",
       purchaseRate: "Taux NBP (achat)",
       saleRate: "Taux NBP (vente)",
-      disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales.",
+      disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales. En utilisant ce service, vous acceptez le traitement de vos données personnelles.",
     },
   }
 

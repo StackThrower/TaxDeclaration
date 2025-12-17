@@ -391,7 +391,7 @@ export function FormF0121214() {
 
       // Разделяем дивиденды и остальные операции
       if (pos.assetType === "dividends") {
-        // Для дивидендов считаем только полученную сумму
+        // Для дивідендів считаем только полученную сумму
         totalDividends += salePrice
 
         // Логування для дивідендів
@@ -580,7 +580,7 @@ export function FormF0121214() {
         removePosition: "Видалити позицію",
         position: "Позиція",
         checkCalculations: "Перевірити розрахунки",
-        disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів.",
+        disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних.",
       },
       en: {
         personalData: "Personal Data",
@@ -616,7 +616,7 @@ export function FormF0121214() {
         removePosition: "Remove Position",
         position: "Position",
         checkCalculations: "Check Calculations",
-        disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities.",
+        disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities. By using this service, you agree to the processing of personal data.",
       },
       fr: {
         personalData: "Données personnelles",
@@ -645,7 +645,7 @@ export function FormF0121214() {
         removePosition: "Supprimer la position",
         position: "Position",
         checkCalculations: "Vérifier les calculs",
-        disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales.",
+        disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales. En utilisant ce service, vous acceptez le traitement de vos données personnelles.",
       },
       pl: {
         personalData: "Dane osobowe",
@@ -674,7 +674,7 @@ export function FormF0121214() {
         removePosition: "Usuń pozycję",
         position: "Pozycja",
         checkCalculations: "Sprawdź obliczenia",
-        disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego.",
+        disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego. Korzystając z usługi, zgadzasz się na przetwarzanie danych osobowych.",
       },
       es: {
         personalData: "Datos personales",
@@ -703,7 +703,7 @@ export function FormF0121214() {
         removePosition: "Eliminar posición",
         position: "Posición",
         checkCalculations: "Verificar cálculos",
-        disclaimer: "⚠️ No nos hacemos responsables de los cálculos realizados. Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales.",
+        disclaimer: "⚠️ No nos hacemos responsables de los cálculos realizados. Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales. Al utilizar este servicio, usted acepta el procesamiento de datos personales.",
       },
       pt: {
         personalData: "Dados pessoais",
@@ -732,7 +732,7 @@ export function FormF0121214() {
         removePosition: "Remover posição",
         position: "Posição",
         checkCalculations: "Verificar cálculos",
-        disclaimer: "⚠️ Não nos responsabilizamos pelos cálculos efetuados. Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais.",
+        disclaimer: "⚠️ Não nos responsabilizamos pelos cálculos efetuados. Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais. Ao utilizar este serviço, você concorda com o processamento de dados pessoais.",
       },
       de: {
         personalData: "Persönliche Daten",
@@ -761,7 +761,7 @@ export function FormF0121214() {
         removePosition: "Position entfernen",
         position: "Position",
         checkCalculations: "Berechnungen überprüfen",
-        disclaimer: "⚠️ Wir übernehmen keine Verantwortung für die durchgeführten Berechnungen. Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden.",
+        disclaimer: "⚠️ Wir übernehmen keine Verantwortung für die durchgeführten Berechnungen. Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden. Durch die Nutzung dieses Dienstes stimmen Sie der Verarbeitung personenbezogener Daten zu.",
       },
     }
 

@@ -519,18 +519,18 @@ export function FormF0100214() {
         <div className="p-4 rounded-lg bg-muted/50 border border-border">
           <p className="text-sm text-muted-foreground leading-relaxed">
             {language === "uk"
-              ? "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів."
+              ? "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних."
               : language === "en"
-                ? "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities."
+                ? "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities. By using this service, you agree to the processing of personal data."
                 : language === "fr"
-                  ? "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales."
+                  ? "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales. En utilisant ce service, vous acceptez le traitement de vos données personnelles."
                   : language === "pl"
-                    ? "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego."
+                    ? "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego. Korzystając z usługi, zgadzasz się na przetwarzanie danych osobowych."
                     : language === "es"
-                      ? "⚠️ No nos hacemos responsables de los cálculos realizados. Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales."
+                      ? "⚠️ No nos hacemos responsables de los cálculos realizados. Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales. Al utilizar este servicio, usted acepta el procesamiento de datos personales."
                       : language === "pt"
-                        ? "⚠️ Não nos responsabilizamos pelos cálculos efetuados. Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais."
-                        : "⚠️ Wir übernehmen keine Verantwortung für die durchgeführten Berechnungen. Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden."}
+                        ? "⚠️ Não nos responsabilizamos pelos cálculos efetuados. Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais. Ao utilizar este serviço, você concorda com o processamento de dados pessoais."
+                        : "⚠️ Wir übernehmen keine Verantwortung für die durchgeführten Berechnungen. Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden. Durch die Nutzung dieses Dienstes stimmen Sie der Verarbeitung personenbezogener Daten zu."}
           </p>
         </div>
       </div>
