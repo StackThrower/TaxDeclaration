@@ -10,8 +10,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
-import { Trash2, Plus, FileText, Upload } from "lucide-react"
+import { Trash2, Plus, FileText, Upload, FileSpreadsheet } from "lucide-react"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
+import { generateTaxCalculationExcel } from "@/lib/excel-generator"
 import {
   fetchNBUExchangeRate,
   convertToUAH,
@@ -520,6 +521,28 @@ export function FormF0121214() {
     })
   }
 
+  const handleExportExcel = () => {
+    // Validate that we have required data
+    if (!formData.fullName || !formData.taxNumber) {
+      alert(language === "uk"
+        ? "Будь ласка, заповніть ім'я та ІПН перед експортом"
+        : "Please fill in name and tax ID before export")
+      return
+    }
+
+    // Generate Excel file
+    generateTaxCalculationExcel(
+      {
+        fullName: formData.fullName,
+        taxNumber: formData.taxNumber,
+        year: formData.year,
+        positions: positions,
+        calculations: calculations,
+      },
+      language
+    )
+  }
+
   const getLabel = (key: string): string => {
     const translations: Record<string, Record<string, string>> = {
       uk: {
@@ -555,6 +578,7 @@ export function FormF0121214() {
         addPosition: "Додати позицію",
         removePosition: "Видалити позицію",
         position: "Позиція",
+        checkCalculations: "Перевірити розрахунки",
       },
       en: {
         personalData: "Personal Data",
@@ -589,6 +613,7 @@ export function FormF0121214() {
         addPosition: "Add Position",
         removePosition: "Remove Position",
         position: "Position",
+        checkCalculations: "Check Calculations",
       },
       fr: {
         personalData: "Données personnelles",
@@ -616,6 +641,7 @@ export function FormF0121214() {
         addPosition: "Ajouter une position",
         removePosition: "Supprimer la position",
         position: "Position",
+        checkCalculations: "Vérifier les calculs",
       },
       pl: {
         personalData: "Dane osobowe",
@@ -643,6 +669,7 @@ export function FormF0121214() {
         addPosition: "Dodaj pozycję",
         removePosition: "Usuń pozycję",
         position: "Pozycja",
+        checkCalculations: "Sprawdź obliczenia",
       },
       es: {
         personalData: "Datos personales",
@@ -670,6 +697,7 @@ export function FormF0121214() {
         addPosition: "Agregar posición",
         removePosition: "Eliminar posición",
         position: "Posición",
+        checkCalculations: "Verificar cálculos",
       },
       pt: {
         personalData: "Dados pessoais",
@@ -697,6 +725,7 @@ export function FormF0121214() {
         addPosition: "Adicionar posição",
         removePosition: "Remover posição",
         position: "Posição",
+        checkCalculations: "Verificar cálculos",
       },
       de: {
         personalData: "Persönliche Daten",
@@ -724,6 +753,7 @@ export function FormF0121214() {
         addPosition: "Position hinzufügen",
         removePosition: "Position entfernen",
         position: "Position",
+        checkCalculations: "Berechnungen überprüfen",
       },
     }
 
@@ -1379,6 +1409,16 @@ export function FormF0121214() {
         <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
           <FileText className="h-5 w-5" />
           {getLabel("save")}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          onClick={handleExportExcel}
+          className="gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950"
+        >
+          <FileSpreadsheet className="h-5 w-5" />
+          {getLabel("checkCalculations")}
         </Button>
         <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
           {getLabel("clear")}
