@@ -471,6 +471,7 @@ export function FormPIT39() {
       salePriceForeign: "Ціна продажу (валюта)",
       purchaseRate: "Курс NBP (придбання)",
       saleRate: "Курс NBP (продаж)",
+      disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів.",
     },
     en: {
       title: "PIT-39",
@@ -510,6 +511,7 @@ export function FormPIT39() {
       salePriceForeign: "Sale Price (currency)",
       purchaseRate: "NBP Rate (purchase)",
       saleRate: "NBP Rate (sale)",
+      disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities.",
     },
     pl: {
       title: "PIT-39",
@@ -549,6 +551,7 @@ export function FormPIT39() {
       salePriceForeign: "Cena sprzedaży (waluta)",
       purchaseRate: "Kurs NBP (nabycie)",
       saleRate: "Kurs NBP (sprzedaż)",
+      disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego.",
     },
     fr: {
       title: "PIT-39",
@@ -588,6 +591,7 @@ export function FormPIT39() {
       salePriceForeign: "Prix de vente (devise)",
       purchaseRate: "Taux NBP (achat)",
       saleRate: "Taux NBP (vente)",
+      disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales.",
     },
   }
 
@@ -958,24 +962,33 @@ export function FormPIT39() {
       </Card>
 
       {/* Buttons */}
-      <div className="flex gap-4 pt-6">
-        <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
-          <FileText className="h-5 w-5" />
-          {translations.generate}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          onClick={handleExportExcel}
-          className="gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950"
-        >
-          <FileSpreadsheet className="h-5 w-5" />
-          {translations.exportExcel}
-        </Button>
-        <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
-          {translations.clear}
-        </Button>
+      <div className="space-y-4 pt-6">
+        <div className="flex gap-4">
+          <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
+            <FileText className="h-5 w-5" />
+            {translations.generate}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={handleExportExcel}
+            className="gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950"
+          >
+            <FileSpreadsheet className="h-5 w-5" />
+            {translations.exportExcel}
+          </Button>
+          <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
+            {translations.clear}
+          </Button>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="p-4 rounded-lg bg-muted/50 border border-border">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {translations.disclaimer}
+          </p>
+        </div>
       </div>
     </form>
   )

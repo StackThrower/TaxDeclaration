@@ -480,38 +480,59 @@ export function FormF0100214() {
         </CardContent>
       </Card>
 
-      <div className="flex gap-4 pt-6">
-        <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 gap-2">
-          <FileText className="h-5 w-5" />
-          {language === "uk"
-            ? "Сформувати PDF"
-            : language === "en"
-              ? "Generate PDF"
-              : language === "fr"
-                ? "Générer PDF"
-                : language === "pl"
-                  ? "Generuj PDF"
-                  : language === "es"
-                    ? "Generar PDF"
-                    : language === "pt"
-                      ? "Gerar PDF"
-                      : "PDF erstellen"}
-        </Button>
-        <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
-          {language === "uk"
-            ? "Очистити форму"
-            : language === "en"
-              ? "Clear Form"
-              : language === "fr"
-                ? "Effacer le formulaire"
-                : language === "pl"
-                  ? "Wyczyść formularz"
-                  : language === "es"
-                    ? "Limpiar formulario"
-                    : language === "pt"
-                      ? "Limpar formulário"
-                      : "Formular löschen"}
-        </Button>
+      <div className="space-y-4 pt-6">
+        <div className="flex gap-4">
+          <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 gap-2">
+            <FileText className="h-5 w-5" />
+            {language === "uk"
+              ? "Сформувати PDF"
+              : language === "en"
+                ? "Generate PDF"
+                : language === "fr"
+                  ? "Générer PDF"
+                  : language === "pl"
+                    ? "Generuj PDF"
+                    : language === "es"
+                      ? "Generar PDF"
+                      : language === "pt"
+                        ? "Gerar PDF"
+                        : "PDF erstellen"}
+          </Button>
+          <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
+            {language === "uk"
+              ? "Очистити форму"
+              : language === "en"
+                ? "Clear Form"
+                : language === "fr"
+                  ? "Effacer le formulaire"
+                  : language === "pl"
+                    ? "Wyczyść formularz"
+                    : language === "es"
+                      ? "Limpiar formulario"
+                      : language === "pt"
+                        ? "Limpar formulário"
+                        : "Formular löschen"}
+          </Button>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="p-4 rounded-lg bg-muted/50 border border-border">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {language === "uk"
+              ? "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів."
+              : language === "en"
+                ? "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities."
+                : language === "fr"
+                  ? "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales."
+                  : language === "pl"
+                    ? "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego."
+                    : language === "es"
+                      ? "⚠️ No nos hacemos responsables de los cálculos realizados. Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales."
+                      : language === "pt"
+                        ? "⚠️ Não nos responsabilizamos pelos cálculos efetuados. Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais."
+                        : "⚠️ Wir übernehmen keine Verantwortung für die durchgeführten Berechnungen. Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden."}
+          </p>
+        </div>
       </div>
     </form>
   )

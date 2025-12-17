@@ -114,6 +114,7 @@ export function FormPIT38() {
       additionalInfo: "Додаткова інформація",
       generate: "Сформувати PDF",
       clear: "Очистити",
+      disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів.",
     },
     en: {
       title: "PIT-38",
@@ -143,6 +144,7 @@ export function FormPIT38() {
       additionalInfo: "Additional Information",
       generate: "Generate PDF",
       clear: "Clear",
+      disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities.",
     },
     pl: {
       title: "PIT-38",
@@ -172,6 +174,7 @@ export function FormPIT38() {
       additionalInfo: "Informacje dodatkowe",
       generate: "Generuj PDF",
       clear: "Wyczyść",
+      disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego.",
     },
     fr: {
       title: "PIT-38",
@@ -201,6 +204,7 @@ export function FormPIT38() {
       additionalInfo: "Informations complémentaires",
       generate: "Générer PDF",
       clear: "Effacer",
+      disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales.",
     },
   }
 
@@ -456,14 +460,23 @@ export function FormPIT38() {
       </Card>
 
       {/* Buttons */}
-      <div className="flex gap-4 justify-end">
-        <Button type="button" variant="outline" onClick={handleClear}>
-          {translations.clear}
-        </Button>
-        <Button type="submit" className="gap-2">
-          <FileText className="w-4 h-4" />
-          {translations.generate}
-        </Button>
+      <div className="space-y-4">
+        <div className="flex gap-4 justify-end">
+          <Button type="button" variant="outline" onClick={handleClear}>
+            {translations.clear}
+          </Button>
+          <Button type="submit" className="gap-2">
+            <FileText className="w-4 h-4" />
+            {translations.generate}
+          </Button>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="p-4 rounded-lg bg-muted/50 border border-border">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {translations.disclaimer}
+          </p>
+        </div>
       </div>
     </form>
   )
