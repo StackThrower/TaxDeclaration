@@ -519,7 +519,7 @@ export function FormF0100214() {
         <div className="p-4 rounded-lg bg-muted/50 border border-border">
           <p className="text-sm text-muted-foreground leading-relaxed">
             {language === "uk"
-              ? "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних."
+              ? "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені кристувачем перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних."
               : language === "en"
                 ? "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities. By using this service, you agree to the processing of personal data."
                 : language === "fr"
