@@ -1,0 +1,36 @@
+{
+  "name": "Monegoo - Tax Declaration System",
+  "short_name": "Monegoo",
+  "description": "Online system for filing tax declarations on property status, income, and investment transactions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-light-32x32.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-dark-32x32.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity", "business"],
+  "lang": "uk-UA",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
+

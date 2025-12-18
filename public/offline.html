@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>You are offline - Monegoo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: #f3f4f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            background: #fef3c7;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #92400e;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: #1f2937;
+            }
+
+            h1 {
+                color: #f9fafb;
+            }
+
+            p {
+                color: #d1d5db;
+            }
+
+            .icon {
+                background: #374151;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📡</div>
+        <h1>You are offline</h1>
+        <p>It looks like you've lost your internet connection. Don't worry, some features may still work offline thanks to our Progressive Web App technology.</p>
+        <a href="/" class="button" onclick="window.location.reload(); return false;">Try Again</a>
+        <div class="status" id="status">
+            Checking connection status...
+        </div>
+    </div>
+
+    <script>
+        function checkConnection() {
+            const status = document.getElementById('status');
+            if (navigator.onLine) {
+                status.textContent = '✅ Connection restored! Click "Try Again" to continue.';
+                status.style.background = '#d1fae5';
+                status.style.color = '#065f46';
+            } else {
+                status.textContent = '❌ Still offline. We\'ll keep checking...';
+                status.style.background = '#fef3c7';
+                status.style.color = '#92400e';
+            }
+        }
+
+        // Check connection immediately
+        checkConnection();
+
+        // Check connection every 3 seconds
+        setInterval(checkConnection, 3000);
+
+        // Listen for online/offline events
+        window.addEventListener('online', checkConnection);
+        window.addEventListener('offline', checkConnection);
+    </script>
+</body>
+</html>
+

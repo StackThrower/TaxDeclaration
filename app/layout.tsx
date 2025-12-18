@@ -7,6 +7,7 @@ import { I18nProvider } from "@/lib/i18n-context"
 import { DynamicHtmlLang } from "@/components/dynamic-html-lang"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import { CookieConsent } from "@/components/cookie-consent"
+import { PwaInstallPrompt } from "@/components/pwa-install-prompt"
 import { headers } from "next/headers"
 import "./globals.css"
 
@@ -18,6 +19,10 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" }
+  ],
 }
 
 export const metadata: Metadata = {
@@ -39,6 +44,8 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  // PWA manifest
+  manifest: "/manifest.json",
   // Allow search engines to index
   robots: {
     index: true,
@@ -186,6 +193,15 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        {/* PWA Meta Tags */}
+        <meta name="application-name" content="Monegoo" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Monegoo" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+
         {/* Structured Data - Organization */}
         <script
           type="application/ld+json"
@@ -234,6 +250,7 @@ export default async function RootLayout({
             <DynamicHtmlLang />
             {children}
             <CookieConsent />
+            <PwaInstallPrompt />
             <Analytics />
           </I18nProvider>
         </ThemeProvider>

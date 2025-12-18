@@ -57,4 +57,11 @@ tfplan
 *.tfvars
 !terraform.tfvars.example
 
+# PWA files
+**/public/sw.js
+**/public/swe-worker-*.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/*.js.map
+
 

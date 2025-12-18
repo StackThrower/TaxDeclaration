@@ -1,3 +1,18 @@
+import withPWAInit from '@ducanh2912/next-pwa';
+
+const withPWA = withPWAInit({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  skipWaiting: true,
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  workboxOptions: {
+    disableDevLogs: true,
+  }
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -7,6 +22,8 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'standalone',
+  // Use webpack for PWA compatibility
+  turbopack: {},
 
   // Security headers and X-Robots-Tag
   async headers() {
@@ -80,6 +97,5 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
-
+export default withPWA(nextConfig);
 

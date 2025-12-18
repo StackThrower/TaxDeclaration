@@ -28,6 +28,16 @@
 
 Monegoo is an open-source platform for filing tax declarations across multiple countries. The system supports country-specific tax forms with multi-language interfaces.
 
+### ✨ Key Features
+
+- 📱 **Progressive Web App (PWA)** - Install on any device, works offline
+- 🌐 **Multi-country support** - Tax forms for 10+ countries
+- 🗣️ **Multi-language** - Interface in 7+ languages
+- 🔒 **Privacy-first** - All data stays in your browser
+- 📊 **Tax calculator** - Built-in calculations
+- 📄 **PDF export** - Download filled forms
+- 🌙 **Dark mode** - Theme support
+
 ### Supported Countries & Forms
 
 - 🇺🇦 **Ukraine** - F0100214, F0121214 (Fully Implemented)
@@ -64,6 +74,7 @@ Examples:
 ## 📚 Documentation
 
 ### Core Documentation
+- **[PWA.md](./docs/PWA.md)** - ⭐ Progressive Web App implementation
 - **[LOCALE_ROUTING.md](./LOCALE_ROUTING.md)** - Locale-based routing implementation details
 - **[TAX_FORMS.md](./TAX_FORMS.md)** - Complete tax forms reference for all countries
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment and infrastructure guide
