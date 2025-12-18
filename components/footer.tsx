@@ -48,6 +48,36 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a
+                  href={`/${locale}/privacy`}
+                  className="hover:opacity-100 transition-opacity hover:underline"
+                >
+                  {language === "uk" ? "Політика конфіденційності" :
+                   language === "pl" ? "Polityka prywatności" :
+                   language === "en" ? "Privacy Policy" :
+                   language === "fr" ? "Politique de confidentialité" :
+                   language === "de" ? "Datenschutzrichtlinie" :
+                   language === "es" ? "Política de privacidad" :
+                   language === "pt" ? "Política de Privacidade" :
+                   "Privacy Policy"}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`/${locale}/terms`}
+                  className="hover:opacity-100 transition-opacity hover:underline"
+                >
+                  {language === "uk" ? "Умови використання" :
+                   language === "pl" ? "Warunki użytkowania" :
+                   language === "en" ? "Terms of Use" :
+                   language === "fr" ? "Conditions d'utilisation" :
+                   language === "de" ? "Nutzungsbedingungen" :
+                   language === "es" ? "Términos de uso" :
+                   language === "pt" ? "Termos de Uso" :
+                   "Terms of Use"}
+                </a>
+              </li>
+              <li>
                 <a href={`/${locale}/knowledge`} className="hover:opacity-100 transition-opacity hover:underline">
                   {t(language, "knowledge.base")}
                 </a>
