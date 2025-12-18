@@ -77,28 +77,6 @@ export function Footer() {
                    "Terms of Use"}
                 </a>
               </li>
-              <li>
-                <a href={`/${locale}/knowledge`} className="hover:opacity-100 transition-opacity hover:underline">
-                  {t(language, "knowledge.base")}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/StackThrower/Monegoo/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-100 transition-opacity hover:underline"
-                >
-                  {language === "uk" ? "Баг-трекер" :
-                   language === "pl" ? "Zgłaszanie błędów" :
-                   language === "en" ? "Bug Tracker" :
-                   language === "fr" ? "Suivi des bogues" :
-                   language === "de" ? "Fehler melden" :
-                   language === "es" ? "Rastreador de errores" :
-                   language === "pt" ? "Rastreador de bugs" :
-                   "Bug Tracker"}
-                </a>
-              </li>
             </ul>
           </div>
           <div className="md:col-span-2">
@@ -143,9 +121,31 @@ export function Footer() {
                   {t(language, "help.title")}
                 </a>
               </li>
+              <li>
+                <a href={`/${locale}/knowledge`} className="hover:opacity-100 transition-opacity hover:underline">
+                  {t(language, "knowledge.base")}
+                </a>
+              </li>
             </ul>
             <h3 className="font-semibold mb-3 md:mb-4 mt-6 text-sm md:text-base">Contact</h3>
             <ul className="space-y-2 text-xs md:text-sm opacity-75">
+              <li className="break-words">
+                <a
+                    href="https://github.com/StackThrower/Monegoo/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-100 transition-opacity hover:underline"
+                >
+                  {language === "uk" ? "Баг-трекер" :
+                      language === "pl" ? "Zgłaszanie błędów" :
+                          language === "en" ? "Bug Tracker" :
+                              language === "fr" ? "Suivi des bogues" :
+                                  language === "de" ? "Fehler melden" :
+                                      language === "es" ? "Rastreador de errores" :
+                                          language === "pt" ? "Rastreador de bugs" :
+                                              "Bug Tracker"}
+                </a>
+              </li>
               <li className="break-words">Email: 0x01code@gmail.com</li>
             </ul>
             <div className="flex items-center gap-3 mt-4">
