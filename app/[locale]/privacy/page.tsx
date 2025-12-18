@@ -48,7 +48,7 @@ export default async function PrivacyPage({ params }: Props) {
   }> = {
     uk: {
       title: "Політика конфіденційності",
-      lastUpdated: "Останнє оновлення: 18 грудня 2024",
+      lastUpdated: "Останнє оновлення: 18 грудня 2025",
       sections: [
         {
           heading: "1. Збір та використання даних",
@@ -101,7 +101,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Контакти",
+          heading: "7. Відповідність GDPR (Загальний регламент захисту даних ЄС)",
+          content: [
+            "Наш сервіс повністю відповідає вимогам GDPR (EU 2016/679) та іншим міжнародним стандартам захисту персональних даних.",
+            "Ваші права згідно з GDPR:",
+            "• Право на доступ до ваших даних – оскільки ми не зберігаємо ваші дані на серверах, всі дані знаходяться виключно у вашому браузері",
+            "• Право на видалення даних – ви можете очистити локальне сховище браузера в будь-який час",
+            "• Право на портативність даних – ви можете експортувати свої дані в PDF або Excel формат",
+            "• Право на заперечення обробки – ви можете відхилити необов'язкові cookies через банер згоди",
+            "• Право на обмеження обробки – ви контролюєте всі свої дані локально",
+            "Типи cookies, які ми використовуємо:",
+            "✅ Обов'язкові cookies: Зберігають налаштування мови та теми (не вимагають згоди згідно з GDPR)",
+            "❌ Аналітичні cookies: НЕ використовуються без вашої згоди",
+            "❌ Маркетингові/Рекламні cookies: НЕ використовуються взагалі",
+            "Правова основа обробки даних:",
+            "• Згода користувача (Article 6(1)(a) GDPR) – для аналітичних cookies",
+            "• Легітимний інтерес (Article 6(1)(f) GDPR) – для необхідних cookies для функціонування сайту",
+            "Міжнародна передача даних: Ми НЕ передаємо ваші податкові дані за межі ЄС, оскільки вони взагалі не залишають ваш браузер.",
+          ],
+        },
+        {
+          heading: "8. Контакти",
           content: [
             "Якщо у вас є питання щодо нашої політики конфіденційності, зв'яжіться з нами:",
             "Email: 0x01code@gmail.com",
@@ -111,7 +131,7 @@ export default async function PrivacyPage({ params }: Props) {
     },
     pl: {
       title: "Polityka prywatności",
-      lastUpdated: "Ostatnia aktualizacja: 18 grudnia 2024",
+      lastUpdated: "Ostatnia aktualizacja: 18 grudnia 2025",
       sections: [
         {
           heading: "1. Zbieranie i wykorzystanie danych",
@@ -164,7 +184,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Kontakt",
+          heading: "7. Zgodność z RODO (Ogólne Rozporządzenie o Ochronie Danych UE)",
+          content: [
+            "Nasza usługa jest w pełni zgodna z wymogami RODO (UE 2016/679) i innymi międzynarodowymi standardami ochrony danych osobowych.",
+            "Twoje prawa zgodnie z RODO:",
+            "• Prawo dostępu do danych – ponieważ nie przechowujemy Twoich danych na serwerach, wszystkie dane znajdują się wyłącznie w Twojej przeglądarce",
+            "• Prawo do usunięcia danych – możesz wyczyścić pamięć lokalną przeglądarki w dowolnym momencie",
+            "• Prawo do przenoszenia danych – możesz eksportować swoje dane do formatu PDF lub Excel",
+            "• Prawo do sprzeciwu wobec przetwarzania – możesz odrzucić opcjonalne pliki cookie przez baner zgody",
+            "• Prawo do ograniczenia przetwarzania – kontrolujesz wszystkie swoje dane lokalnie",
+            "Rodzaje plików cookie, których używamy:",
+            "✅ Niezbędne cookies: Przechowują ustawienia języka i motywu (nie wymagają zgody zgodnie z RODO)",
+            "❌ Analityczne cookies: NIE są używane bez Twojej zgody",
+            "❌ Marketingowe/Reklamowe cookies: NIE są używane w ogóle",
+            "Podstawa prawna przetwarzania danych:",
+            "• Zgoda użytkownika (Art. 6(1)(a) RODO) – dla analitycznych cookies",
+            "• Uzasadniony interes (Art. 6(1)(f) RODO) – dla niezbędnych cookies do funkcjonowania strony",
+            "Międzynarodowe przekazywanie danych: NIE przekazujemy Twoich danych podatkowych poza UE, ponieważ w ogóle nie opuszczają Twojej przeglądarki.",
+          ],
+        },
+        {
+          heading: "8. Kontakt",
           content: [
             "Jeśli masz pytania dotyczące naszej polityki prywatności, skontaktuj się z nami:",
             "Email: 0x01code@gmail.com",
@@ -174,7 +214,7 @@ export default async function PrivacyPage({ params }: Props) {
     },
     en: {
       title: "Privacy Policy",
-      lastUpdated: "Last updated: December 18, 2024",
+      lastUpdated: "Last updated: December 18, 2025",
       sections: [
         {
           heading: "1. Data Collection and Use",
@@ -227,7 +267,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Contact",
+          heading: "7. GDPR Compliance (General Data Protection Regulation)",
+          content: [
+            "Our service is fully compliant with GDPR (EU 2016/679) requirements and other international data protection standards.",
+            "Your rights under GDPR:",
+            "• Right to access your data – since we don't store your data on servers, all data is exclusively in your browser",
+            "• Right to deletion – you can clear browser local storage at any time",
+            "• Right to data portability – you can export your data to PDF or Excel format",
+            "• Right to object to processing – you can reject optional cookies via the consent banner",
+            "• Right to restriction of processing – you control all your data locally",
+            "Types of cookies we use:",
+            "✅ Necessary cookies: Store language and theme preferences (do not require consent under GDPR)",
+            "❌ Analytics cookies: NOT used without your consent",
+            "❌ Marketing/Advertising cookies: NOT used at all",
+            "Legal basis for data processing:",
+            "• User consent (Article 6(1)(a) GDPR) – for analytics cookies",
+            "• Legitimate interest (Article 6(1)(f) GDPR) – for necessary cookies for site functionality",
+            "International data transfer: We DO NOT transfer your tax data outside the EU, as it never leaves your browser at all.",
+          ],
+        },
+        {
+          heading: "8. Contact",
           content: [
             "If you have questions about our privacy policy, contact us:",
             "Email: 0x01code@gmail.com",
@@ -237,7 +297,7 @@ export default async function PrivacyPage({ params }: Props) {
     },
     fr: {
       title: "Politique de confidentialité",
-      lastUpdated: "Dernière mise à jour : 18 décembre 2024",
+      lastUpdated: "Dernière mise à jour : 18 décembre 2025",
       sections: [
         {
           heading: "1. Collecte et utilisation des données",
@@ -290,7 +350,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Contact",
+          heading: "7. Conformité au RGPD (Règlement Général sur la Protection des Données)",
+          content: [
+            "Notre service est entièrement conforme aux exigences du RGPD (UE 2016/679) et à d'autres normes internationales de protection des données.",
+            "Vos droits en vertu du RGPD :",
+            "• Droit d'accès à vos données – puisque nous ne stockons pas vos données sur des serveurs, toutes les données se trouvent exclusivement dans votre navigateur",
+            "• Droit à l'effacement – vous pouvez effacer le stockage local du navigateur à tout moment",
+            "• Droit à la portabilité des données – vous pouvez exporter vos données au format PDF ou Excel",
+            "• Droit d'opposition au traitement – vous pouvez refuser les cookies optionnels via la bannière de consentement",
+            "• Droit à la limitation du traitement – vous contrôlez toutes vos données localement",
+            "Types de cookies que nous utilisons :",
+            "✅ Cookies nécessaires : Stockent les préférences de langue et de thème (ne nécessitent pas de consentement selon le RGPD)",
+            "❌ Cookies analytiques : NON utilisés sans votre consentement",
+            "❌ Cookies marketing/publicitaires : NON utilisés du tout",
+            "Base juridique du traitement des données :",
+            "• Consentement de l'utilisateur (Article 6(1)(a) RGPD) – pour les cookies analytiques",
+            "• Intérêt légitime (Article 6(1)(f) RGPD) – pour les cookies nécessaires au fonctionnement du site",
+            "Transfert international de données : Nous NE transférons PAS vos données fiscales en dehors de l'UE, car elles ne quittent jamais votre navigateur.",
+          ],
+        },
+        {
+          heading: "8. Contact",
           content: [
             "Si vous avez des questions concernant notre politique de confidentialité, contactez-nous :",
             "Email: 0x01code@gmail.com",
@@ -353,7 +433,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Kontakt",
+          heading: "7. DSGVO-Konformität (Datenschutz-Grundverordnung)",
+          content: [
+            "Unser Service entspricht vollständig den Anforderungen der DSGVO (EU 2016/679) und anderen internationalen Datenschutzstandards.",
+            "Ihre Rechte gemäß DSGVO:",
+            "• Recht auf Zugang zu Ihren Daten – da wir Ihre Daten nicht auf Servern speichern, befinden sich alle Daten ausschließlich in Ihrem Browser",
+            "• Recht auf Löschung – Sie können den lokalen Speicher des Browsers jederzeit löschen",
+            "• Recht auf Datenübertragbarkeit – Sie können Ihre Daten im PDF- oder Excel-Format exportieren",
+            "• Widerspruchsrecht gegen Verarbeitung – Sie können optionale Cookies über das Einwilligungsbanner ablehnen",
+            "• Recht auf Einschränkung der Verarbeitung – Sie kontrollieren alle Ihre Daten lokal",
+            "Arten von Cookies, die wir verwenden:",
+            "✅ Notwendige Cookies: Speichern Sprach- und Designeinstellungen (erfordern keine Einwilligung gemäß DSGVO)",
+            "❌ Analyse-Cookies: NICHT ohne Ihre Einwilligung verwendet",
+            "❌ Marketing-/Werbe-Cookies: NICHT verwendet",
+            "Rechtsgrundlage für Datenverarbeitung:",
+            "• Einwilligung des Nutzers (Art. 6(1)(a) DSGVO) – für Analyse-Cookies",
+            "• Berechtigtes Interesse (Art. 6(1)(f) DSGVO) – für notwendige Cookies für die Website-Funktionalität",
+            "Internationale Datenübermittlung: Wir übermitteln Ihre Steuerdaten NICHT außerhalb der EU, da sie Ihren Browser überhaupt nicht verlassen.",
+          ],
+        },
+        {
+          heading: "8. Kontakt",
           content: [
             "Wenn Sie Fragen zu unserer Datenschutzrichtlinie haben, kontaktieren Sie uns:",
             "Email: 0x01code@gmail.com",
@@ -416,7 +516,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Contacto",
+          heading: "7. Cumplimiento del RGPD (Reglamento General de Protección de Datos)",
+          content: [
+            "Nuestro servicio cumple completamente con los requisitos del RGPD (UE 2016/679) y otros estándares internacionales de protección de datos.",
+            "Sus derechos bajo el RGPD:",
+            "• Derecho de acceso a sus datos – dado que no almacenamos sus datos en servidores, todos los datos están exclusivamente en su navegador",
+            "• Derecho de supresión – puede borrar el almacenamiento local del navegador en cualquier momento",
+            "• Derecho a la portabilidad de datos – puede exportar sus datos en formato PDF o Excel",
+            "• Derecho de oposición al procesamiento – puede rechazar cookies opcionales a través del banner de consentimiento",
+            "• Derecho a la limitación del procesamiento – usted controla todos sus datos localmente",
+            "Tipos de cookies que usamos:",
+            "✅ Cookies necesarias: Almacenan preferencias de idioma y tema (no requieren consentimiento según el RGPD)",
+            "❌ Cookies analíticas: NO se usan sin su consentimiento",
+            "❌ Cookies de marketing/publicidad: NO se usan en absoluto",
+            "Base legal para el procesamiento de datos:",
+            "• Consentimiento del usuario (Artículo 6(1)(a) RGPD) – para cookies analíticas",
+            "• Interés legítimo (Artículo 6(1)(f) RGPD) – para cookies necesarias para la funcionalidad del sitio",
+            "Transferencia internacional de datos: NO transferimos sus datos fiscales fuera de la UE, ya que nunca salen de su navegador.",
+          ],
+        },
+        {
+          heading: "8. Contacto",
           content: [
             "Si tiene preguntas sobre nuestra política de privacidad, contáctenos:",
             "Email: 0x01code@gmail.com",
@@ -479,7 +599,27 @@ export default async function PrivacyPage({ params }: Props) {
           ],
         },
         {
-          heading: "7. Contato",
+          heading: "7. Conformidade com o GDPR (Regulamento Geral de Proteção de Dados)",
+          content: [
+            "Nosso serviço está totalmente em conformidade com os requisitos do GDPR (UE 2016/679) e outros padrões internacionais de proteção de dados.",
+            "Seus direitos sob o GDPR:",
+            "• Direito de acesso aos seus dados – como não armazenamos seus dados em servidores, todos os dados estão exclusivamente em seu navegador",
+            "• Direito de exclusão – você pode limpar o armazenamento local do navegador a qualquer momento",
+            "• Direito à portabilidade de dados – você pode exportar seus dados em formato PDF ou Excel",
+            "• Direito de oposição ao processamento – você pode rejeitar cookies opcionais através do banner de consentimento",
+            "• Direito à limitação do processamento – você controla todos os seus dados localmente",
+            "Tipos de cookies que usamos:",
+            "✅ Cookies necessários: Armazenam preferências de idioma e tema (não requerem consentimento sob o GDPR)",
+            "❌ Cookies analíticos: NÃO usados sem seu consentimento",
+            "❌ Cookies de marketing/publicidade: NÃO usados",
+            "Base legal para processamento de dados:",
+            "• Consentimento do usuário (Artigo 6(1)(a) GDPR) – para cookies analíticos",
+            "• Interesse legítimo (Artigo 6(1)(f) GDPR) – para cookies necessários para funcionalidade do site",
+            "Transferência internacional de dados: NÃO transferimos seus dados fiscais para fora da UE, pois eles nunca saem do seu navegador.",
+          ],
+        },
+        {
+          heading: "8. Contato",
           content: [
             "Se você tiver dúvidas sobre nossa política de privacidade, entre em contato conosco:",
             "Email: 0x01code@gmail.com",

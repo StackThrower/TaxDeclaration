@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes"
 import { I18nProvider } from "@/lib/i18n-context"
 import { DynamicHtmlLang } from "@/components/dynamic-html-lang"
 import { GoogleAnalytics } from "@/components/google-analytics"
+import { CookieConsent } from "@/components/cookie-consent"
 import { headers } from "next/headers"
 import "./globals.css"
 
@@ -232,6 +233,7 @@ export default async function RootLayout({
           <I18nProvider>
             <DynamicHtmlLang />
             {children}
+            <CookieConsent />
             <Analytics />
           </I18nProvider>
         </ThemeProvider>
