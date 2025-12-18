@@ -12,13 +12,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const language = locale.split("-")[0]
 
   const titles: Record<string, string> = {
-    uk: "Умови використання | Monegoo",
-    pl: "Warunki użytkowania | Monegoo",
-    en: "Terms of Use | Monegoo",
-    fr: "Conditions d'utilisation | Monegoo",
-    de: "Nutzungsbedingungen | Monegoo",
-    es: "Términos de uso | Monegoo",
-    pt: "Termos de Uso | Monegoo",
+    uk: "Умови використання",
+    pl: "Warunki użytkowania",
+    en: "Terms of Use",
+    fr: "Conditions d'utilisation",
+    de: "Nutzungsbedingungen",
+    es: "Términos de uso",
+    pt: "Termos de Uso",
   }
 
   const descriptions: Record<string, string> = {
