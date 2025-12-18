@@ -82,6 +82,23 @@ export function Footer() {
                   {t(language, "knowledge.base")}
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://github.com/StackThrower/Monegoo/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-100 transition-opacity hover:underline"
+                >
+                  {language === "uk" ? "Баг-трекер" :
+                   language === "pl" ? "Zgłaszanie błędów" :
+                   language === "en" ? "Bug Tracker" :
+                   language === "fr" ? "Suivi des bogues" :
+                   language === "de" ? "Fehler melden" :
+                   language === "es" ? "Rastreador de errores" :
+                   language === "pt" ? "Rastreador de bugs" :
+                   "Bug Tracker"}
+                </a>
+              </li>
             </ul>
           </div>
           <div className="md:col-span-2">
