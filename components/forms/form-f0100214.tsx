@@ -9,11 +9,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n-context"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { FileText } from "lucide-react"
 import { generateF0100214PDF } from "@/lib/pdf-generator"
 
 export function FormF0100214() {
   const { language } = useI18n()
+  const isMobile = useIsMobile()
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
@@ -481,37 +483,51 @@ export function FormF0100214() {
       </Card>
 
       <div className="space-y-4 pt-6">
-        <div className="flex gap-4">
-          <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 gap-2">
-            <FileText className="h-5 w-5" />
-            {language === "uk"
-              ? "Сформувати PDF"
-              : language === "en"
-                ? "Generate PDF"
-                : language === "fr"
-                  ? "Générer PDF"
-                  : language === "pl"
-                    ? "Generuj PDF"
-                    : language === "es"
-                      ? "Generar PDF"
-                      : language === "pt"
-                        ? "Gerar PDF"
-                        : "PDF erstellen"}
+        <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : ''}`}>
+          <Button
+            type="submit"
+            size={isMobile ? "default" : "lg"}
+            className={`bg-primary hover:bg-primary/90 gap-2 ${isMobile ? 'w-full' : ''}`}
+          >
+            <FileText className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>
+              {language === "uk"
+                ? "Сформувати PDF"
+                : language === "en"
+                  ? "Generate PDF"
+                  : language === "fr"
+                    ? "Générer PDF"
+                    : language === "pl"
+                      ? "Generuj PDF"
+                      : language === "es"
+                        ? "Generar PDF"
+                        : language === "pt"
+                          ? "Gerar PDF"
+                          : "PDF erstellen"}
+            </span>
           </Button>
-          <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
-            {language === "uk"
-              ? "Очистити форму"
-              : language === "en"
-                ? "Clear Form"
-                : language === "fr"
-                  ? "Effacer le formulaire"
-                  : language === "pl"
-                    ? "Wyczyść formularz"
-                    : language === "es"
-                      ? "Limpiar formulario"
-                      : language === "pt"
-                        ? "Limpar formulário"
-                        : "Formular löschen"}
+          <Button
+            type="reset"
+            variant="outline"
+            size={isMobile ? "default" : "lg"}
+            onClick={handleClear}
+            className={isMobile ? 'w-full' : ''}
+          >
+            <span className={isMobile ? 'text-sm' : ''}>
+              {language === "uk"
+                ? "Очистити форму"
+                : language === "en"
+                  ? "Clear Form"
+                  : language === "fr"
+                    ? "Effacer le formulaire"
+                    : language === "pl"
+                      ? "Wyczyść formularz"
+                      : language === "es"
+                        ? "Limpiar formulario"
+                        : language === "pt"
+                          ? "Limpar formulário"
+                          : "Formular löschen"}
+            </span>
           </Button>
         </div>
 

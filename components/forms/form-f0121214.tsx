@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { Trash2, Plus, FileText, Upload, FileSpreadsheet, HelpCircle } from "lucide-react"
 import Link from "next/link"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
@@ -47,6 +48,7 @@ interface FinancialPosition {
 
 export function FormF0121214() {
   const { language } = useI18n()
+  const isMobile = useIsMobile()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isImporting, setIsImporting] = useState(false)
   const [importProgress, setImportProgress] = useState(0)
@@ -1194,7 +1196,7 @@ export function FormF0121214() {
 
       {/* Import and Add Position Buttons */}
       <div className="flex flex-col gap-4">
-        <div className="flex justify-center gap-4">
+        <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-center gap-3 ${isMobile ? 'w-full' : ''}`}>
           <input
             ref={fileInputRef}
             type="file"
@@ -1205,26 +1207,28 @@ export function FormF0121214() {
           <Button
             type="button"
             variant="secondary"
-            size="lg"
+            size={isMobile ? "default" : "lg"}
             onClick={triggerFileInput}
             disabled={isImporting}
-            className="gap-2"
+            className={`gap-2 ${isMobile ? 'w-full' : ''}`}
           >
-            <Upload className="h-5 w-5" />
-            {isImporting
-              ? (language === "uk" ? "Імпорт..." : "Importing...")
-              : (language === "uk" ? "Імпортувати дані" : "Import Data")
-            }
+            <Upload className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>
+              {isImporting
+                ? (language === "uk" ? "Імпорт..." : "Importing...")
+                : (language === "uk" ? "Імпортувати дані" : "Import Data")
+              }
+            </span>
           </Button>
           <Button
             type="button"
             variant="outline"
-            size="lg"
+            size={isMobile ? "default" : "lg"}
             onClick={addPosition}
-            className="gap-2 border-dashed border-2"
+            className={`gap-2 border-dashed border-2 ${isMobile ? 'w-full' : ''}`}
           >
-            <Plus className="h-5 w-5" />
-            {getLabel("addPosition")}
+            <Plus className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>{getLabel("addPosition")}</span>
           </Button>
         </div>
 
@@ -1437,23 +1441,33 @@ export function FormF0121214() {
       </Card>
 
       <div className="space-y-4 pt-6">
-        <div className="flex gap-4">
-          <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90 gap-2">
-            <FileText className="h-5 w-5" />
-            {getLabel("save")}
+        <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : ''}`}>
+          <Button
+            type="submit"
+            size={isMobile ? "default" : "lg"}
+            className={`bg-accent hover:bg-accent/90 gap-2 ${isMobile ? 'w-full' : ''}`}
+          >
+            <FileText className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>{getLabel("save")}</span>
           </Button>
           <Button
             type="button"
             variant="outline"
-            size="lg"
+            size={isMobile ? "default" : "lg"}
             onClick={handleExportExcel}
-            className="gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950"
+            className={`gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950 ${isMobile ? 'w-full' : ''}`}
           >
-            <FileSpreadsheet className="h-5 w-5" />
-            {getLabel("checkCalculations")}
+            <FileSpreadsheet className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>{getLabel("checkCalculations")}</span>
           </Button>
-          <Button type="reset" variant="outline" size="lg" onClick={handleClear}>
-            {getLabel("clear")}
+          <Button
+            type="reset"
+            variant="outline"
+            size={isMobile ? "default" : "lg"}
+            onClick={handleClear}
+            className={isMobile ? 'w-full' : ''}
+          >
+            <span className={isMobile ? 'text-sm' : ''}>{getLabel("clear")}</span>
           </Button>
         </div>
 

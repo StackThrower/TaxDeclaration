@@ -9,11 +9,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n-context"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { FileText } from "lucide-react"
 import { generatePIT38PDF } from "@/lib/pdf-generator"
 
 export function FormPIT38() {
   const { language } = useI18n()
+  const isMobile = useIsMobile()
   const [formData, setFormData] = useState({
     // Dane identyfikacyjne
     firstName: "",
@@ -461,13 +463,23 @@ export function FormPIT38() {
 
       {/* Buttons */}
       <div className="space-y-4">
-        <div className="flex gap-4 justify-end">
-          <Button type="button" variant="outline" onClick={handleClear}>
-            {translations.clear}
+        <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : 'justify-end'}`}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleClear}
+            size={isMobile ? "default" : "lg"}
+            className={isMobile ? 'w-full' : ''}
+          >
+            <span className={isMobile ? 'text-sm' : ''}>{translations.clear}</span>
           </Button>
-          <Button type="submit" className="gap-2">
-            <FileText className="w-4 h-4" />
-            {translations.generate}
+          <Button
+            type="submit"
+            className={`gap-2 ${isMobile ? 'w-full' : ''}`}
+            size={isMobile ? "default" : "lg"}
+          >
+            <FileText className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>{translations.generate}</span>
           </Button>
         </div>
 
