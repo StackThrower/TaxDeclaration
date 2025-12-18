@@ -2,6 +2,20 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+
+  // Redirect specific URLs to homepage
+  const redirectUrls = [
+    '/tag/etf',
+    '/en-us/the-role-of-technology-for-stocks-in-shaping-the-u-s-stock-market',
+    '/en-us/tag/savings',
+    '/en-us/home'
+  ]
+
+  if (redirectUrls.includes(pathname)) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
   // Clone the response
   const response = NextResponse.next()
 
@@ -13,7 +27,6 @@ export function middleware(request: NextRequest) {
   response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
 
   // Add pathname to headers so root layout can access it (for dynamic lang attribute)
-  const pathname = request.nextUrl.pathname
   response.headers.set('x-pathname', pathname)
 
   return response
