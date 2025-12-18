@@ -12,7 +12,7 @@
 
 2. **Подключите GitHub репозиторий:**
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/TaxDeclaration.git
+   git remote add origin https://github.com/YOUR_USERNAME/Monegoo.git
    git push -u origin main
    ```
 
