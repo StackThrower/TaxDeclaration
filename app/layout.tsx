@@ -202,6 +202,9 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        {/* PWA Manifest - Critical for PWA detection */}
+        <link rel="manifest" href="/manifest.json" />
+
         {/* PWA Meta Tags */}
         <meta name="application-name" content="Monegoo" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -210,6 +213,11 @@ export default async function RootLayout({
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
+
+        {/* Additional PWA Icons */}
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512x512.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
 
         {/* Structured Data - Organization */}
         <script
