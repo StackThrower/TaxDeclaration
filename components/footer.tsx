@@ -43,6 +43,18 @@ export function Footer() {
             <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base">{t(language, "footer.about")}</h3>
             <ul className="space-y-2 text-xs md:text-sm opacity-75">
               <li>
+                <a href="/" className="hover:opacity-100 transition-opacity hover:underline">
+                  {language === "uk" ? "Головна" :
+                   language === "pl" ? "Strona główna" :
+                   language === "en" ? "Home" :
+                   language === "fr" ? "Accueil" :
+                   language === "de" ? "Startseite" :
+                   language === "es" ? "Inicio" :
+                   language === "pt" ? "Início" :
+                   "Home"}
+                </a>
+              </li>
+              <li>
                 <a href={`/${locale}/about`} className="hover:opacity-100 transition-opacity hover:underline">
                   {t(language, "footer.about")}
                 </a>

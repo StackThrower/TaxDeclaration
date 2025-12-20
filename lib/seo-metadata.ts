@@ -606,7 +606,7 @@ export function generatePageMetadata(
     alternates: {
       canonical: `https://monegoo.com/${locale}`,
       languages: {
-        "x-default": "/uk-ua",
+        "x-default": "/",
         "uk-UA": "/uk-ua",
         "en-US": "/en-us",
         "en-GB": "/en-gb",
@@ -1971,7 +1971,7 @@ export function generateAboutMetadata(
     alternates: {
       canonical: `https://monegoo.com/${locale}/about`,
       languages: {
-        "x-default": "/uk-ua/about",
+        "x-default": "https://monegoo.com",
         "uk-UA": "/uk-ua/about",
         "en-US": "/en-us/about",
         "en-GB": "/en-gb/about",
@@ -2036,7 +2036,7 @@ export function generateHelpMetadata(
     alternates: {
       canonical: `https://monegoo.com/${locale}/help`,
       languages: {
-        "x-default": "/uk-ua/help",
+        "x-default": "https://monegoo.com",
         "uk-UA": "/uk-ua/help",
         "en-US": "/en-us/help",
         "en-GB": "/en-gb/help",
