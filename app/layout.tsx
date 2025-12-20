@@ -267,7 +267,6 @@ export default async function RootLayout({
             <DynamicHtmlLang />
             {children}
             <CookieConsent />
-            <PwaInstallPrompt />
             <Analytics />
           </I18nProvider>
         </ThemeProvider>
