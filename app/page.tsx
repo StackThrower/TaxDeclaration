@@ -149,6 +149,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: "https://monegoo.com",
       languages: {
+        "x-default": "/",
         "uk-UA": "/uk-ua",
         "en-US": "/en-us",
         "en-GB": "/en-gb",
