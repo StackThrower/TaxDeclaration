@@ -77,7 +77,7 @@ export const generateF0100214PDF = async (data: F0100214Data, language: string =
 
   const labels = {
     uk: {
-      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ",
+      title: "ПРИКЛАД ДЛЯ ЗАПОВНЕННЯ ПОДАТКОВОЇ ДЕКЛАРАЦІЇ",
       formNumber: "Ф0100214",
       subtitle: "про майновий стан і доходи",
       officialNote: "Річна податкова декларація про майновий стан і доходи",
@@ -104,7 +104,7 @@ export const generateF0100214PDF = async (data: F0100214Data, language: string =
       date: "Дата",
     },
     en: {
-      title: "TAX DECLARATION",
+      title: "EXAMPLE FOR FILLING OUT TAX DECLARATION",
       formNumber: "F0100214",
       subtitle: "on property status and income",
       officialNote: "Annual tax declaration on property status and income",
@@ -164,10 +164,10 @@ export const generateF0100214PDF = async (data: F0100214Data, language: string =
     doc.setFontSize(11)
     if (isCopy) {
       doc.setTextColor(200, 0, 0)
-      doc.text(t.copyLabel, 180, 15, { align: "right" })
+      doc.text(t.copyLabel, 180, 25, { align: "right" })
     } else {
       doc.setTextColor(0, 100, 0)
-      doc.text(t.originalLabel, 180, 15, { align: "right" })
+      doc.text(t.originalLabel, 180, 25, { align: "right" })
     }
 
     let yPos = 48
@@ -384,7 +384,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
 
   const labels = {
     uk: {
-      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ",
+      title: "ПРИКЛАД ДЛЯ ЗАПОВНЕННЯ ПОДАТКОВОЇ ДЕКЛАРАЦІЇ",
       formNumber: "Ф0121214 (Ф1)",
       subtitle: "про майновий стан і доходи",
       officialNote: "Додаток Ф1 до річної податкової декларації",
@@ -432,7 +432,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       },
     },
     en: {
-      title: "TAX DECLARATION",
+      title: "EXAMPLE FOR FILLING OUT TAX DECLARATION",
       formNumber: "F0121214 (F1)",
       subtitle: "on property status and income",
       officialNote: "Appendix F1 to annual tax return",
@@ -508,10 +508,10 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
     doc.setFontSize(11)
     if (isCopy) {
       doc.setTextColor(200, 0, 0)
-      doc.text(t.copyLabel, 180, 15, { align: "right" })
+      doc.text(t.copyLabel, 180, 25, { align: "right" })
     } else {
       doc.setTextColor(0, 100, 0)
-      doc.text(t.originalLabel, 180, 15, { align: "right" })
+      doc.text(t.originalLabel, 180, 25, { align: "right" })
     }
 
     let yPos = 48
@@ -846,7 +846,7 @@ export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl",
 
   const labels = {
     pl: {
-      title: "ZEZNANIE PODATKOWE PIT-37",
+      title: "PRZYKŁAD WYPEŁNIENIA ZEZNANIA PODATKOWEGO PIT-37",
       subtitle: "Zeznanie o wysokości osiągniętego dochodu (w tym z działalności gospodarczej)",
       officialNote: "Urząd Skarbowy - Roczne zeznanie podatkowe",
       copyLabel: "KOPIA",
@@ -885,7 +885,7 @@ export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl",
       signatureLine: "_________________",
     },
     en: {
-      title: "TAX RETURN PIT-37",
+      title: "EXAMPLE FOR FILLING OUT TAX RETURN PIT-37",
       subtitle: "Declaration of income achieved",
       officialNote: "Tax Office - Annual tax return",
       copyLabel: "COPY",
@@ -924,7 +924,7 @@ export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl",
       signatureLine: "_________________",
     },
     uk: {
-      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ PIT-37",
+      title: "ПРИКЛАД ЗАПОВНЕННЯ ДЕКЛАРАЦІЇ PIT-37",
       subtitle: "Zeznanie o wysokości osiągniętego dochodu",
       officialNote: "Urząd Skarbowy - Roczne zeznanie podatkowe",
       copyLabel: "KOPIA",
@@ -1009,10 +1009,10 @@ export const generatePIT37PDF = async (data: PIT37Data, language: string = "pl",
     doc.setFontSize(11)
     if (isCopy) {
       doc.setTextColor(200, 0, 0)
-      doc.text(t.copyLabel, 180, 15, { align: "right" })
+      doc.text(t.copyLabel, 180, 35, { align: "right" })
     } else {
       doc.setTextColor(0, 100, 0)
-      doc.text(t.originalLabel, 180, 15, { align: "right" })
+      doc.text(t.originalLabel, 180, 35, { align: "right" })
     }
 
     let yPos = 42
@@ -1298,7 +1298,7 @@ export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl",
 
   const labels = {
     pl: {
-      title: "ZEZNANIE PODATKOWE PIT-38",
+      title: "PRZYKŁAD WYPEŁNIENIA ZEZNANIA PODATKOWEGO PIT-38",
       subtitle: "Zeznanie o wysokości osiągniętego dochodu z kapitałów pieniężnych",
       officialNote: "Urząd Skarbowy - Dochody z kapitałów pieniężnych",
       copyLabel: "KOPIA",
@@ -1334,7 +1334,7 @@ export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl",
       signatureLine: "_________________",
     },
     en: {
-      title: "TAX RETURN PIT-38",
+      title: "EXAMPLE FOR FILLING OUT TAX RETURN PIT-38",
       subtitle: "Declaration of income from capital",
       officialNote: "Tax Office - Income from capital",
       copyLabel: "COPY",
@@ -1370,7 +1370,7 @@ export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl",
       signatureLine: "_________________",
     },
     uk: {
-      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ PIT-38",
+      title: "ПРИКЛАД ЗАПОВНЕННЯ ДЕКЛАРАЦІЇ PIT-38",
       subtitle: "Zeznanie o wysokości osiągniętego dochodu z kapitałów pieniężnych",
       officialNote: "Urząd Skarbowy - Dochody z kapitałów pieniężnych",
       copyLabel: "KOPIA",
@@ -1448,10 +1448,10 @@ export const generatePIT38PDF = async (data: PIT38Data, language: string = "pl",
     doc.setFontSize(11)
     if (isCopy) {
       doc.setTextColor(200, 0, 0)
-      doc.text(t.copyLabel, 180, 15, { align: "right" })
+      doc.text(t.copyLabel, 180, 35, { align: "right" })
     } else {
       doc.setTextColor(0, 100, 0)
-      doc.text(t.originalLabel, 180, 15, { align: "right" })
+      doc.text(t.originalLabel, 180, 35, { align: "right" })
     }
 
     let yPos = 42
@@ -1704,7 +1704,7 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl",
 
   const labels = {
     pl: {
-      title: "ZEZNANIE PODATKOWE PIT-39",
+      title: "PRZYKŁAD WYPEŁNIENIA ZEZNANIA PODATKOWEGO PIT-39",
       subtitle: "Zeznanie o wysokości osiągniętego dochodu (przychodu) z odpłatnego zbycia nieruchomości",
       officialNote: "Urząd Skarbowy - Dochody z odpłatnego zbycia",
       copyLabel: "KOPIA",
@@ -1741,7 +1741,7 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl",
       signatureLine: "_________________",
     },
     en: {
-      title: "TAX RETURN PIT-39",
+      title: "EXAMPLE FOR FILLING OUT TAX RETURN PIT-39",
       subtitle: "Declaration of income from property disposal",
       officialNote: "Tax Office - Income from property disposal",
       copyLabel: "COPY",
@@ -1778,7 +1778,7 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl",
       signatureLine: "_________________",
     },
     uk: {
-      title: "ПОДАТКОВА ДЕКЛАРАЦІЯ PIT-39",
+      title: "ПРИКЛАД ЗАПОВНЕННЯ ДЕКЛАРАЦІЇ PIT-39",
       subtitle: "Zeznanie o wysokości osiągniętego dochodu z odpłatnego zbycia nieruchomości",
       officialNote: "Urząd Skarbowy - Dochody z odpłatnego zbycia",
       copyLabel: "KOPIA",
@@ -1862,10 +1862,10 @@ export const generatePIT39PDF = async (data: PIT39Data, language: string = "pl",
     doc.setFontSize(11)
     if (isCopy) {
       doc.setTextColor(200, 0, 0)
-      doc.text(t.copyLabel, 180, 15, { align: "right" })
+      doc.text(t.copyLabel, 180, 35, { align: "right" })
     } else {
       doc.setTextColor(0, 100, 0)
-      doc.text(t.originalLabel, 180, 15, { align: "right" })
+      doc.text(t.originalLabel, 180, 35, { align: "right" })
     }
 
     let yPos = 42
