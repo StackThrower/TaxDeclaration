@@ -377,6 +377,11 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   // Setup Ukrainian fonts for Cyrillic support
   await setupUkrainianFonts(doc)
 
+  // Ставка военного сбора: 1.5% для года ≤2024, 5% для года ≥2025
+  const reportYear = parseInt(data.year) || 2025
+  const militaryTaxRate = reportYear >= 2025 ? 5 : 1.5
+  const militaryTaxPercent = militaryTaxRate.toFixed(1).replace('.0', '')
+
   const labels = {
     uk: {
       title: "ПОДАТКОВА ДЕКЛАРАЦІЯ",
@@ -422,8 +427,8 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
         other: "Інше",
       },
       taxRates: {
-        trades: "Операції з цінними паперами (18% ПДФО + 5% ВЗ)",
-        dividends: "Дивіденди (9% ПДФО + 5% ВЗ)",
+        trades: `Операції з цінними паперами (18% ПДФО + ${militaryTaxPercent}% ВЗ)`,
+        dividends: `Дивіденди (9% ПДФО + ${militaryTaxPercent}% ВЗ)`,
       },
     },
     en: {
@@ -470,8 +475,8 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
         other: "Other",
       },
       taxRates: {
-        trades: "Securities transactions (18% PIT + 5% ML)",
-        dividends: "Dividends (9% PIT + 5% ML)",
+        trades: `Securities transactions (18% PIT + ${militaryTaxPercent}% ML)`,
+        dividends: `Dividends (9% PIT + ${militaryTaxPercent}% ML)`,
       },
     },
   }
@@ -662,7 +667,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       taxData.push(
         [`${language === "uk" ? "Прибуток від операцій з ЦП:" : "Profit from securities:"}`, `${(data.calculations.profitFromTrades || 0).toFixed(2)} UAH`],
         [`${language === "uk" ? "  - ПДФО (18%):" : "  - PIT (18%):"}`, `${(data.calculations.pdfoFromTrades || 0).toFixed(2)} UAH`],
-        [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromTrades || 0).toFixed(2)} UAH`]
+        [`${language === "uk" ? `  - Військовий збір (${militaryTaxPercent}%):` : `  - Military levy (${militaryTaxPercent}%):`}`, `${(data.calculations.militaryTaxFromTrades || 0).toFixed(2)} UAH`]
       )
     }
 
@@ -670,7 +675,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       taxData.push(
         [`${language === "uk" ? "Дивіденди отримано:" : "Dividends received:"}`, `${(data.calculations.dividends || 0).toFixed(2)} UAH`],
         [`${language === "uk" ? "  - ПДФО (9%):" : "  - PIT (9%):"}`, `${(data.calculations.pdfoFromDividends || 0).toFixed(2)} UAH`],
-        [`${language === "uk" ? "  - Військовий збір (5%):" : "  - Military levy (5%):"}`, `${(data.calculations.militaryTaxFromDividends || 0).toFixed(2)} UAH`]
+        [`${language === "uk" ? `  - Військовий збір (${militaryTaxPercent}%):` : `  - Military levy (${militaryTaxPercent}%):`}`, `${(data.calculations.militaryTaxFromDividends || 0).toFixed(2)} UAH`]
       )
     }
 

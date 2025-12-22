@@ -91,6 +91,15 @@ export function FormF0121214() {
     militaryTaxFromDividends: 0,
   })
 
+  // Ставка военного сбора для отображения: 1.5% для года ≤2024, 5% для года ≥2025
+  const [militaryTaxRateDisplay, setMilitaryTaxRateDisplay] = useState("5")
+
+  // Обновляем ставку при изменении года
+  useEffect(() => {
+    const reportYear = parseInt(formData.year) || 2025
+    setMilitaryTaxRateDisplay(reportYear >= 2025 ? "5" : "1.5")
+  }, [formData.year])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -381,10 +390,14 @@ export function FormF0121214() {
     fileInputRef.current?.click()
   }
 
-  // Автоматический пересчет налогов при изменении позиций
+  // Автоматический пересчет налогов при изменении позиций или года
   useEffect(() => {
     let totalProfitFromTrades = 0
     let totalDividends = 0
+
+    // Ставка военного сбора: 1.5% для года ≤2024, 5% для года ≥2025
+    const reportYear = parseInt(formData.year) || 2025
+    const militaryTaxRate = reportYear >= 2025 ? 0.05 : 0.015
 
     positions.forEach((pos) => {
       const purchasePrice = Number.parseFloat(pos.purchasePrice) || 0
@@ -424,27 +437,30 @@ export function FormF0121214() {
       }
     })
 
-    // Налоги для трейдов: 18% ПДФО + 5% военный сбор
+    // Налоги для трейдов: 18% ПДФО + военный сбор (1.5% или 5%)
     const pdfoFromTrades = totalProfitFromTrades > 0 ? totalProfitFromTrades * 0.18 : 0
-    const militaryTaxFromTrades = totalProfitFromTrades > 0 ? totalProfitFromTrades * 0.05 : 0
+    const militaryTaxFromTrades = totalProfitFromTrades > 0 ? totalProfitFromTrades * militaryTaxRate : 0
 
-    // Налоги для дивидендов: 9% ПДФО + 5% военный сбор
+    // Налоги для дивидендов: 9% ПДФО + военный сбор (1.5% или 5%)
     const pdfoFromDividends = totalDividends > 0 ? totalDividends * 0.09 : 0
-    const militaryTaxFromDividends = totalDividends > 0 ? totalDividends * 0.05 : 0
+    const militaryTaxFromDividends = totalDividends > 0 ? totalDividends * militaryTaxRate : 0
 
     // Общие налоги
     const totalPdfo = pdfoFromTrades + pdfoFromDividends
     const totalMilitaryTax = militaryTaxFromTrades + militaryTaxFromDividends
     const total = totalPdfo + totalMilitaryTax
 
+    const militaryTaxPercent = (militaryTaxRate * 100).toFixed(1)
     console.log('Загальні розрахунки:', {
+      'рік звіту': reportYear,
+      'ставка військового збору': `${militaryTaxPercent}%`,
       'прибуток від трейдів': totalProfitFromTrades,
       'дивіденди': totalDividends,
       'ПДФО від трейдів (18%)': pdfoFromTrades,
       'ПДФО від дивідендів (9%)': pdfoFromDividends,
       'ПДФО загалом': totalPdfo,
-      'Військовий збір від трейдів (5%)': militaryTaxFromTrades,
-      'Військовий збір від дивідендів (5%)': militaryTaxFromDividends,
+      [`Військовий збір від трейдів (${militaryTaxPercent}%)`]: militaryTaxFromTrades,
+      [`Військовий збір від дивідендів (${militaryTaxPercent}%)`]: militaryTaxFromDividends,
       'Військовий збір загалом': totalMilitaryTax,
       'всього до сплати': total
     })
@@ -461,7 +477,7 @@ export function FormF0121214() {
       militaryTaxFromTrades: militaryTaxFromTrades,
       militaryTaxFromDividends: militaryTaxFromDividends,
     })
-  }, [positions])
+  }, [positions, formData.year])
 
 
 
@@ -572,7 +588,7 @@ export function FormF0121214() {
         taxCalculation: "Розрахунок податкових зобов'язань",
         profit: "Прибуток",
         pdfo: "ПДФО (18% + 9%)",
-        military: "Військ. збір (5%)",
+        military: `Військ. збір (${militaryTaxRateDisplay}%)`,
         total: "Всього до сплати",
         additionalInfo: "Додаткова інформація",
         notes: "Примітки та уточнення",
@@ -608,7 +624,7 @@ export function FormF0121214() {
         taxCalculation: "Tax Obligation Calculation",
         profit: "Profit",
         pdfo: "Personal Income Tax (18%)",
-        military: "Military Levy (5%)",
+        military: `Military Levy (${militaryTaxRateDisplay}%)`,
         total: "Total Due",
         additionalInfo: "Additional Information",
         notes: "Notes and Clarifications",
@@ -637,7 +653,7 @@ export function FormF0121214() {
         taxCalculation: "Calcul de l'obligation fiscale",
         profit: "Bénéfice",
         pdfo: "Impôt sur le revenu (18%)",
-        military: "Prélèvement militaire (5%)",
+        military: `Prélèvement militaire (${militaryTaxRateDisplay}%)`,
         total: "Montant total dû",
         additionalInfo: "Informations supplémentaires",
         notes: "Notes et clarifications",
@@ -666,7 +682,7 @@ export function FormF0121214() {
         taxCalculation: "Obliczenie zobowiązania podatkowego",
         profit: "Zysk",
         pdfo: "PIT (18%)",
-        military: "Opłata wojskowa (5%)",
+        military: `Opłata wojskowa (${militaryTaxRateDisplay}%)`,
         total: "Razem do zapłaty",
         additionalInfo: "Dodatkowe informacje",
         notes: "Uwagi i wyjaśnienia",
@@ -695,7 +711,7 @@ export function FormF0121214() {
         taxCalculation: "Cálculo de obligación fiscal",
         profit: "Ganancia",
         pdfo: "IRPF (18%)",
-        military: "Gravamen militar (5%)",
+        military: `Gravamen militar (${militaryTaxRateDisplay}%)`,
         total: "Total a pagar",
         additionalInfo: "Información adicional",
         notes: "Notas y aclaraciones",
@@ -724,7 +740,7 @@ export function FormF0121214() {
         taxCalculation: "Cálculo de obrigação fiscal",
         profit: "Lucro",
         pdfo: "IR (18%)",
-        military: "Taxa militar (5%)",
+        military: `Taxa militar (${militaryTaxRateDisplay}%)`,
         total: "Total a pagar",
         additionalInfo: "Informações adicionais",
         notes: "Notas e esclarecimentos",
@@ -753,7 +769,7 @@ export function FormF0121214() {
         taxCalculation: "Berechnung der Steuerschuld",
         profit: "Gewinn",
         pdfo: "Einkommensteuer (18%)",
-        military: "Wehrbeitrag (5%)",
+        military: `Wehrbeitrag (${militaryTaxRateDisplay}%)`,
         total: "Gesamtzahlbar",
         additionalInfo: "Zusätzliche Informationen",
         notes: "Notizen und Klarstellungen",
@@ -812,10 +828,14 @@ export function FormF0121214() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="2019">2019</SelectItem>
+                <SelectItem value="2020">2020</SelectItem>
+                <SelectItem value="2021">2021</SelectItem>
                 <SelectItem value="2022">2022</SelectItem>
                 <SelectItem value="2023">2023</SelectItem>
                 <SelectItem value="2024">2024</SelectItem>
                 <SelectItem value="2025">2025</SelectItem>
+                <SelectItem value="2026">2026</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -1136,8 +1156,8 @@ export function FormF0121214() {
                 <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
                   <p className="text-xs text-blue-700 dark:text-blue-300">
                     💡 {language === "uk"
-                      ? "Для дивідендів: ПДФО 9% + Військовий збір 5%"
-                      : "For dividends: PIT 9% + Military Levy 5%"
+                      ? `Для дивідендів: ПДФО 9% + Військовий збір ${militaryTaxRateDisplay}%`
+                      : `For dividends: PIT 9% + Military Levy ${militaryTaxRateDisplay}%`
                     }
                   </p>
                 </div>
@@ -1361,7 +1381,7 @@ export function FormF0121214() {
                   </div>
                   <div className="space-y-1 bg-background p-3 rounded-md border border-border">
                     <p className="text-xs text-muted-foreground">
-                      {language === "uk" ? "Військовий збір (5%)" : "Military Levy (5%)"}
+                      {language === "uk" ? `Військовий збір (${militaryTaxRateDisplay}%)` : `Military Levy (${militaryTaxRateDisplay}%)`}
                     </p>
                     <p className="text-lg font-bold text-orange-600">
                       {calculations.militaryTaxFromTrades.toFixed(2)} ₴
@@ -1399,7 +1419,7 @@ export function FormF0121214() {
                   </div>
                   <div className="space-y-1 bg-background p-3 rounded-md border border-border">
                     <p className="text-xs text-muted-foreground">
-                      {language === "uk" ? "Військовий збір (5%)" : "Military Levy (5%)"}
+                      {language === "uk" ? `Військовий збір (${militaryTaxRateDisplay}%)` : `Military Levy (${militaryTaxRateDisplay}%)`}
                     </p>
                     <p className="text-lg font-bold text-orange-600">
                       {calculations.militaryTaxFromDividends.toFixed(2)} ₴

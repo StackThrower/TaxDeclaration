@@ -41,8 +41,13 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
   // Create a new workbook
   const wb = XLSX.utils.book_new()
 
+  // Ставка военного сбора: 1.5% для года ≤2024, 5% для года ≥2025
+  const reportYear = parseInt(formData.year) || 2025
+  const militaryTaxRate = reportYear >= 2025 ? 0.05 : 0.015
+  const militaryTaxPercent = (militaryTaxRate * 100).toFixed(1)
+
   // Translations
-  const t = getTranslations(language)
+  const t = getTranslations(language, militaryTaxPercent)
 
   // Sheet 1: Summary
   const summaryData = [
@@ -132,20 +137,20 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
     let taxRateLabel = ''
 
     if (pos.assetType === 'dividends') {
-      // For dividends: 9% PDFO + 5% military tax
+      // For dividends: 9% PDFO + military tax (1.5% or 5%)
       profit = salePrice
       pdfo = salePrice * 0.09
-      military = salePrice * 0.05
+      military = salePrice * militaryTaxRate
       total = pdfo + military
-      taxRateLabel = '9% + 5%'
+      taxRateLabel = `9% + ${militaryTaxPercent}%`
     } else {
-      // For trades: 18% PDFO + 5% military tax (only on profit)
+      // For trades: 18% PDFO + military tax (1.5% or 5%) (only on profit)
       profit = salePrice - purchasePrice - expenses
       if (profit > 0) {
         pdfo = profit * 0.18
-        military = profit * 0.05
+        military = profit * militaryTaxRate
         total = pdfo + military
-        taxRateLabel = '18% + 5%'
+        taxRateLabel = `18% + ${militaryTaxPercent}%`
       } else {
         taxRateLabel = t.noTax
       }
@@ -290,15 +295,15 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
     if (pos.assetType === 'dividends') {
       stats.totalProfit += salePrice
       stats.totalPdfo += salePrice * 0.09
-      stats.totalMilitary += salePrice * 0.05
-      stats.totalTax += (salePrice * 0.09) + (salePrice * 0.05)
+      stats.totalMilitary += salePrice * militaryTaxRate
+      stats.totalTax += (salePrice * 0.09) + (salePrice * militaryTaxRate)
     } else {
       const profit = salePrice - purchasePrice - expenses
       stats.totalProfit += profit
       if (profit > 0) {
         stats.totalPdfo += profit * 0.18
-        stats.totalMilitary += profit * 0.05
-        stats.totalTax += (profit * 0.18) + (profit * 0.05)
+        stats.totalMilitary += profit * militaryTaxRate
+        stats.totalTax += (profit * 0.18) + (profit * militaryTaxRate)
       }
     }
   })
@@ -459,7 +464,7 @@ function getAssetTypeLabel(assetType: string, language: string): string {
   return labels[language]?.[assetType] || labels['en'][assetType] || assetType
 }
 
-function getTranslations(language: string) {
+function getTranslations(language: string, militaryTaxPercent: string = '5') {
   const translations: Record<string, any> = {
     uk: {
       title: 'Розрахунок податкових зобов\'язань (Додаток Ф1 / F0121214)',
@@ -484,7 +489,7 @@ function getTranslations(language: string) {
       militaryFromDividends: 'Військовий збір від дивідендів',
       rate18: '(18%)',
       rate9: '(9%)',
-      rate5: '(5%)',
+      rate5: `(${militaryTaxPercent}%)`,
       summarySheet: 'Підсумок',
       detailedCalculations: 'Детальні розрахунки по кожній позиції',
       assetType: 'Тип активу',
@@ -523,12 +528,12 @@ function getTranslations(language: string) {
       calculatePdfo: 'Розрахунок ПДФО',
       pdfoTradesFormula: 'ПДФО = Прибуток × 18% (якщо прибуток > 0)',
       calculateMilitary: 'Розрахунок військового збору',
-      militaryTradesFormula: 'Військовий збір = Прибуток × 5% (якщо прибуток > 0)',
+      militaryTradesFormula: `Військовий збір = Прибуток × ${militaryTaxPercent}% (якщо прибуток > 0)`,
       dividendsCalculation: 'Для дивідендів:',
       calculatePdfoDividends: 'Розрахунок ПДФО (знижена ставка)',
       pdfoDividendsFormula: 'ПДФО = Дивіденди × 9%',
       calculateMilitaryDividends: 'Розрахунок військового збору',
-      militaryDividendsFormula: 'Військовий збір = Дивіденди × 5%',
+      militaryDividendsFormula: `Військовий збір = Дивіденди × ${militaryTaxPercent}%`,
       totalCalculation: 'Загальна сума податків:',
       totalFormula: 'Всього = ПДФО + Військовий збір',
       example: 'Приклад розрахунку:',
@@ -568,7 +573,7 @@ function getTranslations(language: string) {
       militaryFromDividends: 'Military Levy from Dividends',
       rate18: '(18%)',
       rate9: '(9%)',
-      rate5: '(5%)',
+      rate5: `(${militaryTaxPercent}%)`,
       summarySheet: 'Summary',
       detailedCalculations: 'Detailed Calculations for Each Position',
       assetType: 'Asset Type',
@@ -607,12 +612,12 @@ function getTranslations(language: string) {
       calculatePdfo: 'Calculate Personal Income Tax',
       pdfoTradesFormula: 'PIT = Profit × 18% (if profit > 0)',
       calculateMilitary: 'Calculate Military Levy',
-      militaryTradesFormula: 'Military Levy = Profit × 5% (if profit > 0)',
+      militaryTradesFormula: `Military Levy = Profit × ${militaryTaxPercent}% (if profit > 0)`,
       dividendsCalculation: 'For dividends:',
       calculatePdfoDividends: 'Calculate PIT (reduced rate)',
       pdfoDividendsFormula: 'PIT = Dividends × 9%',
       calculateMilitaryDividends: 'Calculate Military Levy',
-      militaryDividendsFormula: 'Military Levy = Dividends × 5%',
+      militaryDividendsFormula: `Military Levy = Dividends × ${militaryTaxPercent}%`,
       totalCalculation: 'Total Tax Amount:',
       totalFormula: 'Total = PIT + Military Levy',
       example: 'Calculation Example:',
@@ -652,7 +657,7 @@ function getTranslations(language: string) {
       militaryFromDividends: 'Opłata wojskowa z dywidend',
       rate18: '(18%)',
       rate9: '(9%)',
-      rate5: '(5%)',
+      rate5: `(${militaryTaxPercent}%)`,
       summarySheet: 'Podsumowanie',
       detailedCalculations: 'Szczegółowe obliczenia dla każdej pozycji',
       assetType: 'Typ aktywa',
@@ -691,12 +696,12 @@ function getTranslations(language: string) {
       calculatePdfo: 'Obliczenie podatku dochodowego',
       pdfoTradesFormula: 'Podatek = Zysk × 18% (jeśli zysk > 0)',
       calculateMilitary: 'Obliczenie opłaty wojskowej',
-      militaryTradesFormula: 'Opłata wojskowa = Zysk × 5% (jeśli zysk > 0)',
+      militaryTradesFormula: `Opłata wojskowa = Zysk × ${militaryTaxPercent}% (jeśli zysk > 0)`,
       dividendsCalculation: 'Dla dywidend:',
       calculatePdfoDividends: 'Obliczenie podatku (obniżona stawka)',
       pdfoDividendsFormula: 'Podatek = Dywidendy × 9%',
       calculateMilitaryDividends: 'Obliczenie opłaty wojskowej',
-      militaryDividendsFormula: 'Opłata wojskowa = Dywidendy × 5%',
+      militaryDividendsFormula: `Opłata wojskowa = Dywidendy × ${militaryTaxPercent}%`,
       totalCalculation: 'Łączna kwota podatków:',
       totalFormula: 'Razem = Podatek + Opłata wojskowa',
       example: 'Przykład obliczenia:',
