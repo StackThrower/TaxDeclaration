@@ -44,6 +44,8 @@ interface FinancialPosition {
   purchasePrice: string
   salePrice: string
   expenses: string
+  quantity?: string
+  multiplier?: string
 }
 
 export function FormF0121214() {
@@ -75,6 +77,8 @@ export function FormF0121214() {
       purchasePrice: "",
       salePrice: "",
       expenses: "",
+      quantity: "",
+      multiplier: "1",
     },
   ])
 
@@ -222,6 +226,8 @@ export function FormF0121214() {
         purchasePrice: "",
         salePrice: "",
         expenses: "",
+        quantity: "",
+        multiplier: "1",
       },
     ])
   }

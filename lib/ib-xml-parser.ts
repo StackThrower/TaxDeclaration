@@ -16,6 +16,7 @@ export interface IBTrade {
   fifoPnlRealized: number
   assetCategory: string
   subCategory: string
+  multiplier: number
 }
 
 export interface IBDividend {
@@ -97,6 +98,7 @@ export function parseIBXML(xmlContent: string): ParsedIBData {
       fifoPnlRealized: parseFloat(lot.getAttribute("fifoPnlRealized") || "0"),
       assetCategory,
       subCategory,
+      multiplier: parseFloat(lot.getAttribute("multiplier") || "1"),
     }
 
     trades.push(trade)
@@ -181,6 +183,7 @@ function parseIBXMLRegex(xmlContent: string): ParsedIBData {
       fifoPnlRealized: parseFloat(getAttribute("fifoPnlRealized") || "0"),
       assetCategory: getAttribute("assetCategory"),
       subCategory: getAttribute("subCategory"),
+      multiplier: parseFloat(getAttribute("multiplier") || "1"),
     }
 
     trades.push(trade)
@@ -384,6 +387,8 @@ export function convertToFormPosition(trade: IBTrade) {
     purchasePrice: "",
     salePrice: "",
     expenses: "0",
+    quantity: trade.quantity.toString(),
+    multiplier: trade.multiplier.toString(),
   }
 }
 
@@ -405,6 +410,8 @@ export function convertDividendToFormPosition(dividend: IBDividend) {
     purchasePrice: "0",
     salePrice: "",
     expenses: "0",
+    quantity: "",
+    multiplier: "1",
   }
 }
 

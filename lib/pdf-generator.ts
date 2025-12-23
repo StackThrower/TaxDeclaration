@@ -47,6 +47,8 @@ export interface F0121214Position {
   purchasePrice: string
   salePrice: string
   expenses: string
+  quantity?: string
+  multiplier?: string
 }
 
 export interface F0121214Data {
@@ -398,6 +400,8 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       position: "Позиція",
       assetType: "Вид активу:",
       currency: "Валюта:",
+      quantity: "Кількість:",
+      multiplier: "Множник:",
       purchaseDate: "Дата придбання:",
       saleDate: "Дата продажу/отримання:",
       purchasePriceForeign: "Сума купівлі (валюта):",
@@ -446,6 +450,8 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       position: "Position",
       assetType: "Asset type:",
       currency: "Currency:",
+      quantity: "Quantity:",
+      multiplier: "Multiplier:",
       purchaseDate: "Purchase date:",
       saleDate: "Sale/receipt date:",
       purchasePriceForeign: "Purchase amount (foreign currency):",
@@ -586,6 +592,18 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
         [t.assetType, assetTypeLabel],
         [t.currency, currency],
       ]
+
+      // Add quantity for stocks and options
+      if (position.assetType !== "dividends" && position.quantity) {
+        const quantity = parseFloat(position.quantity) || 0
+        const multiplier = parseFloat(position.multiplier || "1") || 1
+        if (quantity !== 0) {
+          positionData.push([t.quantity, quantity.toString()])
+          if (multiplier !== 1) {
+            positionData.push([t.multiplier, multiplier.toString()])
+          }
+        }
+      }
 
       if (position.assetType !== "dividends") {
         positionData.push(

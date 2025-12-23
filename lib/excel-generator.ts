@@ -14,6 +14,8 @@ interface FinancialPosition {
   purchasePrice: string
   salePrice: string
   expenses: string
+  quantity?: string
+  multiplier?: string
 }
 
 interface Calculations {
@@ -107,6 +109,8 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
       '№',
       t.assetType,
       t.description,
+      t.quantity,
+      t.multiplier,
       t.currency,
       t.purchaseDate,
       t.saleDate,
@@ -160,6 +164,8 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
       index + 1,
       getAssetTypeLabel(pos.assetType, language),
       pos.assetDescription || '-',
+      pos.quantity || '-',
+      pos.multiplier || '1',
       pos.currency,
       pos.purchaseDate || '-',
       pos.saleDate || '-',
@@ -185,6 +191,8 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
     { wch: 5 },   // №
     { wch: 18 },  // Asset Type
     { wch: 25 },  // Description
+    { wch: 10 },  // Quantity
+    { wch: 10 },  // Multiplier
     { wch: 8 },   // Currency
     { wch: 12 },  // Purchase Date
     { wch: 12 },  // Sale Date
@@ -494,6 +502,8 @@ function getTranslations(language: string, militaryTaxPercent: string = '5') {
       detailedCalculations: 'Детальні розрахунки по кожній позиції',
       assetType: 'Тип активу',
       description: 'Опис',
+      quantity: 'Кількість',
+      multiplier: 'Множник',
       currency: 'Валюта',
       purchaseDate: 'Дата купівлі',
       saleDate: 'Дата продажу',
@@ -578,6 +588,8 @@ function getTranslations(language: string, militaryTaxPercent: string = '5') {
       detailedCalculations: 'Detailed Calculations for Each Position',
       assetType: 'Asset Type',
       description: 'Description',
+      quantity: 'Quantity',
+      multiplier: 'Multiplier',
       currency: 'Currency',
       purchaseDate: 'Purchase Date',
       saleDate: 'Sale Date',
@@ -662,6 +674,8 @@ function getTranslations(language: string, militaryTaxPercent: string = '5') {
       detailedCalculations: 'Szczegółowe obliczenia dla każdej pozycji',
       assetType: 'Typ aktywa',
       description: 'Opis',
+      quantity: 'Ilość',
+      multiplier: 'Mnożnik',
       currency: 'Waluta',
       purchaseDate: 'Data zakupu',
       saleDate: 'Data sprzedaży',
