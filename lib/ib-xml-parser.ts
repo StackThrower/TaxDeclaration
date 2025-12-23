@@ -377,6 +377,7 @@ export function convertToFormPosition(trade: IBTrade) {
     id: Date.now().toString() + Math.random().toString(36).substring(7),
     assetType: assetType,
     assetDescription: `${trade.symbol} - ${trade.description} (${trade.assetCategory}${trade.subCategory ? `/${trade.subCategory}` : ""})`,
+    symbol: trade.symbol,
     currency: trade.currency,
     purchaseDate: trade.openDateTime,
     saleDate: trade.tradeDate,
@@ -400,6 +401,7 @@ export function convertDividendToFormPosition(dividend: IBDividend) {
     id: Date.now().toString() + Math.random().toString(36).substring(7),
     assetType: "dividends",
     assetDescription: `${dividend.symbol} - ${dividend.description}`,
+    symbol: dividend.symbol,
     currency: dividend.currency,
     purchaseDate: "", // Not applicable for dividends
     saleDate: dividend.date, // Use dividend date as "sale" date

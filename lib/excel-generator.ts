@@ -4,6 +4,7 @@ interface FinancialPosition {
   id: string
   assetType: string
   assetDescription?: string
+  symbol?: string
   currency: string
   purchaseDate: string
   saleDate: string
@@ -108,6 +109,7 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
     [
       '№',
       t.assetType,
+      t.symbol,
       t.description,
       t.quantity,
       t.multiplier,
@@ -163,6 +165,7 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
     return [
       index + 1,
       getAssetTypeLabel(pos.assetType, language),
+      pos.symbol || '-',
       pos.assetDescription || '-',
       pos.quantity || '-',
       pos.multiplier || '1',
@@ -190,6 +193,7 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
   wsDetails['!cols'] = [
     { wch: 5 },   // №
     { wch: 18 },  // Asset Type
+    { wch: 12 },  // Symbol
     { wch: 25 },  // Description
     { wch: 10 },  // Quantity
     { wch: 10 },  // Multiplier
@@ -501,6 +505,7 @@ function getTranslations(language: string, militaryTaxPercent: string = '5') {
       summarySheet: 'Підсумок',
       detailedCalculations: 'Детальні розрахунки по кожній позиції',
       assetType: 'Тип активу',
+      symbol: 'Тикер',
       description: 'Опис',
       quantity: 'Кількість',
       multiplier: 'Множник',
@@ -587,6 +592,7 @@ function getTranslations(language: string, militaryTaxPercent: string = '5') {
       summarySheet: 'Summary',
       detailedCalculations: 'Detailed Calculations for Each Position',
       assetType: 'Asset Type',
+      symbol: 'Symbol',
       description: 'Description',
       quantity: 'Quantity',
       multiplier: 'Multiplier',

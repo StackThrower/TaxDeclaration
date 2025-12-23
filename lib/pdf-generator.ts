@@ -37,6 +37,7 @@ export interface F0121214Position {
   id: string
   assetType: string
   assetDescription?: string
+  symbol?: string
   currency: string
   purchaseDate: string
   saleDate: string
@@ -399,6 +400,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       positions: "II. ВІДОМОСТІ ПРО ІНВЕСТИЦІЙНІ ПРИБУТКИ",
       position: "Позиція",
       assetType: "Вид активу:",
+      symbol: "Тикер:",
       currency: "Валюта:",
       quantity: "Кількість:",
       multiplier: "Множник:",
@@ -449,6 +451,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
       positions: "II. INFORMATION ABOUT INVESTMENT INCOME",
       position: "Position",
       assetType: "Asset type:",
+      symbol: "Symbol:",
       currency: "Currency:",
       quantity: "Quantity:",
       multiplier: "Multiplier:",
@@ -590,8 +593,14 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
 
       const positionData = [
         [t.assetType, assetTypeLabel],
-        [t.currency, currency],
       ]
+
+      // Add symbol/ticker if available
+      if (position.symbol) {
+        positionData.push([t.symbol, position.symbol])
+      }
+
+      positionData.push([t.currency, currency])
 
       // Add quantity for stocks and options
       if (position.assetType !== "dividends" && position.quantity) {
