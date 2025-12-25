@@ -60,7 +60,7 @@ export function FormF0121214() {
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
-    year: "2025",
+    year: "2026",
     notes: "",
   })
 
@@ -101,7 +101,7 @@ export function FormF0121214() {
 
   // Обновляем ставку при изменении года
   useEffect(() => {
-    const reportYear = parseInt(formData.year) || 2025
+    const reportYear = parseInt(formData.year) || 2026
     setMilitaryTaxRateDisplay(reportYear >= 2025 ? "5" : "1.5")
   }, [formData.year])
 
@@ -403,7 +403,7 @@ export function FormF0121214() {
     let totalDividends = 0
 
     // Ставка военного сбора: 1.5% для года ≤2024, 5% для года ≥2025
-    const reportYear = parseInt(formData.year) || 2025
+    const reportYear = parseInt(formData.year) || 2026
     const militaryTaxRate = reportYear >= 2025 ? 0.05 : 0.015
 
     positions.forEach((pos) => {
@@ -524,7 +524,7 @@ export function FormF0121214() {
     setFormData({
       fullName: "",
       taxNumber: "",
-      year: "2025",
+      year: "2026",
       notes: "",
     })
 

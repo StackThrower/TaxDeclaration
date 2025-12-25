@@ -1,18 +1,18 @@
 ---
-title: "PIT-37 2025: Kompletny przewodnik po rozliczeniu rocznym"
+title: "PIT-37 2026: Kompletny przewodnik po rozliczeniu rocznym"
 description: "Wszystko co musisz wiedzieć o PIT-37. Dowiedz się jak prawidłowo wypełnić zeznanie, jakie ulgi możesz wykorzystać i jak zoptymalizować zwrot podatku."
 category: "rozliczenie roczne"
 readTime: "10 min"
 publishedAt: "2025-01-15"
 keywords:
-  - "PIT-37 2025"
+  - "PIT-37 2026"
   - "rozliczenie roczne"
   - "ulga podatkowa"
   - "zwrot podatku"
   - "deklaracja PIT"
 ---
 
-# PIT-37 2025: Kompletny przewodnik po rozliczeniu rocznym
+# PIT-37 2026: Kompletny przewodnik po rozliczeniu rocznym
 
 ## Czym jest PIT-37?
 
@@ -27,9 +27,9 @@ Formularz PIT-37 składają osoby, które otrzymały:
 - Świadczenia przedemerytalne
 - Stypendia wypłacane przez pracodawcę
 
-## Terminy rozliczenia 2025
+## Terminy rozliczenia 2026
 
-📅 **30 kwietnia 2025** – ostateczny termin złożenia zeznania rocznego za rok 2024
+📅 **30 kwietnia 2026** – ostateczny termin złożenia zeznania rocznego za rok 2024
 
 💰 **Zwrot nadpłaty** – do 45 dni od złożenia deklaracji (przy e-PIT do 30 dni)
 
@@ -72,13 +72,13 @@ Przychód - Koszty uzyskania przychodu = Podstawa opodatkowania
 Podstawa opodatkowania - Składki ZUS = Dochód
 ```
 
-**Koszty uzyskania przychodu w 2025:**
+**Koszty uzyskania przychodu w 2026:**
 - Standardowe: **250 zł miesięcznie** (3,000 zł rocznie)
 - Dla pracowników: **300 zł miesięcznie** (3,600 zł rocznie dla miast pow. 100k mieszkańców)
 
 ### Krok 4: Zastosuj progi podatkowe
 
-**Skala podatkowa 2025:**
+**Skala podatkowa 2026:**
 
 | Dochód roczny | Stawka | Kwota wolna |
 |---------------|---------|-------------|
@@ -96,7 +96,7 @@ Podatek = 10,800 zł + (Dochód - 120,000 zł) × 32%
 
 ### Krok 5: Odlicz ulgi
 
-## Ulgi podatkowe 2025
+## Ulgi podatkowe 2026
 
 ### 1. Ulga na dzieci
 

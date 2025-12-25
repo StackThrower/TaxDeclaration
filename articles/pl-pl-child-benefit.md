@@ -1,24 +1,24 @@
 ---
-title: "Ulga na dziecko 2025: Jak zmaksymalizować korzyści?"
+title: "Ulga na dziecko 2026: Jak zmaksymalizować korzyści?"
 description: "Szczegółowy przewodnik po uldze prorodzinnej. Dowiedz się ile możesz odliczyć na dzieci i jakie są warunki otrzymania ulgi."
 category: "ulgi rodzinne"
 readTime: "6 min"
 publishedAt: "2025-01-12"
 keywords:
-  - "ulga na dziecko 2025"
+  - "ulga na dziecko 2026"
   - "ulga prorodzinna"
   - "odliczenia podatkowe dzieci"
   - "PIT ulga rodzinna"
   - "kwota wolna od podatku dzieci"
 ---
 
-# Ulga na dziecko 2025: Jak zmaksymalizować korzyści?
+# Ulga na dziecko 2026: Jak zmaksymalizować korzyści?
 
 ## Czym jest ulga na dziecko?
 
 Ulga prorodzinna to preferencja podatkowa, która pozwala rodzicom zmniejszyć należny podatek dochodowy. Im więcej dzieci, tym wyższa kwota odliczenia!
 
-## Kwoty ulgi na dzieci w 2025 roku
+## Kwoty ulgi na dzieci w 2026 roku
 
 ### Aktualne stawki odliczeń:
 
@@ -182,7 +182,7 @@ Płacenie alimentów nie daje automatycznie prawa do ulgi. Prawo do ulgi ma rodz
 ### Ulga na dziecko vs. 500+
 
 **500+ (Rodzina 500 Plus):**
-- 500 zł miesięcznie na dziecko (800 zł od 2025)
+- 500 zł miesięcznie na dziecko (800 zł od 2026)
 - Świadczenie społeczne (nie podlega PIT)
 - Bez limitu dochodowego
 
@@ -241,7 +241,7 @@ Aby dowiedzieć się więcej o rozliczeniu rocznym, przeczytaj nasz [kompletny p
 
 **Oszczędność podatkowa:** Znaczna redukcja PIT!
 
-## Nowe propozycje na 2025/2026
+## Nowe propozycje na 2026/2026
 
 Rząd rozważa:
 - Podwyższenie kwot ulgi prorodzinnej

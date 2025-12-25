@@ -60,7 +60,7 @@ export function FormPIT39() {
     address: "",
     city: "",
     postalCode: "",
-    year: "2025",
+    year: "2026",
     additionalInfo: "",
   })
 
@@ -446,7 +446,7 @@ export function FormPIT39() {
       address: "",
       city: "",
       postalCode: "",
-      year: "2025",
+      year: "2026",
       additionalInfo: "",
     })
     setPropertySales([

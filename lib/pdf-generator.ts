@@ -381,7 +381,7 @@ export const generateF0121214PDF = async (data: F0121214Data, language: string =
   await setupUkrainianFonts(doc)
 
   // Ставка военного сбора: 1.5% для года ≤2024, 5% для года ≥2025
-  const reportYear = parseInt(data.year) || 2025
+  const reportYear = parseInt(data.year) || 2026
   const militaryTaxRate = reportYear >= 2025 ? 5 : 1.5
   const militaryTaxPercent = militaryTaxRate.toFixed(1).replace('.0', '')
 

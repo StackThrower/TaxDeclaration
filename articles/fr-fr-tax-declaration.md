@@ -1,33 +1,33 @@
 ---
-title: "Déclaration d'impôts 2025 en France : Guide complet"
+title: "Déclaration d'impôts 2026 en France : Guide complet"
 description: "Tout ce que vous devez savoir sur la déclaration de revenus en France. Dates limites, réductions d'impôt, et optimisation fiscale."
 category: "déclaration"
 readTime: "10 min"
 publishedAt: "2025-01-15"
 keywords:
-  - "déclaration impôts 2025"
+  - "déclaration impôts 2026"
   - "formulaire 2042"
   - "impôt sur le revenu france"
   - "réductions fiscales"
   - "crédits d'impôt"
 ---
 
-# Déclaration d'impôts 2025 en France : Guide complet
+# Déclaration d'impôts 2026 en France : Guide complet
 
 ## Qu'est-ce que la déclaration de revenus ?
 
 La déclaration de revenus est l'acte par lequel vous déclarez à l'administration fiscale l'ensemble de vos revenus perçus au cours de l'année précédente. En France, cette démarche est obligatoire pour tous les contribuables.
 
-## Calendrier fiscal 2025
+## Calendrier fiscal 2026
 
 ### Dates importantes :
 
-📅 **Mi-avril 2025** – Ouverture du service de déclaration en ligne
+📅 **Mi-avril 2026** – Ouverture du service de déclaration en ligne
 
 📅 **Date limite selon département :**
-- **Zone 1 (départements 01 à 19)** : 22 mai 2025
-- **Zone 2 (départements 20 à 54)** : 29 mai 2025
-- **Zone 3 (départements 55 à 976)** : 5 juin 2025
+- **Zone 1 (départements 01 à 19)** : 22 mai 2026
+- **Zone 2 (départements 20 à 54)** : 29 mai 2026
+- **Zone 3 (départements 55 à 976)** : 5 juin 2026
 
 📅 **Version papier** : 20 mai 2025
 

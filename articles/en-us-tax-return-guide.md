@@ -1,11 +1,11 @@
 ---
-title: "US Tax Return 2025: Complete Guide for Individuals"
+title: "US Tax Return 2026: Complete Guide for Individuals"
 description: "Everything you need to know about filing your US federal tax return. Deductions, credits, deadlines, and how to maximize your refund."
 category: "tax filing"
 readTime: "12 min"
 publishedAt: "2025-01-15"
 keywords:
-  - "US tax return 2025"
+  - "US tax return 2026"
   - "IRS filing"
   - "1040 form"
   - "tax deductions USA"
@@ -13,7 +13,7 @@ keywords:
   - "tax refund"
 ---
 
-# US Tax Return 2025: Complete Guide for Individuals
+# US Tax Return 2026: Complete Guide for Individuals
 
 ## What is a Tax Return?
 

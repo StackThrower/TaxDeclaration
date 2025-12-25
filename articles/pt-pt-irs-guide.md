@@ -1,24 +1,24 @@
 ---
-title: "IRS 2025 Portugal: Guia Completo da Declaração"
-description: "Tudo sobre a declaração de IRS em Portugal. Prazos, deduções fiscais, taxas e como otimizar sua declaração para 2025."
+title: "IRS 2026 Portugal: Guia Completo da Declaração"
+description: "Tudo sobre a declaração de IRS em Portugal. Prazos, deduções fiscais, taxas e como otimizar sua declaração para 2026."
 category: "declaração"
 readTime: "9 min"
 publishedAt: "2025-01-15"
 keywords:
-  - "IRS 2025 portugal"
+  - "IRS 2026 portugal"
   - "declaração IRS"
   - "modelo 3 IRS"
   - "deduções fiscais portugal"
   - "reembolso IRS"
 ---
 
-# IRS 2025 Portugal: Guia Completo da Declaração
+# IRS 2026 Portugal: Guia Completo da Declaração
 
 ## O que é o IRS?
 
 O IRS (Imposto sobre o Rendimento de Pessoas Singulares) é um imposto anual sobre os rendimentos obtidos por pessoas físicas em Portugal. A declaração de IRS é obrigatória para quem aufere rendimentos acima de determinados valores.
 
-## Calendário Fiscal 2025
+## Calendário Fiscal 2026
 
 ### Datas importantes:
 
@@ -80,7 +80,7 @@ O IRS (Imposto sobre o Rendimento de Pessoas Singulares) é um imposto anual sob
 **Anexo J:** Rendimentos obtidos no estrangeiro
 **Anexo L:** Deduções
 
-## Taxas de IRS 2025
+## Taxas de IRS 2026
 
 ### Escalões continente:
 

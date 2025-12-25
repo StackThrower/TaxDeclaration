@@ -27,7 +27,7 @@ export function FormPIT37() {
     address: "",
     city: "",
     postalCode: "",
-    year: "2025",
+    year: "2026",
 
     // Przychody z pracy
     employmentIncome: "",
