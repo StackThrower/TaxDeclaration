@@ -357,14 +357,14 @@ export function convertToFormPosition(trade: IBTrade) {
     // Purchase price = absolute value of fifoPnlRealized
     // Sale price = absolute value of cost
     if (trade.quantity < 0) {
-      purchasePrice = Math.abs(trade.fifoPnlRealized)
+      purchasePrice = Math.abs(trade.cost + trade.fifoPnlRealized)
       salePrice = Math.abs(trade.cost)
     } else {
       // For options with positive quantity (bought options):
       // Purchase price = cost (with sign: negative = received premium, positive = paid premium)
       // Sale price = fifoPnlRealized (realized profit/loss in currency)
-      purchasePrice = trade.cost
-      salePrice = trade.fifoPnlRealized
+      purchasePrice = Math.abs(trade.cost)
+      salePrice = Math.abs(trade.cost + trade.fifoPnlRealized)
     }
   } else {
     // For other asset types (bonds, crypto, etc.):
@@ -379,8 +379,8 @@ export function convertToFormPosition(trade: IBTrade) {
     assetDescription: `${trade.symbol} - ${trade.description} (${trade.assetCategory}${trade.subCategory ? `/${trade.subCategory}` : ""})`,
     symbol: trade.symbol,
     currency: trade.currency,
-    purchaseDate: trade.openDateTime,
-    saleDate: trade.tradeDate,
+    purchaseDate: trade.quantity < 0 ? trade.tradeDate : trade.openDateTime,
+    saleDate: trade.quantity < 0 ? trade.openDateTime : trade.tradeDate,
     purchasePriceForeign: purchasePrice.toFixed(2),
     salePriceForeign: salePrice.toFixed(2),
     purchaseRate: "",
