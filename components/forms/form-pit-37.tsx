@@ -16,6 +16,7 @@ import { generatePIT37PDF } from "@/lib/pdf-generator"
 export function FormPIT37() {
   const { language } = useI18n()
   const isMobile = useIsMobile()
+  const [anonymous, setAnonymous] = useState(false)
   const [formData, setFormData] = useState({
     // Dane identyfikacyjne
     firstName: "",
@@ -56,13 +57,38 @@ export function FormPIT37() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const getToday = () => new Date().toISOString().split('T')[0]
+
   const handleSelect = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await generatePIT37PDF(formData, language)
+    const anonymousValues: Record<string, string> = {
+      uk: "Не вказано",
+      en: "Not specified",
+      pl: "Nie podano",
+      fr: "Non spécifié",
+      es: "No especificado",
+      pt: "Não especificado",
+      de: "Nicht angegeben",
+      ru: "Не указано",
+    }
+    const anonValue = anonymousValues[language as keyof typeof anonymousValues] || anonymousValues.pl
+    const payload = {
+      ...formData,
+      firstName: anonymous ? anonValue : formData.firstName,
+      lastName: anonymous ? anonValue : formData.lastName,
+      pesel: anonymous ? anonValue : formData.pesel,
+      nip: anonymous ? anonValue : formData.nip,
+      address: anonymous ? anonValue : formData.address,
+      city: anonymous ? anonValue : formData.city,
+      postalCode: anonymous ? anonValue : formData.postalCode,
+      // For anonymous submissions use today's date as birthDate (YYYY-MM-DD)
+      birthDate: anonymous ? getToday() : formData.birthDate,
+    }
+    await generatePIT37PDF(payload, language)
   }
 
   const handleClear = () => {
@@ -242,7 +268,8 @@ export function FormPIT37() {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -252,7 +279,8 @@ export function FormPIT37() {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -263,7 +291,8 @@ export function FormPIT37() {
                 placeholder="12345678901"
                 value={formData.pesel}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -274,6 +303,7 @@ export function FormPIT37() {
                 placeholder="1234567890"
                 value={formData.nip}
                 onChange={handleChange}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -284,6 +314,7 @@ export function FormPIT37() {
                 type="date"
                 value={formData.birthDate}
                 onChange={handleChange}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -310,6 +341,7 @@ export function FormPIT37() {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -320,6 +352,7 @@ export function FormPIT37() {
                 placeholder="00-000"
                 value={formData.postalCode}
                 onChange={handleChange}
+                disabled={anonymous}
               />
             </div>
           </div>
@@ -330,7 +363,27 @@ export function FormPIT37() {
               name="city"
               value={formData.city}
               onChange={handleChange}
+              disabled={anonymous}
             />
+          </div>
+          {/* Anonymous checkbox */}
+          <div className="md:col-span-2">
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={anonymous}
+                onChange={(e) => {
+                  const checked = e.target.checked
+                  setAnonymous(checked)
+                  if (checked) {
+                    // set birthDate to today's date when anonymous chosen
+                    setFormData(prev => ({ ...prev, birthDate: getToday() }))
+                  }
+                }}
+                className="form-checkbox h-4 w-4"
+              />
+              <span className="ml-2">{language === 'uk' ? 'Заповнити анонімно' : language === 'en' ? 'Fill anonymously' : language === 'pl' ? 'Wypełnij anonimowo' : 'Fill anonymously'}</span>
+            </label>
           </div>
         </CardContent>
       </Card>
