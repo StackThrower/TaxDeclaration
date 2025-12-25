@@ -116,7 +116,7 @@ export function FormPIT38() {
       additionalInfo: "Додаткова інформація",
       generate: "Сформувати PDF",
       clear: "Очистити",
-      disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних.",
+      disclaimer: "⚠️ Всі сформовані дані повинні бути перевірені та підтверджені податковими консультантами перед поданням до податкових органів.",
     },
     en: {
       title: "PIT-38",
@@ -146,7 +146,7 @@ export function FormPIT38() {
       additionalInfo: "Additional Information",
       generate: "Generate PDF",
       clear: "Clear",
-      disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities. By using this service, you agree to the processing of personal data.",
+      disclaimer: "⚠️ All generated data must be verified and confirmed by tax consultants before submission to tax authorities.",
     },
     pl: {
       title: "PIT-38",
@@ -176,7 +176,7 @@ export function FormPIT38() {
       additionalInfo: "Informacje dodatkowe",
       generate: "Generuj PDF",
       clear: "Wyczyść",
-      disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego. Korzystając z usługi, zgadzasz się na przetwarzanie danych osobowych.",
+      disclaimer: "⚠️ Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego.",
     },
     fr: {
       title: "PIT-38",
@@ -206,7 +206,7 @@ export function FormPIT38() {
       additionalInfo: "Informations complémentaires",
       generate: "Générer PDF",
       clear: "Effacer",
-      disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales. En utilisant ce service, vous acceptez le traitement de vos données personnelles.",
+      disclaimer: "⚠️ Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales.",
     },
   }
 

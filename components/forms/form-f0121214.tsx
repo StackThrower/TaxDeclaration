@@ -698,7 +698,7 @@ export function FormF0121214() {
         removePosition: "Usuń pozycję",
         position: "Pozycja",
         checkCalculations: "Sprawdź obliczenia",
-        disclaimer: "⚠️ Nie ponosimy odpowiedzialności za przeprowadzone obliczenia. Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego. Korzystając z usługi, zgadzasz się na przetwarzanie danych osobowych.",
+        disclaimer: "⚠️ Wszystkie wygenerowane dane powinny zostać zweryfikowane i potwierdzone przez doradców podatkowych przed złożeniem do urzędu skarbowego.",
       },
       es: {
         personalData: "Datos personales",
@@ -727,7 +727,7 @@ export function FormF0121214() {
         removePosition: "Eliminar posición",
         position: "Posición",
         checkCalculations: "Verificar cálculos",
-        disclaimer: "⚠️ No nos hacemos responsables de los cálculos realizados. Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales. Al utilizar este servicio, usted acepta el procesamiento de datos personales.",
+        disclaimer: "⚠️ Todos los datos generados deben ser verificados y confirmados por asesores fiscales antes de ser presentados a las autoridades fiscales.",
       },
       pt: {
         personalData: "Dados pessoais",
@@ -756,7 +756,7 @@ export function FormF0121214() {
         removePosition: "Remover posição",
         position: "Posição",
         checkCalculations: "Verificar cálculos",
-        disclaimer: "⚠️ Não nos responsabilizamos pelos cálculos efetuados. Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais. Ao utilizar este serviço, você concorda com o processamento de dados pessoais.",
+        disclaimer: "⚠️ Todos os dados gerados devem ser verificados e confirmados por consultores fiscais antes da submissão às autoridades fiscais.",
       },
       de: {
         personalData: "Persönliche Daten",
@@ -785,7 +785,7 @@ export function FormF0121214() {
         removePosition: "Position entfernen",
         position: "Position",
         checkCalculations: "Berechnungen überprüfen",
-        disclaimer: "⚠️ Wir übernehmen keine Verantwortung für die durchgeführten Berechnungen. Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden. Durch die Nutzung dieses Dienstes stimmen Sie der Verarbeitung personenbezogener Daten zu.",
+        disclaimer: "⚠️ Alle generierten Daten müssen von Steuerberatern überprüft und bestätigt werden, bevor sie bei den Steuerbehörden eingereicht werden.",
       },
     }
 
