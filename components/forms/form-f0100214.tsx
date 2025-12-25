@@ -16,6 +16,8 @@ import { generateF0100214PDF } from "@/lib/pdf-generator"
 export function FormF0100214() {
   const { language } = useI18n()
   const isMobile = useIsMobile()
+  // Whether user chose to fill anonymously
+  const [anonymous, setAnonymous] = useState(false)
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
@@ -43,11 +45,25 @@ export function FormF0100214() {
     e.preventDefault()
 
     // Generate PDF with current form data
+    // If anonymous selected, replace fullName and taxNumber with localized "not specified" value
+    const anonymousValues: Record<string, { label: string; value: string }> = {
+      uk: { label: "Заповнити анонімно", value: "Не вказано" },
+      en: { label: "Fill anonymously", value: "Not specified" },
+      fr: { label: "Remplir anonymement", value: "Non spécifié" },
+      pl: { label: "Wypełnij anonimowo", value: "Nie podano" },
+      es: { label: "Rellenar de forma anónima", value: "No especificado" },
+      pt: { label: "Preencher anonimamente", value: "Não especificado" },
+      de: { label: "Anonym ausfüllen", value: "Nicht angegeben" },
+      ru: { label: "Заполнить анонимно", value: "Не указано" },
+    }
+
+    const anonValue = anonymousValues[language as keyof typeof anonymousValues]?.value || anonymousValues.uk.value
+
     await generateF0100214PDF(
       {
-        fullName: formData.fullName,
-        taxNumber: formData.taxNumber,
-        passportNumber: formData.passportNumber,
+        fullName: anonymous ? anonValue : formData.fullName,
+        taxNumber: anonymous ? anonValue : formData.taxNumber,
+        passportNumber: anonymous ? "" : formData.passportNumber,
         residence: formData.residence,
         year: formData.year,
         realEstate: formData.realEstate,
@@ -137,7 +153,8 @@ export function FormF0100214() {
                 placeholder={translations[language]?.placeholder || "Name"}
                 value={formData.fullName}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -162,7 +179,8 @@ export function FormF0100214() {
                 placeholder="ХХХХХХХХХХХХ"
                 value={formData.taxNumber}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -187,31 +205,36 @@ export function FormF0100214() {
                 placeholder="АА 123456"
                 value={formData.passportNumber}
                 onChange={handleChange}
+                disabled={anonymous}
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="residence">
-                {language === "uk"
-                  ? "Місце проживання"
-                  : language === "en"
-                    ? "Residence"
-                    : language === "fr"
-                      ? "Résidence"
-                      : language === "pl"
-                        ? "Miejsce zamieszkania"
-                        : language === "es"
-                          ? "Domicilio"
-                          : language === "pt"
-                            ? "Residência"
-                            : "Wohnort"}
-              </Label>
-              <Input
-                id="residence"
-                name="residence"
-                placeholder={language === "uk" ? "Місто, вул., дім" : "City, street, house"}
-                value={formData.residence}
-                onChange={handleChange}
-              />
+            {/* Anonymous checkbox */}
+            <div className="md:col-span-2">
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={anonymous}
+                  onChange={(e) => setAnonymous(e.target.checked)}
+                  className="form-checkbox h-4 w-4"
+                />
+                <span className="ml-2">
+                  {language === "uk"
+                    ? "Заповнити анонімно"
+                    : language === "en"
+                      ? "Fill anonymously"
+                      : language === "fr"
+                        ? "Remplir anonymement"
+                        : language === "pl"
+                          ? "Wypełnij anonimowo"
+                          : language === "es"
+                            ? "Rellenar de forma anónima"
+                            : language === "pt"
+                              ? "Preencher anonimamente"
+                              : language === "de"
+                                ? "Anonym ausfüllen"
+                                : "Заполнить анонимно"}
+                </span>
+              </label>
             </div>
           </div>
         </CardContent>

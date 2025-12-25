@@ -51,6 +51,7 @@ interface FinancialPosition {
 export function FormF0121214() {
   const { language } = useI18n()
   const isMobile = useIsMobile()
+  const [anonymous, setAnonymous] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isImporting, setIsImporting] = useState(false)
   const [importProgress, setImportProgress] = useState(0)
@@ -369,7 +370,7 @@ export function FormF0121214() {
             `Trades: ${parsedData.trades.length}\n` +
             `Dividends: ${parsedData.dividends.length}\n\n` +
             (parsedData.trades.length > 0 ? `Total profit/loss from trades: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\n` : '') +
-            `NBU rates fetched and amounts converted to UAH.`
+            `NBU rates fetched and amounts converted to UAH`
 
         alert(message)
         setImportProgress(0)
@@ -490,11 +491,25 @@ export function FormF0121214() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Generate PDF with current form data
+    // Localized anonymous strings
+    const anonymousValues: Record<string, string> = {
+      uk: "Не вказано",
+      en: "Not specified",
+      fr: "Non spécifié",
+      pl: "Nie podano",
+      es: "No especificado",
+      pt: "Não especificado",
+      de: "Nicht angegeben",
+      ru: "Не указано",
+    }
+
+    const anonValue = anonymousValues[language as keyof typeof anonymousValues] || anonymousValues.uk
+
+    // Generate PDF with current form data (respect anonymous selection)
     await generateF0121214PDF(
       {
-        fullName: formData.fullName,
-        taxNumber: formData.taxNumber,
+        fullName: anonymous ? anonValue : formData.fullName,
+        taxNumber: anonymous ? anonValue : formData.taxNumber,
         year: formData.year,
         notes: formData.notes,
         positions: positions,
@@ -548,18 +563,32 @@ export function FormF0121214() {
 
   const handleExportExcel = () => {
     // Validate that we have required data
-    if (!formData.fullName || !formData.taxNumber) {
+    // If not anonymous, ensure required fields are present
+    if (!anonymous && (!formData.fullName || !formData.taxNumber)) {
       alert(language === "uk"
         ? "Будь ласка, заповніть ім'я та ІПН перед експортом"
         : "Please fill in name and tax ID before export")
       return
     }
 
-    // Generate Excel file
+    const anonymousValues: Record<string, string> = {
+      uk: "Не вказано",
+      en: "Not specified",
+      fr: "Non spécifié",
+      pl: "Nie podano",
+      es: "No especificado",
+      pt: "Não especificado",
+      de: "Nicht angegeben",
+      ru: "Не указано",
+    }
+
+    const anonValue = anonymousValues[language as keyof typeof anonymousValues] || anonymousValues.uk
+
+    // Generate Excel file; substitute anonymous values when needed
     generateTaxCalculationExcel(
       {
-        fullName: formData.fullName,
-        taxNumber: formData.taxNumber,
+        fullName: anonymous ? anonValue : formData.fullName,
+        taxNumber: anonymous ? anonValue : formData.taxNumber,
         year: formData.year,
         positions: positions,
         calculations: calculations,
@@ -806,7 +835,8 @@ export function FormF0121214() {
                 placeholder="John Smith"
                 value={formData.fullName}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
             </div>
             <div className="space-y-2">
@@ -817,8 +847,37 @@ export function FormF0121214() {
                 placeholder="ХХХХХХХХХХХХ"
                 value={formData.taxNumber}
                 onChange={handleChange}
-                required
+                required={!anonymous}
+                disabled={anonymous}
               />
+            </div>
+            {/* Anonymous checkbox */}
+            <div className="md:col-span-2">
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={anonymous}
+                  onChange={(e) => setAnonymous(e.target.checked)}
+                  className="form-checkbox h-4 w-4"
+                />
+                <span className="ml-2">
+                  {language === "uk"
+                    ? "Заповнити анонімно"
+                    : language === "en"
+                      ? "Fill anonymously"
+                      : language === "fr"
+                        ? "Remplir anonymement"
+                        : language === "pl"
+                          ? "Wypełnij anonimowo"
+                          : language === "es"
+                            ? "Rellenar de forma anónima"
+                            : language === "pt"
+                              ? "Preencher anonimamente"
+                              : language === "de"
+                                ? "Anonym ausfüllen"
+                                : "Заполнить анонимно"}
+                </span>
+              </label>
             </div>
           </div>
         </CardContent>
