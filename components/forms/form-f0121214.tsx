@@ -604,7 +604,7 @@ export function FormF0121214() {
         removePosition: "Видалити позицію",
         position: "Позиція",
         checkCalculations: "Перевірити розрахунки",
-        disclaimer: "⚠️ Ми не несемо відповідальності за проведені розрахунки. Всі сформовані дані повинні бути перевірені та підтверджені користувачем перед поданням до податкових органів. Використовуючи сервіс ви погоджуєтесь на обробку персональних даних.",
+        disclaimer: "⚠️ Всі сформовані дані повинні бути перевірені та підтверджені користувачем перед поданням до податкових органів.",
       },
       en: {
         personalData: "Personal Data",
@@ -640,7 +640,7 @@ export function FormF0121214() {
         removePosition: "Remove Position",
         position: "Position",
         checkCalculations: "Check Calculations",
-        disclaimer: "⚠️ We are not responsible for the calculations performed. All generated data must be verified and confirmed by tax consultants before submission to tax authorities. By using this service, you agree to the processing of personal data.",
+        disclaimer: "⚠️ All generated data must be verified and confirmed by tax consultants before submission to tax authorities.",
       },
       fr: {
         personalData: "Données personnelles",
@@ -669,7 +669,7 @@ export function FormF0121214() {
         removePosition: "Supprimer la position",
         position: "Position",
         checkCalculations: "Vérifier les calculs",
-        disclaimer: "⚠️ Nous ne sommes pas responsables des calculs effectués. Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales. En utilisant ce service, vous acceptez le traitement de vos données personnelles.",
+        disclaimer: "⚠️ Toutes les données générées doivent être vérifiées et confirmées par des conseillers fiscaux avant soumission aux autorités fiscales.",
       },
       pl: {
         personalData: "Dane osobowe",
