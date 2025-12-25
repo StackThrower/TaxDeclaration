@@ -112,15 +112,12 @@ export function parseIBXML(xmlContent: string): ParsedIBData {
     const type = transaction.getAttribute("type") || ""
 
     // Only process dividends (exclude withholding tax)
-    if (type === "Dividends") {
-      const amount = parseFloat(transaction.getAttribute("amount") || "0")
+    if (type === "Dividends" || type === "Payment In Lieu Of Dividends") {
 
-      // Only process positive amounts (received dividends)
-      if (amount > 0) {
         const dividend: IBDividend = {
           symbol: transaction.getAttribute("symbol") || "",
           description: transaction.getAttribute("description") || "",
-          amount: amount,
+          amount: parseFloat(transaction.getAttribute("amount") || "0"),
           date: formatDate(transaction.getAttribute("dateTime")?.split(";")[0] || ""),
           currency: transaction.getAttribute("currency") || "USD",
           assetCategory: transaction.getAttribute("assetCategory") || "STK",
@@ -128,7 +125,6 @@ export function parseIBXML(xmlContent: string): ParsedIBData {
         }
 
         dividends.push(dividend)
-      }
     }
   })
 
