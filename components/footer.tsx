@@ -162,7 +162,7 @@ export function Footer() {
             </ul>
             <div className="flex items-center gap-3 mt-4">
               <a
-                href="https://www.linkedin.com/groups/16413023/"
+                href="https://www.linkedin.com/company/monegoo-tax/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="opacity-75 hover:opacity-100 transition-opacity"
