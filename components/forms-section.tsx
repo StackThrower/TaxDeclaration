@@ -5,8 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormF0100214 } from "./forms/form-f0100214"
 import { FormF0121214 } from "./forms/form-f0121214"
-import { FormPIT37 } from "./forms/form-pit-37"
-import { FormPIT38 } from "./forms/form-pit-38"
 import { FormPIT39 } from "./forms/form-pit-39"
 import { FileText, CheckCircle, AlertCircle } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
@@ -43,11 +41,11 @@ export function FormsSection({ country }: FormsSectionProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+        <div className="gap-4 md:gap-6 mb-6 md:mb-8">
           {country.taxForms.map((form, index) => (
             <Card
               key={form.id}
-              className="border-border hover:border-primary/50 transition-colors cursor-pointer"
+              className="mt-5 border-border hover:border-primary/50 transition-colors cursor-pointer"
               onClick={() => handleCardClick(form.id)}
             >
               <CardHeader className="space-y-1.5">
@@ -92,11 +90,8 @@ export function FormsSection({ country }: FormsSectionProps) {
                     <CardDescription className="text-sm">{form.description}</CardDescription>
                   </CardHeader>
                   <CardContent className="px-3 md:px-6">
-                    {country.code === "ua" && form.id === "f0100214" && <FormF0100214 />}
                     {country.code === "ua" && form.id === "f0121214" && <FormF0121214 />}
-                    {country.code === "pl" && form.id === "pit-37" && <FormPIT37 />}
-                    {country.code === "pl" && form.id === "pit-38" && <FormPIT38 />}
-                    {country.code === "pl" && form.id === "pit-39" && <FormPIT39 />}
+                    {country.code === "pl" && form.id === "pit-38" && <FormPIT39 />}
                     {((country.code !== "ua" && country.code !== "pl") ||
                       (country.code === "pl" && !["pit-37", "pit-38", "pit-39"].includes(form.id)) ||
                       (country.code === "ua" && !["f0100214", "f0121214"].includes(form.id))) && (

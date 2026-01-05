@@ -23,17 +23,6 @@ export const countries: Record<CountryCode, Country> = {
     flag: "🇺🇦",
     taxForms: [
       {
-        id: "f0100214",
-        title: "F0100214",
-        description: "Податкова декларація про майновий стан і доходи",
-        features: [
-          "Відомості про майно",
-          "Дані про доходи",
-          "Витрати та збитки",
-        ],
-        year: 2026,
-      },
-      {
         id: "f0121214",
         title: "F0121214 (Ф1)",
         description: "Додаток Ф1 - Розрахунок податкових зобов'язань",
@@ -52,17 +41,6 @@ export const countries: Record<CountryCode, Country> = {
     flag: "🇵🇱",
     taxForms: [
       {
-        id: "pit-37",
-        title: "PIT-37",
-        description: "Zeznanie o wysokości osiągniętego dochodu",
-        features: [
-          "Dochody z pracy",
-          "Emerytury i renty",
-          "Inne źródła przychodów",
-        ],
-        year: 2026,
-      },
-      {
         id: "pit-38",
         title: "PIT-38",
         description: "Zeznanie o wysokości osiągniętego dochodu z kapitałów",
@@ -70,17 +48,6 @@ export const countries: Record<CountryCode, Country> = {
           "Dywidendy",
           "Odsetki",
           "Przychody kapitałowe",
-        ],
-        year: 2026,
-      },
-      {
-        id: "pit-39",
-        title: "PIT-39",
-        description: "Zeznanie o dochodach z odpłatnego zbycia",
-        features: [
-          "Sprzedaż nieruchomości",
-          "Sprzedaż akcji",
-          "Inne transakcje",
         ],
         year: 2026,
       },
