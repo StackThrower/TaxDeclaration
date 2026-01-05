@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useId } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -57,6 +57,14 @@ export function FormF0121214() {
   const [importProgress, setImportProgress] = useState(0)
   const [importStatus, setImportStatus] = useState("")
 
+  // Use stable ID generation to avoid hydration mismatch
+  const baseId = useId()
+  const idCounterRef = useRef(0)
+  const generateId = () => {
+    idCounterRef.current += 1
+    return `${baseId}-${idCounterRef.current}`
+  }
+
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
@@ -66,7 +74,7 @@ export function FormF0121214() {
 
   const [positions, setPositions] = useState<FinancialPosition[]>([
     {
-      id: Date.now().toString(),
+      id: `${baseId}-0`,
       assetType: "",
       currency: "UAH",
       purchaseDate: "",
@@ -215,7 +223,7 @@ export function FormF0121214() {
     setPositions((prev) => [
       ...prev,
       {
-        id: Date.now().toString(),
+        id: generateId(),
         assetType: "",
         currency: "UAH",
         purchaseDate: "",
@@ -531,7 +539,7 @@ export function FormF0121214() {
     // Очищаємо всі позиції і повертаємо одну порожню
     setPositions([
       {
-        id: Date.now().toString(),
+        id: generateId(),
         assetType: "",
         currency: "UAH",
         purchaseDate: "",
