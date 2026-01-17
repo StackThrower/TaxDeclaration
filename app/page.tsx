@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   // Beautiful multilingual titles and descriptions with emojis
   const metadata: Record<string, { title: string; description: string; keywords: string[] }> = {
     uk: {
-      title: `Monegoo - Податкова декларація онлайн ${currentYear} | Безкоштовно для України`,
+      title: `Податкова декларація про майновий стан та доходи ${currentYear} | Безкоштовно для України`,
       description: `✨ Заповніть декларацію F0100214 та F0121214 легко і швидко! Безкоштовний онлайн сервіс для громадян України 🇺🇦 | Розрахунок ПДФО та військового збору | Ваші дані залишаються тільки у вас 🔒 | Експорт в PDF за 5 хвилин`,
       keywords: [
         "податкова декларація україна",

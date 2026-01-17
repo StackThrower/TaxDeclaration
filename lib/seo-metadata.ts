@@ -24,7 +24,7 @@ export function generateSEOMetadata(
   const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
     uk: {
       ua: {
-        title: `Податкова декларація F0100214 та F0121214 - Україна ${new Date().getFullYear()}`,
+        title: `Податкова декларація про майновий стан та доходи - Україна ${new Date().getFullYear()}`,
         description: `Заповніть податкову декларацію онлайн: F0100214 про майновий стан і доходи та F0121214 (Додаток Ф1) для розрахунку ПДФО та військового збору від інвестицій. Безкоштовний сервіс для громадян України.`,
         keywords: [
           "податкова декларація",
