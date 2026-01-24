@@ -464,52 +464,6 @@ export function FormF0100214() {
         </CardContent>
       </Card>
 
-      {/* Додаткова інформація */}
-      <Card className="border-border/50">
-        <CardContent className="pt-6 space-y-4">
-          <h3 className="text-lg font-semibold text-primary">
-            {language === "uk"
-              ? "Додаткова інформація"
-              : language === "en"
-                ? "Additional Information"
-                : language === "fr"
-                  ? "Informations supplémentaires"
-                  : language === "pl"
-                    ? "Dodatkowe informacje"
-                    : language === "es"
-                      ? "Información adicional"
-                      : language === "pt"
-                        ? "Informações adicionais"
-                        : "Zusätzliche Informationen"}
-          </h3>
-          <div className="space-y-2">
-            <Label htmlFor="additionalInfo">
-              {language === "uk"
-                ? "Примітки та уточнення"
-                : language === "en"
-                  ? "Notes and Clarifications"
-                  : language === "fr"
-                    ? "Notes et clarifications"
-                    : language === "pl"
-                      ? "Uwagi i wyjaśnienia"
-                      : language === "es"
-                        ? "Notas y aclaraciones"
-                        : language === "pt"
-                          ? "Notas e esclarecimentos"
-                          : "Notizen und Klarstellungen"}
-            </Label>
-            <Textarea
-              id="additionalInfo"
-              name="additionalInfo"
-              placeholder={language === "uk" ? "Введіть додаткову інформацію..." : "Enter additional information..."}
-              value={formData.additionalInfo}
-              onChange={handleChange}
-              rows={4}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
       <div className="space-y-4 pt-6">
         <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : ''}`}>
           <Button

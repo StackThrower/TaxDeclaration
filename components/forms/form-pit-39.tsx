@@ -1022,22 +1022,6 @@ export function FormPIT39() {
         )}
       </div>
 
-      {/* Dodatkowe informacje */}
-      <Card className="border-border/50">
-        <CardContent className="pt-6 space-y-4">
-          <h3 className="text-lg font-semibold text-primary">{translations.additionalInfo}</h3>
-          <div className="space-y-2">
-            <Textarea
-              id="additionalInfo"
-              name="additionalInfo"
-              rows={4}
-              value={formData.additionalInfo}
-              onChange={handleChange}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Buttons */}
       <div className="space-y-4 pt-6">
         <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : ''}`}>

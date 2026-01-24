@@ -1516,23 +1516,6 @@ export function FormF0121214() {
         </Card>
       )}
 
-      <Card className="border-border/50">
-        <CardContent className="pt-6 space-y-4">
-          <h3 className="text-lg font-semibold text-accent">{getLabel("additionalInfo")}</h3>
-          <div className="space-y-2">
-            <Label htmlFor="notes">{getLabel("notes")}</Label>
-            <Textarea
-              id="notes"
-              name="notes"
-              placeholder="Enter additional information..."
-              value={formData.notes}
-              onChange={handleChange}
-              rows={4}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
       <div className="space-y-4 pt-6">
         <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : ''}`}>
           <Button
