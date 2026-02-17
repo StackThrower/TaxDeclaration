@@ -131,23 +131,14 @@ export const metadata: Metadata = {
   // },
 }
 
-// Extract language from URL path (e.g., /uk-ua -> uk, /en-us -> en)
-function getLanguageFromPath(pathname: string): string {
-  const localeMatch = pathname.match(/^\/([a-z]{2})-[a-z]{2}/)
-  return localeMatch ? localeMatch[1] : 'en'
-}
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // Get current pathname from headers (SSR)
+  // Get language from middleware header
   const headersList = await headers()
-  const pathname = headersList.get('x-pathname') || ''
-
-  // Extract language code from pathname (e.g., /uk-ua -> uk, /en-us -> en)
-  const lang = getLanguageFromPath(pathname)
+  const lang = headersList.get('x-lang') || 'en'
 
   // Generate structured data for Organization and WebSite
   const organizationSchema = {

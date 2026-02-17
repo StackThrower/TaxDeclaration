@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// Extract language from URL path (e.g., /uk-ua -> uk, /en-us -> en)
+function getLanguageFromPath(pathname: string): string {
+  const localeMatch = pathname.match(/^\/([a-z]{2})-[a-z]{2}/)
+  return localeMatch ? localeMatch[1] : 'en'
+}
+
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
@@ -26,8 +32,9 @@ export function middleware(request: NextRequest) {
   // Set reasonable cache control (allow caching)
   response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
 
-  // Add pathname to headers so root layout can access it (for dynamic lang attribute)
-  response.headers.set('x-pathname', pathname)
+  // Determine language from URL prefix and add to header
+  const lang = getLanguageFromPath(pathname)
+  response.headers.set('x-lang', lang)
 
   return response
 }
