@@ -1411,7 +1411,7 @@ export function FormF0121214() {
                       target="_blank"
                     >
                       інструкція для IB
-                    </Link> або звіт Брокера для Freedom Finance
+                    </Link> або звіт брокера xml для Freedom Finance
                     )
                   </>
                 ) : (
