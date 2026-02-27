@@ -2063,3 +2063,571 @@ export function generateHelpMetadata(
   }
 }
 
+// Generate SEO metadata for the calculator page
+export function generateCalculatorPageMetadata(
+  countryCode: CountryCode,
+  language: Language
+): SEOMetadata {
+  const currentYear = new Date().getFullYear()
+
+  const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
+    uk: {
+      ua: {
+        title: `Податковий калькулятор ${currentYear} - Розрахунок податків онлайн | Monegoo`,
+        description: `Безкоштовний онлайн калькулятор податків для України та інших країн. Розрахуйте ПДФО, військовий збір, податок на інвестиції. Порівняйте ставки податків у різних країнах.`,
+        keywords: [
+          "податковий калькулятор",
+          "розрахунок податків",
+          "ПДФО калькулятор",
+          "військовий збір",
+          "податок на інвестиції",
+          "податки Україна",
+          "онлайн калькулятор",
+        ],
+      },
+      pl: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki online | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy online dla Polski i innych krajów. Oblicz PIT, ZUS, podatek od zysków kapitałowych. Porównaj stawki podatkowe w różnych krajach.`,
+        keywords: [
+          "kalkulator podatkowy",
+          "obliczanie podatków",
+          "kalkulator PIT",
+          "podatek od inwestycji",
+          "podatki Polska",
+        ],
+      },
+      fr: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez vos impôts en ligne | Monegoo`,
+        description: `Calculateur d'impôts gratuit en ligne pour la France et d'autres pays. Calculez l'impôt sur le revenu, les cotisations sociales, la flat tax. Comparez les taux d'imposition.`,
+        keywords: [
+          "calculateur d'impôts",
+          "calcul impôts",
+          "simulateur fiscal",
+          "flat tax",
+          "impôts France",
+        ],
+      },
+      de: {
+        title: `Steuerrechner ${currentYear} - Steuern online berechnen | Monegoo`,
+        description: `Kostenloser Online-Steuerrechner für Deutschland und andere Länder. Berechnen Sie Einkommensteuer, Sozialabgaben, Kapitalertragsteuer. Vergleichen Sie Steuersätze.`,
+        keywords: [
+          "Steuerrechner",
+          "Steuerberechnung",
+          "Einkommensteuer Rechner",
+          "Kapitalertragsteuer",
+          "Steuern Deutschland",
+        ],
+      },
+      pt: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos online | Monegoo`,
+        description: `Calculadora de impostos gratuita online para Portugal e outros países. Calcule IRS, Segurança Social, mais-valias. Compare taxas de imposto em diferentes países.`,
+        keywords: [
+          "calculadora de impostos",
+          "cálculo de impostos",
+          "calculadora IRS",
+          "mais-valias",
+          "impostos Portugal",
+        ],
+      },
+      es: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos online | Monegoo`,
+        description: `Calculadora de impuestos gratuita online para España y otros países. Calcula IRPF, Seguridad Social, impuesto sobre ganancias. Compara tasas impositivas.`,
+        keywords: [
+          "calculadora de impuestos",
+          "cálculo de impuestos",
+          "calculadora IRPF",
+          "ganancias de capital",
+          "impuestos España",
+        ],
+      },
+      se: {
+        title: `Skattekalkylator ${currentYear} - Beräkna skatt online | Monegoo`,
+        description: `Gratis skattekalkylator online för Sverige och andra länder. Beräkna inkomstskatt, kommunalskatt, kapitalvinstskatt. Jämför skattesatser i olika länder.`,
+        keywords: [
+          "skattekalkylator",
+          "skatteberäkning",
+          "inkomstskatt kalkylator",
+          "kapitalvinstskatt",
+          "skatter Sverige",
+        ],
+      },
+      gb: {
+        title: `Tax Calculator ${currentYear} - Calculate taxes online | Monegoo`,
+        description: `Free online tax calculator for the UK and other countries. Calculate income tax, National Insurance, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "tax calculation",
+          "income tax calculator",
+          "capital gains tax",
+          "UK taxes",
+        ],
+      },
+      us: {
+        title: `Tax Calculator ${currentYear} - Calculate taxes online | Monegoo`,
+        description: `Free online tax calculator for the USA and other countries. Calculate federal income tax, FICA, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "tax calculation",
+          "income tax calculator",
+          "capital gains tax",
+          "US taxes",
+        ],
+      },
+      ca: {
+        title: `Tax Calculator ${currentYear} - Calculate taxes online | Monegoo`,
+        description: `Free online tax calculator for Canada and other countries. Calculate federal income tax, CPP, EI, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "tax calculation",
+          "income tax calculator",
+          "capital gains tax",
+          "Canadian taxes",
+        ],
+      },
+    },
+    en: {
+      ua: {
+        title: `Tax Calculator ${currentYear} - Calculate Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Ukraine and other countries. Calculate personal income tax, military duty, investment tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "calculate taxes",
+          "Ukraine tax calculator",
+          "investment tax",
+          "tax comparison",
+        ],
+      },
+      pl: {
+        title: `Tax Calculator ${currentYear} - Calculate Polish Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Poland and other countries. Calculate PIT, ZUS contributions, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "Poland tax calculator",
+          "PIT calculator",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+      fr: {
+        title: `Tax Calculator ${currentYear} - Calculate French Taxes Online | Monegoo`,
+        description: `Free online tax calculator for France and other countries. Calculate income tax, social contributions, flat tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "France tax calculator",
+          "income tax",
+          "flat tax",
+          "tax comparison",
+        ],
+      },
+      de: {
+        title: `Tax Calculator ${currentYear} - Calculate German Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Germany and other countries. Calculate income tax, social insurance, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "Germany tax calculator",
+          "income tax",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+      pt: {
+        title: `Tax Calculator ${currentYear} - Calculate Portuguese Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Portugal and other countries. Calculate IRS, social security, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "Portugal tax calculator",
+          "IRS calculator",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+      es: {
+        title: `Tax Calculator ${currentYear} - Calculate Spanish Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Spain and other countries. Calculate IRPF, social security, savings tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "Spain tax calculator",
+          "IRPF calculator",
+          "savings tax",
+          "tax comparison",
+        ],
+      },
+      se: {
+        title: `Tax Calculator ${currentYear} - Calculate Swedish Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Sweden and other countries. Calculate municipal tax, state tax, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "Sweden tax calculator",
+          "income tax",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+      gb: {
+        title: `Tax Calculator ${currentYear} - Calculate UK Taxes Online | Monegoo`,
+        description: `Free online tax calculator for the UK and other countries. Calculate income tax, National Insurance, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "UK tax calculator",
+          "income tax",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+      us: {
+        title: `Tax Calculator ${currentYear} - Calculate US Taxes Online | Monegoo`,
+        description: `Free online tax calculator for the USA and other countries. Calculate federal income tax, FICA, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "US tax calculator",
+          "federal income tax",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+      ca: {
+        title: `Tax Calculator ${currentYear} - Calculate Canadian Taxes Online | Monegoo`,
+        description: `Free online tax calculator for Canada and other countries. Calculate federal income tax, CPP, EI, capital gains tax. Compare tax rates across countries.`,
+        keywords: [
+          "tax calculator",
+          "Canada tax calculator",
+          "income tax",
+          "capital gains tax",
+          "tax comparison",
+        ],
+      },
+    },
+    fr: {
+      ua: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts ukrainiens | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour l'Ukraine et d'autres pays. Calculez l'impôt sur le revenu, la taxe militaire.`,
+        keywords: ["calculateur d'impôts", "impôts Ukraine"],
+      },
+      pl: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts polonais | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour la Pologne. Calculez le PIT, les cotisations ZUS.`,
+        keywords: ["calculateur d'impôts", "impôts Pologne"],
+      },
+      fr: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez vos impôts en ligne | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour la France. Calculez l'impôt sur le revenu, les cotisations sociales, le PFU.`,
+        keywords: ["calculateur d'impôts", "impôts France", "PFU"],
+      },
+      de: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts allemands | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour l'Allemagne. Calculez l'impôt sur le revenu, les assurances sociales.`,
+        keywords: ["calculateur d'impôts", "impôts Allemagne"],
+      },
+      pt: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts portugais | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour le Portugal. Calculez l'IRS, la sécurité sociale.`,
+        keywords: ["calculateur d'impôts", "impôts Portugal"],
+      },
+      es: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts espagnols | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour l'Espagne. Calculez l'IRPF, la sécurité sociale.`,
+        keywords: ["calculateur d'impôts", "impôts Espagne"],
+      },
+      se: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts suédois | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour la Suède. Calculez l'impôt municipal, l'impôt d'État.`,
+        keywords: ["calculateur d'impôts", "impôts Suède"],
+      },
+      gb: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts britanniques | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour le Royaume-Uni. Calculez l'impôt sur le revenu, l'assurance nationale.`,
+        keywords: ["calculateur d'impôts", "impôts UK"],
+      },
+      us: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts américains | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour les États-Unis. Calculez l'impôt fédéral, FICA.`,
+        keywords: ["calculateur d'impôts", "impôts USA"],
+      },
+      ca: {
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts canadiens | Monegoo`,
+        description: `Calculateur d'impôts gratuit pour le Canada. Calculez l'impôt fédéral, RPC, AE.`,
+        keywords: ["calculateur d'impôts", "impôts Canada"],
+      },
+    },
+    pl: {
+      ua: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki ukraińskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Ukrainy. Oblicz podatek dochodowy, podatek wojskowy.`,
+        keywords: ["kalkulator podatkowy", "podatki Ukraina"],
+      },
+      pl: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki online | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Polski. Oblicz PIT, składki ZUS, podatek od zysków kapitałowych.`,
+        keywords: ["kalkulator podatkowy", "PIT", "ZUS", "podatki Polska"],
+      },
+      fr: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki francuskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Francji. Oblicz podatek dochodowy, składki społeczne.`,
+        keywords: ["kalkulator podatkowy", "podatki Francja"],
+      },
+      de: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki niemieckie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Niemiec. Oblicz podatek dochodowy, ubezpieczenia społeczne.`,
+        keywords: ["kalkulator podatkowy", "podatki Niemcy"],
+      },
+      pt: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki portugalskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Portugalii. Oblicz IRS, ubezpieczenia społeczne.`,
+        keywords: ["kalkulator podatkowy", "podatki Portugalia"],
+      },
+      es: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki hiszpańskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Hiszpanii. Oblicz IRPF, ubezpieczenia społeczne.`,
+        keywords: ["kalkulator podatkowy", "podatki Hiszpania"],
+      },
+      se: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki szwedzkie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Szwecji. Oblicz podatek komunalny, państwowy.`,
+        keywords: ["kalkulator podatkowy", "podatki Szwecja"],
+      },
+      gb: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki brytyjskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Wielkiej Brytanii. Oblicz podatek dochodowy, NI.`,
+        keywords: ["kalkulator podatkowy", "podatki UK"],
+      },
+      us: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki amerykańskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla USA. Oblicz podatek federalny, FICA.`,
+        keywords: ["kalkulator podatkowy", "podatki USA"],
+      },
+      ca: {
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki kanadyjskie | Monegoo`,
+        description: `Bezpłatny kalkulator podatkowy dla Kanady. Oblicz podatek federalny, CPP, EI.`,
+        keywords: ["kalkulator podatkowy", "podatki Kanada"],
+      },
+    },
+    es: {
+      ua: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos ucranianos | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Ucrania. Calcula el impuesto sobre la renta, el impuesto militar.`,
+        keywords: ["calculadora de impuestos", "impuestos Ucrania"],
+      },
+      pl: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos polacos | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Polonia. Calcula PIT, cotizaciones ZUS.`,
+        keywords: ["calculadora de impuestos", "impuestos Polonia"],
+      },
+      fr: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos franceses | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Francia. Calcula el impuesto sobre la renta, cotizaciones sociales.`,
+        keywords: ["calculadora de impuestos", "impuestos Francia"],
+      },
+      de: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos alemanes | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Alemania. Calcula el impuesto sobre la renta, seguros sociales.`,
+        keywords: ["calculadora de impuestos", "impuestos Alemania"],
+      },
+      pt: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos portugueses | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Portugal. Calcula IRS, seguridad social.`,
+        keywords: ["calculadora de impuestos", "impuestos Portugal"],
+      },
+      es: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos online | Monegoo`,
+        description: `Calculadora de impuestos gratuita para España. Calcula IRPF, Seguridad Social, impuesto del ahorro.`,
+        keywords: ["calculadora de impuestos", "IRPF", "impuestos España"],
+      },
+      se: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos suecos | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Suecia. Calcula el impuesto municipal, estatal.`,
+        keywords: ["calculadora de impuestos", "impuestos Suecia"],
+      },
+      gb: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos británicos | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Reino Unido. Calcula el impuesto sobre la renta, NI.`,
+        keywords: ["calculadora de impuestos", "impuestos UK"],
+      },
+      us: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos americanos | Monegoo`,
+        description: `Calculadora de impuestos gratuita para EE.UU. Calcula el impuesto federal, FICA.`,
+        keywords: ["calculadora de impuestos", "impuestos USA"],
+      },
+      ca: {
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos canadienses | Monegoo`,
+        description: `Calculadora de impuestos gratuita para Canadá. Calcula el impuesto federal, CPP, EI.`,
+        keywords: ["calculadora de impuestos", "impuestos Canadá"],
+      },
+    },
+    pt: {
+      ua: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos ucranianos | Monegoo`,
+        description: `Calculadora de impostos gratuita para a Ucrânia. Calcule o imposto sobre o rendimento, taxa militar.`,
+        keywords: ["calculadora de impostos", "impostos Ucrânia"],
+      },
+      pl: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos polacos | Monegoo`,
+        description: `Calculadora de impostos gratuita para a Polónia. Calcule PIT, contribuições ZUS.`,
+        keywords: ["calculadora de impostos", "impostos Polónia"],
+      },
+      fr: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos franceses | Monegoo`,
+        description: `Calculadora de impostos gratuita para a França. Calcule o imposto sobre o rendimento, contribuições sociais.`,
+        keywords: ["calculadora de impostos", "impostos França"],
+      },
+      de: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos alemães | Monegoo`,
+        description: `Calculadora de impostos gratuita para a Alemanha. Calcule o imposto sobre o rendimento, seguros sociais.`,
+        keywords: ["calculadora de impostos", "impostos Alemanha"],
+      },
+      pt: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos online | Monegoo`,
+        description: `Calculadora de impostos gratuita para Portugal. Calcule IRS, Segurança Social, mais-valias.`,
+        keywords: ["calculadora de impostos", "IRS", "impostos Portugal"],
+      },
+      es: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos espanhóis | Monegoo`,
+        description: `Calculadora de impostos gratuita para Espanha. Calcule IRPF, segurança social.`,
+        keywords: ["calculadora de impostos", "impostos Espanha"],
+      },
+      se: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos suecos | Monegoo`,
+        description: `Calculadora de impostos gratuita para a Suécia. Calcule o imposto municipal, estatal.`,
+        keywords: ["calculadora de impostos", "impostos Suécia"],
+      },
+      gb: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos britânicos | Monegoo`,
+        description: `Calculadora de impostos gratuita para o Reino Unido. Calcule o imposto sobre o rendimento, NI.`,
+        keywords: ["calculadora de impostos", "impostos UK"],
+      },
+      us: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos americanos | Monegoo`,
+        description: `Calculadora de impostos gratuita para os EUA. Calcule o imposto federal, FICA.`,
+        keywords: ["calculadora de impostos", "impostos USA"],
+      },
+      ca: {
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos canadenses | Monegoo`,
+        description: `Calculadora de impostos gratuita para o Canadá. Calcule o imposto federal, CPP, EI.`,
+        keywords: ["calculadora de impostos", "impostos Canadá"],
+      },
+    },
+    de: {
+      ua: {
+        title: `Steuerrechner ${currentYear} - Ukrainische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für die Ukraine. Berechnen Sie Einkommensteuer, Militärsteuer.`,
+        keywords: ["Steuerrechner", "Steuern Ukraine"],
+      },
+      pl: {
+        title: `Steuerrechner ${currentYear} - Polnische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Polen. Berechnen Sie PIT, ZUS-Beiträge.`,
+        keywords: ["Steuerrechner", "Steuern Polen"],
+      },
+      fr: {
+        title: `Steuerrechner ${currentYear} - Französische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Frankreich. Berechnen Sie Einkommensteuer, Sozialabgaben.`,
+        keywords: ["Steuerrechner", "Steuern Frankreich"],
+      },
+      de: {
+        title: `Steuerrechner ${currentYear} - Steuern online berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Deutschland. Berechnen Sie Einkommensteuer, Sozialversicherung, Kapitalertragsteuer.`,
+        keywords: ["Steuerrechner", "Einkommensteuer", "Steuern Deutschland"],
+      },
+      pt: {
+        title: `Steuerrechner ${currentYear} - Portugiesische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Portugal. Berechnen Sie IRS, Sozialversicherung.`,
+        keywords: ["Steuerrechner", "Steuern Portugal"],
+      },
+      es: {
+        title: `Steuerrechner ${currentYear} - Spanische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Spanien. Berechnen Sie IRPF, Sozialversicherung.`,
+        keywords: ["Steuerrechner", "Steuern Spanien"],
+      },
+      se: {
+        title: `Steuerrechner ${currentYear} - Schwedische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Schweden. Berechnen Sie Gemeindesteuer, Staatssteuer.`,
+        keywords: ["Steuerrechner", "Steuern Schweden"],
+      },
+      gb: {
+        title: `Steuerrechner ${currentYear} - Britische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Großbritannien. Berechnen Sie Einkommensteuer, NI.`,
+        keywords: ["Steuerrechner", "Steuern UK"],
+      },
+      us: {
+        title: `Steuerrechner ${currentYear} - Amerikanische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für die USA. Berechnen Sie Bundessteuer, FICA.`,
+        keywords: ["Steuerrechner", "Steuern USA"],
+      },
+      ca: {
+        title: `Steuerrechner ${currentYear} - Kanadische Steuern berechnen | Monegoo`,
+        description: `Kostenloser Steuerrechner für Kanada. Berechnen Sie Bundessteuer, CPP, EI.`,
+        keywords: ["Steuerrechner", "Steuern Kanada"],
+      },
+    },
+  }
+
+  // Fallback to English if language/country combination not found
+  const langMetadata = metadata[language] || metadata.en
+  const countryMetadata = langMetadata[countryCode] || langMetadata.ua
+
+  return countryMetadata
+}
+
+// Generate full Next.js Metadata for the calculator page
+export function generateCalculatorMetadata(
+  countryCode: CountryCode,
+  language: Language,
+  locale: string
+): Metadata {
+  const seo = generateCalculatorPageMetadata(countryCode, language)
+
+  return {
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    openGraph: {
+      type: "website",
+      locale: `${language}_${countryCode.toUpperCase()}`,
+      url: `https://monegoo.com/${locale}/calculator`,
+      title: seo.title,
+      description: seo.description,
+      siteName: "Monegoo Tax Declaration",
+      images: [
+        {
+          url: "/placeholder-logo.png",
+          width: 1200,
+          height: 630,
+          alt: seo.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+      images: ["/placeholder-logo.png"],
+      creator: "@monegoo",
+    },
+    alternates: {
+      canonical: `https://monegoo.com/${locale}/calculator`,
+      languages: {
+        "x-default": "https://monegoo.com",
+        "uk-UA": "/uk-ua/calculator",
+        "en-US": "/en-us/calculator",
+        "en-GB": "/en-gb/calculator",
+        "en-CA": "/en-ca/calculator",
+        "fr-FR": "/fr-fr/calculator",
+        "pl-PL": "/pl-pl/calculator",
+        "es-ES": "/es-es/calculator",
+        "pt-PT": "/pt-pt/calculator",
+        "de-DE": "/de-de/calculator",
+        "sv-SE": "/sv-se/calculator",
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  }
+}
+

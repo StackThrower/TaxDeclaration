@@ -35,7 +35,7 @@ export function Header() {
           <Link href={`/${locale}#forms`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.forms")}
           </Link>
-          <Link href={`/${locale}#calculator`} className="hover:text-accent transition-colors whitespace-nowrap">
+          <Link href={`/${locale}/calculator`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.calculator")}
           </Link>
           <Link href={`/${locale}/help`} className="hover:text-accent transition-colors whitespace-nowrap">
@@ -105,7 +105,7 @@ export function Header() {
                   </Link>
 
                   <Link
-                    href={`/${locale}#calculator`}
+                    href={`/${locale}/calculator`}
                     className="flex items-center gap-4 px-4 py-3.5 text-base font-medium rounded-lg hover:bg-accent/10 hover:text-accent transition-all duration-200 group"
                     onClick={() => setMobileMenuOpen(false)}
                   >

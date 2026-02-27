@@ -134,6 +134,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href={`/${locale}/calculator`} className="hover:opacity-100 transition-opacity hover:underline">
+                  {t(language, "calculator.title")}
+                </a>
+              </li>
+              <li>
                 <a href={`/${locale}/knowledge`} className="hover:opacity-100 transition-opacity hover:underline">
                   {t(language, "knowledge.base")}
                 </a>
