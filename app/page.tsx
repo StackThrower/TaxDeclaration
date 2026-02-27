@@ -196,7 +196,6 @@ export default function Home() {
       <Header />
       <Hero />
       <FormsSection country={country} />
-      <TaxCalculator countryCode={countryCode} />
       <Footer />
     </main>
   )
