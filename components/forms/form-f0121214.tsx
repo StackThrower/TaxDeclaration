@@ -23,11 +23,11 @@ import {
   getCurrencySymbol
 } from "@/lib/nbu-exchange-rates"
 import {
-  parseIBXML,
-  convertToFormPosition,
-  convertDividendToFormPosition,
   readFileAsText,
-  calculateTradeTotals
+  parseAnyBrokerXML,
+  getSourceDisplayName,
+  getSourceColor,
+  type BrokerSource
 } from "@/lib/ib-xml-parser"
 
 interface FinancialPosition {
@@ -46,6 +46,8 @@ interface FinancialPosition {
   expenses: string
   quantity?: string
   multiplier?: string
+  source?: BrokerSource
+  sourceFile?: string
 }
 
 export function FormF0121214() {
@@ -248,50 +250,83 @@ export function FormF0121214() {
   }
 
   const handleImportXML = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
+    const files = event.target.files
+    if (!files || files.length === 0) return
+
+    // Check if there are existing positions with data (not just empty default)
+    const hasExistingData = positions.some(p =>
+      p.assetType || p.purchasePrice || p.salePrice || p.purchasePriceForeign || p.salePriceForeign
+    )
+
+    const shouldAppend = hasExistingData && window.confirm(
+      language === "uk"
+        ? `У вас вже є ${positions.length} позиція(й).\n\nНатисніть "OK" щоб ДОДАТИ нові дані до існуючих.\nНатисніть "Скасувати" щоб ЗАМІНИТИ всі дані.`
+        : `You already have ${positions.length} position(s).\n\nClick "OK" to ADD new data to existing.\nClick "Cancel" to REPLACE all data.`
+    )
 
     setIsImporting(true)
     setImportProgress(0)
-    setImportStatus(language === "uk" ? "Читання файлу..." : "Reading file...")
+    setImportStatus(language === "uk" ? "Читання файлів..." : "Reading files...")
 
     try {
-      // Read file content
-      setImportProgress(10)
-      const xmlContent = await readFileAsText(file)
+      const newPositions: FinancialPosition[] = []
+      const summaries: { source: string; trades: number; dividends: number; profit: number; currency: string }[] = []
+      const totalFiles = files.length
 
-      // Parse XML
-      setImportProgress(20)
-      setImportStatus(language === "uk" ? "Парсинг XML..." : "Parsing XML...")
-      const parsedData = parseIBXML(xmlContent)
+      for (let fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
+        const file = files[fileIndex]
+        const fileProgress = (fileIndex / totalFiles) * 40
 
-      if (parsedData.trades.length === 0 && parsedData.dividends.length === 0) {
+        setImportProgress(fileProgress)
+        setImportStatus(language === "uk"
+          ? `Читання файлу ${fileIndex + 1}/${totalFiles}: ${file.name}...`
+          : `Reading file ${fileIndex + 1}/${totalFiles}: ${file.name}...`)
+
+        // Read file content
+        const xmlContent = await readFileAsText(file)
+
+        // Parse XML using universal parser
+        setImportStatus(language === "uk"
+          ? `Парсинг ${file.name}...`
+          : `Parsing ${file.name}...`)
+
+        const result = parseAnyBrokerXML(xmlContent, file.name)
+
+        if (result.positions.length === 0) {
+          console.warn(`No positions found in file: ${file.name}`)
+          continue
+        }
+
+        newPositions.push(...result.positions)
+        summaries.push({
+          source: result.source === 'interactive_brokers' ? 'Interactive Brokers' : 'Freedom Finance',
+          trades: result.summary.trades,
+          dividends: result.summary.dividends,
+          profit: result.summary.totalProfit,
+          currency: result.summary.currency,
+        })
+      }
+
+      if (newPositions.length === 0) {
         alert(language === "uk"
-          ? "У файлі не знайдено закритих позицій або дивідендів для імпорту"
-          : "No closed positions or dividends found in the file")
+          ? "У файлах не знайдено закритих позицій або дивідендів для імпорту"
+          : "No closed positions or dividends found in the files")
         return
       }
 
-      // Convert trades to form positions
-      setImportProgress(30)
-      setImportStatus(language === "uk" ? "Конвертація позицій..." : "Converting positions...")
-      const tradePositions = parsedData.trades.map(trade => convertToFormPosition(trade))
-      const dividendPositions = parsedData.dividends.map(dividend => convertDividendToFormPosition(dividend))
-      const newPositions = [...tradePositions, ...dividendPositions]
-
-      // Replace existing positions with imported ones
-      setPositions(newPositions)
+      // Either append to existing positions or replace
+      const allPositions = shouldAppend ? [...positions.filter(p => p.assetType || p.purchasePrice || p.salePrice), ...newPositions] : newPositions
+      setPositions(allPositions)
 
       setImportProgress(40)
-      const totalItems = parsedData.trades.length + parsedData.dividends.length
       setImportStatus(language === "uk"
-        ? `Імпортовано ${totalItems} позиції(й) (трейди: ${parsedData.trades.length}, дивіденди: ${parsedData.dividends.length}). Завантаження курсів НБУ...`
-        : `Imported ${totalItems} position(s) (trades: ${parsedData.trades.length}, dividends: ${parsedData.dividends.length}). Fetching NBU rates...`)
+        ? `Імпортовано ${allPositions.length} позиції(й). Завантаження курсів НБУ...`
+        : `Imported ${allPositions.length} position(s). Fetching NBU rates...`)
 
       // Fetch rates for each position and update state progressively
-      const updatedPositions = [...newPositions]
+      const updatedPositions = [...allPositions]
       const totalPositions = updatedPositions.length
-      const progressPerPosition = 60 / totalPositions // Remaining 60% for rate fetching
+      const progressPerPosition = 55 / totalPositions // Remaining 55% for rate fetching
 
       for (let i = 0; i < updatedPositions.length; i++) {
         const position = updatedPositions[i]
@@ -359,25 +394,27 @@ export function FormF0121214() {
       setImportStatus(language === "uk" ? "Фінальні розрахунки..." : "Final calculations...")
       setPositions(updatedPositions.map(pos => ({...pos})))
 
-      // Calculate totals for summary message
-      const totals = calculateTradeTotals(parsedData.trades)
-
       // Show success message
       setImportProgress(100)
       setImportStatus(language === "uk" ? "Завершено!" : "Complete!")
 
       setTimeout(() => {
-        const totalItems = parsedData.trades.length + parsedData.dividends.length
+        const summaryText = summaries.map(s =>
+          `${s.source}: ${s.trades} ${language === "uk" ? "трейдів" : "trades"}${s.dividends > 0 ? `, ${s.dividends} ${language === "uk" ? "дивідендів" : "dividends"}` : ''} (${s.profit >= 0 ? '+' : ''}${s.profit.toFixed(2)} ${s.currency})`
+        ).join('\n')
+
+        const modeText = shouldAppend
+          ? (language === "uk" ? "(додано до існуючих)" : "(added to existing)")
+          : (language === "uk" ? "(замінено)" : "(replaced)")
+
         const message = language === "uk"
-          ? `✅ Успішно імпортовано ${totalItems} позиції(й)!\n\n` +
-            `Трейди: ${parsedData.trades.length}\n` +
-            `Дивіденди: ${parsedData.dividends.length}\n\n` +
-            (parsedData.trades.length > 0 ? `Загальний прибуток/збиток від трейдів: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\n` : '') +
+          ? `✅ Успішно імпортовано ${newPositions.length} позиції(й) з ${totalFiles} файл(ів) ${modeText}!\n\n` +
+            (shouldAppend ? `Загалом позицій: ${allPositions.length}\n\n` : '') +
+            summaryText + '\n\n' +
             `Курси НБУ завантажено та суми конвертовано в гривні.`
-          : `✅ Successfully imported ${totalItems} position(s)!\n\n` +
-            `Trades: ${parsedData.trades.length}\n` +
-            `Dividends: ${parsedData.dividends.length}\n\n` +
-            (parsedData.trades.length > 0 ? `Total profit/loss from trades: ${totals.totalProfit.toFixed(2)} ${parsedData.trades[0]?.currency || 'USD'}\n\n` : '') +
+          : `✅ Successfully imported ${newPositions.length} position(s) from ${totalFiles} file(s) ${modeText}!\n\n` +
+            (shouldAppend ? `Total positions: ${allPositions.length}\n\n` : '') +
+            summaryText + '\n\n' +
             `NBU rates fetched and amounts converted to UAH`
 
         alert(message)
@@ -920,9 +957,26 @@ export function FormF0121214() {
         <Card key={position.id} className="border-border/50 relative">
           <CardContent className="pt-6 space-y-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-accent">
-                {getLabel("position")} #{index + 1}
-              </h3>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h3 className="text-lg font-semibold text-accent">
+                  {getLabel("position")} #{index + 1}
+                </h3>
+                {position.source && (
+                  <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${getSourceColor(position.source)}`} title={position.sourceFile}>
+                    {getSourceDisplayName(position.source)}
+                  </span>
+                )}
+                {position.quantity && parseFloat(position.quantity) !== 0 && (
+                  <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                    {Math.abs(parseFloat(position.quantity))} {language === "uk" ? "шт" : "qty"}
+                  </span>
+                )}
+                {position.assetDescription && (
+                  <span className="text-sm text-muted-foreground truncate max-w-[250px]" title={position.assetDescription}>
+                    {position.assetDescription}
+                  </span>
+                )}
+              </div>
               {positions.length > 1 && (
                 <Button
                   type="button"
@@ -1294,6 +1348,7 @@ export function FormF0121214() {
             ref={fileInputRef}
             type="file"
             accept=".xml"
+            multiple
             onChange={handleImportXML}
             className="hidden"
           />
@@ -1327,34 +1382,53 @@ export function FormF0121214() {
 
         {/* Import Info */}
         {!isImporting && (
-          <div className="text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-            <span>
-              {language === "uk" ? (
-                <>
-                  Завантажте XML файл з Interactive Brokers (
-                  <Link
-                    href="/uk-ua/knowledge/flex-report-ib"
-                    className="text-primary hover:underline font-medium"
-                    target="_blank"
-                  >
-                    FlexQuery Report з закритими позиціями
-                  </Link>
-                  )
-                </>
-              ) : (
-                "Upload XML file from Interactive Brokers (FlexQuery Report with closed positions)"
+          <div className="text-center text-sm text-muted-foreground space-y-2">
+            <div className="flex items-center justify-center gap-2">
+              <span>
+                {language === "uk" ? (
+                  <>
+                    Завантажте XML файли з{" "}
+                    <span className="font-semibold text-red-600 dark:text-red-400">Interactive Brokers</span> або{" "}
+                    <span className="font-semibold text-blue-600 dark:text-blue-400">Freedom Finance</span>
+                  </>
+                ) : (
+                  <>
+                    Upload XML files from{" "}
+                    <span className="font-semibold text-red-600 dark:text-red-400">Interactive Brokers</span> or{" "}
+                    <span className="font-semibold text-blue-600 dark:text-blue-400">Freedom Finance</span>
+                  </>
+                )}
+              </span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs">
+              <span>
+                {language === "uk" ? (
+                  <>
+                    Можна завантажити кілька файлів одночасно (
+                    <Link
+                      href="/uk-ua/knowledge/flex-report-ib"
+                      className="text-primary hover:underline font-medium"
+                      target="_blank"
+                    >
+                      інструкція для IB
+                    </Link> або звіт Брокера для Freedom Finance
+                    )
+                  </>
+                ) : (
+                  "You can upload multiple files at once"
+                )}
+              </span>
+              {language === "uk" && (
+                <Link
+                  href="/uk-ua/knowledge/flex-report-ib"
+                  className="text-primary hover:text-primary/80 transition-colors"
+                  target="_blank"
+                  title="Детальна інструкція про FlexQuery Report"
+                >
+                  <HelpCircle className="h-4 w-4" />
+                </Link>
               )}
-            </span>
-            {language === "uk" && (
-              <Link
-                href="/uk-ua/knowledge/flex-report-ib"
-                className="text-primary hover:text-primary/80 transition-colors"
-                target="_blank"
-                title="Детальна інструкція про FlexQuery Report"
-              >
-                <HelpCircle className="h-4 w-4" />
-              </Link>
-            )}
+            </div>
           </div>
         )}
 

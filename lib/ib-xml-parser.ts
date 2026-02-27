@@ -3,6 +3,8 @@
  * Parses FlexQuery XML files and extracts trade data for tax forms
  */
 
+export type BrokerSource = 'interactive_brokers' | 'freedom_finance' | 'manual'
+
 export interface IBTrade {
   symbol: string
   description: string
@@ -17,6 +19,8 @@ export interface IBTrade {
   assetCategory: string
   subCategory: string
   multiplier: number
+  source?: BrokerSource
+  sourceFile?: string
 }
 
 export interface IBDividend {
@@ -27,6 +31,8 @@ export interface IBDividend {
   currency: string
   assetCategory: string
   subCategory: string
+  source?: BrokerSource
+  sourceFile?: string
 }
 
 export interface ParsedIBData {
@@ -36,6 +42,39 @@ export interface ParsedIBData {
   fromDate: string
   toDate: string
   period: string
+  source: BrokerSource
+}
+
+// Freedom Finance types
+export interface FFTrade {
+  tradeId: string
+  date: string
+  shortDate: string
+  payDate: string
+  symbol: string
+  instrType: string
+  instrKind: string
+  isin: string
+  operation: 'buy' | 'sell'
+  price: number
+  currency: string
+  quantity: number
+  sum: number
+  profit: number
+  commission: number
+  commissionCurrency: string
+}
+
+export interface ParsedFFData {
+  trades: FFTrade[]
+  accountInfo: {
+    clientName: string
+    clientCode: string
+    baseCurrency: string
+    dateStart: string
+    dateEnd: string
+  }
+  source: BrokerSource
 }
 
 /**
@@ -135,6 +174,7 @@ export function parseIBXML(xmlContent: string): ParsedIBData {
     fromDate: formatDate(fromDate),
     toDate: formatDate(toDate),
     period,
+    source: 'interactive_brokers' as BrokerSource,
   }
 }
 
@@ -224,6 +264,7 @@ function parseIBXMLRegex(xmlContent: string): ParsedIBData {
     fromDate,
     toDate,
     period,
+    source: 'interactive_brokers' as BrokerSource,
   }
 }
 
@@ -434,5 +475,411 @@ export function readFileAsText(file: File): Promise<string> {
 
     reader.readAsText(file)
   })
+}
+
+/**
+ * Detect XML type (Interactive Brokers or Freedom Finance)
+ */
+export function detectXMLType(xmlContent: string): 'interactive_brokers' | 'freedom_finance' | 'unknown' {
+  if (xmlContent.includes('<FlexStatement') || xmlContent.includes('<FlexQueryResponse')) {
+    return 'interactive_brokers'
+  }
+  if (xmlContent.includes('<plainAccountInfoData>') || xmlContent.includes('<trades><detailed>')) {
+    return 'freedom_finance'
+  }
+  return 'unknown'
+}
+
+/**
+ * Parse Freedom Finance XML
+ */
+export function parseFFXML(xmlContent: string, sourceFileName?: string): ParsedFFData {
+  const isBrowser = typeof window !== 'undefined' && typeof DOMParser !== 'undefined'
+
+  let xmlDoc: Document
+
+  if (isBrowser) {
+    const parser = new DOMParser()
+    xmlDoc = parser.parseFromString(xmlContent, "text/xml")
+
+    const parserError = xmlDoc.querySelector("parsererror")
+    if (parserError) {
+      throw new Error("Invalid XML format")
+    }
+  } else {
+    return parseFFXMLRegex(xmlContent, sourceFileName)
+  }
+
+  // Extract account info
+  const accountInfo = {
+    clientName: getTextContent(xmlDoc, 'plainAccountInfoData > client_name'),
+    clientCode: getTextContent(xmlDoc, 'plainAccountInfoData > client_code'),
+    baseCurrency: getTextContent(xmlDoc, 'plainAccountInfoData > base_currency'),
+    dateStart: getTextContent(xmlDoc, 'date_start'),
+    dateEnd: getTextContent(xmlDoc, 'date_end'),
+  }
+
+  // Extract trades
+  const trades: FFTrade[] = []
+  const tradeNodes = xmlDoc.querySelectorAll('trades > detailed > node')
+
+  tradeNodes.forEach((node) => {
+    const trade: FFTrade = {
+      tradeId: getTextContent(node, 'trade_id'),
+      date: getTextContent(node, 'date'),
+      shortDate: formatFFDate(getTextContent(node, 'short_date')),
+      payDate: formatFFDate(getTextContent(node, 'pay_d')),
+      symbol: getTextContent(node, 'instr_nm'),
+      instrType: getTextContent(node, 'instr_type'),
+      instrKind: getTextContent(node, 'instr_kind'),
+      isin: getTextContent(node, 'isin'),
+      operation: getTextContent(node, 'operation') as 'buy' | 'sell',
+      price: parseFloat(getTextContent(node, 'p') || '0'),
+      currency: getTextContent(node, 'curr_c') || 'USD',
+      quantity: parseFloat(getTextContent(node, 'q') || '0'),
+      sum: parseFloat(getTextContent(node, 'summ') || '0'),
+      profit: parseFloat(getTextContent(node, 'profit') || '0'),
+      commission: parseFloat(getTextContent(node, 'commission') || '0'),
+      commissionCurrency: getTextContent(node, 'commission_currency') || 'USD',
+    }
+
+    trades.push(trade)
+  })
+
+  return {
+    trades,
+    accountInfo,
+    source: 'freedom_finance',
+  }
+}
+
+/**
+ * Parse Freedom Finance XML using regex (fallback for Node.js)
+ */
+function parseFFXMLRegex(xmlContent: string, sourceFileName?: string): ParsedFFData {
+  const getTagContent = (content: string, tagName: string): string => {
+    const regex = new RegExp(`<${tagName}>([^<]*)</${tagName}>`, 'i')
+    const match = content.match(regex)
+    return match?.[1]?.trim() || ''
+  }
+
+  const accountInfo = {
+    clientName: getTagContent(xmlContent, 'client_name'),
+    clientCode: getTagContent(xmlContent, 'client_code'),
+    baseCurrency: getTagContent(xmlContent, 'base_currency'),
+    dateStart: getTagContent(xmlContent, 'date_start'),
+    dateEnd: getTagContent(xmlContent, 'date_end'),
+  }
+
+  // Extract trade nodes
+  const nodeRegex = /<node>([\s\S]*?)<\/node>/g
+  const tradesSection = xmlContent.match(/<trades><detailed>([\s\S]*?)<\/detailed>/)?.[1] || ''
+  const nodeMatches = tradesSection.matchAll(nodeRegex)
+
+  const trades: FFTrade[] = []
+
+  for (const match of nodeMatches) {
+    const nodeContent = match[1]
+
+    const trade: FFTrade = {
+      tradeId: getTagContent(nodeContent, 'trade_id'),
+      date: getTagContent(nodeContent, 'date'),
+      shortDate: formatFFDate(getTagContent(nodeContent, 'short_date')),
+      payDate: formatFFDate(getTagContent(nodeContent, 'pay_d')),
+      symbol: getTagContent(nodeContent, 'instr_nm'),
+      instrType: getTagContent(nodeContent, 'instr_type'),
+      instrKind: getTagContent(nodeContent, 'instr_kind'),
+      isin: getTagContent(nodeContent, 'isin'),
+      operation: getTagContent(nodeContent, 'operation') as 'buy' | 'sell',
+      price: parseFloat(getTagContent(nodeContent, 'p') || '0'),
+      currency: getTagContent(nodeContent, 'curr_c') || 'USD',
+      quantity: parseFloat(getTagContent(nodeContent, 'q') || '0'),
+      sum: parseFloat(getTagContent(nodeContent, 'summ') || '0'),
+      profit: parseFloat(getTagContent(nodeContent, 'profit') || '0'),
+      commission: parseFloat(getTagContent(nodeContent, 'commission') || '0'),
+      commissionCurrency: getTagContent(nodeContent, 'commission_currency') || 'USD',
+    }
+
+    trades.push(trade)
+  }
+
+  return {
+    trades,
+    accountInfo,
+    source: 'freedom_finance',
+  }
+}
+
+/**
+ * Get text content from an element
+ */
+function getTextContent(parent: Document | Element, selector: string): string {
+  const element = parent.querySelector(selector)
+  return element?.textContent?.trim() || ''
+}
+
+/**
+ * Format Freedom Finance date from YYYY-MM-DD to YYYY-MM-DD (already in correct format)
+ */
+function formatFFDate(dateStr: string): string {
+  if (!dateStr) return ''
+  // FF dates are already in YYYY-MM-DD format
+  return dateStr.split(' ')[0] // Remove time part if present
+}
+
+/**
+ * Group Freedom Finance trades by symbol to match buys with sells (FIFO)
+ */
+export function groupFFTradesBySymbol(trades: FFTrade[]): Map<string, { buys: FFTrade[], sells: FFTrade[] }> {
+  const grouped = new Map<string, { buys: FFTrade[], sells: FFTrade[] }>()
+
+  // Sort by date
+  const sortedTrades = [...trades].sort((a, b) =>
+    new Date(a.shortDate).getTime() - new Date(b.shortDate).getTime()
+  )
+
+  sortedTrades.forEach((trade) => {
+    const existing = grouped.get(trade.symbol) || { buys: [], sells: [] }
+
+    if (trade.operation === 'buy') {
+      existing.buys.push(trade)
+    } else if (trade.operation === 'sell') {
+      existing.sells.push(trade)
+    }
+
+    grouped.set(trade.symbol, existing)
+  })
+
+  return grouped
+}
+
+/**
+ * Match Freedom Finance sells with buys using FIFO method
+ * Returns matched positions for tax calculation
+ */
+export interface FFMatchedPosition {
+  symbol: string
+  instrKind: string
+  isin: string
+  currency: string
+  buyDate: string
+  sellDate: string
+  quantity: number
+  buyPrice: number // Total cost
+  sellPrice: number // Total proceeds
+  profit: number
+  commission: number
+  source: BrokerSource
+  sourceFile?: string
+}
+
+export function matchFFTradesFIFO(trades: FFTrade[], sourceFileName?: string): FFMatchedPosition[] {
+  const grouped = groupFFTradesBySymbol(trades)
+  const matchedPositions: FFMatchedPosition[] = []
+
+  grouped.forEach((symbolTrades, symbol) => {
+    const buyQueue: { trade: FFTrade, remainingQty: number }[] = symbolTrades.buys.map(t => ({
+      trade: t,
+      remainingQty: t.quantity
+    }))
+
+    symbolTrades.sells.forEach((sellTrade) => {
+      let remainingToSell = sellTrade.quantity
+
+      while (remainingToSell > 0 && buyQueue.length > 0) {
+        const firstBuy = buyQueue[0]
+
+        if (firstBuy.remainingQty <= 0) {
+          buyQueue.shift()
+          continue
+        }
+
+        const matchQty = Math.min(remainingToSell, firstBuy.remainingQty)
+
+        // Calculate proportional costs
+        const buyPricePerUnit = firstBuy.trade.price
+        const sellPricePerUnit = sellTrade.price
+
+        const totalBuyCost = matchQty * buyPricePerUnit
+        const totalSellProceeds = matchQty * sellPricePerUnit
+        const profit = totalSellProceeds - totalBuyCost
+
+        // Proportional commission from sell trade
+        const commissionProportion = matchQty / sellTrade.quantity
+        const commission = sellTrade.commission * commissionProportion
+
+        matchedPositions.push({
+          symbol: symbol,
+          instrKind: sellTrade.instrKind || firstBuy.trade.instrKind,
+          isin: sellTrade.isin || firstBuy.trade.isin,
+          currency: sellTrade.currency,
+          buyDate: firstBuy.trade.shortDate,
+          sellDate: sellTrade.shortDate,
+          quantity: matchQty,
+          buyPrice: totalBuyCost,
+          sellPrice: totalSellProceeds,
+          profit: profit,
+          commission: commission,
+          source: 'freedom_finance',
+          sourceFile: sourceFileName,
+        })
+
+        firstBuy.remainingQty -= matchQty
+        remainingToSell -= matchQty
+
+        if (firstBuy.remainingQty <= 0) {
+          buyQueue.shift()
+        }
+      }
+    })
+  })
+
+  return matchedPositions
+}
+
+/**
+ * Determine asset type from Freedom Finance trade data
+ */
+export function determineFFAssetType(instrKind: string): string {
+  const kind = instrKind.toLowerCase()
+
+  if (kind.includes('фонд') || kind.includes('etf')) {
+    return 'stocks'
+  }
+  if (kind.includes('акція') || kind.includes('акция') || kind.includes('stock')) {
+    return 'stocks'
+  }
+  if (kind.includes('облігація') || kind.includes('облигация') || kind.includes('bond')) {
+    return 'bonds'
+  }
+  if (kind.includes('опціон') || kind.includes('опцион') || kind.includes('option')) {
+    return 'options'
+  }
+
+  return 'stocks'
+}
+
+/**
+ * Convert Freedom Finance matched position to form position format
+ */
+export function convertFFToFormPosition(position: FFMatchedPosition, sourceFileName?: string) {
+  const assetType = determineFFAssetType(position.instrKind)
+
+  return {
+    id: Date.now().toString() + Math.random().toString(36).substring(7),
+    assetType: assetType,
+    assetDescription: `${position.symbol} - ${position.instrKind} (ISIN: ${position.isin})`,
+    symbol: position.symbol,
+    currency: position.currency,
+    purchaseDate: position.buyDate,
+    saleDate: position.sellDate,
+    purchasePriceForeign: position.buyPrice.toFixed(2),
+    salePriceForeign: position.sellPrice.toFixed(2),
+    purchaseRate: "",
+    saleRate: "",
+    purchasePrice: "",
+    salePrice: "",
+    expenses: position.commission.toFixed(2),
+    quantity: position.quantity.toString(),
+    multiplier: "1",
+    source: 'freedom_finance' as BrokerSource,
+    sourceFile: sourceFileName,
+  }
+}
+
+/**
+ * Parse and convert any supported XML format
+ */
+export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string): {
+  positions: ReturnType<typeof convertToFormPosition>[]
+  source: BrokerSource
+  summary: {
+    trades: number
+    dividends: number
+    totalProfit: number
+    currency: string
+  }
+} {
+  const xmlType = detectXMLType(xmlContent)
+
+  if (xmlType === 'interactive_brokers') {
+    const parsedData = parseIBXML(xmlContent)
+    const tradePositions = parsedData.trades.map(trade => ({
+      ...convertToFormPosition(trade),
+      source: 'interactive_brokers' as BrokerSource,
+      sourceFile: sourceFileName,
+    }))
+    const dividendPositions = parsedData.dividends.map(dividend => ({
+      ...convertDividendToFormPosition(dividend),
+      source: 'interactive_brokers' as BrokerSource,
+      sourceFile: sourceFileName,
+    }))
+
+    const totals = calculateTradeTotals(parsedData.trades)
+
+    return {
+      positions: [...tradePositions, ...dividendPositions],
+      source: 'interactive_brokers',
+      summary: {
+        trades: parsedData.trades.length,
+        dividends: parsedData.dividends.length,
+        totalProfit: totals.totalProfit,
+        currency: parsedData.trades[0]?.currency || 'USD',
+      }
+    }
+  }
+
+  if (xmlType === 'freedom_finance') {
+    const parsedData = parseFFXML(xmlContent, sourceFileName)
+    const matchedPositions = matchFFTradesFIFO(parsedData.trades, sourceFileName)
+    const formPositions = matchedPositions.map(pos => convertFFToFormPosition(pos, sourceFileName))
+
+    const totalProfit = matchedPositions.reduce((sum, pos) => sum + pos.profit, 0)
+
+    return {
+      positions: formPositions,
+      source: 'freedom_finance',
+      summary: {
+        trades: matchedPositions.length,
+        dividends: 0,
+        totalProfit: totalProfit,
+        currency: parsedData.accountInfo.baseCurrency || 'USD',
+      }
+    }
+  }
+
+  throw new Error('Unknown XML format. Supported formats: Interactive Brokers FlexQuery, Freedom Finance')
+}
+
+/**
+ * Get source display name
+ */
+export function getSourceDisplayName(source: BrokerSource): string {
+  switch (source) {
+    case 'interactive_brokers':
+      return 'IB'
+    case 'freedom_finance':
+      return 'FF'
+    case 'manual':
+      return 'Manual'
+    default:
+      return ''
+  }
+}
+
+/**
+ * Get source color for badges
+ */
+export function getSourceColor(source: BrokerSource): string {
+  switch (source) {
+    case 'interactive_brokers':
+      return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+    case 'freedom_finance':
+      return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+    case 'manual':
+      return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+    default:
+      return 'bg-gray-100 text-gray-800'
+  }
 }
 
