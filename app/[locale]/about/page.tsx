@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!locale) {
     return {
-      title: "About - Monegoo Tax Declaration",
+      title: "About - Taxered Tax Declaration",
       description: "Free and open tax declaration system for everyone",
     }
   }
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (parts.length !== 2) {
     return {
-      title: "About - Monegoo Tax Declaration",
+      title: "About - Taxered Tax Declaration",
       description: "Free and open tax declaration system for everyone",
     }
   }
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = getCountry(countryCode)
   if (!country) {
     return {
-      title: "About - Monegoo Tax Declaration",
+      title: "About - Taxered Tax Declaration",
       description: "Free and open tax declaration system for everyone",
     }
   }
@@ -58,12 +58,12 @@ export default async function AboutPage({ params }: Props) {
     "@type": "WebPage",
     "name": t(lang, "about.title"),
     "description": t(lang, "about.intro"),
-    "url": `https://monegoo.com/${locale}/about`,
+    "url": `https://taxered.com/${locale}/about`,
     "inLanguage": langCode,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Monegoo Tax Declaration",
-      "url": "https://monegoo.com"
+      "name": "Taxered Tax Declaration",
+      "url": "https://taxered.com"
     }
   }
 
@@ -75,13 +75,13 @@ export default async function AboutPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://monegoo.com/${locale}`,
+        "item": `https://taxered.com/${locale}`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t(lang, "about.title"),
-        "item": `https://monegoo.com/${locale}/about`,
+        "item": `https://taxered.com/${locale}/about`,
       },
     ],
   }
@@ -89,9 +89,9 @@ export default async function AboutPage({ params }: Props) {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Monegoo",
-    "url": "https://monegoo.com",
-    "logo": "https://monegoo.com/placeholder-logo.png",
+    "name": "Taxered",
+    "url": "https://taxered.com",
+    "logo": "https://taxered.com/placeholder-logo.png",
     "description": "Free and open tax declaration system for everyone",
   }
 

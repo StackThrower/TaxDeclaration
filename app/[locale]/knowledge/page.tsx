@@ -20,13 +20,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const language = locale.split("-")[0] as Language
 
   const titles: Record<Language, string> = {
-    uk: "База знань з оподаткування | Monegoo",
-    en: "Tax Knowledge Base | Monegoo",
-    fr: "Base de connaissances fiscales | Monegoo",
-    pl: "Baza wiedzy podatkowej | Monegoo",
-    es: "Base de conocimientos fiscales | Monegoo",
-    pt: "Base de conhecimento fiscal | Monegoo",
-    de: "Steuerliche Wissensdatenbank | Monegoo",
+    uk: "База знань з оподаткування | Taxered",
+    en: "Tax Knowledge Base | Taxered",
+    fr: "Base de connaissances fiscales | Taxered",
+    pl: "Baza wiedzy podatkowej | Taxered",
+    es: "Base de conocimientos fiscales | Taxered",
+    pt: "Base de conhecimento fiscal | Taxered",
+    de: "Steuerliche Wissensdatenbank | Taxered",
   }
 
   const descriptions: Record<Language, string> = {
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     de: "Erfahren Sie mehr über Steuergesetzgebung, wie Sie Erklärungen korrekt ausfüllen und Steuerverpflichtungen optimieren",
   }
 
-  const canonicalUrl = `https://monegoo.com/${locale}/knowledge`
+  const canonicalUrl = `https://taxered.com/${locale}/knowledge`
 
   return {
     title: titles[language] || titles.en,

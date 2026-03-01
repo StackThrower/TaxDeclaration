@@ -25,19 +25,19 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://monegoo.com"),
+  metadataBase: new URL("https://taxered.com"),
   title: {
-    default: "Monegoo - F0100214 & F0121214",
-    template: "%s | Monegoo",
+    default: "Taxered - F0100214 & F0121214",
+    template: "%s | Taxered",
   },
   description: "Online system for filing tax declarations on property status, income, and investment transactions",
   generator: "Next.js",
-  applicationName: "Monegoo Tax Declaration",
+  applicationName: "Taxered Tax Declaration",
   referrer: "origin-when-cross-origin",
   keywords: ["tax declaration", "F0100214", "F0121214", "income declaration", "property status", "tax calculator", "online tax filing"],
-  authors: [{ name: "Monegoo", url: "https://monegoo.com" }],
-  creator: "Monegoo",
-  publisher: "Monegoo",
+  authors: [{ name: "Taxered", url: "https://taxered.com" }],
+  creator: "Taxered",
+  publisher: "Taxered",
   formatDetection: {
     email: false,
     address: false,
@@ -62,23 +62,23 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "uk_UA",
-    url: "https://monegoo.com",
-    title: "Monegoo - F0100214 & F0121214",
+    url: "https://taxered.com",
+    title: "Taxered - F0100214 & F0121214",
     description: "Online system for filing tax declarations on property status, income, and investment transactions",
-    siteName: "Monegoo Tax Declaration",
+    siteName: "Taxered Tax Declaration",
     images: [
       {
         url: "/placeholder-logo.png",
         width: 1200,
         height: 630,
-        alt: "Monegoo Tax Declaration",
+        alt: "Taxered Tax Declaration",
       },
     ],
   },
   // Twitter Card
   twitter: {
     card: "summary_large_image",
-    title: "Monegoo - F0100214 & F0121214",
+    title: "Taxered - F0100214 & F0121214",
     description: "Online system for filing tax declarations on property status, income, and investment transactions",
     images: ["/placeholder-logo.png"],
     creator: "@monegoo",
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
   },
   // Alternate languages
   alternates: {
-    canonical: "https://monegoo.com",
+    canonical: "https://taxered.com",
     languages: {
       "uk-UA": "/uk-ua",
       "en-US": "/en-us",
@@ -144,9 +144,9 @@ export default async function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Monegoo",
-    "url": "https://monegoo.com",
-    "logo": "https://monegoo.com/placeholder-logo.png",
+    "name": "Taxered",
+    "url": "https://taxered.com",
+    "logo": "https://taxered.com/placeholder-logo.png",
     "description": "Free and open tax declaration system for everyone",
     "sameAs": [
       "https://twitter.com/monegoo",
@@ -156,22 +156,22 @@ export default async function RootLayout({
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Monegoo Tax Declaration",
-    "url": "https://monegoo.com",
+    "name": "Taxered Tax Declaration",
+    "url": "https://taxered.com",
     "description": "Online system for filing tax declarations on property status, income, and investment transactions",
     "inLanguage": lang,
     "publisher": {
       "@type": "Organization",
-      "name": "Monegoo",
-      "url": "https://monegoo.com",
+      "name": "Taxered",
+      "url": "https://taxered.com",
     },
   }
 
   const webApplicationSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Monegoo Tax Declaration",
-    "url": "https://monegoo.com",
+    "name": "Taxered Tax Declaration",
+    "url": "https://taxered.com",
     "description": "Online system for filing tax declarations on property status, income, and investment transactions",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -196,10 +196,10 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
 
         {/* PWA Meta Tags */}
-        <meta name="application-name" content="Monegoo" />
+        <meta name="application-name" content="Taxered" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Monegoo" />
+        <meta name="apple-mobile-web-app-title" content="Taxered" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />

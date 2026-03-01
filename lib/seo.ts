@@ -227,8 +227,8 @@ export function generateWebPageSchema(data: {
     "inLanguage": data.inLanguage || "en",
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Monegoo Tax Declaration",
-      "url": "https://monegoo.com",
+      "name": "Taxered Tax Declaration",
+      "url": "https://taxered.com",
     },
   }
 }

@@ -583,10 +583,10 @@ export function generatePageMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://monegoo.com/${locale}`,
+      url: `https://taxered.com/${locale}`,
       title: seo.title,
       description: seo.description,
-      siteName: "Monegoo Tax Declaration",
+      siteName: "Taxered Tax Declaration",
       images: [
         {
           url: "/placeholder-logo.png",
@@ -604,7 +604,7 @@ export function generatePageMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://monegoo.com/${locale}`,
+      canonical: `https://taxered.com/${locale}`,
       languages: {
         "x-default": "/",
         "uk-UA": "/uk-ua",
@@ -631,9 +631,9 @@ export function generatePageMetadata(
         "max-snippet": -1,
       },
     },
-    authors: [{ name: "Monegoo", url: "https://monegoo.com" }],
-    creator: "Monegoo",
-    publisher: "Monegoo",
+    authors: [{ name: "Taxered", url: "https://taxered.com" }],
+    creator: "Taxered",
+    publisher: "Taxered",
     category: "Finance",
   }
 }
@@ -649,7 +649,7 @@ export function generateHelpPageMetadata(
   const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
     uk: {
       ua: {
-        title: `Допомога - Центр підтримки Monegoo | Податкові декларації України ${currentYear}`,
+        title: `Допомога - Центр підтримки Taxered | Податкові декларації України ${currentYear}`,
         description: `Знайдіть відповіді на питання про заповнення податкових декларацій F0100214 та F0121214. Інструкції, поради та підтримка для заповнення податкових форм онлайн. Безкоштовна допомога українською мовою.`,
         keywords: [
           "допомога",
@@ -667,7 +667,7 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Rozliczenia Podatkowe Polska ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Rozliczenia Podatkowe Polska ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych PIT. Instrukcje, porady i wsparcie dla rozliczeń podatkowych online. Bezpłatna pomoc po polsku.`,
         keywords: [
           "pomoc",
@@ -682,7 +682,7 @@ export function generateHelpPageMetadata(
         ],
       },
       fr: {
-        title: `Aide - Centre d'Assistance Monegoo | Déclarations Fiscales France ${currentYear}`,
+        title: `Aide - Centre d'Assistance Taxered | Déclarations Fiscales France ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne. Aide gratuite en français.`,
         keywords: [
           "aide",
@@ -696,7 +696,7 @@ export function generateHelpPageMetadata(
         ],
       },
       de: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Deutschland ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Deutschland ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen. Kostenlose Hilfe auf Deutsch.`,
         keywords: [
           "hilfe",
@@ -710,7 +710,7 @@ export function generateHelpPageMetadata(
         ],
       },
       pt: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Portugal ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Portugal ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online. Ajuda gratuita em português.`,
         keywords: [
           "ajuda",
@@ -724,7 +724,7 @@ export function generateHelpPageMetadata(
         ],
       },
       es: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales España ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales España ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea. Ayuda gratuita en español.`,
         keywords: [
           "ayuda",
@@ -738,7 +738,7 @@ export function generateHelpPageMetadata(
         ],
       },
       se: {
-        title: `Hjälp - Supportcenter Monegoo | Skattedeklarationer Sverige ${currentYear}`,
+        title: `Hjälp - Supportcenter Taxered | Skattedeklarationer Sverige ${currentYear}`,
         description: `Hitta svar på frågor om att fylla i skattedeklarationer. Instruktioner, tips och support för online-deklarationer. Gratis hjälp på svenska.`,
         keywords: [
           "hjälp",
@@ -752,7 +752,7 @@ export function generateHelpPageMetadata(
         ],
       },
       gb: {
-        title: `Help - Support Center Monegoo | Tax Returns UK ${currentYear}`,
+        title: `Help - Support Center Taxered | Tax Returns UK ${currentYear}`,
         description: `Find answers to questions about completing tax returns. Instructions, tips and support for online tax filings. Free help in English.`,
         keywords: [
           "help",
@@ -768,7 +768,7 @@ export function generateHelpPageMetadata(
         ],
       },
       us: {
-        title: `Help - Support Center Monegoo | Tax Returns USA ${currentYear}`,
+        title: `Help - Support Center Taxered | Tax Returns USA ${currentYear}`,
         description: `Find answers to questions about filing tax returns. Instructions, tips and support for online tax filings. Free help in English.`,
         keywords: [
           "help",
@@ -783,7 +783,7 @@ export function generateHelpPageMetadata(
         ],
       },
       ca: {
-        title: `Help - Support Center Monegoo | Tax Returns Canada ${currentYear}`,
+        title: `Help - Support Center Taxered | Tax Returns Canada ${currentYear}`,
         description: `Find answers to questions about filing tax returns. Instructions, tips and support for online tax filings. Free help in English.`,
         keywords: [
           "help",
@@ -800,7 +800,7 @@ export function generateHelpPageMetadata(
     },
     en: {
       ua: {
-        title: `Help - Monegoo Support Center | Ukraine Tax Declarations ${currentYear}`,
+        title: `Help - Taxered Support Center | Ukraine Tax Declarations ${currentYear}`,
         description: `Find answers to questions about filling out tax declarations F0100214 and F0121214. Instructions, tips and support for filing tax forms online. Free help in English.`,
         keywords: [
           "help",
@@ -817,7 +817,7 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Help - Monegoo Support Center | Poland Tax Returns ${currentYear}`,
+        title: `Help - Taxered Support Center | Poland Tax Returns ${currentYear}`,
         description: `Find answers to questions about completing PIT tax returns. Instructions, tips and support for online tax filing. Free help in English.`,
         keywords: [
           "help",
@@ -832,7 +832,7 @@ export function generateHelpPageMetadata(
         ],
       },
       fr: {
-        title: `Help - Monegoo Support Center | France Tax Returns ${currentYear}`,
+        title: `Help - Taxered Support Center | France Tax Returns ${currentYear}`,
         description: `Find answers to questions about completing tax declarations. Instructions, tips and support for online tax filing. Free help in English.`,
         keywords: [
           "help",
@@ -846,7 +846,7 @@ export function generateHelpPageMetadata(
         ],
       },
       de: {
-        title: `Help - Monegoo Support Center | Germany Tax Returns ${currentYear}`,
+        title: `Help - Taxered Support Center | Germany Tax Returns ${currentYear}`,
         description: `Find answers to questions about completing tax returns. Instructions, tips and support for online tax filing. Free help in English.`,
         keywords: [
           "help",
@@ -860,7 +860,7 @@ export function generateHelpPageMetadata(
         ],
       },
       pt: {
-        title: `Help - Monegoo Support Center | Portugal Tax Returns ${currentYear}`,
+        title: `Help - Taxered Support Center | Portugal Tax Returns ${currentYear}`,
         description: `Find answers to questions about completing IRS declarations. Instructions, tips and support for online tax filing. Free help in English.`,
         keywords: [
           "help",
@@ -875,7 +875,7 @@ export function generateHelpPageMetadata(
         ],
       },
       es: {
-        title: `Help - Monegoo Support Center | Spain Tax Returns ${currentYear}`,
+        title: `Help - Taxered Support Center | Spain Tax Returns ${currentYear}`,
         description: `Find answers to questions about completing tax returns. Instructions, tips and support for online tax filing. Free help in English.`,
         keywords: [
           "help",
@@ -889,7 +889,7 @@ export function generateHelpPageMetadata(
         ],
       },
       se: {
-        title: `Help - Monegoo Support Center | Sweden Tax Returns ${currentYear}`,
+        title: `Help - Taxered Support Center | Sweden Tax Returns ${currentYear}`,
         description: `Find answers to questions about completing income declarations. Instructions, tips and support for online tax filing. Free help in English.`,
         keywords: [
           "help",
@@ -903,7 +903,7 @@ export function generateHelpPageMetadata(
         ],
       },
       gb: {
-        title: `Help - Support Center Monegoo | Tax Returns UK ${currentYear}`,
+        title: `Help - Support Center Taxered | Tax Returns UK ${currentYear}`,
         description: `Find answers to questions about completing tax returns. Instructions, tips and support for online tax filings. Free help in English.`,
         keywords: [
           "help",
@@ -919,7 +919,7 @@ export function generateHelpPageMetadata(
         ],
       },
       us: {
-        title: `Help - Support Center Monegoo | Tax Returns USA ${currentYear}`,
+        title: `Help - Support Center Taxered | Tax Returns USA ${currentYear}`,
         description: `Find answers to questions about filing tax returns. Instructions, tips and support for online tax filings. Free help in English.`,
         keywords: [
           "help",
@@ -934,7 +934,7 @@ export function generateHelpPageMetadata(
         ],
       },
       ca: {
-        title: `Help - Support Center Monegoo | Tax Returns Canada ${currentYear}`,
+        title: `Help - Support Center Taxered | Tax Returns Canada ${currentYear}`,
         description: `Find answers to questions about filing tax returns. Instructions, tips and support for online tax filings. Free help in English.`,
         keywords: [
           "help",
@@ -951,7 +951,7 @@ export function generateHelpPageMetadata(
     },
     fr: {
       ua: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales Ukraine ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales Ukraine ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales F0100214 et F0121214. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: [
           "aide",
@@ -967,12 +967,12 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Aide - Centre de Support Monegoo | Déclarations PIT Pologne ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations PIT Pologne ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations PIT. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "PIT", "Pologne", "FAQ", "centre d'aide"],
       },
       fr: {
-        title: `Aide - Centre d'Assistance Monegoo | Déclarations Fiscales France ${currentYear}`,
+        title: `Aide - Centre d'Assistance Taxered | Déclarations Fiscales France ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne. Aide gratuite en français.`,
         keywords: [
           "aide",
@@ -986,44 +986,44 @@ export function generateHelpPageMetadata(
         ],
       },
       de: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales Allemagne ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales Allemagne ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "déclaration fiscale", "Allemagne", "FAQ", "centre d'aide"],
       },
       pt: {
-        title: `Aide - Centre de Support Monegoo | Déclarations IRS Portugal ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations IRS Portugal ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations IRS. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "IRS", "Portugal", "FAQ", "centre d'aide"],
       },
       es: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales Espagne ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales Espagne ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "déclaration fiscale", "Espagne", "FAQ", "centre d'aide"],
       },
       se: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales Suède ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales Suède ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations de revenus. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "déclaration de revenus", "Suède", "FAQ", "centre d'aide"],
       },
       gb: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales Royaume-Uni ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales Royaume-Uni ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "déclaration fiscale", "Royaume-Uni", "FAQ", "centre d'aide"],
       },
       us: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales États-Unis ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales États-Unis ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "déclaration fiscale", "États-Unis", "IRS", "FAQ", "centre d'aide"],
       },
       ca: {
-        title: `Aide - Centre de Support Monegoo | Déclarations Fiscales Canada ${currentYear}`,
+        title: `Aide - Centre de Support Taxered | Déclarations Fiscales Canada ${currentYear}`,
         description: `Trouvez des réponses aux questions sur le remplissage des déclarations fiscales. Instructions, conseils et support pour les déclarations en ligne.`,
         keywords: ["aide", "instructions", "support", "déclaration fiscale", "Canada", "FAQ", "centre d'aide"],
       },
     },
     pl: {
       ua: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe Ukraina ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe Ukraina ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych F0100214 i F0121214. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: [
           "pomoc",
@@ -1039,7 +1039,7 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Rozliczenia Podatkowe Polska ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Rozliczenia Podatkowe Polska ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych PIT. Instrukcje, porady i wsparcie dla rozliczeń podatkowych online. Bezpłatna pomoc po polsku.`,
         keywords: [
           "pomoc",
@@ -1054,49 +1054,49 @@ export function generateHelpPageMetadata(
         ],
       },
       fr: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe Francja ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe Francja ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja podatkowa", "Francja", "FAQ", "centrum pomocy"],
       },
       de: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe Niemcy ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe Niemcy ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja podatkowa", "Niemcy", "FAQ", "centrum pomocy"],
       },
       pt: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje IRS Portugalia ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje IRS Portugalia ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji IRS. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "IRS", "Portugalia", "FAQ", "centrum pomocy"],
       },
       es: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe Hiszpania ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe Hiszpania ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja podatkowa", "Hiszpania", "FAQ", "centrum pomocy"],
       },
       se: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Dochodów Szwecja ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Dochodów Szwecja ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji dochodów. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja dochodów", "Szwecja", "FAQ", "centrum pomocy"],
       },
       gb: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe Wielka Brytania ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe Wielka Brytania ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja podatkowa", "Wielka Brytania", "FAQ", "centrum pomocy"],
       },
       us: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe USA ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe USA ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja podatkowa", "USA", "IRS", "FAQ", "centrum pomocy"],
       },
       ca: {
-        title: `Pomoc - Centrum Wsparcia Monegoo | Deklaracje Podatkowe Kanada ${currentYear}`,
+        title: `Pomoc - Centrum Wsparcia Taxered | Deklaracje Podatkowe Kanada ${currentYear}`,
         description: `Znajdź odpowiedzi na pytania dotyczące wypełniania deklaracji podatkowych. Instrukcje, porady i wsparcie dla deklaracji online.`,
         keywords: ["pomoc", "instrukcje", "wsparcie", "deklaracja podatkowa", "Kanada", "FAQ", "centrum pomocy"],
       },
     },
     es: {
       ua: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Ucrania ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Ucrania ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar las declaraciones fiscales F0100214 y F0121214. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: [
           "ayuda",
@@ -1112,27 +1112,27 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones PIT Polonia ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones PIT Polonia ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones PIT. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "PIT", "Polonia", "FAQ", "centro de ayuda"],
       },
       fr: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Francia ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Francia ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "declaración fiscal", "Francia", "FAQ", "centro de ayuda"],
       },
       de: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Alemania ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Alemania ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "declaración fiscal", "Alemania", "FAQ", "centro de ayuda"],
       },
       pt: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones IRS Portugal ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones IRS Portugal ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones IRS. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "IRS", "Portugal", "FAQ", "centro de ayuda"],
       },
       es: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales España ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales España ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea. Ayuda gratuita en español.`,
         keywords: [
           "ayuda",
@@ -1146,29 +1146,29 @@ export function generateHelpPageMetadata(
         ],
       },
       se: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Suecia ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Suecia ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones de ingresos. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "declaración de ingresos", "Suecia", "FAQ", "centro de ayuda"],
       },
       gb: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Reino Unido ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Reino Unido ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "declaración fiscal", "Reino Unido", "FAQ", "centro de ayuda"],
       },
       us: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Estados Unidos ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Estados Unidos ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "declaración fiscal", "Estados Unidos", "IRS", "FAQ", "centro de ayuda"],
       },
       ca: {
-        title: `Ayuda - Centro de Soporte Monegoo | Declaraciones Fiscales Canadá ${currentYear}`,
+        title: `Ayuda - Centro de Soporte Taxered | Declaraciones Fiscales Canadá ${currentYear}`,
         description: `Encuentre respuestas a preguntas sobre cómo completar declaraciones fiscales. Instrucciones, consejos y soporte para declaraciones en línea.`,
         keywords: ["ayuda", "instrucciones", "soporte", "declaración fiscal", "Canadá", "FAQ", "centro de ayuda"],
       },
     },
     pt: {
       ua: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Ucrânia ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Ucrânia ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento das declarações fiscais F0100214 e F0121214. Instruções, dicas e suporte para declarações online.`,
         keywords: [
           "ajuda",
@@ -1184,22 +1184,22 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações PIT Polónia ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações PIT Polónia ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações PIT. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "PIT", "Polónia", "FAQ", "centro de ajuda"],
       },
       fr: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais França ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais França ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração fiscal", "França", "FAQ", "centro de ajuda"],
       },
       de: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Alemanha ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Alemanha ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração fiscal", "Alemanha", "FAQ", "centro de ajuda"],
       },
       pt: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Portugal ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Portugal ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online. Ajuda gratuita em português.`,
         keywords: [
           "ajuda",
@@ -1213,34 +1213,34 @@ export function generateHelpPageMetadata(
         ],
       },
       es: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Espanha ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Espanha ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração fiscal", "Espanha", "FAQ", "centro de ajuda"],
       },
       se: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Suécia ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Suécia ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações de rendimentos. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração de rendimentos", "Suécia", "FAQ", "centro de ajuda"],
       },
       gb: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Reino Unido ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Reino Unido ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração fiscal", "Reino Unido", "FAQ", "centro de ajuda"],
       },
       us: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Estados Unidos ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Estados Unidos ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração fiscal", "Estados Unidos", "IRS", "FAQ", "centro de ajuda"],
       },
       ca: {
-        title: `Ajuda - Centro de Suporte Monegoo | Declarações Fiscais Canadá ${currentYear}`,
+        title: `Ajuda - Centro de Suporte Taxered | Declarações Fiscais Canadá ${currentYear}`,
         description: `Encontre respostas para perguntas sobre o preenchimento de declarações fiscais. Instruções, dicas e suporte para declarações online.`,
         keywords: ["ajuda", "instruções", "suporte", "declaração fiscal", "Canadá", "FAQ", "centro de ajuda"],
       },
     },
     de: {
       ua: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Ukraine ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Ukraine ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen der Steuererklärungen F0100214 und F0121214. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: [
           "hilfe",
@@ -1256,17 +1256,17 @@ export function generateHelpPageMetadata(
         ],
       },
       pl: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen PIT Polen ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen PIT Polen ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von PIT-Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "PIT", "Polen", "FAQ", "hilfezentrum"],
       },
       fr: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Frankreich ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Frankreich ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "steuererklärung", "Frankreich", "FAQ", "hilfezentrum"],
       },
       de: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Deutschland ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Deutschland ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen. Kostenlose Hilfe auf Deutsch.`,
         keywords: [
           "hilfe",
@@ -1280,32 +1280,32 @@ export function generateHelpPageMetadata(
         ],
       },
       pt: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Portugal ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Portugal ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "steuererklärung", "Portugal", "FAQ", "hilfezentrum"],
       },
       es: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Spanien ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Spanien ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "steuererklärung", "Spanien", "FAQ", "hilfezentrum"],
       },
       se: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Schweden ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Schweden ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Einkommenserklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "einkommenserklärung", "Schweden", "FAQ", "hilfezentrum"],
       },
       gb: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Vereinigtes Königreich ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Vereinigtes Königreich ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "steuererklärung", "Vereinigtes Königreich", "FAQ", "hilfezentrum"],
       },
       us: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Vereinigte Staaten ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Vereinigte Staaten ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "steuererklärung", "USA", "IRS", "FAQ", "hilfezentrum"],
       },
       ca: {
-        title: `Hilfe - Support-Center Monegoo | Steuererklärungen Kanada ${currentYear}`,
+        title: `Hilfe - Support-Center Taxered | Steuererklärungen Kanada ${currentYear}`,
         description: `Finden Sie Antworten auf Fragen zum Ausfüllen von Steuererklärungen. Anleitungen, Tipps und Support für Online-Steuererklärungen.`,
         keywords: ["hilfe", "anleitungen", "support", "steuererklärung", "Kanada", "FAQ", "hilfezentrum"],
       },
@@ -1326,10 +1326,10 @@ export function generateAboutPageMetadata(
   const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
     uk: {
       ua: {
-        title: `Про Monegoo - Безкоштовна система податкових декларацій України ${currentYear}`,
-        description: `Monegoo - це безкоштовна відкрита онлайн система для заповнення податкових декларацій F0100214 та F0121214. Ми створюємо доступні інструменти для громадян України. Ваші дані залишаються тільки у вас.`,
+        title: `Про Taxered - Безкоштовна система податкових декларацій України ${currentYear}`,
+        description: `Taxered - це безкоштовна відкрита онлайн система для заповнення податкових декларацій F0100214 та F0121214. Ми створюємо доступні інструменти для громадян України. Ваші дані залишаються тільки у вас.`,
         keywords: [
-          "про Monegoo",
+          "про Taxered",
           "безкоштовні податкові декларації",
           "відкрита система",
           "про нас",
@@ -1343,10 +1343,10 @@ export function generateAboutPageMetadata(
         ],
       },
       pl: {
-        title: `O Monegoo - Bezpłatny system rozliczeń podatkowych Polska ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych PIT. Tworzymy dostępne narzędzia dla obywateli Polski. Twoje dane pozostają tylko u Ciebie.`,
+        title: `O Taxered - Bezpłatny system rozliczeń podatkowych Polska ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych PIT. Tworzymy dostępne narzędzia dla obywateli Polski. Twoje dane pozostają tylko u Ciebie.`,
         keywords: [
-          "o Monegoo",
+          "o Taxered",
           "bezpłatne deklaracje podatkowe",
           "otwarty system",
           "o nas",
@@ -1357,10 +1357,10 @@ export function generateAboutPageMetadata(
         ],
       },
       fr: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales France ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Nous créons des outils accessibles pour les citoyens français. Vos données restent chez vous.`,
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales France ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Nous créons des outils accessibles pour les citoyens français. Vos données restent chez vous.`,
         keywords: [
-          "à propos de Monegoo",
+          "à propos de Taxered",
           "déclarations fiscales gratuites",
           "système ouvert",
           "à propos",
@@ -1371,10 +1371,10 @@ export function generateAboutPageMetadata(
         ],
       },
       de: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Deutschland ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Wir schaffen zugängliche Tools für deutsche Bürger. Ihre Daten bleiben bei Ihnen.`,
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Deutschland ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Wir schaffen zugängliche Tools für deutsche Bürger. Ihre Daten bleiben bei Ihnen.`,
         keywords: [
-          "über Monegoo",
+          "über Taxered",
           "kostenlose Steuererklärungen",
           "offenes System",
           "über uns",
@@ -1385,10 +1385,10 @@ export function generateAboutPageMetadata(
         ],
       },
       pt: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Portugal ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Criamos ferramentas acessíveis para cidadãos portugueses. Seus dados permanecem com você.`,
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Portugal ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Criamos ferramentas acessíveis para cidadãos portugueses. Seus dados permanecem com você.`,
         keywords: [
-          "sobre Monegoo",
+          "sobre Taxered",
           "declarações fiscais gratuitas",
           "sistema aberto",
           "sobre nós",
@@ -1399,10 +1399,10 @@ export function generateAboutPageMetadata(
         ],
       },
       es: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales España ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Creamos herramientas accesibles para ciudadanos españoles. Sus datos permanecen con usted.`,
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales España ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Creamos herramientas accesibles para ciudadanos españoles. Sus datos permanecen con usted.`,
         keywords: [
-          "acerca de Monegoo",
+          "acerca de Taxered",
           "declaraciones fiscales gratuitas",
           "sistema abierto",
           "acerca de",
@@ -1413,10 +1413,10 @@ export function generateAboutPageMetadata(
         ],
       },
       se: {
-        title: `Om Monegoo - Gratis system för skattedeklarationer Sverige ${currentYear}`,
-        description: `Monegoo är ett gratis öppet online-system för att fylla i skattedeklarationer. Vi skapar tillgängliga verktyg för svenska medborgare. Dina data stannar hos dig.`,
+        title: `Om Taxered - Gratis system för skattedeklarationer Sverige ${currentYear}`,
+        description: `Taxered är ett gratis öppet online-system för att fylla i skattedeklarationer. Vi skapar tillgängliga verktyg för svenska medborgare. Dina data stannar hos dig.`,
         keywords: [
-          "om Monegoo",
+          "om Taxered",
           "gratis skattedeklarationer",
           "öppet system",
           "om oss",
@@ -1427,10 +1427,10 @@ export function generateAboutPageMetadata(
         ],
       },
       gb: {
-        title: `About Monegoo - Free Tax Return System UK ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for UK citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System UK ${currentYear}`,
+        description: `Taxered is a free and open online system for completing tax returns. We create accessible tools for UK citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1442,10 +1442,10 @@ export function generateAboutPageMetadata(
         ],
       },
       us: {
-        title: `About Monegoo - Free Tax Return System USA ${currentYear}`,
-        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for US taxpayers. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System USA ${currentYear}`,
+        description: `Taxered is a free and open online system for filing tax returns. We create accessible tools for US taxpayers. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1456,10 +1456,10 @@ export function generateAboutPageMetadata(
         ],
       },
       ca: {
-        title: `About Monegoo - Free Tax Return System Canada ${currentYear}`,
-        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for Canadian taxpayers. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Canada ${currentYear}`,
+        description: `Taxered is a free and open online system for filing tax returns. We create accessible tools for Canadian taxpayers. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1472,10 +1472,10 @@ export function generateAboutPageMetadata(
     },
     en: {
       ua: {
-        title: `About Monegoo - Free Tax Declaration System Ukraine ${currentYear}`,
-        description: `Monegoo is a free and open online system for filling out tax declarations F0100214 and F0121214. We create accessible tools for Ukrainian citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Declaration System Ukraine ${currentYear}`,
+        description: `Taxered is a free and open online system for filling out tax declarations F0100214 and F0121214. We create accessible tools for Ukrainian citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax declarations",
           "open system",
           "about us",
@@ -1489,10 +1489,10 @@ export function generateAboutPageMetadata(
         ],
       },
       pl: {
-        title: `About Monegoo - Free Tax Return System Poland ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing PIT tax returns. We create accessible tools for Polish citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Poland ${currentYear}`,
+        description: `Taxered is a free and open online system for completing PIT tax returns. We create accessible tools for Polish citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1503,10 +1503,10 @@ export function generateAboutPageMetadata(
         ],
       },
       fr: {
-        title: `About Monegoo - Free Tax Return System France ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for French citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System France ${currentYear}`,
+        description: `Taxered is a free and open online system for completing tax returns. We create accessible tools for French citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1517,10 +1517,10 @@ export function generateAboutPageMetadata(
         ],
       },
       de: {
-        title: `About Monegoo - Free Tax Return System Germany ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for German citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Germany ${currentYear}`,
+        description: `Taxered is a free and open online system for completing tax returns. We create accessible tools for German citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1531,10 +1531,10 @@ export function generateAboutPageMetadata(
         ],
       },
       pt: {
-        title: `About Monegoo - Free Tax Return System Portugal ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing IRS declarations. We create accessible tools for Portuguese citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Portugal ${currentYear}`,
+        description: `Taxered is a free and open online system for completing IRS declarations. We create accessible tools for Portuguese citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1545,10 +1545,10 @@ export function generateAboutPageMetadata(
         ],
       },
       es: {
-        title: `About Monegoo - Free Tax Return System Spain ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for Spanish citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Spain ${currentYear}`,
+        description: `Taxered is a free and open online system for completing tax returns. We create accessible tools for Spanish citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1559,10 +1559,10 @@ export function generateAboutPageMetadata(
         ],
       },
       se: {
-        title: `About Monegoo - Free Tax Return System Sweden ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing income declarations. We create accessible tools for Swedish citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Sweden ${currentYear}`,
+        description: `Taxered is a free and open online system for completing income declarations. We create accessible tools for Swedish citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1573,10 +1573,10 @@ export function generateAboutPageMetadata(
         ],
       },
       gb: {
-        title: `About Monegoo - Free Tax Return System UK ${currentYear}`,
-        description: `Monegoo is a free and open online system for completing tax returns. We create accessible tools for UK citizens. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System UK ${currentYear}`,
+        description: `Taxered is a free and open online system for completing tax returns. We create accessible tools for UK citizens. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1588,10 +1588,10 @@ export function generateAboutPageMetadata(
         ],
       },
       us: {
-        title: `About Monegoo - Free Tax Return System USA ${currentYear}`,
-        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for US taxpayers. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System USA ${currentYear}`,
+        description: `Taxered is a free and open online system for filing tax returns. We create accessible tools for US taxpayers. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1602,10 +1602,10 @@ export function generateAboutPageMetadata(
         ],
       },
       ca: {
-        title: `About Monegoo - Free Tax Return System Canada ${currentYear}`,
-        description: `Monegoo is a free and open online system for filing tax returns. We create accessible tools for Canadian taxpayers. Your data stays with you.`,
+        title: `About Taxered - Free Tax Return System Canada ${currentYear}`,
+        description: `Taxered is a free and open online system for filing tax returns. We create accessible tools for Canadian taxpayers. Your data stays with you.`,
         keywords: [
-          "about Monegoo",
+          "about Taxered",
           "free tax returns",
           "open system",
           "about us",
@@ -1618,10 +1618,10 @@ export function generateAboutPageMetadata(
     },
     fr: {
       ua: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Ukraine ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales F0100214 et F0121214. Nous créons des outils accessibles pour les citoyens ukrainiens. Vos données restent chez vous.`,
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales Ukraine ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales F0100214 et F0121214. Nous créons des outils accessibles pour les citoyens ukrainiens. Vos données restent chez vous.`,
         keywords: [
-          "à propos de Monegoo",
+          "à propos de Taxered",
           "déclarations fiscales gratuites",
           "système ouvert",
           "F0100214",
@@ -1630,15 +1630,15 @@ export function generateAboutPageMetadata(
         ],
       },
       pl: {
-        title: `À propos de Monegoo - Système gratuit de déclarations PIT Pologne ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations PIT. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "PIT", "Pologne"],
+        title: `À propos de Taxered - Système gratuit de déclarations PIT Pologne ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations PIT. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "PIT", "Pologne"],
       },
       fr: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales France ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Nous créons des outils accessibles pour les citoyens français. Vos données restent chez vous.`,
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales France ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Nous créons des outils accessibles pour les citoyens français. Vos données restent chez vous.`,
         keywords: [
-          "à propos de Monegoo",
+          "à propos de Taxered",
           "déclarations fiscales gratuites",
           "système ouvert",
           "à propos",
@@ -1649,52 +1649,52 @@ export function generateAboutPageMetadata(
         ],
       },
       de: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Allemagne ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "Allemagne"],
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales Allemagne ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "Allemagne"],
       },
       pt: {
-        title: `À propos de Monegoo - Système gratuit de déclarations IRS Portugal ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations IRS. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "IRS", "Portugal"],
+        title: `À propos de Taxered - Système gratuit de déclarations IRS Portugal ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations IRS. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "IRS", "Portugal"],
       },
       es: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Espagne ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "Espagne"],
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales Espagne ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "Espagne"],
       },
       se: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Suède ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations de revenus. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "Suède"],
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales Suède ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations de revenus. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "Suède"],
       },
       gb: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Royaume-Uni ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "Royaume-Uni"],
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales Royaume-Uni ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "Royaume-Uni"],
       },
       us: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales États-Unis ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "États-Unis"],
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales États-Unis ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "États-Unis"],
       },
       ca: {
-        title: `À propos de Monegoo - Système gratuit de déclarations fiscales Canada ${currentYear}`,
-        description: `Monegoo est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
-        keywords: ["à propos de Monegoo", "Canada"],
+        title: `À propos de Taxered - Système gratuit de déclarations fiscales Canada ${currentYear}`,
+        description: `Taxered est un système en ligne gratuit et ouvert pour remplir les déclarations fiscales. Vos données restent chez vous.`,
+        keywords: ["à propos de Taxered", "Canada"],
       },
     },
     pl: {
       ua: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Ukraina ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych F0100214 i F0121214. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "F0100214", "F0121214", "Ukraina"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych Ukraina ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych F0100214 i F0121214. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "F0100214", "F0121214", "Ukraina"],
       },
       pl: {
-        title: `O Monegoo - Bezpłatny system rozliczeń podatkowych Polska ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych PIT. Tworzymy dostępne narzędzia dla obywateli Polski. Twoje dane pozostają tylko u Ciebie.`,
+        title: `O Taxered - Bezpłatny system rozliczeń podatkowych Polska ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych PIT. Tworzymy dostępne narzędzia dla obywateli Polski. Twoje dane pozostają tylko u Ciebie.`,
         keywords: [
-          "o Monegoo",
+          "o Taxered",
           "bezpłatne deklaracje podatkowe",
           "otwarty system",
           "o nas",
@@ -1705,77 +1705,77 @@ export function generateAboutPageMetadata(
         ],
       },
       fr: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Francja ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "Francja"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych Francja ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "Francja"],
       },
       de: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Niemcy ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "Niemcy"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych Niemcy ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "Niemcy"],
       },
       pt: {
-        title: `O Monegoo - Bezpłatny system deklaracji IRS Portugalia ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji IRS. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "IRS", "Portugalia"],
+        title: `O Taxered - Bezpłatny system deklaracji IRS Portugalia ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji IRS. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "IRS", "Portugalia"],
       },
       es: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Hiszpania ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "Hiszpania"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych Hiszpania ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "Hiszpania"],
       },
       se: {
-        title: `O Monegoo - Bezpłatny system deklaracji dochodów Szwecja ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji dochodów. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "Szwecja"],
+        title: `O Taxered - Bezpłatny system deklaracji dochodów Szwecja ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji dochodów. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "Szwecja"],
       },
       gb: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Wielka Brytania ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "Wielka Brytania"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych Wielka Brytania ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "Wielka Brytania"],
       },
       us: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych USA ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "USA"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych USA ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "USA"],
       },
       ca: {
-        title: `O Monegoo - Bezpłatny system deklaracji podatkowych Kanada ${currentYear}`,
-        description: `Monegoo to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
-        keywords: ["o Monegoo", "Kanada"],
+        title: `O Taxered - Bezpłatny system deklaracji podatkowych Kanada ${currentYear}`,
+        description: `Taxered to bezpłatny otwarty system online do wypełniania deklaracji podatkowych. Twoje dane pozostają tylko u Ciebie.`,
+        keywords: ["o Taxered", "Kanada"],
       },
     },
     es: {
       ua: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Ucrania ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales F0100214 y F0121214. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "F0100214", "F0121214", "Ucrania"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Ucrania ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales F0100214 y F0121214. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "F0100214", "F0121214", "Ucrania"],
       },
       pl: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones PIT Polonia ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones PIT. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "PIT", "Polonia"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones PIT Polonia ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones PIT. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "PIT", "Polonia"],
       },
       fr: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Francia ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "Francia"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Francia ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "Francia"],
       },
       de: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Alemania ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "Alemania"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Alemania ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "Alemania"],
       },
       pt: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones IRS Portugal ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones IRS. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "IRS", "Portugal"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones IRS Portugal ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones IRS. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "IRS", "Portugal"],
       },
       es: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales España ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Creamos herramientas accesibles para ciudadanos españoles. Sus datos permanecen con usted.`,
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales España ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Creamos herramientas accesibles para ciudadanos españoles. Sus datos permanecen con usted.`,
         keywords: [
-          "acerca de Monegoo",
+          "acerca de Taxered",
           "declaraciones fiscales gratuitas",
           "sistema abierto",
           "acerca de",
@@ -1786,52 +1786,52 @@ export function generateAboutPageMetadata(
         ],
       },
       se: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Suecia ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones de ingresos. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "Suecia"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Suecia ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones de ingresos. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "Suecia"],
       },
       gb: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Reino Unido ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "Reino Unido"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Reino Unido ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "Reino Unido"],
       },
       us: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Estados Unidos ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "Estados Unidos"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Estados Unidos ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "Estados Unidos"],
       },
       ca: {
-        title: `Acerca de Monegoo - Sistema gratuito de declaraciones fiscales Canadá ${currentYear}`,
-        description: `Monegoo es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
-        keywords: ["acerca de Monegoo", "Canadá"],
+        title: `Acerca de Taxered - Sistema gratuito de declaraciones fiscales Canadá ${currentYear}`,
+        description: `Taxered es un sistema en línea gratuito y abierto para completar declaraciones fiscales. Sus datos permanecen con usted.`,
+        keywords: ["acerca de Taxered", "Canadá"],
       },
     },
     pt: {
       ua: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Ucrânia ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais F0100214 e F0121214. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "F0100214", "F0121214", "Ucrânia"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Ucrânia ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais F0100214 e F0121214. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "F0100214", "F0121214", "Ucrânia"],
       },
       pl: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações PIT Polónia ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações PIT. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "PIT", "Polónia"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações PIT Polónia ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações PIT. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "PIT", "Polónia"],
       },
       fr: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais França ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "França"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais França ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "França"],
       },
       de: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Alemanha ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "Alemanha"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Alemanha ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "Alemanha"],
       },
       pt: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Portugal ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Criamos ferramentas acessíveis para cidadãos portugueses. Seus dados permanecem com você.`,
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Portugal ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Criamos ferramentas acessíveis para cidadãos portugueses. Seus dados permanecem com você.`,
         keywords: [
-          "sobre Monegoo",
+          "sobre Taxered",
           "declarações fiscais gratuitas",
           "sistema aberto",
           "sobre nós",
@@ -1842,52 +1842,52 @@ export function generateAboutPageMetadata(
         ],
       },
       es: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Espanha ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "Espanha"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Espanha ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "Espanha"],
       },
       se: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Suécia ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações de rendimentos. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "Suécia"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Suécia ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações de rendimentos. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "Suécia"],
       },
       gb: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Reino Unido ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "Reino Unido"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Reino Unido ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "Reino Unido"],
       },
       us: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Estados Unidos ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "Estados Unidos"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Estados Unidos ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "Estados Unidos"],
       },
       ca: {
-        title: `Sobre a Monegoo - Sistema gratuito de declarações fiscais Canadá ${currentYear}`,
-        description: `Monegoo é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
-        keywords: ["sobre Monegoo", "Canadá"],
+        title: `Sobre a Taxered - Sistema gratuito de declarações fiscais Canadá ${currentYear}`,
+        description: `Taxered é um sistema online gratuito e aberto para preencher declarações fiscais. Seus dados permanecem com você.`,
+        keywords: ["sobre Taxered", "Canadá"],
       },
     },
     de: {
       ua: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Ukraine ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen F0100214 und F0121214. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "F0100214", "F0121214", "Ukraine"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Ukraine ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen F0100214 und F0121214. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "F0100214", "F0121214", "Ukraine"],
       },
       pl: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Polen ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von PIT-Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "PIT", "Polen"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Polen ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von PIT-Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "PIT", "Polen"],
       },
       fr: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Frankreich ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "Frankreich"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Frankreich ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "Frankreich"],
       },
       de: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Deutschland ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Wir schaffen zugängliche Tools für deutsche Bürger. Ihre Daten bleiben bei Ihnen.`,
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Deutschland ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Wir schaffen zugängliche Tools für deutsche Bürger. Ihre Daten bleiben bei Ihnen.`,
         keywords: [
-          "über Monegoo",
+          "über Taxered",
           "kostenlose Steuererklärungen",
           "offenes System",
           "über uns",
@@ -1898,34 +1898,34 @@ export function generateAboutPageMetadata(
         ],
       },
       pt: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Portugal ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "Portugal"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Portugal ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "Portugal"],
       },
       es: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Spanien ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "Spanien"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Spanien ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "Spanien"],
       },
       se: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Schweden ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Einkommenserklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "Schweden"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Schweden ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Einkommenserklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "Schweden"],
       },
       gb: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Vereinigtes Königreich ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "Vereinigtes Königreich"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Vereinigtes Königreich ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "Vereinigtes Königreich"],
       },
       us: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Vereinigte Staaten ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "USA"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Vereinigte Staaten ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "USA"],
       },
       ca: {
-        title: `Über Monegoo - Kostenloses Steuererklärungssystem Kanada ${currentYear}`,
-        description: `Monegoo ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
-        keywords: ["über Monegoo", "Kanada"],
+        title: `Über Taxered - Kostenloses Steuererklärungssystem Kanada ${currentYear}`,
+        description: `Taxered ist ein kostenloses offenes Online-System zum Ausfüllen von Steuererklärungen. Ihre Daten bleiben bei Ihnen.`,
+        keywords: ["über Taxered", "Kanada"],
       },
     },
   }
@@ -1948,10 +1948,10 @@ export function generateAboutMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://monegoo.com/${locale}/about`,
+      url: `https://taxered.com/${locale}/about`,
       title: seo.title,
       description: seo.description,
-      siteName: "Monegoo Tax Declaration",
+      siteName: "Taxered Tax Declaration",
       images: [
         {
           url: "/placeholder-logo.png",
@@ -1969,9 +1969,9 @@ export function generateAboutMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://monegoo.com/${locale}/about`,
+      canonical: `https://taxered.com/${locale}/about`,
       languages: {
-        "x-default": "https://monegoo.com",
+        "x-default": "https://taxered.com",
         "uk-UA": "/uk-ua/about",
         "en-US": "/en-us/about",
         "en-GB": "/en-gb/about",
@@ -2013,10 +2013,10 @@ export function generateHelpMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://monegoo.com/${locale}/help`,
+      url: `https://taxered.com/${locale}/help`,
       title: seo.title,
       description: seo.description,
-      siteName: "Monegoo Tax Declaration",
+      siteName: "Taxered Tax Declaration",
       images: [
         {
           url: "/placeholder-logo.png",
@@ -2034,9 +2034,9 @@ export function generateHelpMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://monegoo.com/${locale}/help`,
+      canonical: `https://taxered.com/${locale}/help`,
       languages: {
-        "x-default": "https://monegoo.com",
+        "x-default": "https://taxered.com",
         "uk-UA": "/uk-ua/help",
         "en-US": "/en-us/help",
         "en-GB": "/en-gb/help",
@@ -2073,7 +2073,7 @@ export function generateCalculatorPageMetadata(
   const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
     uk: {
       ua: {
-        title: `Податковий калькулятор ${currentYear} - Розрахунок податків онлайн | Monegoo`,
+        title: `Податковий калькулятор ${currentYear} - Розрахунок податків онлайн | Taxered`,
         description: `Безкоштовний онлайн калькулятор податків для України та інших країн. Розрахуйте ПДФО, військовий збір, податок на інвестиції. Порівняйте ставки податків у різних країнах.`,
         keywords: [
           "податковий калькулятор",
@@ -2086,7 +2086,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       pl: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki online | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki online | Taxered`,
         description: `Bezpłatny kalkulator podatkowy online dla Polski i innych krajów. Oblicz PIT, ZUS, podatek od zysków kapitałowych. Porównaj stawki podatkowe w różnych krajach.`,
         keywords: [
           "kalkulator podatkowy",
@@ -2097,7 +2097,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       fr: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez vos impôts en ligne | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez vos impôts en ligne | Taxered`,
         description: `Calculateur d'impôts gratuit en ligne pour la France et d'autres pays. Calculez l'impôt sur le revenu, les cotisations sociales, la flat tax. Comparez les taux d'imposition.`,
         keywords: [
           "calculateur d'impôts",
@@ -2108,7 +2108,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       de: {
-        title: `Steuerrechner ${currentYear} - Steuern online berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Steuern online berechnen | Taxered`,
         description: `Kostenloser Online-Steuerrechner für Deutschland und andere Länder. Berechnen Sie Einkommensteuer, Sozialabgaben, Kapitalertragsteuer. Vergleichen Sie Steuersätze.`,
         keywords: [
           "Steuerrechner",
@@ -2119,7 +2119,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       pt: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos online | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos online | Taxered`,
         description: `Calculadora de impostos gratuita online para Portugal e outros países. Calcule IRS, Segurança Social, mais-valias. Compare taxas de imposto em diferentes países.`,
         keywords: [
           "calculadora de impostos",
@@ -2130,7 +2130,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       es: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos online | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos online | Taxered`,
         description: `Calculadora de impuestos gratuita online para España y otros países. Calcula IRPF, Seguridad Social, impuesto sobre ganancias. Compara tasas impositivas.`,
         keywords: [
           "calculadora de impuestos",
@@ -2141,7 +2141,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       se: {
-        title: `Skattekalkylator ${currentYear} - Beräkna skatt online | Monegoo`,
+        title: `Skattekalkylator ${currentYear} - Beräkna skatt online | Taxered`,
         description: `Gratis skattekalkylator online för Sverige och andra länder. Beräkna inkomstskatt, kommunalskatt, kapitalvinstskatt. Jämför skattesatser i olika länder.`,
         keywords: [
           "skattekalkylator",
@@ -2152,7 +2152,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       gb: {
-        title: `Tax Calculator ${currentYear} - Calculate taxes online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate taxes online | Taxered`,
         description: `Free online tax calculator for the UK and other countries. Calculate income tax, National Insurance, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2163,7 +2163,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       us: {
-        title: `Tax Calculator ${currentYear} - Calculate taxes online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate taxes online | Taxered`,
         description: `Free online tax calculator for the USA and other countries. Calculate federal income tax, FICA, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2174,7 +2174,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       ca: {
-        title: `Tax Calculator ${currentYear} - Calculate taxes online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate taxes online | Taxered`,
         description: `Free online tax calculator for Canada and other countries. Calculate federal income tax, CPP, EI, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2187,7 +2187,7 @@ export function generateCalculatorPageMetadata(
     },
     en: {
       ua: {
-        title: `Tax Calculator ${currentYear} - Calculate Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate Taxes Online | Taxered`,
         description: `Free online tax calculator for Ukraine and other countries. Calculate personal income tax, military duty, investment tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2198,7 +2198,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       pl: {
-        title: `Tax Calculator ${currentYear} - Calculate Polish Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate Polish Taxes Online | Taxered`,
         description: `Free online tax calculator for Poland and other countries. Calculate PIT, ZUS contributions, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2209,7 +2209,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       fr: {
-        title: `Tax Calculator ${currentYear} - Calculate French Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate French Taxes Online | Taxered`,
         description: `Free online tax calculator for France and other countries. Calculate income tax, social contributions, flat tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2220,7 +2220,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       de: {
-        title: `Tax Calculator ${currentYear} - Calculate German Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate German Taxes Online | Taxered`,
         description: `Free online tax calculator for Germany and other countries. Calculate income tax, social insurance, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2231,7 +2231,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       pt: {
-        title: `Tax Calculator ${currentYear} - Calculate Portuguese Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate Portuguese Taxes Online | Taxered`,
         description: `Free online tax calculator for Portugal and other countries. Calculate IRS, social security, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2242,7 +2242,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       es: {
-        title: `Tax Calculator ${currentYear} - Calculate Spanish Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate Spanish Taxes Online | Taxered`,
         description: `Free online tax calculator for Spain and other countries. Calculate IRPF, social security, savings tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2253,7 +2253,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       se: {
-        title: `Tax Calculator ${currentYear} - Calculate Swedish Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate Swedish Taxes Online | Taxered`,
         description: `Free online tax calculator for Sweden and other countries. Calculate municipal tax, state tax, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2264,7 +2264,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       gb: {
-        title: `Tax Calculator ${currentYear} - Calculate UK Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate UK Taxes Online | Taxered`,
         description: `Free online tax calculator for the UK and other countries. Calculate income tax, National Insurance, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2275,7 +2275,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       us: {
-        title: `Tax Calculator ${currentYear} - Calculate US Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate US Taxes Online | Taxered`,
         description: `Free online tax calculator for the USA and other countries. Calculate federal income tax, FICA, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2286,7 +2286,7 @@ export function generateCalculatorPageMetadata(
         ],
       },
       ca: {
-        title: `Tax Calculator ${currentYear} - Calculate Canadian Taxes Online | Monegoo`,
+        title: `Tax Calculator ${currentYear} - Calculate Canadian Taxes Online | Taxered`,
         description: `Free online tax calculator for Canada and other countries. Calculate federal income tax, CPP, EI, capital gains tax. Compare tax rates across countries.`,
         keywords: [
           "tax calculator",
@@ -2299,260 +2299,260 @@ export function generateCalculatorPageMetadata(
     },
     fr: {
       ua: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts ukrainiens | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts ukrainiens | Taxered`,
         description: `Calculateur d'impôts gratuit pour l'Ukraine et d'autres pays. Calculez l'impôt sur le revenu, la taxe militaire.`,
         keywords: ["calculateur d'impôts", "impôts Ukraine"],
       },
       pl: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts polonais | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts polonais | Taxered`,
         description: `Calculateur d'impôts gratuit pour la Pologne. Calculez le PIT, les cotisations ZUS.`,
         keywords: ["calculateur d'impôts", "impôts Pologne"],
       },
       fr: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez vos impôts en ligne | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez vos impôts en ligne | Taxered`,
         description: `Calculateur d'impôts gratuit pour la France. Calculez l'impôt sur le revenu, les cotisations sociales, le PFU.`,
         keywords: ["calculateur d'impôts", "impôts France", "PFU"],
       },
       de: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts allemands | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts allemands | Taxered`,
         description: `Calculateur d'impôts gratuit pour l'Allemagne. Calculez l'impôt sur le revenu, les assurances sociales.`,
         keywords: ["calculateur d'impôts", "impôts Allemagne"],
       },
       pt: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts portugais | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts portugais | Taxered`,
         description: `Calculateur d'impôts gratuit pour le Portugal. Calculez l'IRS, la sécurité sociale.`,
         keywords: ["calculateur d'impôts", "impôts Portugal"],
       },
       es: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts espagnols | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts espagnols | Taxered`,
         description: `Calculateur d'impôts gratuit pour l'Espagne. Calculez l'IRPF, la sécurité sociale.`,
         keywords: ["calculateur d'impôts", "impôts Espagne"],
       },
       se: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts suédois | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts suédois | Taxered`,
         description: `Calculateur d'impôts gratuit pour la Suède. Calculez l'impôt municipal, l'impôt d'État.`,
         keywords: ["calculateur d'impôts", "impôts Suède"],
       },
       gb: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts britanniques | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts britanniques | Taxered`,
         description: `Calculateur d'impôts gratuit pour le Royaume-Uni. Calculez l'impôt sur le revenu, l'assurance nationale.`,
         keywords: ["calculateur d'impôts", "impôts UK"],
       },
       us: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts américains | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts américains | Taxered`,
         description: `Calculateur d'impôts gratuit pour les États-Unis. Calculez l'impôt fédéral, FICA.`,
         keywords: ["calculateur d'impôts", "impôts USA"],
       },
       ca: {
-        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts canadiens | Monegoo`,
+        title: `Calculateur d'impôts ${currentYear} - Calculez les impôts canadiens | Taxered`,
         description: `Calculateur d'impôts gratuit pour le Canada. Calculez l'impôt fédéral, RPC, AE.`,
         keywords: ["calculateur d'impôts", "impôts Canada"],
       },
     },
     pl: {
       ua: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki ukraińskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki ukraińskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Ukrainy. Oblicz podatek dochodowy, podatek wojskowy.`,
         keywords: ["kalkulator podatkowy", "podatki Ukraina"],
       },
       pl: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki online | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki online | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Polski. Oblicz PIT, składki ZUS, podatek od zysków kapitałowych.`,
         keywords: ["kalkulator podatkowy", "PIT", "ZUS", "podatki Polska"],
       },
       fr: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki francuskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki francuskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Francji. Oblicz podatek dochodowy, składki społeczne.`,
         keywords: ["kalkulator podatkowy", "podatki Francja"],
       },
       de: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki niemieckie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki niemieckie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Niemiec. Oblicz podatek dochodowy, ubezpieczenia społeczne.`,
         keywords: ["kalkulator podatkowy", "podatki Niemcy"],
       },
       pt: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki portugalskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki portugalskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Portugalii. Oblicz IRS, ubezpieczenia społeczne.`,
         keywords: ["kalkulator podatkowy", "podatki Portugalia"],
       },
       es: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki hiszpańskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki hiszpańskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Hiszpanii. Oblicz IRPF, ubezpieczenia społeczne.`,
         keywords: ["kalkulator podatkowy", "podatki Hiszpania"],
       },
       se: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki szwedzkie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki szwedzkie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Szwecji. Oblicz podatek komunalny, państwowy.`,
         keywords: ["kalkulator podatkowy", "podatki Szwecja"],
       },
       gb: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki brytyjskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki brytyjskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Wielkiej Brytanii. Oblicz podatek dochodowy, NI.`,
         keywords: ["kalkulator podatkowy", "podatki UK"],
       },
       us: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki amerykańskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki amerykańskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla USA. Oblicz podatek federalny, FICA.`,
         keywords: ["kalkulator podatkowy", "podatki USA"],
       },
       ca: {
-        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki kanadyjskie | Monegoo`,
+        title: `Kalkulator podatkowy ${currentYear} - Oblicz podatki kanadyjskie | Taxered`,
         description: `Bezpłatny kalkulator podatkowy dla Kanady. Oblicz podatek federalny, CPP, EI.`,
         keywords: ["kalkulator podatkowy", "podatki Kanada"],
       },
     },
     es: {
       ua: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos ucranianos | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos ucranianos | Taxered`,
         description: `Calculadora de impuestos gratuita para Ucrania. Calcula el impuesto sobre la renta, el impuesto militar.`,
         keywords: ["calculadora de impuestos", "impuestos Ucrania"],
       },
       pl: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos polacos | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos polacos | Taxered`,
         description: `Calculadora de impuestos gratuita para Polonia. Calcula PIT, cotizaciones ZUS.`,
         keywords: ["calculadora de impuestos", "impuestos Polonia"],
       },
       fr: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos franceses | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos franceses | Taxered`,
         description: `Calculadora de impuestos gratuita para Francia. Calcula el impuesto sobre la renta, cotizaciones sociales.`,
         keywords: ["calculadora de impuestos", "impuestos Francia"],
       },
       de: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos alemanes | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos alemanes | Taxered`,
         description: `Calculadora de impuestos gratuita para Alemania. Calcula el impuesto sobre la renta, seguros sociales.`,
         keywords: ["calculadora de impuestos", "impuestos Alemania"],
       },
       pt: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos portugueses | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos portugueses | Taxered`,
         description: `Calculadora de impuestos gratuita para Portugal. Calcula IRS, seguridad social.`,
         keywords: ["calculadora de impuestos", "impuestos Portugal"],
       },
       es: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos online | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos online | Taxered`,
         description: `Calculadora de impuestos gratuita para España. Calcula IRPF, Seguridad Social, impuesto del ahorro.`,
         keywords: ["calculadora de impuestos", "IRPF", "impuestos España"],
       },
       se: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos suecos | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos suecos | Taxered`,
         description: `Calculadora de impuestos gratuita para Suecia. Calcula el impuesto municipal, estatal.`,
         keywords: ["calculadora de impuestos", "impuestos Suecia"],
       },
       gb: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos británicos | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos británicos | Taxered`,
         description: `Calculadora de impuestos gratuita para Reino Unido. Calcula el impuesto sobre la renta, NI.`,
         keywords: ["calculadora de impuestos", "impuestos UK"],
       },
       us: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos americanos | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos americanos | Taxered`,
         description: `Calculadora de impuestos gratuita para EE.UU. Calcula el impuesto federal, FICA.`,
         keywords: ["calculadora de impuestos", "impuestos USA"],
       },
       ca: {
-        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos canadienses | Monegoo`,
+        title: `Calculadora de Impuestos ${currentYear} - Calcula impuestos canadienses | Taxered`,
         description: `Calculadora de impuestos gratuita para Canadá. Calcula el impuesto federal, CPP, EI.`,
         keywords: ["calculadora de impuestos", "impuestos Canadá"],
       },
     },
     pt: {
       ua: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos ucranianos | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos ucranianos | Taxered`,
         description: `Calculadora de impostos gratuita para a Ucrânia. Calcule o imposto sobre o rendimento, taxa militar.`,
         keywords: ["calculadora de impostos", "impostos Ucrânia"],
       },
       pl: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos polacos | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos polacos | Taxered`,
         description: `Calculadora de impostos gratuita para a Polónia. Calcule PIT, contribuições ZUS.`,
         keywords: ["calculadora de impostos", "impostos Polónia"],
       },
       fr: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos franceses | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos franceses | Taxered`,
         description: `Calculadora de impostos gratuita para a França. Calcule o imposto sobre o rendimento, contribuições sociais.`,
         keywords: ["calculadora de impostos", "impostos França"],
       },
       de: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos alemães | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos alemães | Taxered`,
         description: `Calculadora de impostos gratuita para a Alemanha. Calcule o imposto sobre o rendimento, seguros sociais.`,
         keywords: ["calculadora de impostos", "impostos Alemanha"],
       },
       pt: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos online | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos online | Taxered`,
         description: `Calculadora de impostos gratuita para Portugal. Calcule IRS, Segurança Social, mais-valias.`,
         keywords: ["calculadora de impostos", "IRS", "impostos Portugal"],
       },
       es: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos espanhóis | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos espanhóis | Taxered`,
         description: `Calculadora de impostos gratuita para Espanha. Calcule IRPF, segurança social.`,
         keywords: ["calculadora de impostos", "impostos Espanha"],
       },
       se: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos suecos | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos suecos | Taxered`,
         description: `Calculadora de impostos gratuita para a Suécia. Calcule o imposto municipal, estatal.`,
         keywords: ["calculadora de impostos", "impostos Suécia"],
       },
       gb: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos britânicos | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos britânicos | Taxered`,
         description: `Calculadora de impostos gratuita para o Reino Unido. Calcule o imposto sobre o rendimento, NI.`,
         keywords: ["calculadora de impostos", "impostos UK"],
       },
       us: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos americanos | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos americanos | Taxered`,
         description: `Calculadora de impostos gratuita para os EUA. Calcule o imposto federal, FICA.`,
         keywords: ["calculadora de impostos", "impostos USA"],
       },
       ca: {
-        title: `Calculadora de Impostos ${currentYear} - Calcule impostos canadenses | Monegoo`,
+        title: `Calculadora de Impostos ${currentYear} - Calcule impostos canadenses | Taxered`,
         description: `Calculadora de impostos gratuita para o Canadá. Calcule o imposto federal, CPP, EI.`,
         keywords: ["calculadora de impostos", "impostos Canadá"],
       },
     },
     de: {
       ua: {
-        title: `Steuerrechner ${currentYear} - Ukrainische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Ukrainische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für die Ukraine. Berechnen Sie Einkommensteuer, Militärsteuer.`,
         keywords: ["Steuerrechner", "Steuern Ukraine"],
       },
       pl: {
-        title: `Steuerrechner ${currentYear} - Polnische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Polnische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Polen. Berechnen Sie PIT, ZUS-Beiträge.`,
         keywords: ["Steuerrechner", "Steuern Polen"],
       },
       fr: {
-        title: `Steuerrechner ${currentYear} - Französische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Französische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Frankreich. Berechnen Sie Einkommensteuer, Sozialabgaben.`,
         keywords: ["Steuerrechner", "Steuern Frankreich"],
       },
       de: {
-        title: `Steuerrechner ${currentYear} - Steuern online berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Steuern online berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Deutschland. Berechnen Sie Einkommensteuer, Sozialversicherung, Kapitalertragsteuer.`,
         keywords: ["Steuerrechner", "Einkommensteuer", "Steuern Deutschland"],
       },
       pt: {
-        title: `Steuerrechner ${currentYear} - Portugiesische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Portugiesische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Portugal. Berechnen Sie IRS, Sozialversicherung.`,
         keywords: ["Steuerrechner", "Steuern Portugal"],
       },
       es: {
-        title: `Steuerrechner ${currentYear} - Spanische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Spanische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Spanien. Berechnen Sie IRPF, Sozialversicherung.`,
         keywords: ["Steuerrechner", "Steuern Spanien"],
       },
       se: {
-        title: `Steuerrechner ${currentYear} - Schwedische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Schwedische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Schweden. Berechnen Sie Gemeindesteuer, Staatssteuer.`,
         keywords: ["Steuerrechner", "Steuern Schweden"],
       },
       gb: {
-        title: `Steuerrechner ${currentYear} - Britische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Britische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Großbritannien. Berechnen Sie Einkommensteuer, NI.`,
         keywords: ["Steuerrechner", "Steuern UK"],
       },
       us: {
-        title: `Steuerrechner ${currentYear} - Amerikanische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Amerikanische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für die USA. Berechnen Sie Bundessteuer, FICA.`,
         keywords: ["Steuerrechner", "Steuern USA"],
       },
       ca: {
-        title: `Steuerrechner ${currentYear} - Kanadische Steuern berechnen | Monegoo`,
+        title: `Steuerrechner ${currentYear} - Kanadische Steuern berechnen | Taxered`,
         description: `Kostenloser Steuerrechner für Kanada. Berechnen Sie Bundessteuer, CPP, EI.`,
         keywords: ["Steuerrechner", "Steuern Kanada"],
       },
@@ -2581,10 +2581,10 @@ export function generateCalculatorMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://monegoo.com/${locale}/calculator`,
+      url: `https://taxered.com/${locale}/calculator`,
       title: seo.title,
       description: seo.description,
-      siteName: "Monegoo Tax Declaration",
+      siteName: "Taxered Tax Declaration",
       images: [
         {
           url: "/placeholder-logo.png",
@@ -2602,9 +2602,9 @@ export function generateCalculatorMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://monegoo.com/${locale}/calculator`,
+      canonical: `https://taxered.com/${locale}/calculator`,
       languages: {
-        "x-default": "https://monegoo.com",
+        "x-default": "https://taxered.com",
         "uk-UA": "/uk-ua/calculator",
         "en-US": "/en-us/calculator",
         "en-GB": "/en-gb/calculator",

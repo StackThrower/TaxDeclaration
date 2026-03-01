@@ -25,8 +25,8 @@ The app will be available at: http://localhost:3000
 3. Go to **Application** tab
 4. Click **Manifest** in left sidebar
 5. ✅ Verify you see:
-   - App name: "Monegoo - Tax Declaration System"
-   - Short name: "Monegoo"
+   - App name: "Taxered - Tax Declaration System"
+   - Short name: "Taxered"
    - Icons displayed
    - Start URL: "/"
    - Display: "standalone"
@@ -81,7 +81,7 @@ Expected PWA checks:
 
 2. **Alternative: Browser menu**
    - Click the three dots (⋮)
-   - Select "Install Monegoo..."
+   - Select "Install Taxered..."
 
 3. **After installation**
    - ✅ App opens in separate window
@@ -116,7 +116,7 @@ Expected PWA checks:
 
 1. **First visit**
    - ✅ Should see install prompt at bottom
-   - Message: "Install Monegoo App"
+   - Message: "Install Taxered App"
 
 2. **Dismiss prompt**
    - Click "Not now"

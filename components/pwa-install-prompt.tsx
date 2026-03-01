@@ -70,7 +70,7 @@ export function PwaInstallPrompt() {
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50 animate-in slide-in-from-bottom-5">
       <div className="bg-background border rounded-lg shadow-lg p-4 flex items-start gap-3">
         <div className="flex-1">
-          <h3 className="font-semibold text-sm mb-1">Install Monegoo App</h3>
+          <h3 className="font-semibold text-sm mb-1">Install Taxered App</h3>
           <p className="text-xs text-muted-foreground mb-3">
             Install our app for quick access and work offline
           </p>

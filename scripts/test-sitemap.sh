@@ -3,7 +3,7 @@
 # Sitemap Quick Test Script
 # Tests sitemap generation and validates structure
 
-echo "🗺️  Sitemap Testing for Monegoo.com"
+echo "🗺️  Sitemap Testing for Taxered.com"
 echo "===================================="
 echo ""
 

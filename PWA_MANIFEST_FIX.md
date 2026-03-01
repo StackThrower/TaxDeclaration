@@ -1,13 +1,13 @@
-# ✅ Исправление "No manifest detected" на monegoo.com
+# ✅ Исправление "No manifest detected" на taxered.com
 
 ## 🔧 Проблема
 
-На localhost PWA работает, но на production (monegoo.com) браузер показывает:
+На localhost PWA работает, но на production (taxered.com) браузер показывает:
 ```
 ❌ No manifest detected
 ```
 
-Хотя файл https://monegoo.com/manifest.json доступен.
+Хотя файл https://taxered.com/manifest.json доступен.
 
 ## 🎯 Причина
 
@@ -126,13 +126,13 @@ docker push your-registry/monegoo-app
 
 ```bash
 # 1. Manifest доступен
-curl -I https://monegoo.com/manifest.json
+curl -I https://taxered.com/manifest.json
 
 # 2. Правильный Content-Type
 # Должен быть: Content-Type: application/manifest+json
 
 # 3. HTML содержит ссылку
-curl -s https://monegoo.com | grep 'rel="manifest"'
+curl -s https://taxered.com | grep 'rel="manifest"'
 # Должно быть: <link rel="manifest" href="/manifest.json"/>
 ```
 
@@ -140,13 +140,13 @@ curl -s https://monegoo.com | grep 'rel="manifest"'
 
 ### 1. Chrome DevTools
 
-Откройте https://monegoo.com и:
+Откройте https://taxered.com и:
 
 1. **F12** → **Application** → **Manifest**
 2. Должен показать:
    ```
-   ✅ Manifest: https://monegoo.com/manifest.json
-   ✅ Name: Monegoo - Tax Declaration System
+   ✅ Manifest: https://taxered.com/manifest.json
+   ✅ Name: Taxered - Tax Declaration System
    ✅ Icons: 5 icons
    ```
 
@@ -160,7 +160,7 @@ curl -s https://monegoo.com | grep 'rel="manifest"'
 ### 3. Console
 
 ```javascript
-// В браузере на https://monegoo.com
+// В браузере на https://taxered.com
 fetch('/manifest.json')
   .then(r => r.json())
   .then(m => console.log('✅ Manifest loaded:', m))
@@ -169,7 +169,7 @@ fetch('/manifest.json')
 
 ## 🎯 Ожидаемый результат
 
-После деплоя на https://monegoo.com:
+После деплоя на https://taxered.com:
 
 ✅ **DevTools → Application → Manifest**: Показывает манифест  
 ✅ **Lighthouse PWA**: Score 90+  
@@ -199,7 +199,7 @@ location.reload()
 
 ### Проверка 3: Incognito режим
 
-Откройте https://monegoo.com в режиме инкогнито для чистой проверки.
+Откройте https://taxered.com в режиме инкогнито для чистой проверки.
 
 ### Проверка 4: Service Worker
 
@@ -218,7 +218,7 @@ navigator.serviceWorker.getRegistrations().then(regs => {
 
 - [ ] Build прошел успешно (`pnpm build`)
 - [ ] Файлы задеплоены на production
-- [ ] `https://monegoo.com/manifest.json` доступен (200 OK)
+- [ ] `https://taxered.com/manifest.json` доступен (200 OK)
 - [ ] HTML содержит `<link rel="manifest">`
 - [ ] DevTools показывает манифест без ошибок
 - [ ] Service Worker зарегистрирован

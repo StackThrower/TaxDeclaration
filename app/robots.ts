@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
     ],
-    sitemap: 'https://monegoo.com/sitemap.xml',
+    sitemap: 'https://taxered.com/sitemap.xml',
   }
 }
 

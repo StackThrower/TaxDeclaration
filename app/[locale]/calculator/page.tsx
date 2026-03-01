@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!locale) {
     return {
-      title: "Tax Calculator - Monegoo",
+      title: "Tax Calculator - Taxered",
       description: "Calculate your taxes online for different countries",
     }
   }
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (parts.length !== 2) {
     return {
-      title: "Tax Calculator - Monegoo",
+      title: "Tax Calculator - Taxered",
       description: "Calculate your taxes online for different countries",
     }
   }
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = getCountry(countryCode)
   if (!country) {
     return {
-      title: "Tax Calculator - Monegoo",
+      title: "Tax Calculator - Taxered",
       description: "Calculate your taxes online for different countries",
     }
   }
@@ -58,7 +58,7 @@ export default async function CalculatorPage({ params }: Props) {
     "@type": "WebApplication",
     "name": t(lang, "calculator.title"),
     "description": t(lang, "calculator.subtitle"),
-    "url": `https://monegoo.com/${locale}/calculator`,
+    "url": `https://taxered.com/${locale}/calculator`,
     "inLanguage": langCode,
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -69,8 +69,8 @@ export default async function CalculatorPage({ params }: Props) {
     },
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Monegoo Tax Declaration",
-      "url": "https://monegoo.com"
+      "name": "Taxered Tax Declaration",
+      "url": "https://taxered.com"
     }
   }
 
@@ -82,13 +82,13 @@ export default async function CalculatorPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://monegoo.com/${locale}`,
+        "item": `https://taxered.com/${locale}`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t(lang, "calculator.title"),
-        "item": `https://monegoo.com/${locale}/calculator`,
+        "item": `https://taxered.com/${locale}/calculator`,
       },
     ],
   }

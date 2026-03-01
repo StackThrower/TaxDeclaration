@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!locale) {
     return {
-      title: "Monegoo - Tax Declaration",
+      title: "Taxered - Tax Declaration",
       description: "Online system for filing tax declarations",
     }
   }
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (parts.length !== 2) {
     return {
-      title: "Monegoo - Tax Declaration",
+      title: "Taxered - Tax Declaration",
       description: "Online system for filing tax declarations",
     }
   }
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = getCountry(countryCode)
   if (!country) {
     return {
-      title: "Monegoo - Tax Declaration",
+      title: "Taxered - Tax Declaration",
       description: "Online system for filing tax declarations",
     }
   }
@@ -58,7 +58,7 @@ export default async function LocalePage({ params }: Props) {
   const getTranslation = (key: string) => {
     const translations: Record<string, Record<string, string>> = {
       uk: {
-        appName: "Monegoo - Податкові декларації",
+        appName: "Taxered - Податкові декларації",
         appDescription: "Безкоштовна онлайн система для заповнення податкових декларацій F0100214 та F0121214. Всі дані обробляються локально в вашому браузері.",
         feature1: "Заповнення декларації F0100214 онлайн",
         feature2: "Розрахунок податків F0121214 (Ф1)",
@@ -66,7 +66,7 @@ export default async function LocalePage({ params }: Props) {
         feature4: "Всі дані залишаються у вас",
       },
       en: {
-        appName: "Monegoo - Tax Declarations",
+        appName: "Taxered - Tax Declarations",
         appDescription: "Free online system for filling tax declarations F0100214 and F0121214. All data processed locally in your browser.",
         feature1: "Fill F0100214 declaration online",
         feature2: "Calculate taxes F0121214 (F1)",
@@ -74,7 +74,7 @@ export default async function LocalePage({ params }: Props) {
         feature4: "All data stays with you",
       },
       fr: {
-        appName: "Monegoo - Déclarations fiscales",
+        appName: "Taxered - Déclarations fiscales",
         appDescription: "Système en ligne gratuit pour remplir les déclarations fiscales. Toutes les données sont traitées localement dans votre navigateur.",
         feature1: "Remplir les déclarations en ligne",
         feature2: "Calculer les impôts",
@@ -82,7 +82,7 @@ export default async function LocalePage({ params }: Props) {
         feature4: "Vos données restent chez vous",
       },
       pl: {
-        appName: "Monegoo - Deklaracje podatkowe",
+        appName: "Taxered - Deklaracje podatkowe",
         appDescription: "Bezpłatny system online do wypełniania deklaracji podatkowych. Wszystkie dane przetwarzane są lokalnie w przeglądarce.",
         feature1: "Wypełnij deklaracje online",
         feature2: "Oblicz podatki",
@@ -90,7 +90,7 @@ export default async function LocalePage({ params }: Props) {
         feature4: "Twoje dane pozostają u Ciebie",
       },
       es: {
-        appName: "Monegoo - Declaraciones fiscales",
+        appName: "Taxered - Declaraciones fiscales",
         appDescription: "Sistema en línea gratuito para completar declaraciones fiscales. Todos los datos se procesan localmente en su navegador.",
         feature1: "Completar declaraciones en línea",
         feature2: "Calcular impuestos",
@@ -98,7 +98,7 @@ export default async function LocalePage({ params }: Props) {
         feature4: "Sus datos permanecen con usted",
       },
       pt: {
-        appName: "Monegoo - Declarações fiscais",
+        appName: "Taxered - Declarações fiscais",
         appDescription: "Sistema online gratuito para preencher declarações fiscais. Todos os dados são processados localmente no seu navegador.",
         feature1: "Preencher declarações online",
         feature2: "Calcular impostos",
@@ -106,7 +106,7 @@ export default async function LocalePage({ params }: Props) {
         feature4: "Seus dados permanecem com você",
       },
       de: {
-        appName: "Monegoo - Steuererklärungen",
+        appName: "Taxered - Steuererklärungen",
         appDescription: "Kostenloses Online-System zum Ausfüllen von Steuererklärungen. Alle Daten werden lokal in Ihrem Browser verarbeitet.",
         feature1: "Steuererklärungen online ausfüllen",
         feature2: "Steuern berechnen",
@@ -119,15 +119,15 @@ export default async function LocalePage({ params }: Props) {
 
   // Generate schema.org structured data
   const websiteSchema = generateWebsiteSchema({
-    name: "Monegoo Tax Declaration",
-    url: "https://monegoo.com",
+    name: "Taxered Tax Declaration",
+    url: "https://taxered.com",
     description: "Online system for filing tax declarations on property status, income, and investment transactions",
   })
 
   const organizationSchema = generateOrganizationSchema({
-    name: "Monegoo",
-    url: "https://monegoo.com",
-    logo: "https://monegoo.com/placeholder-logo.png",
+    name: "Taxered",
+    url: "https://taxered.com",
+    logo: "https://taxered.com/placeholder-logo.png",
     description: "Free and open tax declaration system for everyone",
   })
 
@@ -136,7 +136,7 @@ export default async function LocalePage({ params }: Props) {
     "@type": "SoftwareApplication",
     "name": getTranslation("appName"),
     "description": getTranslation("appDescription"),
-    "url": `https://monegoo.com/${locale}`,
+    "url": `https://taxered.com/${locale}`,
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -165,7 +165,7 @@ export default async function LocalePage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://monegoo.com/${locale}`,
+        "item": `https://taxered.com/${locale}`,
       },
     ],
   }

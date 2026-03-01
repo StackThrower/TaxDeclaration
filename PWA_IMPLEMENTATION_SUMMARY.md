@@ -2,7 +2,7 @@
 
 ## What Was Done
 
-Your Monegoo Tax Declaration app is now a fully functional **Progressive Web App (PWA)**! 🎉
+Your Taxered Tax Declaration app is now a fully functional **Progressive Web App (PWA)**! 🎉
 
 ### 📦 Installed Package
 - **@ducanh2912/next-pwa** v10.2.9 - Next.js 16 compatible PWA plugin

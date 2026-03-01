@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!locale) {
     return {
-      title: "Help - Monegoo Tax Declaration",
+      title: "Help - Taxered Tax Declaration",
       description: "Find answers to questions about using the tax declaration system",
     }
   }
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (parts.length !== 2) {
     return {
-      title: "Help - Monegoo Tax Declaration",
+      title: "Help - Taxered Tax Declaration",
       description: "Find answers to questions about using the tax declaration system",
     }
   }
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = getCountry(countryCode)
   if (!country) {
     return {
-      title: "Help - Monegoo Tax Declaration",
+      title: "Help - Taxered Tax Declaration",
       description: "Find answers to questions about using the tax declaration system",
     }
   }
@@ -114,12 +114,12 @@ export default async function HelpPage({ params }: Props) {
     "@type": "WebPage",
     "name": t(lang, "help.title"),
     "description": t(lang, "help.intro"),
-    "url": `https://monegoo.com/${locale}/help`,
+    "url": `https://taxered.com/${locale}/help`,
     "inLanguage": langCode,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Monegoo Tax Declaration",
-      "url": "https://monegoo.com"
+      "name": "Taxered Tax Declaration",
+      "url": "https://taxered.com"
     }
   }
 
@@ -131,13 +131,13 @@ export default async function HelpPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://monegoo.com/${locale}`,
+        "item": `https://taxered.com/${locale}`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t(lang, "help.title"),
-        "item": `https://monegoo.com/${locale}/help`,
+        "item": `https://taxered.com/${locale}/help`,
       },
     ],
   }

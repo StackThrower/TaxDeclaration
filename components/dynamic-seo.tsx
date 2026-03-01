@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n-context"
 // Metadata for different languages on the root page
 const rootMetadata: Record<string, { title: string; description: string; keywords: string[] }> = {
   uk: {
-    title: `Monegoo - Податкова декларація онлайн ${new Date().getFullYear()} | Безкоштовно для України`,
+    title: `Taxered - Податкова декларація онлайн ${new Date().getFullYear()} | Безкоштовно для України`,
     description: `✨ Заповніть декларацію F0100214 та F0121214 легко і швидко! Безкоштовний онлайн сервіс для громадян України 🇺🇦 | Розрахунок ПДФО та військового збору | Ваші дані залишаються тільки у вас 🔒 | Експорт в PDF за 5 хвилин`,
     keywords: [
       "податкова декларація україна",
@@ -20,7 +20,7 @@ const rootMetadata: Record<string, { title: string; description: string; keyword
     ],
   },
   en: {
-    title: `Monegoo - Free Online Tax Declaration ${new Date().getFullYear()} | Easy & Fast`,
+    title: `Taxered - Free Online Tax Declaration ${new Date().getFullYear()} | Easy & Fast`,
     description: `✨ Fill out tax declaration F0100214 & F0121214 easily and quickly! Free online service 🌍 | Calculate income tax & military duty | Your data stays private 🔒 | Export to PDF in 5 minutes | Privacy-first approach`,
     keywords: [
       "free tax declaration",
@@ -33,7 +33,7 @@ const rootMetadata: Record<string, { title: string; description: string; keyword
     ],
   },
   fr: {
-    title: `Monegoo - Déclaration d'impôts gratuite ${new Date().getFullYear()} | Simple et rapide`,
+    title: `Taxered - Déclaration d'impôts gratuite ${new Date().getFullYear()} | Simple et rapide`,
     description: `✨ Remplissez votre déclaration d'impôts facilement! Service en ligne 100% gratuit 🎁 | Vos données restent chez vous 🔒 | Export PDF en 5 minutes | Protection de la vie privée garantie`,
     keywords: [
       "déclaration impôts gratuite",
@@ -44,7 +44,7 @@ const rootMetadata: Record<string, { title: string; description: string; keyword
     ],
   },
   pl: {
-    title: `Monegoo - Darmowe rozliczenie PIT ${new Date().getFullYear()} | Łatwo i szybko`,
+    title: `Taxered - Darmowe rozliczenie PIT ${new Date().getFullYear()} | Łatwo i szybko`,
     description: `✨ Wypełnij deklarację podatkową PIT łatwo i szybko! Darmowy serwis online 🎁 | Twoje dane pozostają u Ciebie 🔒 | Export do PDF w 5 minut | Prywatność na pierwszym miejscu`,
     keywords: [
       "darmowe rozliczenie PIT",
@@ -55,7 +55,7 @@ const rootMetadata: Record<string, { title: string; description: string; keyword
     ],
   },
   es: {
-    title: `Monegoo - Declaración de impuestos gratis ${new Date().getFullYear()} | Fácil y rápido`,
+    title: `Taxered - Declaración de impuestos gratis ${new Date().getFullYear()} | Fácil y rápido`,
     description: `✨ Complete su declaración de impuestos fácilmente! Servicio online 100% gratuito 🎁 | Sus datos permanecen privados 🔒 | Exportar a PDF en 5 minutos | Privacidad garantizada`,
     keywords: [
       "declaración impuestos gratis",
@@ -66,7 +66,7 @@ const rootMetadata: Record<string, { title: string; description: string; keyword
     ],
   },
   pt: {
-    title: `Monegoo - Declaração de impostos grátis ${new Date().getFullYear()} | Fácil e rápido`,
+    title: `Taxered - Declaração de impostos grátis ${new Date().getFullYear()} | Fácil e rápido`,
     description: `✨ Preencha sua declaração IRS facilmente! Serviço online 100% gratuito 🎁 | Seus dados permanecem privados 🔒 | Exportar para PDF em 5 minutos | Privacidade garantida`,
     keywords: [
       "declaração IRS grátis",
@@ -77,7 +77,7 @@ const rootMetadata: Record<string, { title: string; description: string; keyword
     ],
   },
   de: {
-    title: `Monegoo - Kostenlose Steuererklärung ${new Date().getFullYear()} | Einfach und schnell`,
+    title: `Taxered - Kostenlose Steuererklärung ${new Date().getFullYear()} | Einfach und schnell`,
     description: `✨ Füllen Sie Ihre Steuererklärung einfach aus! 100% kostenloser Online-Service 🎁 | Ihre Daten bleiben privat 🔒 | PDF-Export in 5 Minuten | Datenschutz garantiert`,
     keywords: [
       "kostenlose Steuererklärung",

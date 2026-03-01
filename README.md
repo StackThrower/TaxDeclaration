@@ -1,4 +1,4 @@
-# Monegoo - Tax Declaration System
+# Taxered - Tax Declaration System
 
 ## 🚨 Quick Start: GitHub Actions не запускается?
 
@@ -12,7 +12,7 @@
 
 2. **Подключите GitHub репозиторий:**
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/Monegoo.git
+   git remote add origin https://github.com/YOUR_USERNAME/Taxered.git
    git push -u origin main
    ```
 
@@ -26,7 +26,7 @@
 
 ## 🌍 Multi-Country Tax Forms Platform
 
-Monegoo is an open-source platform for filing tax declarations across multiple countries. The system supports country-specific tax forms with multi-language interfaces.
+Taxered is an open-source platform for filing tax declarations across multiple countries. The system supports country-specific tax forms with multi-language interfaces.
 
 ### ✨ Key Features
 

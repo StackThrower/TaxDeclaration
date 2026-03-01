@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     en: {
-      title: `Monegoo - Free Online Tax Declaration ${currentYear} | Easy & Fast`,
+      title: `Taxered - Free Online Tax Declaration ${currentYear} | Easy & Fast`,
       description: `✨ Fill out tax declaration F0100214 & F0121214 easily and quickly! Free online service 🌍 | Calculate income tax & military duty | Your data stays private 🔒 | Export to PDF in 5 minutes | Privacy-first approach`,
       keywords: [
         "free tax declaration",
@@ -49,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     fr: {
-      title: `Monegoo - Déclaration d'impôts gratuite ${currentYear} | Simple et rapide`,
+      title: `Taxered - Déclaration d'impôts gratuite ${currentYear} | Simple et rapide`,
       description: `✨ Remplissez votre déclaration d'impôts facilement! Service en ligne 100% gratuit 🎁 | Vos données restent chez vous 🔒 | Export PDF en 5 minutes | Protection de la vie privée garantie`,
       keywords: [
         "déclaration impôts gratuite",
@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     pl: {
-      title: `Monegoo - Darmowe rozliczenie PIT ${currentYear} | Łatwo i szybko`,
+      title: `Taxered - Darmowe rozliczenie PIT ${currentYear} | Łatwo i szybko`,
       description: `✨ Wypełnij deklarację podatkową PIT łatwo i szybko! Darmowy serwis online 🎁 | Twoje dane pozostają u Ciebie 🔒 | Export do PDF w 5 minut | Prywatność na pierwszym miejscu`,
       keywords: [
         "darmowe rozliczenie PIT",
@@ -71,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     es: {
-      title: `Monegoo - Declaración de impuestos gratis ${currentYear} | Fácil y rápido`,
+      title: `Taxered - Declaración de impuestos gratis ${currentYear} | Fácil y rápido`,
       description: `✨ Complete su declaración de impuestos fácilmente! Servicio online 100% gratuito 🎁 | Sus datos permanecen privados 🔒 | Exportar a PDF en 5 minutos | Privacidad garantizada`,
       keywords: [
         "declaración impuestos gratis",
@@ -82,7 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     pt: {
-      title: `Monegoo - Declaração de impostos grátis ${currentYear} | Fácil e rápido`,
+      title: `Taxered - Declaração de impostos grátis ${currentYear} | Fácil e rápido`,
       description: `✨ Preencha sua declaração IRS facilmente! Serviço online 100% gratuito 🎁 | Seus dados permanecem privados 🔒 | Exportar para PDF em 5 minutos | Privacidade garantida`,
       keywords: [
         "declaração IRS grátis",
@@ -93,7 +93,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     de: {
-      title: `Monegoo - Kostenlose Steuererklärung ${currentYear} | Einfach und schnell`,
+      title: `Taxered - Kostenlose Steuererklärung ${currentYear} | Einfach und schnell`,
       description: `✨ Füllen Sie Ihre Steuererklärung einfach aus! 100% kostenloser Online-Service 🎁 | Ihre Daten bleiben privat 🔒 | PDF-Export in 5 Minuten | Datenschutz garantiert`,
       keywords: [
         "kostenlose Steuererklärung",
@@ -104,7 +104,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     sv: {
-      title: `Monegoo - Gratis skattedeklaration ${currentYear} | Enkelt och snabbt`,
+      title: `Taxered - Gratis skattedeklaration ${currentYear} | Enkelt och snabbt`,
       description: `✨ Fyll i din skattedeklaration enkelt! 100% gratis online-tjänst 🎁 | Dina data förblir privata 🔒 | PDF-export på 5 minuter | Integritetsskydd garanterat`,
       keywords: [
         "gratis skattedeklaration",
@@ -126,16 +126,16 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: locale,
-      url: "https://monegoo.com",
+      url: "https://taxered.com",
       title: meta.title,
       description: meta.description,
-      siteName: "Monegoo Tax Declaration",
+      siteName: "Taxered Tax Declaration",
       images: [
         {
           url: "/placeholder-logo.png",
           width: 1200,
           height: 630,
-          alt: "Monegoo - Free Online Tax Declaration",
+          alt: "Taxered - Free Online Tax Declaration",
         },
       ],
     },
@@ -147,7 +147,7 @@ export async function generateMetadata(): Promise<Metadata> {
       creator: "@monegoo",
     },
     alternates: {
-      canonical: "https://monegoo.com",
+      canonical: "https://taxered.com",
       languages: {
         "x-default": "/",
         "uk-UA": "/uk-ua",
@@ -174,9 +174,9 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    authors: [{ name: "Monegoo", url: "https://monegoo.com" }],
-    creator: "Monegoo",
-    publisher: "Monegoo",
+    authors: [{ name: "Taxered", url: "https://taxered.com" }],
+    creator: "Taxered",
+    publisher: "Taxered",
     category: "Finance",
   }
 }

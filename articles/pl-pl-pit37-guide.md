@@ -317,7 +317,7 @@ Pon-Pt: 8:00-18:00
 - mf.gov.pl – Ministerstwo Finansów
 
 **Kalkulatory:**
-- Kalkulator PIT Monegoo
+- Kalkulator PIT Taxered
 - Kalkulator podatkowy ifirma.pl
 - Kalkulator wynagrodzeń
 

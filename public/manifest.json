@@ -1,6 +1,6 @@
 {
-  "name": "Monegoo - Tax Declaration System",
-  "short_name": "Monegoo",
+  "name": "Taxered - Tax Declaration System",
+  "short_name": "Taxered",
   "description": "Online system for filing tax declarations on property status, income, and investment transactions",
   "start_url": "/",
   "display": "standalone",

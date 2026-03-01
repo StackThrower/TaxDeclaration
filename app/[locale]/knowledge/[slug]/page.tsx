@@ -30,10 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const canonicalUrl = `https://monegoo.com/${locale}/knowledge/${slug}`
+  const canonicalUrl = `https://taxered.com/${locale}/knowledge/${slug}`
 
   return {
-    title: `${article.title} | Monegoo`,
+    title: `${article.title} | Taxered`,
     description: article.description,
     keywords: article.keywords,
     alternates: {

@@ -3,7 +3,7 @@ import { getArticles } from '@/lib/articles'
 import { Language } from '@/lib/i18n'
 import { CountryCode } from '@/lib/countries'
 
-const BASE_URL = 'https://monegoo.com'
+const BASE_URL = 'https://taxered.com'
 
 // All supported locale combinations (language-country)
 const locales = [

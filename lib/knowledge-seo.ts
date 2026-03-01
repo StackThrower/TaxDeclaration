@@ -11,38 +11,38 @@ export function generateKnowledgeMetadata(
 
   const baseMetadata = {
     uk: {
-      title: `База знань з оподаткування ${currentYear} | Monegoo`,
+      title: `База знань з оподаткування ${currentYear} | Taxered`,
       description: "Корисні статті про податки, декларації та оптимізацію податкових зобов'язань. Актуальна інформація для України та інших країн.",
     },
     en: {
-      title: `Tax Knowledge Base ${currentYear} | Monegoo`,
+      title: `Tax Knowledge Base ${currentYear} | Taxered`,
       description: "Useful articles about taxes, declarations and tax optimization. Current information for multiple countries.",
     },
     fr: {
-      title: `Base de connaissances fiscales ${currentYear} | Monegoo`,
+      title: `Base de connaissances fiscales ${currentYear} | Taxered`,
       description: "Articles utiles sur les impôts, les déclarations et l'optimisation fiscale. Informations actuelles pour plusieurs pays.",
     },
     pl: {
-      title: `Baza wiedzy podatkowej ${currentYear} | Monegoo`,
+      title: `Baza wiedzy podatkowej ${currentYear} | Taxered`,
       description: "Przydatne artykuły o podatkach, deklaracjach i optymalizacji podatkowej. Aktualne informacje dla wielu krajów.",
     },
     es: {
-      title: `Base de conocimientos fiscales ${currentYear} | Monegoo`,
+      title: `Base de conocimientos fiscales ${currentYear} | Taxered`,
       description: "Artículos útiles sobre impuestos, declaraciones y optimización fiscal. Información actual para varios países.",
     },
     pt: {
-      title: `Base de conhecimento fiscal ${currentYear} | Monegoo`,
+      title: `Base de conhecimento fiscal ${currentYear} | Taxered`,
       description: "Artigos úteis sobre impostos, declarações e otimização fiscal. Informações atuais para vários países.",
     },
     de: {
-      title: `Steuerliche Wissensdatenbank ${currentYear} | Monegoo`,
+      title: `Steuerliche Wissensdatenbank ${currentYear} | Taxered`,
       description: "Nützliche Artikel über Steuern, Erklärungen und Steueroptimierung. Aktuelle Informationen für mehrere Länder.",
     },
   }
 
   if (article) {
     return {
-      title: `${article.title} | Monegoo`,
+      title: `${article.title} | Taxered`,
       description: article.description,
       keywords: article.keywords,
       openGraph: {
