@@ -100,6 +100,29 @@ const nextConfig = {
   // Permanent redirects for www to non-www and http to https
   async redirects() {
     return [
+      // Redirect all monegoo.com pages to taxered.com
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'monegoo.com',
+          },
+        ],
+        destination: 'https://taxered.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.monegoo.com',
+          },
+        ],
+        destination: 'https://taxered.com/:path*',
+        permanent: true,
+      },
       // Redirect www to non-www (works with both http and https)
       {
         source: '/:path*',
