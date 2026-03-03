@@ -34,6 +34,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: titles[language] || titles.en,
     description: descriptions[language] || descriptions.en,
+    alternates: {
+      canonical: `https://taxered.com/${locale}/terms`,
+      languages: {
+        "x-default": "https://taxered.com",
+        "uk-UA": "/uk-ua/terms",
+        "en-US": "/en-us/terms",
+        "en-GB": "/en-gb/terms",
+        "en-CA": "/en-ca/terms",
+        "fr-FR": "/fr-fr/terms",
+        "pl-PL": "/pl-pl/terms",
+        "es-ES": "/es-es/terms",
+        "pt-PT": "/pt-pt/terms",
+        "de-DE": "/de-de/terms",
+        "sv-SE": "/sv-se/terms",
+      },
+    },
   }
 }
 
