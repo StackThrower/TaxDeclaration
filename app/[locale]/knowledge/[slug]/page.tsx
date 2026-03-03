@@ -40,16 +40,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: canonicalUrl,
       languages: {
         "x-default": "https://taxered.com",
-        "uk-UA": `/uk-ua/knowledge/${slug}`,
-        "en-US": `/en-us/knowledge/${slug}`,
-        "en-GB": `/en-gb/knowledge/${slug}`,
-        "en-CA": `/en-ca/knowledge/${slug}`,
-        "fr-FR": `/fr-fr/knowledge/${slug}`,
-        "pl-PL": `/pl-pl/knowledge/${slug}`,
-        "es-ES": `/es-es/knowledge/${slug}`,
-        "pt-PT": `/pt-pt/knowledge/${slug}`,
-        "de-DE": `/de-de/knowledge/${slug}`,
-        "sv-SE": `/sv-se/knowledge/${slug}`,
       },
     },
     openGraph: {
