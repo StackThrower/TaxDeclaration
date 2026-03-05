@@ -407,7 +407,6 @@ export function convertToFormPosition(trade: IBTrade) {
 
     purchasePrice = trade.cost
     salePrice = Math.abs(trade.cost + trade.fifoPnlRealized)
-
   } else {
     // For other asset types (bonds, crypto, etc.):
     // Use the same logic as options
