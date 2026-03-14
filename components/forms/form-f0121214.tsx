@@ -271,6 +271,7 @@ export function FormF0121214() {
     try {
       const newPositions: FinancialPosition[] = []
       const summaries: { source: string; trades: number; dividends: number; profit: number; currency: string }[] = []
+      const allWarnings: string[] = []
       const totalFiles = files.length
 
       for (let fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
@@ -285,12 +286,18 @@ export function FormF0121214() {
         // Read file content
         const xmlContent = await readFileAsText(file)
 
-        // Parse XML using universal parser
+        // Parse XML using universal parser with report year filter
         setImportStatus(language === "uk"
           ? `Парсинг ${file.name}...`
           : `Parsing ${file.name}...`)
 
-        const result = parseAnyBrokerXML(xmlContent, file.name)
+        const reportYear = parseInt(formData.year) || new Date().getFullYear()
+        const result = parseAnyBrokerXML(xmlContent, file.name, reportYear)
+
+        // Collect warnings
+        if (result.warnings && result.warnings.length > 0) {
+          allWarnings.push(...result.warnings.map(w => `${file.name}: ${w}`))
+        }
 
         if (result.positions.length === 0) {
           console.warn(`No positions found in file: ${file.name}`)
@@ -309,8 +316,8 @@ export function FormF0121214() {
 
       if (newPositions.length === 0) {
         alert(language === "uk"
-          ? "У файлах не знайдено закритих позицій або дивідендів для імпорту"
-          : "No closed positions or dividends found in the files")
+          ? "Виберіть рік звіту в формі для правильних розрахунків. Або ви завантажили файл без закритих позицій та дивідендів"
+          : "Select appropriate year in the report. Or there are no closed positions or dividends found in the file")
         return
       }
 
@@ -407,15 +414,22 @@ export function FormF0121214() {
           ? (language === "uk" ? "(додано до існуючих)" : "(added to existing)")
           : (language === "uk" ? "(замінено)" : "(replaced)")
 
+        // Add warnings if any
+        const warningsText = allWarnings.length > 0
+          ? '\n\n⚠️ ' + (language === "uk" ? "ПОПЕРЕДЖЕННЯ:" : "WARNINGS:") + '\n' + allWarnings.join('\n')
+          : ''
+
         const message = language === "uk"
           ? `✅ Успішно імпортовано ${newPositions.length} позиції(й) з ${totalFiles} файл(ів) ${modeText}!\n\n` +
             (shouldAppend ? `Загалом позицій: ${allPositions.length}\n\n` : '') +
             summaryText + '\n\n' +
-            `Курси НБУ завантажено та суми конвертовано в гривні.`
+            `Курси НБУ завантажено та суми конвертовано в гривні.` +
+            warningsText
           : `✅ Successfully imported ${newPositions.length} position(s) from ${totalFiles} file(s) ${modeText}!\n\n` +
             (shouldAppend ? `Total positions: ${allPositions.length}\n\n` : '') +
             summaryText + '\n\n' +
-            `NBU rates fetched and amounts converted to UAH`
+            `NBU rates fetched and amounts converted to UAH` +
+            warningsText
 
         alert(message)
         setImportProgress(0)

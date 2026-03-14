@@ -677,7 +677,7 @@ export interface FFMatchedPosition {
   sourceFile?: string
 }
 
-export function matchFFTradesFIFO(trades: FFTrade[], sourceFileName?: string): FFMatchedPosition[] {
+export function matchFFTradesFIFO(trades: FFTrade[], sourceFileName?: string, reportYear?: number): FFMatchedPosition[] {
   const grouped = groupFFTradesBySymbol(trades)
   const matchedPositions: FFMatchedPosition[] = []
 
@@ -687,7 +687,12 @@ export function matchFFTradesFIFO(trades: FFTrade[], sourceFileName?: string): F
       remainingQty: t.quantity
     }))
 
-    symbolTrades.sells.forEach((sellTrade) => {
+    // Filter sells by report year if specified
+    const sellsToProcess = reportYear
+      ? symbolTrades.sells.filter(t => new Date(t.shortDate).getFullYear() === reportYear)
+      : symbolTrades.sells
+
+    sellsToProcess.forEach((sellTrade) => {
       let remainingToSell = sellTrade.quantity
 
       while (remainingToSell > 0 && buyQueue.length > 0) {
@@ -794,7 +799,7 @@ export function convertFFToFormPosition(position: FFMatchedPosition, sourceFileN
 /**
  * Parse and convert any supported XML format
  */
-export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string): {
+export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string, reportYear?: number): {
   positions: ReturnType<typeof convertToFormPosition>[]
   source: BrokerSource
   summary: {
@@ -803,39 +808,101 @@ export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string): 
     totalProfit: number
     currency: string
   }
+  warnings: string[]
 } {
   const xmlType = detectXMLType(xmlContent)
+  const warnings: string[] = []
 
   if (xmlType === 'interactive_brokers') {
     const parsedData = parseIBXML(xmlContent)
-    const tradePositions = parsedData.trades.map(trade => ({
+
+    // Filter trades by report year if specified
+    let filteredTrades = parsedData.trades
+    if (reportYear) {
+      filteredTrades = parsedData.trades.filter(trade => {
+        const tradeYear = new Date(trade.tradeDate).getFullYear()
+        return tradeYear === reportYear
+      })
+
+      const skippedTrades = parsedData.trades.length - filteredTrades.length
+      if (skippedTrades > 0) {
+        warnings.push(`IB: Пропущено ${skippedTrades} операцій за інші роки (не ${reportYear})`)
+      }
+    }
+
+    // Filter dividends by report year if specified
+    let filteredDividends = parsedData.dividends
+    if (reportYear) {
+      filteredDividends = parsedData.dividends.filter(dividend => {
+        const divYear = new Date(dividend.date).getFullYear()
+        return divYear === reportYear
+      })
+    }
+
+    const tradePositions = filteredTrades.map(trade => ({
       ...convertToFormPosition(trade),
       source: 'interactive_brokers' as BrokerSource,
       sourceFile: sourceFileName,
     }))
-    const dividendPositions = parsedData.dividends.map(dividend => ({
+    const dividendPositions = filteredDividends.map(dividend => ({
       ...convertDividendToFormPosition(dividend),
       source: 'interactive_brokers' as BrokerSource,
       sourceFile: sourceFileName,
     }))
 
-    const totals = calculateTradeTotals(parsedData.trades)
+    const totals = calculateTradeTotals(filteredTrades)
 
     return {
       positions: [...tradePositions, ...dividendPositions],
       source: 'interactive_brokers',
       summary: {
-        trades: parsedData.trades.length,
-        dividends: parsedData.dividends.length,
+        trades: filteredTrades.length,
+        dividends: filteredDividends.length,
         totalProfit: totals.totalProfit,
-        currency: parsedData.trades[0]?.currency || 'USD',
-      }
+        currency: filteredTrades[0]?.currency || 'USD',
+      },
+      warnings,
     }
   }
 
   if (xmlType === 'freedom_finance') {
     const parsedData = parseFFXML(xmlContent, sourceFileName)
-    const matchedPositions = matchFFTradesFIFO(parsedData.trades, sourceFileName)
+
+    // Filter sells by report year and validate
+    const allSells = parsedData.trades.filter(t => t.operation === 'sell')
+    let sellsForYear = allSells
+
+    if (reportYear) {
+      sellsForYear = allSells.filter(trade => {
+        const tradeYear = new Date(trade.shortDate).getFullYear()
+        return tradeYear === reportYear
+      })
+
+      const skippedSells = allSells.length - sellsForYear.length
+      if (skippedSells > 0) {
+        warnings.push(`FF: Пропущено ${skippedSells} продажів за інші роки (не ${reportYear})`)
+      }
+    }
+
+    // Calculate expected sum from XML (broker-provided)
+    const expectedSellSum = sellsForYear.reduce((sum, t) => sum + t.sum, 0)
+
+    // Match trades with FIFO, passing the year filter
+    const matchedPositions = matchFFTradesFIFO(parsedData.trades, sourceFileName, reportYear)
+
+    // Calculate actual matched sum
+    const actualSellSum = matchedPositions.reduce((sum, pos) => sum + pos.sellPrice, 0)
+
+    // Validate sums match
+    const sumDifference = Math.abs(expectedSellSum - actualSellSum)
+    if (sumDifference > 0.01 && expectedSellSum > 0) {
+      const missingSum = expectedSellSum - actualSellSum
+      warnings.push(
+        `FF: Невідповідність сум! Очікувано ${expectedSellSum.toFixed(2)}, розраховано ${actualSellSum.toFixed(2)}. ` +
+        `Різниця: ${missingSum.toFixed(2)}. Завантажте повний звіт брокера з усіма покупками.`
+      )
+    }
+
     const formPositions = matchedPositions.map(pos => convertFFToFormPosition(pos, sourceFileName))
 
     const totalProfit = matchedPositions.reduce((sum, pos) => sum + pos.profit, 0)
@@ -848,7 +915,8 @@ export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string): 
         dividends: 0,
         totalProfit: totalProfit,
         currency: parsedData.accountInfo.baseCurrency || 'USD',
-      }
+      },
+      warnings,
     }
   }
 
