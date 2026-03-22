@@ -1671,43 +1671,51 @@ export function FormF0121214() {
       )}
 
       <div className="space-y-4 pt-6">
-        <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-3 ${isMobile ? 'w-full' : ''}`}>
+        <div className={`${isMobile ? 'grid grid-cols-2' : 'flex flex-row'} gap-3`}>
           <Button
             type="submit"
             size={isMobile ? "default" : "lg"}
-            className={`bg-accent hover:bg-accent/90 gap-2 ${isMobile ? 'w-full' : ''}`}
+            className={`bg-accent hover:bg-accent/90 gap-2 ${isMobile ? 'w-full text-xs px-2' : ''}`}
           >
-            <FileText className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-            <span className={isMobile ? 'text-sm' : ''}>{getLabel("save")}</span>
+            <FileText className={`${isMobile ? 'h-4 w-4 flex-shrink-0' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'truncate' : ''}>
+              {isMobile ? (language === "uk" ? "PDF" : "PDF") : getLabel("save")}
+            </span>
           </Button>
           <Button
             type="button"
             variant="outline"
             size={isMobile ? "default" : "lg"}
             onClick={handleExportExcel}
-            className={`gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950 ${isMobile ? 'w-full' : ''}`}
+            className={`gap-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950 ${isMobile ? 'w-full text-xs px-2' : ''}`}
           >
-            <FileSpreadsheet className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-            <span className={isMobile ? 'text-sm' : ''}>{getLabel("checkCalculations")}</span>
+            <FileSpreadsheet className={`${isMobile ? 'h-4 w-4 flex-shrink-0' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'truncate' : ''}>
+              {isMobile ? (language === "uk" ? "Перевірити" : "Check") : getLabel("checkCalculations")}
+            </span>
           </Button>
           <Button
             type="button"
             variant="outline"
             size={isMobile ? "default" : "lg"}
             onClick={handleExportTaxXML}
-            className={`gap-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 ${isMobile ? 'w-full' : ''}`}
+            className={`gap-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 ${isMobile ? 'w-full text-xs px-2' : ''}`}
           >
-            <FileCode className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-            <span className={isMobile ? 'text-sm' : ''}>{getLabel("exportTaxXml")}</span>
+            <FileCode className={`${isMobile ? 'h-4 w-4 flex-shrink-0' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'truncate' : ''}>
+              {isMobile ? (language === "uk" ? "XML" : "XML") : getLabel("exportTaxXml")}
+            </span>
           </Button>
           <Button
             type="reset"
             variant="outline"
             size={isMobile ? "default" : "lg"}
             onClick={handleClear}
-            className={isMobile ? 'w-full' : ''}
+            className={isMobile ? 'w-full text-xs px-2' : ''}
           >
-            <span className={isMobile ? 'text-sm' : ''}>{getLabel("clear")}</span>
+            <span className={isMobile ? 'truncate' : ''}>
+              {isMobile ? (language === "uk" ? "Очистити" : "Clear") : getLabel("clear")}
+            </span>
           </Button>
         </div>
 
