@@ -11,10 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress"
 import { useI18n } from "@/lib/i18n-context"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { Trash2, Plus, FileText, Upload, FileSpreadsheet, HelpCircle } from "lucide-react"
+import { Trash2, Plus, FileText, Upload, FileSpreadsheet, HelpCircle, FileCode } from "lucide-react"
 import Link from "next/link"
 import { generateF0121214PDF } from "@/lib/pdf-generator"
 import { generateTaxCalculationExcel } from "@/lib/excel-generator"
+import { downloadTaxXML } from "@/lib/tax-xml-generator"
 import {
   fetchNBUExchangeRate,
   convertToUAH,
@@ -70,6 +71,7 @@ export function FormF0121214() {
   const [formData, setFormData] = useState({
     fullName: "",
     taxNumber: "",
+    taxOfficeCode: "",
     year: "2025",
     notes: "",
   })
@@ -583,6 +585,7 @@ export function FormF0121214() {
     setFormData({
       fullName: "",
       taxNumber: "",
+      taxOfficeCode: "",
       year: "2026",
       notes: "",
     })
@@ -617,6 +620,32 @@ export function FormF0121214() {
       pdfoFromDividends: 0,
       militaryTaxFromTrades: 0,
       militaryTaxFromDividends: 0,
+    })
+  }
+
+  const handleExportTaxXML = () => {
+    // Validate required fields for tax XML
+    if (!formData.fullName || !formData.taxNumber) {
+      alert(language === "uk"
+        ? "Будь ласка, заповніть ім'я та ІПН перед експортом XML"
+        : "Please fill in name and tax ID before XML export")
+      return
+    }
+
+    if (!formData.taxOfficeCode) {
+      alert(language === "uk"
+        ? "Будь ласка, заповніть код податкової перед експортом XML"
+        : "Please fill in tax office code before XML export")
+      return
+    }
+
+    downloadTaxXML({
+      fullName: formData.fullName,
+      taxNumber: formData.taxNumber,
+      taxOfficeCode: formData.taxOfficeCode,
+      year: formData.year,
+      positions: positions,
+      calculations: calculations,
     })
   }
 
@@ -662,6 +691,8 @@ export function FormF0121214() {
         personalData: "Персональні дані",
         fullName: "Прізвище та ім'я",
         taxId: "ІПН",
+        taxOfficeCode: "Код податкової",
+        exportTaxXml: "Експорт для податкової XML",
         periodAsset: "Період і тип активу",
         year: "Рік звіту",
         assetType: "Тип інвестиційного активу",
@@ -698,6 +729,8 @@ export function FormF0121214() {
         personalData: "Personal Data",
         fullName: "Full Name",
         taxId: "Tax ID",
+        taxOfficeCode: "Tax Office Code",
+        exportTaxXml: "Export Tax XML",
         periodAsset: "Period and Asset Type",
         year: "Reporting Year",
         assetType: "Investment Asset Type",
@@ -734,6 +767,8 @@ export function FormF0121214() {
         personalData: "Données personnelles",
         fullName: "Nom complet",
         taxId: "ID fiscal",
+        taxOfficeCode: "Code du bureau des impôts",
+        exportTaxXml: "Exporter XML fiscal",
         periodAsset: "Période et type d'actif",
         year: "Année du rapport",
         assetType: "Type d'actif d'investissement",
@@ -763,6 +798,8 @@ export function FormF0121214() {
         personalData: "Dane osobowe",
         fullName: "Imię i nazwisko",
         taxId: "NIP",
+        taxOfficeCode: "Kod urzędu skarbowego",
+        exportTaxXml: "Eksportuj XML podatkowy",
         periodAsset: "Okres i typ aktywa",
         year: "Rok raportowania",
         assetType: "Typ aktywa inwestycyjnego",
@@ -792,6 +829,8 @@ export function FormF0121214() {
         personalData: "Datos personales",
         fullName: "Nombre completo",
         taxId: "Número de contribuyente",
+        taxOfficeCode: "Código de oficina fiscal",
+        exportTaxXml: "Exportar XML fiscal",
         periodAsset: "Período y tipo de activo",
         year: "Año del informe",
         assetType: "Tipo de activo de inversión",
@@ -821,6 +860,8 @@ export function FormF0121214() {
         personalData: "Dados pessoais",
         fullName: "Nome completo",
         taxId: "Número de contribuinte",
+        taxOfficeCode: "Código da repartição de finanças",
+        exportTaxXml: "Exportar XML fiscal",
         periodAsset: "Período e tipo de ativo",
         year: "Ano do relatório",
         assetType: "Tipo de ativo de investimento",
@@ -850,6 +891,8 @@ export function FormF0121214() {
         personalData: "Persönliche Daten",
         fullName: "Vollständiger Name",
         taxId: "Steuernummer",
+        taxOfficeCode: "Finanzamtscode",
+        exportTaxXml: "Steuer-XML exportieren",
         periodAsset: "Zeitraum und Anlagentyp",
         year: "Berichtsjahr",
         assetType: "Typ des Anlagegutes",
@@ -897,7 +940,7 @@ export function FormF0121214() {
       <Card className="border-border/50">
         <CardContent className="pt-6 space-y-4">
           <h3 className="text-lg font-semibold text-accent">{getLabel("personalData")}</h3>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="fullName">{getLabel("fullName")}</Label>
               <Input
@@ -919,6 +962,17 @@ export function FormF0121214() {
                 value={formData.taxNumber}
                 onChange={handleChange}
                 required={!anonymous}
+                disabled={anonymous}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="taxOfficeCode">{getLabel("taxOfficeCode")}</Label>
+              <Input
+                id="taxOfficeCode"
+                name="taxOfficeCode"
+                placeholder="2413"
+                value={formData.taxOfficeCode}
+                onChange={handleChange}
                 disabled={anonymous}
               />
             </div>
@@ -1635,6 +1689,16 @@ export function FormF0121214() {
           >
             <FileSpreadsheet className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
             <span className={isMobile ? 'text-sm' : ''}>{getLabel("checkCalculations")}</span>
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size={isMobile ? "default" : "lg"}
+            onClick={handleExportTaxXML}
+            className={`gap-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 ${isMobile ? 'w-full' : ''}`}
+          >
+            <FileCode className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+            <span className={isMobile ? 'text-sm' : ''}>{getLabel("exportTaxXml")}</span>
           </Button>
           <Button
             type="reset"
