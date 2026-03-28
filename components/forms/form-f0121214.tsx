@@ -1694,18 +1694,18 @@ export function FormF0121214() {
               {isMobile ? (language === "uk" ? "Перевірити" : "Check") : getLabel("checkCalculations")}
             </span>
           </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size={isMobile ? "default" : "lg"}
-            onClick={handleExportTaxXML}
-            className={`gap-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 ${isMobile ? 'w-full text-xs px-2' : ''}`}
-          >
-            <FileCode className={`${isMobile ? 'h-4 w-4 flex-shrink-0' : 'h-5 w-5'}`} />
-            <span className={isMobile ? 'truncate' : ''}>
-              {isMobile ? (language === "uk" ? "XML" : "XML") : getLabel("exportTaxXml")}
-            </span>
-          </Button>
+          {/*<Button*/}
+          {/*  type="button"*/}
+          {/*  variant="outline"*/}
+          {/*  size={isMobile ? "default" : "lg"}*/}
+          {/*  onClick={handleExportTaxXML}*/}
+          {/*  className={`gap-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 ${isMobile ? 'w-full text-xs px-2' : ''}`}*/}
+          {/*>*/}
+          {/*  <FileCode className={`${isMobile ? 'h-4 w-4 flex-shrink-0' : 'h-5 w-5'}`} />*/}
+          {/*  <span className={isMobile ? 'truncate' : ''}>*/}
+          {/*    {isMobile ? (language === "uk" ? "XML" : "XML") : getLabel("exportTaxXml")}*/}
+          {/*  </span>*/}
+          {/*</Button>*/}
           <Button
             type="reset"
             variant="outline"

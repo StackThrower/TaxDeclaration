@@ -141,6 +141,7 @@ export function generateTaxXML(formData: TaxXMLFormData): { xml: string; filenam
   // Calculate totals for non-dividend positions
   let totalSalePrice = 0
   let totalPurchasePrice = 0
+  let totalProfit = 0
 
   // Filter out dividend positions for main calculations
   const tradePositions = formData.positions.filter(p => p.assetType !== 'dividends')
@@ -148,11 +149,25 @@ export function generateTaxXML(formData: TaxXMLFormData): { xml: string; filenam
   tradePositions.forEach(pos => {
     const salePrice = parseFloat(pos.salePrice) || 0
     const purchasePrice = parseFloat(pos.purchasePrice) || 0
-    totalSalePrice += salePrice
-    totalPurchasePrice += purchasePrice
-  })
+    let positionProfit = purchasePrice - salePrice
 
-  const totalProfit = totalSalePrice - totalPurchasePrice
+    if (pos.assetType === 'options') {
+
+      // For options, handle similar to ib-xml-parser calculateTradeTotals:
+      // - Options can have "received premium" (negative cost) which is already
+      //   converted to positive salePrice by convertToFormPosition
+      // - Sum profits directly to avoid rounding issues with intermediate totals
+      totalProfit += positionProfit
+      // Still track sale/purchase for individual row display
+      totalSalePrice += salePrice
+      totalPurchasePrice += purchasePrice
+    } else {
+      // For stocks and other assets: standard calculation
+      totalSalePrice += salePrice
+      totalPurchasePrice += purchasePrice
+      totalProfit += positionProfit
+    }
+  })
 
   // Calculate taxes (only on positive profit)
   const reportYear = parseInt(formData.year) || 2025
