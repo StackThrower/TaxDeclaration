@@ -65,8 +65,26 @@ export interface FFTrade {
   commissionCurrency: string
 }
 
+// Freedom Finance dividend types
+export interface FFDividend {
+  date: string           // Payment date
+  symbol: string         // Ticker symbol (e.g., VTI.US)
+  description: string    // Full description
+  isin: string           // ISIN code
+  grossAmount: number    // Gross dividend amount
+  taxAmount: number      // Withheld tax amount (positive number)
+  netAmount: number      // Net amount after tax
+  currency: string       // Currency (USD, EUR, etc.)
+  taxRate: number        // Tax rate percentage
+  quantity: number       // Number of shares on record date
+  exDate: string         // Ex-dividend date / record date
+  source?: BrokerSource
+  sourceFile?: string
+}
+
 export interface ParsedFFData {
   trades: FFTrade[]
+  dividends: FFDividend[]
   accountInfo: {
     clientName: string
     clientCode: string
@@ -550,8 +568,65 @@ export function parseFFXML(xmlContent: string, sourceFileName?: string): ParsedF
     trades.push(trade)
   })
 
+  // Extract dividends from corporate_actions
+  const dividends: FFDividend[] = []
+  const corporateActionNodes = xmlDoc.querySelectorAll('corporate_actions > detailed > node')
+
+  corporateActionNodes.forEach((node) => {
+    const typeId = getTextContent(node, 'type_id')
+
+    // Only process dividend type corporate actions
+    if (typeId === 'dividend') {
+      const ticker = getTextContent(node, 'ticker')
+      const comment = getTextContent(node, 'comment')
+      const grossAmount = parseFloat(getTextContent(node, 'amount') || '0')
+      const taxAmount = Math.abs(parseFloat(getTextContent(node, 'tax_amount') || '0'))
+
+      // Parse tax rate from comment or use provided value
+      let taxRate = 0
+      const taxRateMatch = comment.match(/Tax rate (\d+)/)
+      if (taxRateMatch) {
+        taxRate = parseFloat(taxRateMatch[1])
+      }
+
+      // Calculate gross from net if we have tax rate
+      // In FF XML: amount is net after tax, tax_amount is the withheld amount
+      // gross = net + taxAmount
+      const netAmount = grossAmount
+      const calculatedGross = netAmount + taxAmount
+
+      // Parse quantity from comment or use provided value
+      let quantity = parseFloat(getTextContent(node, 'q_on_ex_date') || '0')
+      if (!quantity) {
+        const qtyMatch = comment.match(/Balance on the record date is (\d+)/)
+        if (qtyMatch) {
+          quantity = parseFloat(qtyMatch[1])
+        }
+      }
+
+      const dividend: FFDividend = {
+        date: formatFFDate(getTextContent(node, 'date')),
+        symbol: ticker,
+        description: comment || `Dividend on ${ticker}`,
+        isin: getTextContent(node, 'isin'),
+        grossAmount: calculatedGross,
+        taxAmount: taxAmount,
+        netAmount: netAmount,
+        currency: getTextContent(node, 'currency') || 'USD',
+        taxRate: taxRate,
+        quantity: quantity,
+        exDate: formatFFDate(getTextContent(node, 'ex_date')),
+        source: 'freedom_finance',
+        sourceFile: sourceFileName,
+      }
+
+      dividends.push(dividend)
+    }
+  })
+
   return {
     trades,
+    dividends,
     accountInfo,
     source: 'freedom_finance',
   }
@@ -607,8 +682,65 @@ function parseFFXMLRegex(xmlContent: string, sourceFileName?: string): ParsedFFD
     trades.push(trade)
   }
 
+  // Extract dividends from corporate_actions
+  const dividends: FFDividend[] = []
+  const corporateActionsSection = xmlContent.match(/<corporate_actions><detailed>([\s\S]*?)<\/detailed>/)?.[1] || ''
+  const caNodeMatches = corporateActionsSection.matchAll(nodeRegex)
+
+  for (const match of caNodeMatches) {
+    const nodeContent = match[1]
+    const typeId = getTagContent(nodeContent, 'type_id')
+
+    // Only process dividend type corporate actions
+    if (typeId === 'dividend') {
+      const ticker = getTagContent(nodeContent, 'ticker')
+      const comment = getTagContent(nodeContent, 'comment')
+      const grossAmount = parseFloat(getTagContent(nodeContent, 'amount') || '0')
+      const taxAmount = Math.abs(parseFloat(getTagContent(nodeContent, 'tax_amount') || '0'))
+
+      // Parse tax rate from comment
+      let taxRate = 0
+      const taxRateMatch = comment.match(/Tax rate (\d+)/)
+      if (taxRateMatch) {
+        taxRate = parseFloat(taxRateMatch[1])
+      }
+
+      // In FF XML: amount is net after tax
+      const netAmount = grossAmount
+      const calculatedGross = netAmount + taxAmount
+
+      // Parse quantity from q_on_ex_date or comment
+      let quantity = parseFloat(getTagContent(nodeContent, 'q_on_ex_date') || '0')
+      if (!quantity) {
+        const qtyMatch = comment.match(/Balance on the record date is (\d+)/)
+        if (qtyMatch) {
+          quantity = parseFloat(qtyMatch[1])
+        }
+      }
+
+      const dividend: FFDividend = {
+        date: formatFFDate(getTagContent(nodeContent, 'date')),
+        symbol: ticker,
+        description: comment || `Dividend on ${ticker}`,
+        isin: getTagContent(nodeContent, 'isin'),
+        grossAmount: calculatedGross,
+        taxAmount: taxAmount,
+        netAmount: netAmount,
+        currency: getTagContent(nodeContent, 'currency') || 'USD',
+        taxRate: taxRate,
+        quantity: quantity,
+        exDate: formatFFDate(getTagContent(nodeContent, 'ex_date')),
+        source: 'freedom_finance',
+        sourceFile: sourceFileName,
+      }
+
+      dividends.push(dividend)
+    }
+  }
+
   return {
     trades,
+    dividends,
     accountInfo,
     source: 'freedom_finance',
   }
@@ -797,6 +929,38 @@ export function convertFFToFormPosition(position: FFMatchedPosition, sourceFileN
 }
 
 /**
+ * Convert Freedom Finance dividend to form position format
+ */
+export function convertFFDividendToFormPosition(dividend: FFDividend, sourceFileName?: string) {
+  // For dividends: we report the gross amount as income
+  // The withheld foreign tax can be credited against Ukrainian tax
+  return {
+    id: Date.now().toString() + Math.random().toString(36).substring(7),
+    assetType: "dividends",
+    assetDescription: `${dividend.symbol} - Дивіденди (ISIN: ${dividend.isin})`,
+    symbol: dividend.symbol,
+    currency: dividend.currency,
+    purchaseDate: "", // Not applicable for dividends
+    saleDate: dividend.date, // Use payment date as "sale" date for tax purposes
+    purchasePriceForeign: "0",
+    salePriceForeign: dividend.grossAmount.toFixed(2), // Report gross dividend amount
+    purchaseRate: "",
+    saleRate: "",
+    purchasePrice: "0",
+    salePrice: "",
+    expenses: "0",
+    quantity: dividend.quantity.toString(),
+    multiplier: "1",
+    source: 'freedom_finance' as BrokerSource,
+    sourceFile: sourceFileName,
+    // Additional dividend-specific fields
+    withheldTax: dividend.taxAmount.toFixed(2),
+    withheldTaxRate: dividend.taxRate.toString(),
+    exDate: dividend.exDate,
+  }
+}
+
+/**
  * Parse and convert any supported XML format
  */
 export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string, reportYear?: number): {
@@ -905,15 +1069,34 @@ export function parseAnyBrokerXML(xmlContent: string, sourceFileName?: string, r
 
     const formPositions = matchedPositions.map(pos => convertFFToFormPosition(pos, sourceFileName))
 
+    // Filter and process dividends
+    let filteredDividends = parsedData.dividends
+    if (reportYear) {
+      filteredDividends = parsedData.dividends.filter(dividend => {
+        const divYear = new Date(dividend.date).getFullYear()
+        return divYear === reportYear
+      })
+
+      const skippedDividends = parsedData.dividends.length - filteredDividends.length
+      if (skippedDividends > 0) {
+        warnings.push(`FF: Пропущено ${skippedDividends} дивідендів за інші роки (не ${reportYear})`)
+      }
+    }
+
+    const dividendPositions = filteredDividends.map(dividend =>
+      convertFFDividendToFormPosition(dividend, sourceFileName)
+    )
+
     const totalProfit = matchedPositions.reduce((sum, pos) => sum + pos.profit, 0)
+    const totalDividends = filteredDividends.reduce((sum, div) => sum + div.grossAmount, 0)
 
     return {
-      positions: formPositions,
+      positions: [...formPositions, ...dividendPositions],
       source: 'freedom_finance',
       summary: {
         trades: matchedPositions.length,
-        dividends: 0,
-        totalProfit: totalProfit,
+        dividends: filteredDividends.length,
+        totalProfit: totalProfit + totalDividends,
         currency: parsedData.accountInfo.baseCurrency || 'USD',
       },
       warnings,
