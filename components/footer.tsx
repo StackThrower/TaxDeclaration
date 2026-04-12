@@ -146,35 +146,9 @@ export function Footer() {
             </ul>
             <h3 className="font-semibold mb-3 md:mb-4 mt-6 text-sm md:text-base">Contact</h3>
             <ul className="space-y-2 text-xs md:text-sm opacity-75">
-              <li className="break-words">
-                <a
-                    href="https://github.com/StackThrower/Taxered/issues"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-100 transition-opacity hover:underline"
-                >
-                  {language === "uk" ? "Баг-трекер" :
-                      language === "pl" ? "Zgłaszanie błędów" :
-                          language === "en" ? "Bug Tracker" :
-                              language === "fr" ? "Suivi des bogues" :
-                                  language === "de" ? "Fehler melden" :
-                                      language === "es" ? "Rastreador de errores" :
-                                          language === "pt" ? "Rastreador de bugs" :
-                                              "Bug Tracker"}
-                </a>
-              </li>
               <li className="break-words">Email: 0x01code@gmail.com</li>
             </ul>
             <div className="flex items-center gap-3 mt-4">
-              <a
-                href="https://www.linkedin.com/company/monegoo-taxes/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-75 hover:opacity-100 transition-opacity"
-                aria-label="LinkedIn"
-              >
-                <LinkedInIcon className="w-5 h-5" />
-              </a>
               <a
                 href="https://www.youtube.com/channel/UC-EGlDZD2b8cUOq6oDhR2Bw"
                 target="_blank"
