@@ -7,7 +7,7 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { getBlogPost, getBlogPosts, resolveCoverImage } from "@/lib/blog"
+import { getBlogPost, getBlogPosts } from "@/lib/blog"
 import { Language } from "@/lib/i18n"
 
 // Always render on request with fresh data from the blog API (no caching).
@@ -47,7 +47,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const description = post.subtitle || post.teaser || ""
   const canonicalUrl = `https://taxered.com/${locale}/blog/${slug}`
-  const cover = resolveCoverImage(post.cover_image_url)
 
   return {
     title: `${post.name} | Taxered`,
@@ -65,13 +64,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.published_date || undefined,
       modifiedTime: post.write_date || post.published_date || undefined,
       authors: post.author ? [post.author.name] : undefined,
-      images: cover ? [{ url: cover }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: post.name,
       description,
-      images: cover ? [cover] : undefined,
     },
   }
 }
@@ -87,7 +84,6 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const t = getTranslations(language)
-  const cover = resolveCoverImage(post.cover_image_url)
   const description = post.subtitle || post.teaser || ""
 
   // Fetch a few other posts to show as related (exclude the current one).
@@ -140,16 +136,6 @@ export default async function BlogPostPage({ params }: Props) {
             <p className="text-xl text-muted-foreground">{description}</p>
           )}
         </header>
-
-        {/* Cover image */}
-        {cover && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={cover}
-            alt={post.name}
-            className="w-full rounded-xl mb-10 object-cover max-h-[480px]"
-          />
-        )}
 
         {/* Post content */}
         <div

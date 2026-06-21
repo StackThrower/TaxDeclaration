@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Newspaper, ArrowRight, ArrowLeft } from "lucide-react"
-import { getBlogPosts, resolveCoverImage } from "@/lib/blog"
+import { getBlogPosts } from "@/lib/blog"
 import { Language } from "@/lib/i18n"
 
 // Always render on request with fresh data from the blog API (no caching).
@@ -114,19 +114,9 @@ export default async function BlogPage({ params, searchParams }: Props) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => {
-              const cover = resolveCoverImage(post.cover_image_url)
               return (
                 <Link key={post.id} href={`/${locale}/blog/${post.slug}`}>
                   <Card className="hover:shadow-lg transition-shadow cursor-pointer group h-full overflow-hidden flex flex-col">
-                    {cover && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={cover}
-                        alt={post.name}
-                        className="w-full h-44 object-cover"
-                        loading="lazy"
-                      />
-                    )}
                     <CardHeader>
                       <div className="flex items-center justify-between gap-2 mb-2">
                         {post.tags?.[0] ? (

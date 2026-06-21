@@ -69,7 +69,6 @@ export type BlogPostSummary = {
   create_date: string
   write_date: string
   visits: number
-  cover_image_url: string | null
   url: string
 }
 
@@ -94,16 +93,6 @@ export type BlogListMeta = {
 export type BlogList = {
   posts: BlogPostSummary[]
   meta: BlogListMeta | null
-}
-
-/**
- * Resolve a (possibly relative) image path returned by the API into an
- * absolute URL pointing at the ERP origin.
- */
-export function resolveCoverImage(url: string | null | undefined): string | null {
-  if (!url) return null
-  if (url.startsWith("http://") || url.startsWith("https://")) return url
-  return `${BLOG_API_ORIGIN}${url.startsWith("/") ? "" : "/"}${url}`
 }
 
 /**
