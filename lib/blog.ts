@@ -14,9 +14,6 @@ const BLOG_API_ORIGIN =
   process.env.NEXT_PUBLIC_BLOG_API_ORIGIN || "https://erp.stackthrow.com"
 const BLOG_ID = process.env.NEXT_PUBLIC_BLOG_ID || "5"
 
-// Revalidate cached responses every hour (ISR).
-const REVALIDATE_SECONDS = 3600
-
 // Map the site's UI language to the blog API's supported locales.
 const LANG_MAP: Record<Language, string> = {
   uk: "uk_UA",
@@ -30,6 +27,19 @@ const LANG_MAP: Record<Language, string> = {
 
 export function toApiLang(language: Language): string {
   return LANG_MAP[language] || "en_US"
+}
+
+/**
+ * Normalize a slug to its decoded form. Next.js passes route params already
+ * URL-encoded; decoding here means callers can safely re-encode exactly once.
+ * Falls back to the original string if it isn't valid percent-encoding.
+ */
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug)
+  } catch {
+    return slug
+  }
 }
 
 export type BlogAuthor = {
@@ -111,7 +121,7 @@ export async function getBlogPosts(
 
   try {
     const res = await fetch(url, {
-      next: { revalidate: REVALIDATE_SECONDS },
+      cache: "no-store",
       headers: { Accept: "application/json" },
     })
 
@@ -139,13 +149,15 @@ export async function getBlogPost(
   language: Language
 ): Promise<BlogPost | null> {
   const lang = toApiLang(language)
+  // Next.js delivers `params.slug` already URL-encoded. Decode first so we don't
+  // double-encode non-ASCII (e.g. Cyrillic) slugs when building the request URL.
   const url =
-    `${BLOG_API_ORIGIN}/api/v1/posts/by-slug/${encodeURIComponent(slug)}` +
+    `${BLOG_API_ORIGIN}/api/v1/posts/by-slug/${encodeURIComponent(decodeSlug(slug))}` +
     `?lang=${lang}`
 
   try {
     const res = await fetch(url, {
-      next: { revalidate: REVALIDATE_SECONDS },
+      cache: "no-store",
       headers: { Accept: "application/json" },
     })
 

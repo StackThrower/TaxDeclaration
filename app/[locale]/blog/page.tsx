@@ -9,6 +9,9 @@ import { Newspaper, ArrowRight, ArrowLeft } from "lucide-react"
 import { getBlogPosts, resolveCoverImage } from "@/lib/blog"
 import { Language } from "@/lib/i18n"
 
+// Always render on request with fresh data from the blog API (no caching).
+export const dynamic = "force-dynamic"
+
 type Props = {
   params: Promise<{ locale: string }>
   searchParams: Promise<{ page?: string }>

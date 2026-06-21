@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button"
 import { getBlogPost, getBlogPosts, resolveCoverImage } from "@/lib/blog"
 import { Language } from "@/lib/i18n"
 
+// Always render on request with fresh data from the blog API (no caching).
+export const dynamic = "force-dynamic"
+
 type Props = {
   params: Promise<{ locale: string; slug: string }>
 }
