@@ -1,16 +1,13 @@
+// The project supports Ukrainian only. The union is kept wide so the
+// language-keyed SEO metadata maps continue to type-check, but the runtime
+// data below only ever contains Ukrainian.
 export type Language = "uk" | "en" | "fr" | "pl" | "es" | "pt" | "de"
 
-export const languages: Record<Language, string> = {
+export const languages: Partial<Record<Language, string>> = {
   uk: "Українська",
-  en: "English",
-  fr: "Français",
-  pl: "Polski",
-  es: "Español",
-  pt: "Português",
-  de: "Deutsch",
 }
 
-export const translations: Record<Language, Record<string, string>> = {
+export const translations: Partial<Record<Language, Record<string, string>>> = {
   uk: {
     "header.title": "Taxered",
     "header.subtitle": "Податкові декларації",

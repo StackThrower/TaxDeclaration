@@ -3,7 +3,6 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 import type { Language } from "./i18n"
-import { translations } from "./i18n"
 
 interface I18nContextType {
   language: Language
@@ -11,52 +10,6 @@ interface I18nContextType {
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined)
-
-// Detect browser language and map to supported languages
-function detectBrowserLanguage(): Language {
-  if (typeof window === "undefined") return "en"
-
-  const browserLang = navigator.language.toLowerCase()
-
-  // Map browser language codes to our supported languages
-  const languageMap: Record<string, Language> = {
-    uk: "uk",
-    "uk-ua": "uk",
-    en: "en",
-    "en-us": "en",
-    "en-gb": "en",
-    "en-ca": "en",
-    fr: "fr",
-    "fr-fr": "fr",
-    "fr-ca": "fr",
-    pl: "pl",
-    "pl-pl": "pl",
-    es: "es",
-    "es-es": "es",
-    "es-mx": "es",
-    pt: "pt",
-    "pt-pt": "pt",
-    "pt-br": "pt",
-    de: "de",
-    "de-de": "de",
-    "de-at": "de",
-    "de-ch": "de",
-  }
-
-  // Try exact match first
-  if (languageMap[browserLang]) {
-    return languageMap[browserLang]
-  }
-
-  // Try language prefix (e.g., "en" from "en-AU")
-  const langPrefix = browserLang.split("-")[0]
-  if (languageMap[langPrefix]) {
-    return languageMap[langPrefix]
-  }
-
-  // Default to English if no match found
-  return "en"
-}
 
 export function I18nProvider({
   children,
@@ -67,20 +20,14 @@ export function I18nProvider({
 
   useEffect(() => {
     setMounted(true)
-    const saved = localStorage.getItem("language") as Language
-    if (saved && translations[saved]) {
-      setLanguage(saved)
-    } else {
-      // Detect browser language if no saved language
-      const detectedLang = detectBrowserLanguage()
-      setLanguage(detectedLang)
-      localStorage.setItem("language", detectedLang)
-    }
+    // The project is Ukrainian-only.
+    setLanguage("uk")
+    localStorage.setItem("language", "uk")
   }, [])
 
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang)
-    localStorage.setItem("language", lang)
+  const handleSetLanguage = (_lang: Language) => {
+    setLanguage("uk")
+    localStorage.setItem("language", "uk")
   }
 
   return (

@@ -1,6 +1,6 @@
 import { type Metadata } from "next"
 import { type Language } from "./i18n"
-import { type CountryCode, countries } from "./countries"
+import { type CountryCode, type Country, countries } from "./countries"
 
 // SEO-friendly metadata for each country and language
 export type SEOMetadata = {
@@ -14,7 +14,8 @@ export function generateSEOMetadata(
   countryCode: CountryCode,
   language: Language
 ): SEOMetadata {
-  const country = countries[countryCode]
+  // Ukraine-only project: the country is always present for reachable routes.
+  const country = countries[countryCode] as Country
 
   // Get tax forms for this country
   const formTitles = country.taxForms.map((f) => f.title).join(", ")
@@ -643,7 +644,8 @@ export function generateHelpPageMetadata(
   countryCode: CountryCode,
   language: Language
 ): SEOMetadata {
-  const country = countries[countryCode]
+  // Ukraine-only project: the country is always present for reachable routes.
+  const country = countries[countryCode] as Country
   const currentYear = new Date().getFullYear()
 
   const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {
@@ -1320,7 +1322,8 @@ export function generateAboutPageMetadata(
   countryCode: CountryCode,
   language: Language
 ): SEOMetadata {
-  const country = countries[countryCode]
+  // Ukraine-only project: the country is always present for reachable routes.
+  const country = countries[countryCode] as Country
   const currentYear = new Date().getFullYear()
 
   const metadata: Record<Language, Record<CountryCode, SEOMetadata>> = {

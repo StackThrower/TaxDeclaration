@@ -5,18 +5,9 @@ import { CountryCode } from '@/lib/countries'
 
 const BASE_URL = 'https://taxered.com'
 
-// All supported locale combinations (language-country)
+// The project is Ukrainian-only.
 const locales = [
   'uk-ua',  // Ukrainian - Ukraine
-  'en-us',  // English - United States
-  'en-gb',  // English - United Kingdom
-  'en-ca',  // English - Canada
-  'fr-fr',  // French - France
-  'pl-pl',  // Polish - Poland
-  'es-es',  // Spanish - Spain
-  'pt-pt',  // Portuguese - Portugal
-  'de-de',  // German - Germany
-  'sv-se',  // Swedish - Sweden (using 'sv-se' for Swedish locale)
 ]
 
 // Pages to include in sitemap

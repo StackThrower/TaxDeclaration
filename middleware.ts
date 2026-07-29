@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Extract language from URL path (e.g., /uk-ua -> uk, /en-us -> en)
-function getLanguageFromPath(pathname: string): string {
-  const localeMatch = pathname.match(/^\/([a-z]{2})-[a-z]{2}/)
-  return localeMatch ? localeMatch[1] : 'en'
+// The project is Ukrainian-only.
+function getLanguageFromPath(_pathname: string): string {
+  return 'uk'
 }
 
 export function middleware(request: NextRequest) {

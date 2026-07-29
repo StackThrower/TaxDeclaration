@@ -3,12 +3,10 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { FileText, Heart, Menu, X, Home, HelpCircle, Calculator, Globe, MapPin } from "lucide-react"
+import { FileText, Heart, Menu, X, Home, HelpCircle, Calculator } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
 import { ThemeToggle } from "./theme-toggle"
-import { LanguageSwitcher } from "./language-switcher"
-import { CountrySwitcher } from "./country-switcher"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from "./ui/sheet"
 import { Separator } from "./ui/separator"
@@ -61,8 +59,6 @@ export function Header() {
             </a>
           </Button>
           <ThemeToggle />
-          <CountrySwitcher />
-          <LanguageSwitcher />
         </div>
 
         {/* Mobile Controls */}
@@ -128,37 +124,6 @@ export function Header() {
                 </nav>
 
                 <Separator className="my-4" />
-
-                {/* Settings Section */}
-                <div className="space-y-3 mb-6">
-                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 mb-3">
-                    {language === "uk" ? "Налаштування" : "Settings"}
-                  </h3>
-
-                  <div className="flex items-center justify-between px-4 py-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-background flex items-center justify-center">
-                        <Globe className="w-4 h-4 text-foreground" />
-                      </div>
-                      <span className="text-sm font-medium">
-                        {language === "uk" ? "Мова" : "Language"}
-                      </span>
-                    </div>
-                    <LanguageSwitcher />
-                  </div>
-
-                  <div className="flex items-center justify-between px-4 py-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-background flex items-center justify-center">
-                        <MapPin className="w-4 h-4 text-foreground" />
-                      </div>
-                      <span className="text-sm font-medium">
-                        {language === "uk" ? "Країна" : "Country"}
-                      </span>
-                    </div>
-                    <CountrySwitcher />
-                  </div>
-                </div>
 
                 {/* Spacer to push button to bottom */}
                 <div className="flex-1" />

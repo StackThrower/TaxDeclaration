@@ -10,12 +10,9 @@ import { getCountry, type CountryCode } from "@/lib/countries"
 
 // Generate beautiful SSR metadata for root page based on browser language
 export async function generateMetadata(): Promise<Metadata> {
-  // Get browser's Accept-Language header
-  const headersList = await headers()
-  const acceptLanguage = headersList.get('accept-language') || ''
-
-  // Parse language from Accept-Language header
-  const browserLang = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase() || 'uk'
+  // The project is Ukrainian-only.
+  await headers()
+  const browserLang = 'uk'
 
   const currentYear = new Date().getFullYear()
 
@@ -117,7 +114,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   const meta = metadata[browserLang] || metadata.uk
-  const locale = browserLang === 'uk' ? 'uk_UA' : `${browserLang}_${browserLang.toUpperCase()}`
+  const locale = 'uk_UA'
 
   return {
     title: meta.title,
@@ -151,15 +148,6 @@ export async function generateMetadata(): Promise<Metadata> {
       languages: {
         "x-default": "/",
         "uk-UA": "/uk-ua",
-        "en-US": "/en-us",
-        "en-GB": "/en-gb",
-        "en-CA": "/en-ca",
-        "fr-FR": "/fr-fr",
-        "pl-PL": "/pl-pl",
-        "es-ES": "/es-es",
-        "pt-PT": "/pt-pt",
-        "de-DE": "/de-de",
-        "sv-SE": "/sv-se",
       },
     },
     robots: {

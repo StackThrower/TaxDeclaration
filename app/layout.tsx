@@ -111,15 +111,6 @@ export const metadata: Metadata = {
     canonical: "https://taxered.com",
     languages: {
       "uk-UA": "/uk-ua",
-      "en-US": "/en-us",
-      "en-GB": "/en-gb",
-      "en-CA": "/en-ca",
-      "fr-FR": "/fr-fr",
-      "pl-PL": "/pl-pl",
-      "es-ES": "/es-es",
-      "pt-PT": "/pt-pt",
-      "de-DE": "/de-de",
-      "sv-SE": "/sv-se",
     },
   },
   // Additional metadata
@@ -136,9 +127,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // Get language from middleware header
+  // The project is Ukrainian-only.
   const headersList = await headers()
-  const lang = headersList.get('x-lang') || 'en'
+  const lang = headersList.get('x-lang') || 'uk'
 
   // Generate structured data for Organization and WebSite
   const organizationSchema = {
