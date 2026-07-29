@@ -925,18 +925,6 @@ export function FormF0121214() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-
-      <div className="mt-4 pt-4 border-border">
-        <div className="relative w-full max-w-2xl mx-auto aspect-video rounded-lg overflow-hidden shadow-lg">
-          <iframe
-              src="https://www.youtube.com/embed/gW80jDRop3o"
-              title={language === "uk" ? "Відео інструкція по заповненню форми" : "Form filling video tutorial"}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full"
-          />
-        </div>
-      </div>
       <Card className="border-border/50">
         <CardContent className="pt-6 space-y-4">
           <h3 className="text-lg font-semibold text-accent">{getLabel("personalData")}</h3>
