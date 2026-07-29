@@ -1,15 +1,22 @@
 import { MetadataRoute } from 'next'
-import { getBlogPosts } from '@/lib/blog'
+import { getArticles } from '@/lib/articles'
 import { Language } from '@/lib/i18n'
+import { CountryCode } from '@/lib/countries'
 
 const BASE_URL = 'https://taxered.com'
 
-// Only English and Ukrainian locales are included in the sitemap.
+// All supported locale combinations (language-country)
 const locales = [
   'uk-ua',  // Ukrainian - Ukraine
   'en-us',  // English - United States
   'en-gb',  // English - United Kingdom
   'en-ca',  // English - Canada
+  'fr-fr',  // French - France
+  'pl-pl',  // Polish - Poland
+  'es-es',  // Spanish - Spain
+  'pt-pt',  // Portuguese - Portugal
+  'de-de',  // German - Germany
+  'sv-se',  // Swedish - Sweden (using 'sv-se' for Swedish locale)
 ]
 
 // Pages to include in sitemap
@@ -23,13 +30,10 @@ const pages: PageConfig[] = [
   { path: '', priority: 0.9, changeFrequency: 'weekly' },           // Home
   { path: '/about', priority: 0.6, changeFrequency: 'monthly' },    // About
   { path: '/help', priority: 0.7, changeFrequency: 'weekly' },      // Help
-  { path: '/blog', priority: 0.8, changeFrequency: 'daily' },       // Blog
+  { path: '/knowledge', priority: 0.8, changeFrequency: 'daily' },  // Knowledge Base
 ]
 
-// Fetch up to this many blog posts per language for the sitemap.
-const BLOG_SITEMAP_PAGE_SIZE = 100
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const sitemap: MetadataRoute.Sitemap = []
   const currentDate = new Date()
 
@@ -55,38 +59,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   })
 
-  // Add all blog posts dynamically. The blog API is language-based, so fetch
-  // once per unique language and reuse for every locale sharing that language.
-  const blogPostsByLanguage = new Map<Language, Awaited<ReturnType<typeof getBlogPosts>>['posts']>()
-
-  for (const locale of locales) {
-    const language = locale.split('-')[0] as Language
+  // Add all knowledge base articles dynamically
+  locales.forEach((locale) => {
+    const [language, country] = locale.split('-') as [Language, CountryCode]
 
     try {
-      if (!blogPostsByLanguage.has(language)) {
-        const { posts } = await getBlogPosts(language, 1, BLOG_SITEMAP_PAGE_SIZE)
-        blogPostsByLanguage.set(language, posts)
-      }
+      const articles = getArticles(language, country)
 
-      const posts = blogPostsByLanguage.get(language) || []
+      articles.forEach((article) => {
+        const url = `${BASE_URL}/${locale}/knowledge/${article.slug}`
+        const lastModified = article.updatedAt
+          ? new Date(article.updatedAt)
+          : new Date(article.publishedAt)
 
-      posts.forEach((post) => {
         sitemap.push({
-          url: `${BASE_URL}/${locale}/blog/${post.slug}`,
-          lastModified: post.write_date
-            ? new Date(post.write_date)
-            : post.published_date
-            ? new Date(post.published_date)
-            : currentDate,
-          changeFrequency: 'weekly',
+          url,
+          lastModified,
+          changeFrequency: 'monthly',
           priority: 0.7,
         })
       })
     } catch (error) {
-      console.error(`Error loading blog posts for ${locale}:`, error)
+      console.error(`Error loading articles for ${locale}:`, error)
       // Continue with other locales even if one fails
     }
-  }
+  })
 
   return sitemap
 }

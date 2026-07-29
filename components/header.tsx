@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { FileText, Heart, Menu, X, Home, HelpCircle, Calculator, Globe, MapPin, Newspaper } from "lucide-react"
+import { FileText, Heart, Menu, X, Home, HelpCircle, Calculator, Globe, MapPin } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
 import { t } from "@/lib/i18n"
 import { ThemeToggle } from "./theme-toggle"
@@ -37,9 +37,6 @@ export function Header() {
           </Link>
           <Link href={`/${locale}/calculator`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.calculator")}
-          </Link>
-          <Link href={`/${locale}/blog`} className="hover:text-accent transition-colors whitespace-nowrap">
-            {t(language, "header.blog")}
           </Link>
           <Link href={`/${locale}/help`} className="hover:text-accent transition-colors whitespace-nowrap">
             {t(language, "header.help")}
@@ -116,17 +113,6 @@ export function Header() {
                       <Calculator className="w-4 h-4 text-accent" />
                     </div>
                     <span className="flex-1">{t(language, "header.calculator")}</span>
-                  </Link>
-
-                  <Link
-                    href={`/${locale}/blog`}
-                    className="flex items-center gap-4 px-4 py-3.5 text-base font-medium rounded-lg hover:bg-accent/10 hover:text-accent transition-all duration-200 group"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                      <Newspaper className="w-4 h-4 text-accent" />
-                    </div>
-                    <span className="flex-1">{t(language, "header.blog")}</span>
                   </Link>
 
                   <Link

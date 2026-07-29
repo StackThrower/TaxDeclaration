@@ -29,13 +29,8 @@ export function middleware(request: NextRequest) {
   // Remove noindex directives and allow caching
   response.headers.set('X-Robots-Tag', 'index, follow')
 
-  // Blog pages must always reflect the latest data from the blog API.
-  if (/^\/[a-z]{2}-[a-z]{2}\/blog(\/|$)/.test(pathname)) {
-    response.headers.set('Cache-Control', 'no-store, must-revalidate')
-  } else {
-    // Set reasonable cache control (allow caching)
-    response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
-  }
+  // Set reasonable cache control (allow caching)
+  response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
 
   // Determine language from URL prefix and add to header
   const lang = getLanguageFromPath(pathname)
