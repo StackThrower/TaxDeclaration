@@ -109,7 +109,7 @@ const nextConfig = {
             value: 'monegoo.com',
           },
         ],
-        destination: 'https://taxered.com/:path*',
+        destination: 'https://taxered.stackthrow.com/:path*',
         permanent: true,
       },
       {
@@ -120,7 +120,29 @@ const nextConfig = {
             value: 'www.monegoo.com',
           },
         ],
-        destination: 'https://taxered.com/:path*',
+        destination: 'https://taxered.stackthrow.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'taxered.com',
+          },
+        ],
+        destination: 'https://taxered.stackthrow.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.taxered.com',
+          },
+        ],
+        destination: 'https://taxered.stackthrow.com/:path*',
         permanent: true,
       },
       // Redirect www to non-www (works with both http and https)
