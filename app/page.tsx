@@ -123,7 +123,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: locale,
-      url: "https://taxered.com",
+      url: "https://taxered.stackthrow.com",
       title: meta.title,
       description: meta.description,
       siteName: "Taxered Tax Declaration",
@@ -144,7 +144,7 @@ export async function generateMetadata(): Promise<Metadata> {
       creator: "@monegoo",
     },
     alternates: {
-      canonical: "https://taxered.com",
+      canonical: "https://taxered.stackthrow.com",
       languages: {
         "x-default": "/",
         "uk-UA": "/uk-ua",
@@ -162,7 +162,7 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    authors: [{ name: "Taxered", url: "https://taxered.com" }],
+    authors: [{ name: "Taxered", url: "https://taxered.stackthrow.com" }],
     creator: "Taxered",
     publisher: "Taxered",
     category: "Finance",

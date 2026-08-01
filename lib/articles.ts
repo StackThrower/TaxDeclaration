@@ -22,15 +22,56 @@ export type Article = {
 export type ArticleMetadata = Omit<Article, "content">
 
 // Get the articles directory path
-const articlesDirectory = path.join(process.cwd(), "articles")
+const articlesDirectory = path.resolve(process.cwd(), "articles")
+
+// Whitelists for the values that get interpolated into article filenames.
+// Anything outside these sets is rejected before touching the filesystem.
+const LANGUAGES: readonly Language[] = ["uk", "en", "fr", "pl", "es", "pt", "de"]
+const COUNTRIES: readonly CountryCode[] = ["ua", "pl", "fr", "de", "pt", "es", "se", "gb", "us", "ca"]
+
+// Slugs are lowercase, dash-separated words — no dots, no slashes.
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+export function isLanguage(value: string | null | undefined): value is Language {
+  return !!value && (LANGUAGES as readonly string[]).includes(value)
+}
+
+export function isCountryCode(value: string | null | undefined): value is CountryCode {
+  return !!value && (COUNTRIES as readonly string[]).includes(value)
+}
+
+/**
+ * Resolve an article filename to an absolute path, returning null when the
+ * inputs are not well-formed or when the result would escape the articles
+ * directory. Both checks matter: the whitelists stop traversal at the source,
+ * the containment check is the backstop.
+ */
+function resolveArticlePath(
+  slug: string,
+  language: Language,
+  country: CountryCode
+): string | null {
+  if (!isLanguage(language) || !isCountryCode(country)) return null
+  if (typeof slug !== "string" || !SLUG_PATTERN.test(slug)) return null
+
+  const filePath = path.resolve(articlesDirectory, `${language}-${country}-${slug}.md`)
+
+  if (filePath !== articlesDirectory && !filePath.startsWith(articlesDirectory + path.sep)) {
+    return null
+  }
+
+  return filePath
+}
 
 /**
  * Get all articles for a specific language and country
  */
 export function getArticles(language: Language, country: CountryCode): ArticleMetadata[] {
-  try {
-    console.log("getArticles called with:", { language, country, articlesDirectory })
+  if (!isLanguage(language) || !isCountryCode(country)) {
+    return []
+  }
 
+  try {
     const files = fs.readdirSync(articlesDirectory)
     console.log("Found files:", files.length)
 
@@ -90,10 +131,9 @@ export function getArticle(
   country: CountryCode
 ): Article | null {
   try {
-    const filename = `${language}-${country}-${slug}.md`
-    const filePath = path.join(articlesDirectory, filename)
+    const filePath = resolveArticlePath(slug, language, country)
 
-    if (!fs.existsSync(filePath)) {
+    if (!filePath || !fs.existsSync(filePath)) {
       return null
     }
 

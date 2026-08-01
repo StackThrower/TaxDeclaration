@@ -22,22 +22,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const descriptions: Record<string, string> = {
-    uk: "Умови використання сервісу taxered.com для заповнення податкових декларацій",
-    pl: "Warunki korzystania z usługi taxered.com do wypełniania deklaracji podatkowych",
-    en: "Terms of use for the taxered.com service for filling out tax returns",
-    fr: "Conditions d'utilisation du service taxered.com pour remplir les déclarations fiscales",
-    de: "Nutzungsbedingungen für den taxered.com-Service zum Ausfüllen von Steuererklärungen",
-    es: "Términos de uso del servicio taxered.com para completar declaraciones de impuestos",
-    pt: "Termos de uso do serviço taxered.com para preencher declarações fiscais",
+    uk: "Умови використання сервісу taxered.stackthrow.com для заповнення податкових декларацій",
+    pl: "Warunki korzystania z usługi taxered.stackthrow.com do wypełniania deklaracji podatkowych",
+    en: "Terms of use for the taxered.stackthrow.com service for filling out tax returns",
+    fr: "Conditions d'utilisation du service taxered.stackthrow.com pour remplir les déclarations fiscales",
+    de: "Nutzungsbedingungen für den taxered.stackthrow.com-Service zum Ausfüllen von Steuererklärungen",
+    es: "Términos de uso del servicio taxered.stackthrow.com para completar declaraciones de impuestos",
+    pt: "Termos de uso do serviço taxered.stackthrow.com para preencher declarações fiscais",
   }
 
   return {
     title: titles[language] || titles.en,
     description: descriptions[language] || descriptions.en,
     alternates: {
-      canonical: `https://taxered.com/${locale}/terms`,
+      canonical: `https://taxered.stackthrow.com/${locale}/terms`,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
         "uk-UA": "/uk-ua/terms",
         "en-US": "/en-us/terms",
         "en-GB": "/en-gb/terms",
@@ -69,14 +69,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Прийняття умов",
           content: [
-            "Використовуючи сервіс taxered.com, ви погоджуєтесь з цими умовами використання. Якщо ви не згодні з будь-якою частиною цих умов, ви не повинні використовувати наш сервіс.",
-            "Сервіс taxered.com надається \"як є\" без будь-яких гарантій явних чи неявних.",
+            "Використовуючи сервіс taxered.stackthrow.com, ви погоджуєтесь з цими умовами використання. Якщо ви не згодні з будь-якою частиною цих умов, ви не повинні використовувати наш сервіс.",
+            "Сервіс taxered.stackthrow.com надається \"як є\" без будь-яких гарантій явних чи неявних.",
           ],
         },
         {
           heading: "2. Опис сервісу",
           content: [
-            "taxered.com – це безкоштовний інструмент для заповнення податкових декларацій.",
+            "taxered.stackthrow.com – це безкоштовний інструмент для заповнення податкових декларацій.",
             "Сервіс дозволяє:",
             "• Заповнювати податкові форми онлайн",
             "• Генерувати PDF-документи з податковими деklarацями",
@@ -99,7 +99,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Обмеження відповідальності",
           content: [
-            "taxered.com та його розробники НЕ НЕСУТЬ ВІДПОВІДАЛЬНОСТІ за:",
+            "taxered.stackthrow.com та його розробники НЕ НЕСУТЬ ВІДПОВІДАЛЬНОСТІ за:",
             "• Помилки в розрахунках",
             "• Збитки, понесені внаслідок використання сервісу",
             "• Штрафи або санкції від податкових органів",
@@ -111,7 +111,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Інтелектуальна власність",
           content: [
-            "Всі права на дизайн, код, логотипи та контент сайту taxered.com належать його розробникам.",
+            "Всі права на дизайн, код, логотипи та контент сайту taxered.stackthrow.com належать його розробникам.",
             "Ви маєте право використовувати сервіс для особистих некомерційних цілей.",
             "Заборонено:",
             "• Копіювати, модифікувати або розповсюджувати код сайту без дозволу",
@@ -173,14 +173,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Akceptacja warunków",
           content: [
-            "Korzystając z usługi taxered.com, akceptujesz te warunki użytkowania. Jeśli nie zgadzasz się z jakąkolwiek częścią tych warunków, nie powinieneś korzystać z naszej usługi.",
-            "Usługa taxered.com jest świadczona \"tak jak jest\" bez żadnych gwarancji, wyraźnych lub dorozumianych.",
+            "Korzystając z usługi taxered.stackthrow.com, akceptujesz te warunki użytkowania. Jeśli nie zgadzasz się z jakąkolwiek częścią tych warunków, nie powinieneś korzystać z naszej usługi.",
+            "Usługa taxered.stackthrow.com jest świadczona \"tak jak jest\" bez żadnych gwarancji, wyraźnych lub dorozumianych.",
           ],
         },
         {
           heading: "2. Opis usługi",
           content: [
-            "taxered.com to darmowe narzędzie do wypełniania deklaracji podatkowych.",
+            "taxered.stackthrow.com to darmowe narzędzie do wypełniania deklaracji podatkowych.",
             "Usługa umożliwia:",
             "• Wypełnianie formularzy podatkowych online",
             "• Generowanie dokumentów PDF z deklaracjami podatkowymi",
@@ -203,7 +203,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Ograniczenie odpowiedzialności",
           content: [
-            "taxered.com i jego twórcy NIE PONOSZĄ ODPOWIEDZIALNOŚCI za:",
+            "taxered.stackthrow.com i jego twórcy NIE PONOSZĄ ODPOWIEDZIALNOŚCI za:",
             "• Błędy w obliczeniach",
             "• Szkody poniesione w wyniku korzystania z usługi",
             "• Kary lub sankcje od urzędów skarbowych",
@@ -215,7 +215,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Własność intelektualna",
           content: [
-            "Wszystkie prawa do projektu, kodu, logo i treści strony taxered.com należą do jej twórców.",
+            "Wszystkie prawa do projektu, kodu, logo i treści strony taxered.stackthrow.com należą do jej twórców.",
             "Masz prawo korzystać z usługi do osobistych celów niekomercyjnych.",
             "Zabronione jest:",
             "• Kopiowanie, modyfikowanie lub rozpowszechnianie kodu strony bez zgody",
@@ -277,14 +277,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Acceptance of Terms",
           content: [
-            "By using the taxered.com service, you agree to these terms of use. If you do not agree with any part of these terms, you should not use our service.",
-            "The taxered.com service is provided \"as is\" without any warranties, express or implied.",
+            "By using the taxered.stackthrow.com service, you agree to these terms of use. If you do not agree with any part of these terms, you should not use our service.",
+            "The taxered.stackthrow.com service is provided \"as is\" without any warranties, express or implied.",
           ],
         },
         {
           heading: "2. Service Description",
           content: [
-            "taxered.com is a free tool for filling out tax returns.",
+            "taxered.stackthrow.com is a free tool for filling out tax returns.",
             "The service allows you to:",
             "• Fill out tax forms online",
             "• Generate PDF documents with tax returns",
@@ -307,7 +307,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Limitation of Liability",
           content: [
-            "taxered.com and its developers ARE NOT LIABLE for:",
+            "taxered.stackthrow.com and its developers ARE NOT LIABLE for:",
             "• Errors in calculations",
             "• Damages incurred as a result of using the service",
             "• Penalties or sanctions from tax authorities",
@@ -319,7 +319,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Intellectual Property",
           content: [
-            "All rights to the design, code, logos, and content of the taxered.com site belong to its developers.",
+            "All rights to the design, code, logos, and content of the taxered.stackthrow.com site belong to its developers.",
             "You have the right to use the service for personal non-commercial purposes.",
             "It is forbidden to:",
             "• Copy, modify, or distribute the site code without permission",
@@ -381,14 +381,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Acceptation des conditions",
           content: [
-            "En utilisant le service taxered.com, vous acceptez ces conditions d'utilisation. Si vous n'êtes pas d'accord avec une partie de ces conditions, vous ne devez pas utiliser notre service.",
-            "Le service taxered.com est fourni \"tel quel\" sans aucune garantie, expresse ou implicite.",
+            "En utilisant le service taxered.stackthrow.com, vous acceptez ces conditions d'utilisation. Si vous n'êtes pas d'accord avec une partie de ces conditions, vous ne devez pas utiliser notre service.",
+            "Le service taxered.stackthrow.com est fourni \"tel quel\" sans aucune garantie, expresse ou implicite.",
           ],
         },
         {
           heading: "2. Description du service",
           content: [
-            "taxered.com est un outil gratuit pour remplir les déclarations fiscales.",
+            "taxered.stackthrow.com est un outil gratuit pour remplir les déclarations fiscales.",
             "Le service vous permet de :",
             "• Remplir des formulaires fiscaux en ligne",
             "• Générer des documents PDF avec des déclarations fiscales",
@@ -411,7 +411,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Limitation de responsabilité",
           content: [
-            "taxered.com et ses développeurs NE SONT PAS RESPONSABLES de :",
+            "taxered.stackthrow.com et ses développeurs NE SONT PAS RESPONSABLES de :",
             "• Erreurs dans les calculs",
             "• Dommages subis suite à l'utilisation du service",
             "• Pénalités ou sanctions des autorités fiscales",
@@ -423,7 +423,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Propriété intellectuelle",
           content: [
-            "Tous les droits sur la conception, le code, les logos et le contenu du site taxered.com appartiennent à ses développeurs.",
+            "Tous les droits sur la conception, le code, les logos et le contenu du site taxered.stackthrow.com appartiennent à ses développeurs.",
             "Vous avez le droit d'utiliser le service à des fins personnelles non commerciales.",
             "Il est interdit de :",
             "• Copier, modifier ou distribuer le code du site sans autorisation",
@@ -485,14 +485,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Annahme der Bedingungen",
           content: [
-            "Durch die Nutzung des taxered.com-Dienstes stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie mit einem Teil dieser Bedingungen nicht einverstanden sind, sollten Sie unseren Dienst nicht nutzen.",
-            "Der taxered.com-Dienst wird \"wie besehen\" ohne jegliche ausdrückliche oder stillschweigende Garantien bereitgestellt.",
+            "Durch die Nutzung des taxered.stackthrow.com-Dienstes stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie mit einem Teil dieser Bedingungen nicht einverstanden sind, sollten Sie unseren Dienst nicht nutzen.",
+            "Der taxered.stackthrow.com-Dienst wird \"wie besehen\" ohne jegliche ausdrückliche oder stillschweigende Garantien bereitgestellt.",
           ],
         },
         {
           heading: "2. Dienstbeschreibung",
           content: [
-            "taxered.com ist ein kostenloses Tool zum Ausfüllen von Steuererklärungen.",
+            "taxered.stackthrow.com ist ein kostenloses Tool zum Ausfüllen von Steuererklärungen.",
             "Der Dienst ermöglicht Ihnen:",
             "• Steuerformulare online auszufüllen",
             "• PDF-Dokumente mit Steuererklärungen zu generieren",
@@ -515,7 +515,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Haftungsbeschränkung",
           content: [
-            "taxered.com und seine Entwickler HAFTEN NICHT für:",
+            "taxered.stackthrow.com und seine Entwickler HAFTEN NICHT für:",
             "• Fehler in Berechnungen",
             "• Schäden, die durch die Nutzung des Dienstes entstehen",
             "• Strafen oder Sanktionen von Steuerbehörden",
@@ -527,7 +527,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Geistiges Eigentum",
           content: [
-            "Alle Rechte an Design, Code, Logos und Inhalten der taxered.com-Website gehören ihren Entwicklern.",
+            "Alle Rechte an Design, Code, Logos und Inhalten der taxered.stackthrow.com-Website gehören ihren Entwicklern.",
             "Sie haben das Recht, den Dienst für persönliche, nicht-kommerzielle Zwecke zu nutzen.",
             "Es ist verboten:",
             "• Den Code der Website ohne Genehmigung zu kopieren, zu modifizieren oder zu verbreiten",
@@ -589,14 +589,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Aceptación de términos",
           content: [
-            "Al utilizar el servicio taxered.com, acepta estos términos de uso. Si no está de acuerdo con alguna parte de estos términos, no debe utilizar nuestro servicio.",
-            "El servicio taxered.com se proporciona \"tal cual\" sin ninguna garantía, expresa o implícita.",
+            "Al utilizar el servicio taxered.stackthrow.com, acepta estos términos de uso. Si no está de acuerdo con alguna parte de estos términos, no debe utilizar nuestro servicio.",
+            "El servicio taxered.stackthrow.com se proporciona \"tal cual\" sin ninguna garantía, expresa o implícita.",
           ],
         },
         {
           heading: "2. Descripción del servicio",
           content: [
-            "taxered.com es una herramienta gratuita para completar declaraciones de impuestos.",
+            "taxered.stackthrow.com es una herramienta gratuita para completar declaraciones de impuestos.",
             "El servicio le permite:",
             "• Completar formularios fiscales en línea",
             "• Generar documentos PDF con declaraciones de impuestos",
@@ -619,7 +619,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Limitación de responsabilidad",
           content: [
-            "taxered.com y sus desarrolladores NO SON RESPONSABLES de:",
+            "taxered.stackthrow.com y sus desarrolladores NO SON RESPONSABLES de:",
             "• Errores en los cálculos",
             "• Daños incurridos como resultado del uso del servicio",
             "• Multas o sanciones de las autoridades fiscales",
@@ -631,7 +631,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Propiedad intelectual",
           content: [
-            "Todos los derechos sobre el diseño, código, logotipos y contenido del sitio taxered.com pertenecen a sus desarrolladores.",
+            "Todos los derechos sobre el diseño, código, logotipos y contenido del sitio taxered.stackthrow.com pertenecen a sus desarrolladores.",
             "Tiene derecho a utilizar el servicio para fines personales no comerciales.",
             "Está prohibido:",
             "• Copiar, modificar o distribuir el código del sitio sin permiso",
@@ -693,14 +693,14 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "1. Aceitação dos termos",
           content: [
-            "Ao usar o serviço taxered.com, você concorda com estes termos de uso. Se você não concordar com qualquer parte destes termos, não deve usar nosso serviço.",
-            "O serviço taxered.com é fornecido \"como está\" sem quaisquer garantias, expressas ou implícitas.",
+            "Ao usar o serviço taxered.stackthrow.com, você concorda com estes termos de uso. Se você não concordar com qualquer parte destes termos, não deve usar nosso serviço.",
+            "O serviço taxered.stackthrow.com é fornecido \"como está\" sem quaisquer garantias, expressas ou implícitas.",
           ],
         },
         {
           heading: "2. Descrição do serviço",
           content: [
-            "taxered.com é uma ferramenta gratuita para preencher declarações fiscais.",
+            "taxered.stackthrow.com é uma ferramenta gratuita para preencher declarações fiscais.",
             "O serviço permite que você:",
             "• Preencha formulários fiscais online",
             "• Gere documentos PDF com declarações fiscais",
@@ -723,7 +723,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "4. Limitação de responsabilidade",
           content: [
-            "taxered.com e seus desenvolvedores NÃO SÃO RESPONSÁVEIS por:",
+            "taxered.stackthrow.com e seus desenvolvedores NÃO SÃO RESPONSÁVEIS por:",
             "• Erros nos cálculos",
             "• Danos incorridos como resultado do uso do serviço",
             "• Multas ou sanções das autoridades fiscais",
@@ -735,7 +735,7 @@ export default async function TermsPage({ params }: Props) {
         {
           heading: "5. Propriedade intelectual",
           content: [
-            "Todos os direitos sobre o design, código, logotipos e conteúdo do site taxered.com pertencem aos seus desenvolvedores.",
+            "Todos os direitos sobre o design, código, logotipos e conteúdo do site taxered.stackthrow.com pertencem aos seus desenvolvedores.",
             "Você tem o direito de usar o serviço para fins pessoais não comerciais.",
             "É proibido:",
             "• Copiar, modificar ou distribuir o código do site sem permissão",

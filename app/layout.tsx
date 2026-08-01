@@ -25,7 +25,7 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://taxered.com"),
+  metadataBase: new URL("https://taxered.stackthrow.com"),
   title: {
     default: "Taxered - F0100214 & F0121214",
     template: "%s | Taxered",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   applicationName: "Taxered Tax Declaration",
   referrer: "origin-when-cross-origin",
   keywords: ["tax declaration", "F0100214", "F0121214", "income declaration", "property status", "tax calculator", "online tax filing"],
-  authors: [{ name: "Taxered", url: "https://taxered.com" }],
+  authors: [{ name: "Taxered", url: "https://taxered.stackthrow.com" }],
   creator: "Taxered",
   publisher: "Taxered",
   formatDetection: {
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "uk_UA",
-    url: "https://taxered.com",
+    url: "https://taxered.stackthrow.com",
     title: "Taxered - F0100214 & F0121214",
     description: "Online system for filing tax declarations on property status, income, and investment transactions",
     siteName: "Taxered Tax Declaration",
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
   },
   // Alternate languages
   alternates: {
-    canonical: "https://taxered.com",
+    canonical: "https://taxered.stackthrow.com",
     languages: {
       "uk-UA": "/uk-ua",
     },
@@ -136,8 +136,8 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Taxered",
-    "url": "https://taxered.com",
-    "logo": "https://taxered.com/placeholder-logo.png",
+    "url": "https://taxered.stackthrow.com",
+    "logo": "https://taxered.stackthrow.com/placeholder-logo.png",
     "description": "Free and open tax declaration system for everyone",
     "sameAs": [
       "https://twitter.com/monegoo",
@@ -148,13 +148,13 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Taxered Tax Declaration",
-    "url": "https://taxered.com",
+    "url": "https://taxered.stackthrow.com",
     "description": "Online system for filing tax declarations on property status, income, and investment transactions",
     "inLanguage": lang,
     "publisher": {
       "@type": "Organization",
       "name": "Taxered",
-      "url": "https://taxered.com",
+      "url": "https://taxered.stackthrow.com",
     },
   }
 
@@ -162,7 +162,7 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Taxered Tax Declaration",
-    "url": "https://taxered.com",
+    "url": "https://taxered.stackthrow.com",
     "description": "Online system for filing tax declarations on property status, income, and investment transactions",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",

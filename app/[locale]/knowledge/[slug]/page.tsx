@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const canonicalUrl = `https://taxered.com/${locale}/knowledge/${slug}`
+  const canonicalUrl = `https://taxered.stackthrow.com/${locale}/knowledge/${slug}`
 
   return {
     title: `${article.title} | Taxered`,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
       },
     },
     openGraph: {

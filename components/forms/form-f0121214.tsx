@@ -72,7 +72,7 @@ export function FormF0121214() {
     fullName: "",
     taxNumber: "",
     taxOfficeCode: "",
-    year: "2025",
+    year: "2026",
     notes: "",
   })
 
@@ -923,8 +923,10 @@ export function FormF0121214() {
     return translations[language]?.[key] || key
   }
 
+  // data-clarity-mask keeps declaration data (name, tax ID, amounts) out of
+  // Microsoft Clarity session recordings.
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8" data-clarity-mask="true">
       <Card className="border-border/50">
         <CardContent className="pt-6 space-y-4">
           <h3 className="text-lg font-semibold text-accent">{getLabel("personalData")}</h3>

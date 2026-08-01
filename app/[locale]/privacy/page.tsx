@@ -22,22 +22,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const descriptions: Record<string, string> = {
-    uk: "Дізнайтеся, як ми захищаємо вашу конфіденційність і обробляємо ваші дані на taxered.com",
-    pl: "Dowiedz się, jak chronimy Twoją prywatność i przetwarzamy Twoje dane w taxered.com",
-    en: "Learn how we protect your privacy and handle your data on taxered.com",
-    fr: "Découvrez comment nous protégeons votre vie privée et traitons vos données sur taxered.com",
-    de: "Erfahren Sie, wie wir Ihre Privatsphäre schützen und Ihre Daten auf taxered.com verarbeiten",
-    es: "Descubra cómo protegemos su privacidad y manejamos sus datos en taxered.com",
-    pt: "Saiba como protegemos sua privacidade e tratamos seus dados no taxered.com",
+    uk: "Дізнайтеся, як ми захищаємо вашу конфіденційність і обробляємо ваші дані на taxered.stackthrow.com",
+    pl: "Dowiedz się, jak chronimy Twoją prywatność i przetwarzamy Twoje dane w taxered.stackthrow.com",
+    en: "Learn how we protect your privacy and handle your data on taxered.stackthrow.com",
+    fr: "Découvrez comment nous protégeons votre vie privée et traitons vos données sur taxered.stackthrow.com",
+    de: "Erfahren Sie, wie wir Ihre Privatsphäre schützen und Ihre Daten auf taxered.stackthrow.com verarbeiten",
+    es: "Descubra cómo protegemos su privacidad y manejamos sus datos en taxered.stackthrow.com",
+    pt: "Saiba como protegemos sua privacidade e tratamos seus dados no taxered.stackthrow.com",
   }
 
   return {
     title: titles[language] || titles.en,
     description: descriptions[language] || descriptions.en,
     alternates: {
-      canonical: `https://taxered.com/${locale}/privacy`,
+      canonical: `https://taxered.stackthrow.com/${locale}/privacy`,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
         "uk-UA": "/uk-ua/privacy",
         "en-US": "/en-us/privacy",
         "en-GB": "/en-gb/privacy",
@@ -69,7 +69,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Збір та використання даних",
           content: [
-            "taxered.com – це безкоштовний інструмент для заповнення податкових декларацій. Ми серйозно ставимося до захисту вашої конфіденційності.",
+            "taxered.stackthrow.com – це безкоштовний інструмент для заповнення податкових декларацій. Ми серйозно ставимося до захисту вашої конфіденційності.",
             "Важливо: Ми НЕ зберігаємо ваші податкові дані, персональну інформацію або дані декларацій на наших серверах. Всі розрахунки виконуються локально у вашому браузері.",
             "Усі дані, які ви вводите в форми (ПІБ, ІПН, суми доходів тощо), обробляються виключно на вашому пристрої та не передаються на наші сервери.",
           ],
@@ -152,7 +152,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Zbieranie i wykorzystanie danych",
           content: [
-            "taxered.com to darmowe narzędzie do wypełniania deklaracji podatkowych. Poważnie traktujemy ochronę Twojej prywatności.",
+            "taxered.stackthrow.com to darmowe narzędzie do wypełniania deklaracji podatkowych. Poważnie traktujemy ochronę Twojej prywatności.",
             "Ważne: NIE przechowujemy Twoich danych podatkowych, informacji osobowych ani danych z deklaracji na naszych serwerach. Wszystkie obliczenia są wykonywane lokalnie w Twojej przeglądarce.",
             "Wszystkie dane wprowadzane do formularzy (imię, nazwisko, NIP, kwoty dochodów itp.) są przetwarzane wyłącznie na Twoim urządzeniu i nie są przesyłane na nasze serwery.",
           ],
@@ -235,7 +235,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Data Collection and Use",
           content: [
-            "taxered.com is a free tool for filling out tax returns. We take your privacy seriously.",
+            "taxered.stackthrow.com is a free tool for filling out tax returns. We take your privacy seriously.",
             "Important: We DO NOT store your tax data, personal information, or declaration data on our servers. All calculations are performed locally in your browser.",
             "All data you enter into forms (name, tax ID, income amounts, etc.) is processed exclusively on your device and is not transmitted to our servers.",
           ],
@@ -318,7 +318,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Collecte et utilisation des données",
           content: [
-            "taxered.com est un outil gratuit pour remplir les déclarations fiscales. Nous prenons votre vie privée au sérieux.",
+            "taxered.stackthrow.com est un outil gratuit pour remplir les déclarations fiscales. Nous prenons votre vie privée au sérieux.",
             "Important : Nous NE stockons PAS vos données fiscales, informations personnelles ou données de déclaration sur nos serveurs. Tous les calculs sont effectués localement dans votre navigateur.",
             "Toutes les données que vous saisissez dans les formulaires (nom, numéro fiscal, montants de revenus, etc.) sont traitées exclusivement sur votre appareil et ne sont pas transmises à nos serveurs.",
           ],
@@ -401,7 +401,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Datenerfassung und -verwendung",
           content: [
-            "taxered.com ist ein kostenloses Tool zum Ausfüllen von Steuererklärungen. Wir nehmen Ihre Privatsphäre ernst.",
+            "taxered.stackthrow.com ist ein kostenloses Tool zum Ausfüllen von Steuererklärungen. Wir nehmen Ihre Privatsphäre ernst.",
             "Wichtig: Wir speichern KEINE Ihrer Steuerdaten, persönlichen Informationen oder Erklärungsdaten auf unseren Servern. Alle Berechnungen werden lokal in Ihrem Browser durchgeführt.",
             "Alle Daten, die Sie in Formulare eingeben (Name, Steuernummer, Einkommensbeträge usw.), werden ausschließlich auf Ihrem Gerät verarbeitet und nicht an unsere Server übertragen.",
           ],
@@ -484,7 +484,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Recopilación y uso de datos",
           content: [
-            "taxered.com es una herramienta gratuita para completar declaraciones de impuestos. Nos tomamos en serio su privacidad.",
+            "taxered.stackthrow.com es una herramienta gratuita para completar declaraciones de impuestos. Nos tomamos en serio su privacidad.",
             "Importante: NO almacenamos sus datos fiscales, información personal o datos de declaración en nuestros servidores. Todos los cálculos se realizan localmente en su navegador.",
             "Todos los datos que ingresa en los formularios (nombre, número fiscal, montos de ingresos, etc.) se procesan exclusivamente en su dispositivo y no se transmiten a nuestros servidores.",
           ],
@@ -567,7 +567,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           heading: "1. Coleta e uso de dados",
           content: [
-            "taxered.com é uma ferramenta gratuita para preencher declarações fiscais. Levamos sua privacidade a sério.",
+            "taxered.stackthrow.com é uma ferramenta gratuita para preencher declarações fiscais. Levamos sua privacidade a sério.",
             "Importante: NÃO armazenamos seus dados fiscais, informações pessoais ou dados de declaração em nossos servidores. Todos os cálculos são realizados localmente em seu navegador.",
             "Todos os dados que você insere nos formulários (nome, número fiscal, valores de renda, etc.) são processados exclusivamente em seu dispositivo e não são transmitidos aos nossos servidores.",
           ],

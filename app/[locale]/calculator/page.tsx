@@ -58,7 +58,7 @@ export default async function CalculatorPage({ params }: Props) {
     "@type": "WebApplication",
     "name": t(lang, "calculator.title"),
     "description": t(lang, "calculator.subtitle"),
-    "url": `https://taxered.com/${locale}/calculator`,
+    "url": `https://taxered.stackthrow.com/${locale}/calculator`,
     "inLanguage": langCode,
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -70,7 +70,7 @@ export default async function CalculatorPage({ params }: Props) {
     "isPartOf": {
       "@type": "WebSite",
       "name": "Taxered Tax Declaration",
-      "url": "https://taxered.com"
+      "url": "https://taxered.stackthrow.com"
     }
   }
 
@@ -82,13 +82,13 @@ export default async function CalculatorPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://taxered.com/${locale}`,
+        "item": `https://taxered.stackthrow.com/${locale}`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t(lang, "calculator.title"),
-        "item": `https://taxered.com/${locale}/calculator`,
+        "item": `https://taxered.stackthrow.com/${locale}/calculator`,
       },
     ],
   }

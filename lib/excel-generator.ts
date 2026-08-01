@@ -45,7 +45,7 @@ export function generateTaxCalculationExcel(formData: FormData, language: string
   const wb = XLSX.utils.book_new()
 
   // Ставка военного сбора: 1.5% для года ≤2024, 5% для года ≥2025
-  const reportYear = parseInt(formData.year) || 2025
+  const reportYear = parseInt(formData.year) || 2026
   const militaryTaxRate = reportYear >= 2025 ? 0.05 : 0.015
   const militaryTaxPercent = (militaryTaxRate * 100).toFixed(1)
 

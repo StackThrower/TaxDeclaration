@@ -124,8 +124,10 @@ export function FormF0100214() {
     },
   }
 
+  // data-clarity-mask keeps declaration data (name, tax ID, amounts) out of
+  // Microsoft Clarity session recordings.
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8" data-clarity-mask="true">
       {/* Персональні дані */}
       <Card className="border-border/50">
         <CardContent className="pt-6 space-y-4">
@@ -287,6 +289,7 @@ export function FormF0100214() {
                 <SelectItem value="2024">2024</SelectItem>
                 <SelectItem value="2025">2025</SelectItem>
                 <SelectItem value="2026">2026</SelectItem>
+                <SelectItem value="2027">2027</SelectItem>
               </SelectContent>
             </Select>
           </div>

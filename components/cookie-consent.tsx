@@ -4,32 +4,32 @@ import { useState, useEffect } from "react"
 import { useI18n } from "@/lib/i18n-context"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
+import { getConsent, setConsent } from "@/lib/consent"
 
 export function CookieConsent() {
   const { language } = useI18n()
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
-    // Check if user has already accepted cookies
-    const hasAccepted = localStorage.getItem("cookieConsent")
-    if (!hasAccepted) {
-      // Show banner after a short delay
-      setTimeout(() => setShowBanner(true), 1000)
+    // Show the banner until the user has made an explicit choice.
+    if (getConsent() === null) {
+      const timer = setTimeout(() => setShowBanner(true), 1000)
+      return () => clearTimeout(timer)
     }
   }, [])
 
   const acceptCookies = () => {
-    localStorage.setItem("cookieConsent", "accepted")
-    localStorage.setItem("cookieConsentDate", new Date().toISOString())
+    setConsent("accepted")
     setShowBanner(false)
   }
 
   const rejectCookies = () => {
-    localStorage.setItem("cookieConsent", "rejected")
-    localStorage.setItem("cookieConsentDate", new Date().toISOString())
+    setConsent("rejected")
     setShowBanner(false)
   }
 
+  // Dismissing without choosing is not consent: nothing is stored, analytics
+  // stays off, and the banner comes back on the next visit.
   const closeBanner = () => {
     setShowBanner(false)
   }
@@ -54,7 +54,7 @@ export function CookieConsent() {
       acceptAll: "Прийняти всі",
       rejectAll: "Відхилити необов'язкові",
       necessary: "Обов'язкові cookies: Зберігають налаштування сайту (мова, тема)",
-      analytics: "Аналітичні cookies: НЕ використовуються",
+      analytics: "Аналітичні cookies: Google Analytics і Microsoft Clarity — вмикаються лише після вашої згоди",
       marketing: "Маркетингові cookies: НЕ використовуються",
       gdprCompliance: "Згідно з GDPR (EU 2016/679) ви маєте право контролювати використання cookies. Ви можете змінити свої налаштування у будь-який час.",
     },
@@ -65,7 +65,7 @@ export function CookieConsent() {
       acceptAll: "Zaakceptuj wszystkie",
       rejectAll: "Odrzuć opcjonalne",
       necessary: "Niezbędne cookies: Przechowują ustawienia strony (język, motyw)",
-      analytics: "Analityczne cookies: NIE są używane",
+      analytics: "Analityczne cookies: Google Analytics i Microsoft Clarity — włączane wyłącznie po Twojej zgodzie",
       marketing: "Marketingowe cookies: NIE są używane",
       gdprCompliance: "Zgodnie z RODO (UE 2016/679) masz prawo kontrolować wykorzystanie plików cookie. Możesz zmienić swoje ustawienia w dowolnym momencie.",
     },
@@ -76,7 +76,7 @@ export function CookieConsent() {
       acceptAll: "Accept all",
       rejectAll: "Reject optional",
       necessary: "Necessary cookies: Store site preferences (language, theme)",
-      analytics: "Analytics cookies: NOT used",
+      analytics: "Analytics cookies: Google Analytics and Microsoft Clarity — enabled only after your consent",
       marketing: "Marketing cookies: NOT used",
       gdprCompliance: "In accordance with GDPR (EU 2016/679), you have the right to control cookie usage. You can change your settings at any time.",
     },
@@ -87,7 +87,7 @@ export function CookieConsent() {
       acceptAll: "Tout accepter",
       rejectAll: "Refuser les optionnels",
       necessary: "Cookies nécessaires : Stockent les préférences du site (langue, thème)",
-      analytics: "Cookies analytiques : NON utilisés",
+      analytics: "Cookies analytiques : Google Analytics et Microsoft Clarity — activés uniquement après votre consentement",
       marketing: "Cookies marketing : NON utilisés",
       gdprCompliance: "Conformément au RGPD (UE 2016/679), vous avez le droit de contrôler l'utilisation des cookies. Vous pouvez modifier vos paramètres à tout moment.",
     },
@@ -98,7 +98,7 @@ export function CookieConsent() {
       acceptAll: "Alle akzeptieren",
       rejectAll: "Optionale ablehnen",
       necessary: "Notwendige Cookies: Speichern Website-Einstellungen (Sprache, Design)",
-      analytics: "Analyse-Cookies: NICHT verwendet",
+      analytics: "Analyse-Cookies: Google Analytics und Microsoft Clarity — nur nach Ihrer Einwilligung aktiviert",
       marketing: "Marketing-Cookies: NICHT verwendet",
       gdprCompliance: "Gemäß DSGVO (EU 2016/679) haben Sie das Recht, die Verwendung von Cookies zu kontrollieren. Sie können Ihre Einstellungen jederzeit ändern.",
     },
@@ -109,7 +109,7 @@ export function CookieConsent() {
       acceptAll: "Aceptar todo",
       rejectAll: "Rechazar opcionales",
       necessary: "Cookies necesarias: Almacenan preferencias del sitio (idioma, tema)",
-      analytics: "Cookies analíticas: NO se utilizan",
+      analytics: "Cookies analíticas: Google Analytics y Microsoft Clarity — se activan solo tras su consentimiento",
       marketing: "Cookies de marketing: NO se utilizan",
       gdprCompliance: "De acuerdo con el RGPD (UE 2016/679), tiene derecho a controlar el uso de cookies. Puede cambiar su configuración en cualquier momento.",
     },
@@ -120,7 +120,7 @@ export function CookieConsent() {
       acceptAll: "Aceitar tudo",
       rejectAll: "Rejeitar opcionais",
       necessary: "Cookies necessários: Armazenam preferências do site (idioma, tema)",
-      analytics: "Cookies analíticos: NÃO usados",
+      analytics: "Cookies analíticos: Google Analytics e Microsoft Clarity — ativados apenas após o seu consentimento",
       marketing: "Cookies de marketing: NÃO usados",
       gdprCompliance: "De acordo com o GDPR (UE 2016/679), você tem o direito de controlar o uso de cookies. Você pode alterar suas configurações a qualquer momento.",
     },

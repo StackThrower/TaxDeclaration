@@ -58,12 +58,12 @@ export default async function AboutPage({ params }: Props) {
     "@type": "WebPage",
     "name": t(lang, "about.title"),
     "description": t(lang, "about.intro"),
-    "url": `https://taxered.com/${locale}/about`,
+    "url": `https://taxered.stackthrow.com/${locale}/about`,
     "inLanguage": langCode,
     "isPartOf": {
       "@type": "WebSite",
       "name": "Taxered Tax Declaration",
-      "url": "https://taxered.com"
+      "url": "https://taxered.stackthrow.com"
     }
   }
 
@@ -75,13 +75,13 @@ export default async function AboutPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://taxered.com/${locale}`,
+        "item": `https://taxered.stackthrow.com/${locale}`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t(lang, "about.title"),
-        "item": `https://taxered.com/${locale}/about`,
+        "item": `https://taxered.stackthrow.com/${locale}/about`,
       },
     ],
   }
@@ -90,8 +90,8 @@ export default async function AboutPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Taxered",
-    "url": "https://taxered.com",
-    "logo": "https://taxered.com/placeholder-logo.png",
+    "url": "https://taxered.stackthrow.com",
+    "logo": "https://taxered.stackthrow.com/placeholder-logo.png",
     "description": "Free and open tax declaration system for everyone",
   }
 

@@ -228,7 +228,7 @@ export function generateWebPageSchema(data: {
     "isPartOf": {
       "@type": "WebSite",
       "name": "Taxered Tax Declaration",
-      "url": "https://taxered.com",
+      "url": "https://taxered.stackthrow.com",
     },
   }
 }

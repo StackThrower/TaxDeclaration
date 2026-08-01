@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     de: "Erfahren Sie mehr über Steuergesetzgebung, wie Sie Erklärungen korrekt ausfüllen und Steuerverpflichtungen optimieren",
   }
 
-  const canonicalUrl = `https://taxered.com/${locale}/knowledge`
+  const canonicalUrl = `https://taxered.stackthrow.com/${locale}/knowledge`
 
   return {
     title: titles[language] || titles.en,
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
         "uk-UA": "/uk-ua/knowledge",
         "en-US": "/en-us/knowledge",
         "en-GB": "/en-gb/knowledge",

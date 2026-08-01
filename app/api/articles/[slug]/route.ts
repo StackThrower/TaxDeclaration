@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getArticle, getRelatedArticles } from "@/lib/articles"
-import { Language } from "@/lib/i18n"
-import { CountryCode } from "@/lib/countries"
+import { getArticle, getRelatedArticles, isLanguage, isCountryCode } from "@/lib/articles"
 
 export async function GET(
   request: NextRequest,
@@ -9,11 +7,18 @@ export async function GET(
 ) {
   try {
     const searchParams = request.nextUrl.searchParams
-    const language = searchParams.get("language") as Language || "uk"
-    const country = searchParams.get("country") as CountryCode || "ua"
+    const languageParam = searchParams.get("language") ?? "uk"
+    const countryParam = searchParams.get("country") ?? "ua"
     const { slug } = await context.params
 
-    const article = getArticle(slug, language, country)
+    if (!isLanguage(languageParam) || !isCountryCode(countryParam)) {
+      return NextResponse.json(
+        { error: "Invalid language or country" },
+        { status: 400 }
+      )
+    }
+
+    const article = getArticle(slug, languageParam, countryParam)
 
     if (!article) {
       return NextResponse.json(
@@ -22,7 +27,7 @@ export async function GET(
       )
     }
 
-    const related = getRelatedArticles(slug, language, country, 3)
+    const related = getRelatedArticles(slug, languageParam, countryParam, 3)
 
     return NextResponse.json({ article, related })
   } catch (error) {

@@ -114,12 +114,12 @@ export default async function HelpPage({ params }: Props) {
     "@type": "WebPage",
     "name": t(lang, "help.title"),
     "description": t(lang, "help.intro"),
-    "url": `https://taxered.com/${locale}/help`,
+    "url": `https://taxered.stackthrow.com/${locale}/help`,
     "inLanguage": langCode,
     "isPartOf": {
       "@type": "WebSite",
       "name": "Taxered Tax Declaration",
-      "url": "https://taxered.com"
+      "url": "https://taxered.stackthrow.com"
     }
   }
 
@@ -131,13 +131,13 @@ export default async function HelpPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://taxered.com/${locale}`,
+        "item": `https://taxered.stackthrow.com/${locale}`,
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": t(lang, "help.title"),
-        "item": `https://taxered.com/${locale}/help`,
+        "item": `https://taxered.stackthrow.com/${locale}/help`,
       },
     ],
   }

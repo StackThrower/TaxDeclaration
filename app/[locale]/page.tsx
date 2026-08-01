@@ -120,14 +120,14 @@ export default async function LocalePage({ params }: Props) {
   // Generate schema.org structured data
   const websiteSchema = generateWebsiteSchema({
     name: "Taxered Tax Declaration",
-    url: "https://taxered.com",
+    url: "https://taxered.stackthrow.com",
     description: "Online system for filing tax declarations on property status, income, and investment transactions",
   })
 
   const organizationSchema = generateOrganizationSchema({
     name: "Taxered",
-    url: "https://taxered.com",
-    logo: "https://taxered.com/placeholder-logo.png",
+    url: "https://taxered.stackthrow.com",
+    logo: "https://taxered.stackthrow.com/placeholder-logo.png",
     description: "Free and open tax declaration system for everyone",
   })
 
@@ -136,7 +136,7 @@ export default async function LocalePage({ params }: Props) {
     "@type": "SoftwareApplication",
     "name": getTranslation("appName"),
     "description": getTranslation("appDescription"),
-    "url": `https://taxered.com/${locale}`,
+    "url": `https://taxered.stackthrow.com/${locale}`,
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -165,7 +165,7 @@ export default async function LocalePage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": `https://taxered.com/${locale}`,
+        "item": `https://taxered.stackthrow.com/${locale}`,
       },
     ],
   }

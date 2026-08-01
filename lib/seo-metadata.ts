@@ -584,7 +584,7 @@ export function generatePageMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://taxered.com/${locale}`,
+      url: `https://taxered.stackthrow.com/${locale}`,
       title: seo.title,
       description: seo.description,
       siteName: "Taxered Tax Declaration",
@@ -605,7 +605,7 @@ export function generatePageMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://taxered.com/${locale}`,
+      canonical: `https://taxered.stackthrow.com/${locale}`,
       languages: {
         "x-default": "/",
         "uk-UA": "/uk-ua",
@@ -632,7 +632,7 @@ export function generatePageMetadata(
         "max-snippet": -1,
       },
     },
-    authors: [{ name: "Taxered", url: "https://taxered.com" }],
+    authors: [{ name: "Taxered", url: "https://taxered.stackthrow.com" }],
     creator: "Taxered",
     publisher: "Taxered",
     category: "Finance",
@@ -1951,7 +1951,7 @@ export function generateAboutMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://taxered.com/${locale}/about`,
+      url: `https://taxered.stackthrow.com/${locale}/about`,
       title: seo.title,
       description: seo.description,
       siteName: "Taxered Tax Declaration",
@@ -1972,9 +1972,9 @@ export function generateAboutMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://taxered.com/${locale}/about`,
+      canonical: `https://taxered.stackthrow.com/${locale}/about`,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
         "uk-UA": "/uk-ua/about",
         "en-US": "/en-us/about",
         "en-GB": "/en-gb/about",
@@ -2016,7 +2016,7 @@ export function generateHelpMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://taxered.com/${locale}/help`,
+      url: `https://taxered.stackthrow.com/${locale}/help`,
       title: seo.title,
       description: seo.description,
       siteName: "Taxered Tax Declaration",
@@ -2037,9 +2037,9 @@ export function generateHelpMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://taxered.com/${locale}/help`,
+      canonical: `https://taxered.stackthrow.com/${locale}/help`,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
         "uk-UA": "/uk-ua/help",
         "en-US": "/en-us/help",
         "en-GB": "/en-gb/help",
@@ -2584,7 +2584,7 @@ export function generateCalculatorMetadata(
     openGraph: {
       type: "website",
       locale: `${language}_${countryCode.toUpperCase()}`,
-      url: `https://taxered.com/${locale}/calculator`,
+      url: `https://taxered.stackthrow.com/${locale}/calculator`,
       title: seo.title,
       description: seo.description,
       siteName: "Taxered Tax Declaration",
@@ -2605,9 +2605,9 @@ export function generateCalculatorMetadata(
       creator: "@monegoo",
     },
     alternates: {
-      canonical: `https://taxered.com/${locale}/calculator`,
+      canonical: `https://taxered.stackthrow.com/${locale}/calculator`,
       languages: {
-        "x-default": "https://taxered.com",
+        "x-default": "https://taxered.stackthrow.com",
         "uk-UA": "/uk-ua/calculator",
         "en-US": "/en-us/calculator",
         "en-GB": "/en-gb/calculator",
